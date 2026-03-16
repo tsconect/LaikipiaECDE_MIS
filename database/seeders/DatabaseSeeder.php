@@ -14,18 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(NGAOUnitsSeeder::class);
+        // $this->call(NGAOUnitsSeeder::class);
 
-        $this->call(UsersSeeders::class);
-        $this->call(AdminstrativeUnitsSeeders::class);
-        $this->call(StudentTypeSeeder::class);
-        $this->call(EcdeSchoolSeeder::class);
-        $this->call(VTCSeeder::class);
-        $this->call(VTCDepartmentsSeeder::class);
-        $this->call(VTCCoursesSeeder::class);
-        $this->call(VTCTeacherSeeder::class);
-        $this->call(StudentSeeder::class);
-
+      
+        // $this->call(AdminstrativeUnitsSeeders::class);
+        // $this->call(StudentTypeSeeder::class);
+        // $this->call(EcdeSchoolSeeder::class);
+        // $this->call(VTCSeeder::class);
+        // $this->call(VTCDepartmentsSeeder::class);
+        // $this->call(VTCCoursesSeeder::class);
+        // $this->call(VTCTeacherSeeder::class);
+        // $this->call(StudentSeeder::class);
+        $this->call([
+             CountySeeder::class,
+            ConstituencySeeder::class,
+            WardSeeder::class,
+       
+        ]);
+          $this->call(UsersSeeders::class);
 
     }
 }

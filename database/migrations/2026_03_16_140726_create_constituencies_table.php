@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('counties', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
+        Schema::create('constituencies', function (Blueprint $table) {
+            $table->id();
+            $table->string('county_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
+            $table->string('county_code')->nullable();
+            $table->string('constituency_id')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('counties');
+        Schema::dropIfExists('constituencies');
     }
 };

@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('wards', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('constituency_id')->default(0);
+        Schema::create('counties', function (Blueprint $table) {
+             $table->string('id');
+            $table->string('county_id')->nullable();
             $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('code')->nullable();
+       
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wards');
+        Schema::dropIfExists('counties');
     }
 };

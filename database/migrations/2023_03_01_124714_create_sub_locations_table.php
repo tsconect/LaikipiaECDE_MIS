@@ -17,10 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
-            $table->unsignedBigInteger('ward_id');
+            $table->string('ward_id');
             $table->timestamps();
 
-            $table->foreign('ward_id')->references('id')->on('wards')->onDelete('cascade')->onUpdate('cascade');
 
         });
     }

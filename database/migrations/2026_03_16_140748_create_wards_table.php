@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('constituencies', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name')->nullable();
+        Schema::create('wards', function (Blueprint $table) {
+             $table->string('id')->nullable();
+            $table->string('name')->nullabe();
+            $table->string('code')->nullable();
+            $table->string('constituency_id')->nullable();
+            $table->string('constituency_code')->nullable();
+            $table->string('ward_code')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('constituencies');
+        Schema::dropIfExists('wards');
     }
 };
