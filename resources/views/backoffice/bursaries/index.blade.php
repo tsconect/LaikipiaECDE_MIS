@@ -20,10 +20,14 @@
                             <tr>
                                 <th>ID </th>
                                 <th>Name</th>
-                                <th>Status</th>
-                                <th>Deadline</th>                              
                                 <th>Applicants</th>
+                                <th>Secondary</th>
+                                <th>University</th>
+                                <th>Colleges</th>
+                                <th>Allocated</th>
+                                <th>Percentage</th>
                                 <th>Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -31,38 +35,17 @@
                             <tr>
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->name}}</td>
+                                <td>3000</td>
+                                <td>44</td>
+                                <td>30</td>
+                                <td>456</td>
+                                <td>19</td>
+                                <td>29 %</td>
                                 <td>
-            
-                                    @if ($item->status == 'open')
-                                        <span class="badge badge-success">Open</span>
-                                    @elseif ($item->status == 'closed')
-                                        <span class="badge badge-danger">Closed</span>
-                                    @elseif ($item->status == 'cancelled')
-                                        <span class="badge badge-secondary">Cancelled</span>
-                                    @else
-                                        <span class="badge badge-warning">Unknown</span>
-                                    @endif  
-                                      
-                                </td>
-                                
-                                <td>
-                                <?php
-                                    $deadline = \Carbon\Carbon::parse($item->deadline);
-                                    $today = \Carbon\Carbon::now();
-
-                                    if ($today > $deadline) {
-                                        echo "Closed";
-                                    } else {
-                                        $daysRemaining = $today->diffInDays($deadline);
-                                        echo $daysRemaining . " days remaining";
-                                    }
-                                ?>
-
-                                </td>
-                                <td>{{  \App\Models\StudentApplications::where('bursary_id', $item->id)->count()  }}</td>
-                          
-                                <td>
-                                  
+                                <a class="btn btn-outline-primary" title="View Wards"
+                                        href="">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
                                     <a class="btn btn-outline-primary" title="Delete Constituency"
                                         href="/singlebusiness/edit/{{$item->id}}">
                                         <i class="fa fa-edit"></i>
@@ -70,9 +53,6 @@
                                     <a class="btn btn-outline-primary" title="Delete Constituency"
                                         href="/constituency/delete/{{$item->id}}">
                                         <i class="fa fa-trash"></i>
-                                    </a>
-                                    <a class="btn btn-outline-primary"
-                                        href="{{ route('admin.bursary.applications.view', ['id' => $item->id]) }}"><i class="fa fa-eye"></i>View Applications
                                     </a>
                                 </td>
                             </tr>

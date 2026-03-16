@@ -17,10 +17,10 @@
                     <div class="card-body">
                         <center>
                             <div class="float-center">
-                                <img src="{{ asset('assets/images/laikipia.png')}}" style="width:100px; height: 100px;">
+                                <img src="assets/images/laikipia.png" style="width:100px; height: 100px;">
                             </div>
                         </center>
-                        <form method="POST" action="{{ route('admin.login.submit') }}">
+                        <form method="POST" action="{{ route('login') }}">
                             @csrf
 
                             <div class="">

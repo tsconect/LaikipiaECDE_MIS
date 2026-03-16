@@ -11,44 +11,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Laikipia CDF Dashboard</title>
-  <link rel="icon" type="image/png" href="{{ asset('images/laikipia.png')}}"/>
+    <title>LAIKIPIA COUNTY - CDF MANAGEMENT SYSTEM</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
     <meta name="description" content="Laikipia Cdf management SYstem.">
     <meta name="msapplication-tap-highlight" content="no">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.0/css/buttons.dataTables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.colVis.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 
 </head>
 
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#example1').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'colvis', 
-                'print'  
-            ],
-            columnDefs: [
-                { targets: [7, 8, 9, 10], visible: false} 
-            ]
-        });
-    });
-</script>
+
 
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
     <div class="app-header header-shadow bg-dark text-white">
@@ -270,8 +245,9 @@ function goBack() {
                                                                     src="https://cdn-icons-png.flaticon.com/512/0/93.png" alt="">
                                                             </div>
                                                             <div class="widget-content-left">
-                                                                <div class="widget-heading">{{Auth::user()->first_name ?? '' }} {{Auth::user()->last_name ?? '' }}</div>
-                                                        
+                                                                <div class="widget-heading">Alina Mcloughlin</div>
+                                                                <div class="widget-subheading opacity-8">A short
+                                                                    profile description</div>
                                                             </div>
                                                             <div class="widget-content-right mr-2">
                                                                 <button
@@ -291,13 +267,44 @@ function goBack() {
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item-divider mb-0 nav-item"></li>
+                                        </ul>
+                                        <div class="grid-menu grid-menu-2col">
+                                            <div class="no-gutters row">
+                                                <div class="col-sm-6">
+                                                    <button
+                                                        class="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning">
+                                                        <i
+                                                            class="pe-7s-chat icon-gradient bg-amy-crisp btn-icon-wrapper mb-2"></i>
+                                                        Message Inbox
+                                                    </button>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <button
+                                                        class="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-danger">
+                                                        <i
+                                                            class="pe-7s-ticket icon-gradient bg-love-kiss btn-icon-wrapper mb-2"></i>
+                                                        <b>Support Tickets</b>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item-divider nav-item">
+                                            </li>
+                                            <li class="nav-item-btn text-center nav-item">
+                                                <button class="btn-wide btn btn-primary btn-sm"> Open Messages
+                                                </button>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading"> {{Auth::user()->first_name ?? '' }} {{Auth::user()->last_name ?? '' }} </div>
-                                <div class="widget-subheading"> {{Auth::user()->role ?? '' }} </div>
+                                <div class="widget-heading"> Alina Mclourd </div>
+                                <div class="widget-subheading"> VP People Manager </div>
                             </div>
 
                         </div>
@@ -328,35 +335,12 @@ function goBack() {
 
 <script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
 
-
-<script>
-  $(document).ready(function() {
-    // Check for Toastr notifications
-    @if(session('success'))
-      toastr.success("{{ session('success') }}");
-    @endif
-
-    @if(session('error'))
-      toastr.error("{{ session('error') }}");
-    @endif
-
-    @if(session('warning'))
-      toastr.warning("{{ session('warning') }}");
-    @endif
-
-    @if(session('info'))
-      toastr.info("{{ session('info') }}");
-    @endif
-  });
-</script>
-
-
 <script>
     function btn()
     {
         alert('clicked');
     }
-</>
+</script>
 
 
 <style>
@@ -374,6 +358,4 @@ function goBack() {
         background:url("{{asset('assets/images/laikipia.png')}}");
     }
 </style>
-
-
 </html>

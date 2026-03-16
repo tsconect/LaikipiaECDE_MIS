@@ -16,6 +16,10 @@ class CheckPermissions
             // For example: return redirect()->route('login');
         }
 
+        // Check if the user has any of the required permissions
+        if (!Auth::user()->hasAnyPermission($permissions)) {
+            throw UnauthorizedException::forPermissions($permissions);
+        }
 
         return $next($request);
     }

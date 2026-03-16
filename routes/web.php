@@ -1,22 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ChequeController;
-use App\Http\Controllers\ChiefsController;
-use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\DepartMentWorkersController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubLocationController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VTCStudentController;
 use App\Http\Controllers\VTCTeacherController;
-use App\Http\Controllers\SubLocationController;
-use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\Zones\ConstController;
-use App\Http\Controllers\ChiefProfileController;
-use App\Http\Controllers\Student\AuthController;
-use App\Http\Controllers\Student\AccountController;
-use App\Http\Controllers\DepartMentWorkersController;
-use App\Http\Controllers\Student\RegistrationController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,157 +20,26 @@ use App\Http\Controllers\Student\RegistrationController;
 | contains the "web" middleware group. Now create something great!
 |
  */
-// student
+
 Route::get('/', [App\Http\Controllers\FrontController::class, 'index'])->name('home');
-Route::get('/student/register', [App\Http\Controllers\FrontController::class, 'register'])->name('student.register');
-Route::post('/register/store', [RegistrationController::class, 'store'])->name('register.store');
-Route::get('/test',[AccountController::class, 'test'])->name('test');
-
-// 
-
-// students
-Route::prefix('students')->group(function () {
-  Route::post('/students/login', [AuthController::class, 'login'])->name('login.submit');
-
-  Route::group(['middleware' => ['auth', 'role:student'],], function () {
-    Route::get('/dashboard', [AccountController::class, 'dashboard'])->name('student.dashboard');
-    Route::get('/logout', [AuthController::class, 'logout'])->name('student.logout');
-    Route::get('/student-profile', [AccountController::class, 'student_profile'])->name('student.profile');
-    Route::get('/my-appliactions', [AccountController::class, 'myApplications'])->name('student.applications'); 
-    Route::get('/my-account', [AccountController::class, 'account'])->name('student.account'); 
-    Route::get('/bursary/applications/view/{id}', [AccountController::class, 'application_view'])->name('student.application.view');
-    Route::get('/bursary/application/{id}', [AccountController::class, 'bursary_appplication'])->name('bursary.application'); 
-    Route::post('/profile', [AccountController::class, 'update'])->name('student.profile.update');
-    Route::post('/student-details/update', [AccountController::class, 'details_update'])->name('student.details.update');
-    Route::put('/student-details/update', [AccountController::class, 'profile_update'])->name('student.user.profile.update');
-
-
-  });
-});
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/bursary-status-query', [App\Http\Controllers\Student\ApplicationsController::class, 'applicationStatus'])->name('applicationStatus');
 Route::get('/view-bursary-application', [App\Http\Controllers\Student\ApplicationsController::class, 'viewApplication'])->name('viewApplication');
 
 Route::post('/store', [App\Http\Controllers\Student\ApplicationsController::class, 'store'])->name('student.store');
 // register.custom
 Route::any('register_custom', [UsersController::class, 'register'])->name('register.custom');
-Route::post('/admin/login/submit', [AuthController::class, 'admin_login'])->name('admin.login.submit');
-Route::get('/admin/login', [AuthController::class, 'admin_login_view'])->name('admin.login'); 
-Route::get('/chief/login', [AuthController::class, 'admin_login_view'])->name('chief.login'); 
 Auth::routes();
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('/admin/dashboard', function () {
+        // Only users with the required permissions can access this route
+        return "ok";
 
-// chiefs
+    })->middleware('permission:Performace Appraisal');
 
-Route::group(['middleware' => ['auth', 'role:chief'],], function () {
-  Route::prefix('chief')->group(function () {
-    Route::name('chief.')->group(function () {
-      Route::get('/dashboard', [App\Http\Controllers\ChiefsController::class, 'dashboard'])->name('home');
-      Route::any('/all-bursary-application', [App\Http\Controllers\ChiefsController::class, 'bursary_applications'])->name('bursary.application.all');
-      Route::get('/students', [App\Http\Controllers\ChiefsController::class, 'students'])->name('students.all');
-      Route::get('/bursary/{id}/applications', [App\Http\Controllers\ChiefsController::class, 'show_bursary'])->name('bursary.applications.view'); 
-      Route::get('/bursary/applications/review/{id}', [App\Http\Controllers\ChiefsController::class, 'application_review'])->name('application.review');
-      Route::get('/bursary/applications/view/{id}', [App\Http\Controllers\ChiefsController::class, 'application_view'])->name('application.view');
-      Route::post('/chiefs-reviews/store', [App\Http\Controllers\ChiefsController::class, 'store_review'])->name('reviews.store'); 
-      Route::get('/bursary/applications/reviewed/', [App\Http\Controllers\ChiefsController::class, 'reviewed_applications'])->name('applications.reviewed');
-      Route::get('/bursary/applications/unreviewed/', [App\Http\Controllers\ChiefsController::class, 'unreviewed_applications'])->name('applications.unreviewed');
-      Route::get('/student/view/{id}', [ChiefsController::class, 'student_view'])->name('student.view');
-
-
-
-      Route::post('/update-password', [ChiefProfileController::class, 'changePassword'])->name('password.update');
-      Route::get('/profile', [ChiefProfileController::class, 'show'])->name('profile');
-      Route::post('/profile', [ChiefProfileController::class, 'update'])->name('profile.update');
-    });
-  });
-});
-
-
-
-// admin
-Route::group(['middleware' => ['auth', 'role:admin'],], function () {
     Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {
-          Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-              //teachers
-              Route::get('chiefs/all', [ChiefsController::class, 'index'])->name('chiefs.all');
-              Route::get('chiefs/create', [ChiefsController::class, 'create'])->name('chiefs.create');
-              Route::post('/admin/chiefs/store', [ChiefsController::class, 'store'])->name('chiefs.store');
-              // Route::get('view-vtc-teacher/{id}', [ChiefsController::class, 'view'])->name('vtc-teacher-view');
-              // {{ route('admin.edit-view', $item->id) }}
-
-            // bursary applications
-            Route::any('/all-bursary-application', [App\Http\Controllers\BursaryController::class, 'bursary_applications'])->name('bursary.application.all');
-            Route::get('/bursary/applications/reviewed/', [App\Http\Controllers\BursaryController::class, 'reviewed_applications'])->name('applications.reviewed');
-            Route::get('/bursary/applications/unreviewed/', [App\Http\Controllers\BursaryController::class, 'unreviewed_applications'])->name('applications.unreviewed');
-            Route::get('/bursary/applications/released/', [App\Http\Controllers\BursaryController::class, 'released_applications'])->name('applications.released');
-            Route::get('/bursary/applications/view/{id}', [App\Http\Controllers\BursaryController::class, 'application_view'])->name('application.view');
-            Route::get('/bursary/applications/assign-cheque/{id}', [App\Http\Controllers\BursaryController::class, 'assign_cheque'])->name('application.assign_cheque');
-            Route::post('/application/assign/cheque',  [App\Http\Controllers\BursaryController::class, 'storeCheque'])->name('application.assign.cheque');
-
-            // 
-
-            Route::any('/reports/bursary/all', [ReportsController::class, 'index'])->name('reports.bursary.all');
-            Route::any('/reports/bursary/approved', [ReportsController::class, 'approved_bursary_reports'])->name('reports.bursary.approved');
-            Route::get('/approved/pdf', [ReportsController::class, 'approved_bursary_pdf'])->name('reports.approved_pdf'); 
-            Route::get('/approved/excel', [ReportsController::class, 'approved_bursary_excel'])->name('reports.approved_excel'); 
-            
-            Route::get('/reports/pending', [ReportsController::class, 'pending_bursary_reports'])->name('reports.bursary.pending');
-            Route::get('/pending/pdf', [ReportsController::class, 'pending_bursary_pdf'])->name('reports.pending_pdf'); 
-            Route::get('/pending/excel', [ReportsController::class, 'pending_bursary_excel'])->name('reports.pending_excel'); 
-
-            Route::get('/reports/rejected', [ReportsController::class, 'rejected_bursary_reports'])->name('reports.bursary.rejected');
-            Route::get('/rejected/pdf', [ReportsController::class, 'rejected_bursary_pdf'])->name('reports.rejected_pdf'); 
-            Route::get('/rejected/excel', [ReportsController::class, 'rejected_bursary_excel'])->name('reports.rejected_excel'); 
-            Route::get('/reports/bursary-reports/{id}', [ReportsController::class, 'bursary_reports'])->name('reports.bursary.view'); 
-
-
-            Route::get('/reports/chief/rejected-applications', [ReportsController::class, 'chief_rejected_reports'])->name('reports.chief.rejected');
-            Route::get('/cdf-committee/rejected-applications', [ReportsController::class, 'cdf_rejected_reports'])->name('reports.cdf.rejected');
-            Route::get('/reports/all-students', [ReportsController::class, 'all_students_reports'])->name('reports.students.registered');
-            Route::get('reports/all-chefs', [ReportsController::class, 'all_chiefs_reports'])->name('reports.chiefs.registered');
-
-            Route::get('/rejected/chief', [ReportsController::class, 'chief_rejected_bursary_pdf'])->name('chief.rejected_pdf'); 
-            Route::get('/rejected/cdf', [ReportsController::class, 'cdf_rejected_bursary_pdf'])->name('cdf.rejected_pdf');
-            Route::get('/students/pdf', [ReportsController::class, 'registered_students_pdf'])->name('students.registered_pdf');
-            Route::get('/chiefs/pdf', [ReportsController::class, 'registered_chiefs_pdf'])->name('chiefs.registered_pdf');
-
-
-            // students
-            Route::get('/students', [StudentsController::class, 'index'])->name('students.all');
-            Route::get('/students/approved', [StudentsController::class, 'approved_students'])->name('students.approved');
-            Route::get('/students/pending', [StudentsController::class, 'pending_students'])->name('students.pending');
-            Route::get('/students/approve/{id}', [StudentsController::class, 'approve_students'])->name('student.approve');
-            Route::post('/student/account/approve', [StudentsController::class, 'approve_student_account'])->name('student.account.approve');
-
-            Route::get('/student/view/{id}', [StudentsController::class, 'student_view'])->name('student.view');
-
-
-
-
-
-
-
-
-
-            // 
-            // user profile
-            Route::post('/update-password', [UserProfileController::class, 'changePassword'])->name('password.update');
-            Route::get('/profile', [UserProfileController::class, 'show'])->name('profile');
-            Route::post('/profile', [UserProfileController::class, 'update'])->name('profile.update');
-            Route::get('/staff', [UserProfileController::class, 'index'])->name('staff');
-
-
 
             //constituencies
             Route::get('/new-constituency', [App\Http\Controllers\Zones\ConstController::class, 'create'])->name('const.create');
@@ -187,7 +48,7 @@ Route::group(['middleware' => ['auth', 'role:admin'],], function () {
             Route::get('edit-constituency/{id}', [App\Http\Controllers\Zones\ConstController::class, 'edit'])->name('const.edit');
             Route::get('constituency/delete/{id}', [ConstController::class, 'delete'])->name('delete-constituency');
             Route::get('constituency/edit/{id}', [ConstController::class, 'edit'])->name('edit-constituency');
-            // Route::post('constituency/update/{id}', [ConstController::class, 'update'])->name('const.edit');
+            Route::post('constituency/edit/{id}', [ConstController::class, 'update'])->name('const.edit');
             //
 
             //wards
@@ -224,26 +85,49 @@ Route::group(['middleware' => ['auth', 'role:admin'],], function () {
             Route::post('update-unions/{union}', [App\Http\Controllers\UnionController::class, 'update'])->name('union.update');
 
 
-          
+            //school
+            Route::get('/new-school', [App\Http\Controllers\ESchoolController::class, 'create'])->name('school.create');
+            Route::any('/all-school', [App\Http\Controllers\ESchoolController::class, 'index'])->name('school.all');
+            Route::post('/save-school', [App\Http\Controllers\ESchoolController::class, 'store'])->name('school.store');
+            Route::get('edit-school/{school}', [App\Http\Controllers\ESchoolController::class, 'editView'])->name('school.edit');
+            Route::post('update-school/{school}', [App\Http\Controllers\ESchoolController::class, 'update'])->name('school.update');
+
+            //feeder school
+            Route::get('/new-feeder_school', [App\Http\Controllers\FeederSchoolsController::class, 'create'])->name('feeder_school.create');
+            Route::any('/all-feeder_school', [App\Http\Controllers\FeederSchoolsController::class, 'index'])->name('feeder_school.all');
+            Route::post('/save-feeder_school', [App\Http\Controllers\FeederSchoolsController::class, 'store'])->name('feeder_school.store');
+            Route::get('edit-feeder_school/{school}', [App\Http\Controllers\FeederSchoolsController::class, 'editView'])->name('feeder_school.edit');
+            Route::post('update-feeder_school/{school}', [App\Http\Controllers\FeederSchoolsController::class, 'update'])->name('feeder_school.update');
+
+
+            //teachers
+            Route::get('/new-teachers', [App\Http\Controllers\TeacherController::class, 'create'])->name('teachers.create');
+            Route::any('/all-teachers', [App\Http\Controllers\TeacherController::class, 'index'])->name('teachers.all');
+            Route::post('/save-teachers', [App\Http\Controllers\TeacherController::class, 'store'])->name('teachers.store');
+            Route::get('edit-teachers/{id}', [App\Http\Controllers\TeacherController::class, 'edit'])->name('teachers.edit');
+            Route::get('delete-teacher/{id}', [App\Http\Controllers\TeacherController::class, 'delete'])->name('teachers.delete');
+            // download teachers cert
+            Route::get('download', [TeacherController::class, 'downloadCert'])->name('download.cert');
+
+            //coordinators
+            Route::get('/new-coordinators', [App\Http\Controllers\CoordinatorsController::class, 'create'])->name('coordinators.create');
+            Route::any('/all-coordinators', [App\Http\Controllers\CoordinatorsController::class, 'index'])->name('coordinators.all');
+            Route::post('/save-coordinators', [App\Http\Controllers\CoordinatorsController::class, 'store'])->name('coordinators.store');
+            Route::get('edit-coordinators/{id}', [App\Http\Controllers\CoordinatorsController::class, 'edit'])->name('coordinators.edit');
+            Route::get('delete-coordinators/{id}', [App\Http\Controllers\CoordinatorsController::class, 'delete'])->name('coordinators.delete');
+
 
              //bursary applications
              Route::get('/new-bursary-application', [App\Http\Controllers\BursaryController::class, 'create'])->name('bursary.application.create');
              Route::any('/all-bursary-application', [App\Http\Controllers\BursaryController::class, 'index'])->name('bursary.application.all');
              Route::post('/save-bursary-application', [App\Http\Controllers\BursaryController::class, 'store'])->name('bursary.application.store');
              Route::get('edit-bursary-application/{id}', [App\Http\Controllers\BursaryController::class, 'edit'])->name('bursary.application.edit');
-             Route::get('/bursary/{id}/applications', [App\Http\Controllers\BursaryController::class, 'show'])->name('bursary.applications.view'); 
 
-              //applications 
-            Route::get('/bursary/applications/review/{id}', [App\Http\Controllers\BursaryController::class, 'application_review'])->name('application.review');
-            Route::post('/reviews/store', [App\Http\Controllers\BursaryController::class, 'store_review'])->name('reviews.store');
-
-
-
-            
-
-            Route::get('/new-location', [App\Http\Controllers\LocationController::class, 'create'])->name('location.create');
-            Route::any('/all-locations', [App\Http\Controllers\LocationController::class, 'index'])->name('location.all');
-            Route::post('/save-locations', [App\Http\Controllers\LocationController::class, 'store'])->name('location.store');
+              //teachers
+            Route::get('edit-teacher/{id}', [TeacherController::class, 'edit'])->name('teacher-edit-view');
+            Route::get('view-teacher/{id}', [TeacherController::class, 'view'])->name('teacher-view');
+            Route::get('view-vtc-teacher/{id}', [VTCTeacherController::class, 'view'])->name('vtc-teacher-view');
+            // {{ route('admin.edit-view', $item->id) }}
 
 
             Route::get('/new-county', [App\Http\Controllers\CountyController::class, 'create'])->name('county.create');
@@ -257,26 +141,80 @@ Route::group(['middleware' => ['auth', 'role:admin'],], function () {
             Route::get('/create_students', [StudentsController::class, 'create'])->name('students.create');
             Route::any('/students_store', [StudentsController::class, 'store'])->name('students.store');
 
-
-            // cheques
-
-            
-            Route::get('/cheques/all', [ChequeController::class, 'index'])->name('cheques.all'); 
-            Route::get('/cheques/create', [ChequeController::class, 'create'])->name('cheques.create');
-            Route::post('/cheques/store', [ChequeController::class, 'store'])->name('cheques.store');
-            Route::get('/cheques/assign/{id}', [ChequeController::class, 'assign'])->name('cheques.assign');
-            Route::post('/cheques/assign/students', [ChequeController::class, 'assign_students'])->name('cheques.assign.students');
-            Route::post('/student/assign/cheque', [ChequeController::class, 'assign_student'])->name('cheques.assign.student');
-
-            Route::get('/cheques/view/{id}', [ChequeController::class, 'view'])->name('cheques.view');
-
-            
+             //vtc
+             Route::get('/vtc_home/{vtc}', [App\Http\Controllers\VTCController::class, 'vtcHome'])->name('vtc_home');
+             Route::get('/new-vtc', [App\Http\Controllers\VTCController::class, 'create'])->name('vtc.create');
+             Route::any('/all-vtc', [App\Http\Controllers\VTCController::class, 'index'])->name('vtc.all');
+             Route::post('/save-vtc', [App\Http\Controllers\VTCController::class, 'store'])->name('vtc.store');
+             Route::get('edit-vtc/{id}', [App\Http\Controllers\VTCController::class, 'edit'])->name('vtc.edit');
+             Route::get('vtc/delete/{id}', [VTCController::class, 'delete'])->name('delete-vtc');
+             Route::get('vtc/edit/{id}', [VTCController::class, 'edit'])->name('edit-vtc');
+             Route::post('vtc/edit/{id}', [VTCController::class, 'update'])->name('vtc.edit');
 
 
 
 
-          
+             //vtc dpts
+             Route::get('/new-vtc_dept', [App\Http\Controllers\VTCDepartmentsController::class, 'create'])->name('vtc_dept.create');
+             Route::any('/all-vtc_dept', [App\Http\Controllers\VTCDepartmentsController::class, 'index'])->name('vtc_dept.all');
+             Route::post('/save-vtc_dept', [App\Http\Controllers\VTCDepartmentsController::class, 'store'])->name('vtc_dept.store');
+             Route::get('edit-vtc_dept/{id}', [App\Http\Controllers\VTCDepartmentsController::class, 'edit'])->name('vtc_dept.edit');
+             Route::get('vtc_dept/delete/{id}', [VTCDepartmentsController::class, 'delete'])->name('delete-vtc_dept');
+             Route::get('vtc_dept/edit/{id}', [VTCDepartmentsController::class, 'edit'])->name('edit-vtc_dept');
+             Route::post('vtc_dept/edit/{id}', [VTCDepartmentsController::class, 'update'])->name('vtc_dept.edit');
 
+             //vtc_courses
+             Route::get('/new-vtc_courses', [App\Http\Controllers\VTCCoursesController::class, 'create'])->name('vtc_courses.create');
+             Route::any('/all-vtc_courses', [App\Http\Controllers\VTCCoursesController::class, 'index'])->name('vtc_courses.all');
+             Route::post('/save-vtc_courses', [App\Http\Controllers\VTCCoursesController::class, 'store'])->name('vtc_courses.store');
+             Route::get('edit-vtc_courses/{id}', [App\Http\Controllers\VTCCoursesController::class, 'edit'])->name('vtc_courses.edit');
+             Route::get('vtc_courses/delete/{id}', [VTCCoursesController::class, 'delete'])->name('delete-vtc_courses');
+             Route::get('vtc_courses/edit/{id}', [VTCCoursesController::class, 'edit'])->name('edit-vtc_courses');
+             Route::post('vtc_courses/edit/{id}', [VTCCoursesController::class, 'update'])->name('vtc_courses.edit');
+
+
+             //vtc_teachers
+             Route::get('/new-vtc_teachers', [App\Http\Controllers\VTCTeacherController::class, 'create'])->name('vtc_teachers.create');
+             Route::any('/all-vtc_teachers', [App\Http\Controllers\VTCTeacherController::class, 'index'])->name('vtc_teachers.all');
+             Route::post('/save-vtc_teachers', [App\Http\Controllers\VTCTeacherController::class, 'store'])->name('vtc_teachers.store');
+             Route::get('edit-vtc_teachers/{id}', [App\Http\Controllers\VTCTeacherController::class, 'edit'])->name('vtc_teachers.edit');
+             Route::get('vtc_teachers/delete/{id}', [VTCTeacherController::class, 'delete'])->name('delete-vtc_teachers');
+             Route::get('vtc_teachers/edit/{id}', [VTCTeacherController::class, 'edit'])->name('edit-vtc_teachers');
+             Route::post('vtc_teachers/edit/{id}', [VTCTeacherController::class, 'update'])->name('vtc_teachers.edit');
+
+              //other_vtc_staff
+              Route::get('/new-other_vtc_staff', [App\Http\Controllers\OtherVTCStaffController::class, 'create'])->name('other_vtc_staff.create');
+              Route::any('/all-other_vtc_staff', [App\Http\Controllers\OtherVTCStaffController::class, 'index'])->name('other_vtc_staff.all');
+              Route::post('/save-other_vtc_staff', [App\Http\Controllers\OtherVTCStaffController::class, 'store'])->name('other_vtc_staff.store');
+              Route::get('edit-other_vtc_staff/{id}', [App\Http\Controllers\OtherVTCStaffController::class, 'edit'])->name('other_vtc_staff.edit');
+              Route::get('other_vtc_staff/delete/{id}', [OtherVTCStaffController::class, 'delete'])->name('delete-other_vtc_staff');
+              Route::get('other_vtc_staff/edit/{id}', [OtherVTCStaffController::class, 'edit'])->name('edit-other_vtc_staff');
+              Route::post('other_vtc_staff/edit/{id}', [OtherVTCStaffController::class, 'update'])->name('other_vtc_staff.edit');
+
+              //department_workers
+              Route::get('/new-department_workers', [App\Http\Controllers\DepartMentWorkersController::class, 'create'])->name('department_workers.create');
+              Route::any('/all-department_workers', [App\Http\Controllers\DepartMentWorkersController::class, 'index'])->name('department_workers.all');
+              Route::post('/save-department_workers', [App\Http\Controllers\DepartMentWorkersController::class, 'store'])->name('department_workers.store');
+              Route::get('edit-department_workers/{id}', [App\Http\Controllers\DepartMentWorkersController::class, 'edit'])->name('department_workers.edit');
+              Route::get('department_workers/delete/{id}', [DepartMentWorkersController::class, 'delete'])->name('delete-department_workers');
+              Route::get('department_workers/edit/{id}', [DepartMentWorkersController::class, 'edit'])->name('edit-department_workers');
+              Route::post('department_workers/edit/{id}', [DepartMentWorkersController::class, 'update'])->name('department_workers.edit');
+
+             //vtc student
+            Route::get('/vtc_create_students', [VTCStudentController::class, 'create'])->name('vtc_students.create');
+            Route::any('/vtc_students_store', [VTCStudentController::class, 'store'])->name('vtc_students.store');
+
+
+
+            //  Generate Staff Returns
+            Route::get('generate_staff_returns', [TeacherController::class, 'generateStaffReturns'])->name('generate_staff_returns');
+            Route::get('generate_vtc_staff_returns', [VTCTeacherController::class, 'generateVTCStaffReturns'])->name('generate_vtc_staff_returns');
+            Route::get('generate_dpt_staff_returns', [DepartMentWorkersController::class, 'generateDPTStaffReturns'])->name('generate_dpt_staff_returns');
+
+            // dpts within a vtc
+            Route::get('dpts_within_vtc/{vtc}', [App\Http\Controllers\VTCController::class, 'dptsWithinVtc'])->name('dpts_within_vtc');
+            // dpts within a vtc
+            Route::get('coursesWithinVtcDPT/{dpt}', [App\Http\Controllers\VTCDepartmentsController::class, 'coursesWithinVtcDPT'])->name('coursesWithinVtcDPT');
 
 
         });});

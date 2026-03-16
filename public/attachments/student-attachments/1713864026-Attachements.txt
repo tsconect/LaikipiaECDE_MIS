@@ -1,2 +1,0 @@
-phone_number ,name
-254700000000,test number

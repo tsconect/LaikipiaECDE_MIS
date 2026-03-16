@@ -55,13 +55,6 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-/**
- * Update the email of the user with id 1 to "password".
- *
- * @return void
- */
-
-    
 
     /**
      * Create a new user instance after a valid registration.

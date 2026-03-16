@@ -40,7 +40,7 @@
 
 @section('content')
 <div class="p-2 btn-success">
-        <h5 >Create New Bursary</h5>
+        <h5 >Bursary Batch</h5>
     </div>
 <div class="main-card mb-3 card col-12">
 
@@ -50,39 +50,20 @@
     </div>
 @endif
     <div class="card-body">
-        <form class="" action="{{ route('admin.bursary.application.store') }}" method="post">
-        @csrf
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="position-relative form-group">
-                    <label for="name" class="">Name of the  Bursary</label>
-                    <input name="name" id="name" placeholder="e.g 2023/GOVERNOR'S/BURSARY" required type="text" class="form-control">
+        <form class="" action="{{route('admin.bursary.application.store')}}" method="post">
+            @csrf
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="position-relative form-group">
+                        <label for="name" class="">New Finacial Yeal  Busary Opening</label>
+                        <input name="name" id="name" placeholder="2023/GOVERNOR'S/BURSARY" required type="text"
+                            class="form-control">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="position-relative form-group">
-                    <label for="deadline" class="">Deadline</label>
-                    <input name="deadline" id="deadline" placeholder="YYYY-MM-DD" required type="date" class="form-control">
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="position-relative form-group">
-                    <label for="status" class="">Status</label>
-                    <select name="status" id="status" class="form-control" required>
-                        <option value="open">Open</option>
-                        <option value="closed">Closed</option>
-                        <option value="cancelled">Cancelled</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <button class="mt-2 btn btn-success">Submit</button>
-    </form>
 
+            <button class="mt-2 btn btn-success">Submit</button>
+        </form>
     </div>
 </div>
 @endsection

@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Location;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Students extends Model
 {
@@ -17,11 +16,6 @@ class Students extends Model
 
     function type(){
         return $this->hasOne(StudentType::class,'id','stundent_type_id');
-    }
-
-    public function Location()
-    {
-        return $this->belongsTo(Location::class, 'location_id');
     }
 
     // school
