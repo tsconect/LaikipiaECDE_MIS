@@ -1,5 +1,6 @@
-<div class="app-sidebar sidebar-shadow">
+<div class="app-sidebar sidebar-shadow" style="background: #1a3c5e;">
     <div class="app-header__logo">
+        <img src="{{asset('assets/images/laikipia.png')}}" alt="Laikipia" style="height: 40px; width: 40px; margin-right: 10px;">
         <div class="logo-src">Laikipia CDF</div>
         <div class="header__pane ml-auto">
             <div>
@@ -43,7 +44,7 @@
              
                 <li>
                     <a href="#">
-                        <i class="metismenu-icon pe-7s-rocket"></i>Unions
+                        <i class="metismenu-icon fa fa-users"></i>Unions
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
@@ -62,7 +63,7 @@
                 </li>
                 <li>
                     <a href="#">
-                        <i class="metismenu-icon pe-7s-rocket"></i>Schools
+                        <i class="metismenu-icon fa fa-building"></i>Schools
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
@@ -90,7 +91,7 @@
 
                     <li>
                         <a href="#"   >
-                            <i class="metismenu-icon pe-7s-rocket"   ></i>ECDE Coordinators
+                            <i class="metismenu-icon fa fa-user-tie"   ></i>ECDE Coordinators
                             <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
                         </a>
                         <ul>
@@ -110,7 +111,7 @@
 
                 <li>
                     <a href="#"   >
-                        <i class="metismenu-icon pe-7s-rocket"   ></i>ECDE Teachers
+                        <i class="metismenu-icon fa fa-book"   ></i>ECDE Teachers
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
                     </a>
                     <ul>
@@ -130,7 +131,7 @@
 
                 <li>
                     <a href="#"   >
-                        <i class="metismenu-icon pe-7s-rocket"   ></i>Students
+                        <i class="metismenu-icon fa fa-graduation-cap"   ></i>Students
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
                     </a>
                     <ul>
@@ -169,7 +170,7 @@
               
                 <li>
                     <a href="#">
-                        <i class="metismenu-icon pe-7s-rocket"></i>Communication
+                        <i class="metismenu-icon fa fa-comments"></i>Communication
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                     </a>
                     <ul>
@@ -193,3 +194,31 @@
         </div>
     </div>
 </div>
+
+<style>
+.vertical-nav-menu a {
+    color: #ffffff !important;
+}
+.vertical-nav-menu a:hover {
+    color: #060c48 !important;
+}
+.vertical-nav-menu a.active {
+    color: #ffffff !important;
+}
+.vertical-nav-menu li.active a {
+    color: #ffffff !important;
+}
+.vertical-nav-menu a:focus {
+    color: #4c77ab !important;
+}
+.app-sidebar .logo-src {
+    color: #ffffff;
+}
+.metismenu-icon {
+    color: #c6c9eb !important;
+    margin-right: 10px;
+}
+.metismenu-state-icon {
+    color: #ffffff !important;
+}
+</style>
