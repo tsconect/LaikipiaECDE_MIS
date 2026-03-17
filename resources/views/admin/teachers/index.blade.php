@@ -42,26 +42,20 @@
                                     <td>{{ $item->user->first_name . ' ' . $item->user->middle_name . ' ' . $item->user->last_name }}
                                     </td>
                                     <td>{{ $item->user->email }}</td>
-                                    <td>{{ $item->phone }}</td>
+                                    <td>{{ $item->user->phone_number }}</td>
                                     <td>{{ $item->id_number }}</td>
                                     <td>{{ $item->kra_pin }}</td>
                                     <td>{{ $item->gender }}</td>
                                    
                                     <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.teacher-view', $item->id) }}">
+                                            href="{{ route('admin.teachers.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-
                                         <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.teacher-edit-view', $item->id) }}">
+                                            href="{{ route('admin.teachers.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-
-                                        <!-- <a class="btn btn-outline-primary" title="Delete Teacher"
-                                        href="{{ route('admin.teachers.delete', $item->id) }}">
-                                        <i class="fa fa-trash"></i>
-                                    </a> -->
                                     </td>
                                 </tr>
                             @endforeach

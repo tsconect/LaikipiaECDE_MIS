@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\SendSms;
+use App\Helpers\PhoneHelper;
 use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
@@ -16,8 +18,10 @@ use App\Models\Wards;
 use Carbon\Carbon;
 use Faker\Core\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use League\Csv\Writer;
 
 class TeacherController extends Controller
@@ -25,7 +29,7 @@ class TeacherController extends Controller
    //
    public function index()
    {
-       $data = Teacher::all();
+       $data = Teacher::latest()->get();
        return view('admin.teachers.index', compact('data'));
    }
 
@@ -39,82 +43,87 @@ class TeacherController extends Controller
 
    public function store(Request $request)
    {
-        // return $request;
+        $request->validate([
+            'first_name' => 'required',
+            'middle_name' => 'nullable',
+            'last_name' => 'required',
+            'pwd_status' => 'required',
+            'disability_type' => 'nullable',
+            'ethnicity_id' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'id_number' => 'required',
+            'kra_pin' => 'required',
+            'gender' => 'required',
+            'dob' => 'required',
+            // 'tsc_number' => 'required',
+            'date_of_first_appointment' => 'required',
+            'terms_of_service' => 'required',
+            'job_group_id' => 'required',
+            'county_id' => 'required',
+            'subcounty_id' => 'required',
+            'ward_id' => 'required',
+            // 'school_id' => 'required',
+        ]);
 
-        // $validatedData = $request->validate([
-        //     'photo' => 'required|file|max:1024|mimes:jpeg,png',
-        // ]);
+        try{
+            DB::beginTransaction();
+            $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz';
+            $newPassword = Str::random(6, $characters);
+            
+            $obj = new \App\Models\User();
+            $obj->first_name = $request->first_name;
+            $obj->middle_name = $request->middle_name;
+            $obj->last_name = $request->last_name;
+            $obj->email=$request->email;
+            $obj->phone_number= PhoneHelper::normalizePhoneNumber($request->phone_number);
+            $obj->role='teacher';
+            $obj->password=Hash::make('teacher');
+            $obj->save();
 
-        if($request->file('photo')){
+            $user_id=$obj->id;
+            $teacher=new \App\Models\Teacher();
+            $teacher->user_id=$user_id;
+            $teacher->id_number=$request->id_number;
+            $teacher->kra_pin=$request->kra_pin;
+            $teacher->gender=$request->gender;
+            $teacher->dob=$request->dob;
+            $teacher->tsc_number=$request->tsc_number;
+            $teacher->ippd_number=$request->ippd_number;
+            $teacher->date_of_first_appointment=$request->date_of_first_appointment;
+            $teacher->terms_of_engagement=$request->terms_of_engagement;
+            $teacher->job_group_id =$request->job_group_id;
 
-            $photo_path = $request->file('photo')->store('uploads');
+            $teacher->ethnicity_id =$request->ethnicity_id;
+            $teacher->school_id=$request->school_id;
+            $teacher->pwd_status=$request->pwd_status;
+            $teacher->disability_type=$request->disability_type;
+            $teacher->impairment_details=$request->impairment_details;
+            $teacher->pwd_number=$request->pwd_number;
+            $teacher->county_id=$request->county_id;
+            $teacher->subcounty_id=$request->subcounty_id;
+            $teacher->ward_id=$request->ward_id;
+            $teacher->school_id = $request->school_id;
+            $teacher->save();
+
+            DB::commit();
+
+            $sendSms = new SendSms();
+            $message = 'Dear ' . $obj->first_name . ' ' . $obj->last_name . ' You have been successfully registered as a teacher at Ecde School Management System. Use your email and '. $newPassword .' to login and start using the system.';
+
+            $phoneNumber = $request->phone_number;
+            $statusCode = $sendSms->sendSms($phoneNumber, $message);
+        }catch(\Exception $e){
+            DB::rollBack();
+            return $e->getMessage();
+            return back()->with('error', $e->getMessage());
+
         }
 
-        if($request->file('certificate')){
-            $certificate_path = $request->file('certificate')->store('uploads');
-        }
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher '. $obj->name .   ' Added Successfully');
 
 
-       $obj = new \App\Models\User();
-       $obj->first_name = $request->first_name;
-       $obj->middle_name = $request->middle_name;
-       $obj->last_name = $request->last_name;
-       $obj->email=$request->email;
-       $obj->role='teacher';
-       $obj->password=Hash::make('teacher');
-       $obj->save();
-
-       $user_id=$obj->id;
-       $teacher=new \App\Models\Teacher();
-       $teacher->user_id=$user_id;
-       $teacher->phone=$request->phone;
-       $teacher->id_number=$request->id_number;
-       $teacher->kra_pin=$request->kra_pin;
-       $teacher->gender=$request->gender;
-       $teacher->dob=$request->dob;
-       $teacher->tsc_number=$request->tsc_number;
-       $teacher->next_kin_first_name=$request->next_kin_first_name;
-       $teacher->next_kin_middle_name=$request->next_kin_middle_name;
-       $teacher->next_kin_last_name=$request->next_kin_last_name;
-       $teacher->next_kin_id_number=$request->next_kin_id_number;
-       $teacher->next_kin_phone=$request->next_kin_phone;
-       $teacher->next_kin_relationship=$request->next_kin_relationship;
-       $teacher->next_kin_gender=$request->next_kin_gender;
-       $teacher->ippd_number=$request->ippd_number;
-       $teacher->ethnicity=$request->ethnicity;
-       $teacher->date_of_first_appointment=$request->date_of_first_appointment;
-       $teacher->terms_of_engagement=$request->terms_of_engagement;
-       $teacher->job_group=$request->job_group;
-       $teacher->school_id=$request->school_id;
-       $teacher->image_path = basename($photo_path);
-       $teacher->save();
-
-        //add to union
-        if($request->union){
-            foreach($request->union as $_){
-                TeachersUnions::create([
-                    'teachers_id' => $teacher->id,
-                    'union_id' => $_
-                ]);
-            }
-        }
-
-
-       $teacher_id=$teacher->id;
-
-       $teacher_education=new \App\Models\TeacherEducation();
-       $teacher_education->teacher_id=$teacher_id;
-       $teacher_education->education_level=$request->education_level;
-       $teacher_education->doc_path=basename($certificate_path);
-       $teacher_education->save();
-
-       $teacher_residential=new \App\Models\TeacherResidential();
-       $teacher_residential->teacher_id=$teacher_id;
-       $teacher_residential->constituency_id=$request->const_id;
-       $teacher_residential->ward_id=$request->ward_id;
-       $teacher_residential->Sub_location=$request->sub_location_id;
-       $teacher_residential->village=$request->village;
-       $teacher_residential->save();
+       
 
        return back()->with('success', 'Teacher '. $obj->name .   ' Added Successfully');
    }

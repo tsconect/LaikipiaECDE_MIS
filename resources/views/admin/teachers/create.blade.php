@@ -4,18 +4,25 @@
 @endsection
 
 @section('content')
-@include('flash-message')
 
 <div class="card-body">
     <div class="container mt-4">
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
     <form method="POST" action="{{ route('admin.teachers.store') }}">
         @csrf
 
 
         <!-- ================= PERSONAL INFORMATION ================= -->
 
-        <div class="card shadow-sm mb-4">
+        <div class="card p-2 shadow-sm mb-4">
 
             <div class="card-header bg-success text-white">
                 <h5 class="mb-0">Register New Teacher</h5>
@@ -24,7 +31,12 @@
             <div class="card-body">
 
                <div class="row g-4">
-
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
+                        </div>
+                    @endif
+                    
                     <div class="col-md-4 mb-3">
                         <label for="first_name">First Name</label>
 
@@ -129,8 +141,8 @@
                         <label for="ethnicity">Ethnicity</label>
 
                         <select
-                            name="ethnicity"
-                            id="ethnicity"
+                            name="ethnicity_id"
+                            id="ethnicity_id"
                             class="form-control"
                         >
                             <option value="">Select Ethnicity</option>
@@ -144,7 +156,7 @@
                             <option value="maasai">Maasai</option>
                         </select>
 
-                        @error('ethnicity')
+                        @error('ethnicity_id')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
@@ -173,7 +185,7 @@
 
                         <input
                             type="text"
-                            name="phone"
+                            name="phone_number"
                             id="phone"
                             class="form-control"
                             placeholder="07********"
@@ -285,8 +297,8 @@
 
                         <input
                             type="text"
-                            name="school_contact_tsc_number"
-                            id="school_contact_tsc_number"
+                            name="tsc_number"
+                            id="tsc_number"
                             class="form-control"
                             value="{{ old('school_contact_tsc_number') }}"
                             placeholder="Enter TSC number"
@@ -352,7 +364,7 @@
                         <label for="job_group">Job Group</label>
 
                         <select
-                            name="job_group"
+                            name="job_group_id"
                             id="job_group"
                             class="form-control"
                         >
@@ -402,6 +414,21 @@
                                 <option value="">Select ward</option>
                             </select>
                             @error('ward_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">School <span class="text-danger">*</span></label>
+                            <select name="school_id" id="schoolSelect" 
+                                    class="form-control @error('school_id') is-invalid @enderror"
+                                    >
+                                <option value="">Select school</option>
+                                @foreach($ecde_schools as $school)
+                                    <option value="{{ $school->id }}" {{ old('school_id') == $school->id ? 'selected' : '' }}>{{ $school->school_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('school_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
