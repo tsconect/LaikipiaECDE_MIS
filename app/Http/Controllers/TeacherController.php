@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Teacher;
 use App\Models\Constituency;
+use App\Models\County;
 use App\Models\EcdeSchools;
+use App\Models\Teacher;
 use App\Models\TeacherEducation;
 use App\Models\TeacherResidential;
 use App\Models\TeacherSchoolContact;
 use App\Models\TeachersUnions;
 use App\Models\User;
+use App\Models\Ward;
 use App\Models\Wards;
 use Carbon\Carbon;
 use Faker\Core\File;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Hash;
-
 use League\Csv\Writer;
 
 class TeacherController extends Controller
@@ -25,14 +26,15 @@ class TeacherController extends Controller
    public function index()
    {
        $data = Teacher::all();
-       return view('backoffice.teachers.index', compact('data'));
+       return view('admin.teachers.index', compact('data'));
    }
 
    function create(){
-    $constituencies=Constituency::get();
-    $wards=Wards::get();
-    $ecde_schools = EcdeSchools::get();
-    return view('backoffice.teachers.create',compact('wards','constituencies','ecde_schools' ));
+        $sub_counties =Constituency::get();
+        $wards=Ward::get();
+        $ecde_schools = EcdeSchools::get();
+        $counties = County::get();
+    return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools', 'counties')); 
    }
 
    public function store(Request $request)
@@ -132,7 +134,7 @@ class TeacherController extends Controller
 
     $data = $id;
 
-    return view('backoffice.teachers.teacher_view_profile', compact('data'));
+    return view('admin.teachers.teacher_view_profile', compact('data'));
 
    }
 

@@ -1,4 +1,4 @@
-@extends('backoffice.layouts.app')
+@extends('admin.app')
 
 
 @section('nav-bar')
@@ -37,7 +37,7 @@
         </span>
     </div>
 
-    @include('layouts.main_nav')
+    @include('admin.layouts.sidebar')
 </div>
 
 

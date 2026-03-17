@@ -1,16 +1,16 @@
-@extends('backoffice.layouts.app')
+@extends('admin.app')
 
 @section('nav-bar')
-
-@include('layouts.main_nav')
+@include('admin.layouts.sidebar')
 @endsection
 
 @section('content')
     @include('flash-message')
-    <div class="card container">
-        <div class="card-header btn-success">
+      <div class="card-header btn-success">
             <h5>ECDE <small>TEACHERS</small></h5>
         </div>
+    <div class="card ">
+      
         <div class="card-body">
             <h5 class="card-title text-right"> <a href="{{ route('admin.generate_staff_returns') }}"><button class="btn btn-warning ">
                         <i class="fa fa-file"></i> Generate <?php $month = date('F ,Y');
@@ -24,15 +24,13 @@
                         <thead>
                             <tr>
                                 <th>ID </th>
-                                <th>Full Names</th>
+                                <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>ID Number</th>
                                 <th>Kra Pin</th>
                                 <th>Gender</th>
-                                {{-- <th>School Posted</th> --}}
-                                <!-- <th>Age</th>  -->
-                                <!-- <th>TSC Number</th>  -->
+                           
                                 <th>Action</th>
 
                             </tr>
@@ -48,9 +46,7 @@
                                     <td>{{ $item->id_number }}</td>
                                     <td>{{ $item->kra_pin }}</td>
                                     <td>{{ $item->gender }}</td>
-                                    {{-- <td> Update<td> --}}
-                                    <!-- <td>{{ $item->dob }}</td>  -->
-                                    <!-- <td>{{ $item->tsc_number }}</td> -->
+                                   
                                     <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"
                                             href="{{ route('admin.teacher-view', $item->id) }}">

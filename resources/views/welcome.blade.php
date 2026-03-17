@@ -13,7 +13,7 @@ else{
 
 @section('nav-bar')
 
-@include('layouts.main_nav')
+@include('admin.app')
 @endsection
 
 
@@ -67,12 +67,12 @@ else{
                         </a>
                         <ul>
                             <li  >
-                                <a href="{{route('admin.const.all')}}" >
+                                <a href="" >
                                     <i class="metismenu-icon "></i>All Constituencies
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('admin.const.create')}}">
+                                <a href="">
                                     <i class="metismenu-icon"></i>New Constituency
                                 </a>
                             </li>
@@ -86,12 +86,12 @@ else{
                         </a>
                         <ul>
                             <li>
-                                <a href="{{route('admin.county.all')}}">
+                                <a href="">
                                     <i class="metismenu-icon "></i>All Counties
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('admin.county.create')}}">
+                                <a href="">
                                     <i class="metismenu-icon"></i>New County
                                 </a>
                             </li>
@@ -105,12 +105,12 @@ else{
                         </a>
                         <ul>
                             <li>
-                                <a href="{{route('admin.unions.all')}}">
+                                <a href="">
                                     <i class="metismenu-icon "></i>All Unions
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('admin.unions.create')}}">
+                                <a href="">
                                     <i class="metismenu-icon"></i>New Union
                                 </a>
                             </li>
@@ -124,12 +124,12 @@ else{
                         </a>
                         <ul>
                             <li>
-                                <a href="{{route('admin.school.all')}}">
+                                <a href="">
                                     <i class="metismenu-icon "></i>All Schools
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('admin.school.create')}}">
+                                <a href="">
                                     <i class="metismenu-icon"></i>New School
                                 </a>
                             </li>
@@ -145,7 +145,7 @@ else{
                         </a>
                         <ul>
                             <li  >
-                                <a  href="{{route('admin.teachers.all')}}">
+                                <a  href="{{route('admin.teachers.index')}}">
                                     <i class="metismenu-icon "></i>All Teachers
                                 </a>
                             </li>
