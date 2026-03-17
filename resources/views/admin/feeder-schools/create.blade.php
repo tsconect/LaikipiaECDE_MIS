@@ -18,12 +18,12 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.ecde-schools.store') }}">
+    <form method="POST" action="{{ route('admin.feeder-schools.store') }}">
         @csrf
         <div class="card p-2 shadow-sm mb-4">
 
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0">Register New ECDE</h5>
+                <h5 class="mb-0">Register New Feeder School</h5>
             </div>
 
             <div class="card-body">
@@ -135,33 +135,6 @@
 
                             
 
-                           
-
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="has_feeder" class="">Does this school have a feeder school?</label>
-                                    <select name="has_feeder" id="has_feeder" class="form-control" onchange="showFeederDiv()">
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                             <div class="col-md-6 d-none" id="feeder_div">
-                                <div class="position-relative form-group">
-                                    <label for="feeder_id" class="">Feeder School </label>
-
-                                    <select name="feeder_id" id="feeder_id" class="form-control">
-                                        <option value="">Select Feeder School</option>
-                                        @foreach ($feeder_schools as $value)
-                                            <option value="{{ $value->id ?? null }}">{{ $value->school_name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div>
-
-
                             <div class="col-12">
                                 <div class="">
                                     <label for="remarks"> Remarks</label>
@@ -187,19 +160,7 @@
     </form>
 
 </div>
-          
-                            <script>
-                                function showFeederDiv() {
-                                    var has_feeder = document.getElementById("has_feeder").value;
-                                    var feeder_div = document.getElementById("feeder_div");
-
-                                    if (has_feeder == 1) {
-                                        feeder_div.classList.remove("d-none");
-                                    } else {
-                                        feeder_div.classList.add("d-none");
-                                    }
-                                }
-                            </script>
+                              
       <script>
                                 // Pass PHP variables to JavaScript
     const data = {

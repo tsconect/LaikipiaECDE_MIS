@@ -7,7 +7,7 @@
 @section('content')
     @include('flash-message')
       <div class="card-header btn-success">
-            <h5>WARDS</h5>
+            <h5>SUB-COUNTIES</h5>
         </div>
 <div class="card ">
 
@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($wards as $item)
+                        @foreach($constituencies as $item)
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$item->name}}</td>

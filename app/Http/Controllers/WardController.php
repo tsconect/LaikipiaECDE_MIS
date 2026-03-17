@@ -14,7 +14,9 @@ class WardController extends Controller
      */
     public function index()
     {
-        //
+        $wards = Ward::all();
+
+        return view('admin.wards.index', compact('wards'));
     }
 
     /**

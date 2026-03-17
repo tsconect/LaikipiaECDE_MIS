@@ -11,10 +11,7 @@ class EcdeSchools extends Model
 
     protected $guarded = [];
 
-    function const(){
-        return $this->hasOne(Constituency::class,'id','constituency');
-    }
-    function ward(){
-        return $this->hasOne(Wards::class,'id','ward');
+    public function ward(){
+        return $this->hasOne(Ward::class,'id','ward_id');
     }
 }

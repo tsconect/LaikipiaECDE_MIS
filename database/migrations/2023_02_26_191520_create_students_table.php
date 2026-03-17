@@ -15,15 +15,23 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->nullable();
-            $table->bigInteger('student_type_id')->nullable();
-            $table->string('plwd_number')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('middle_name')->nullable();
+
+          
+              $table->string('pwd_status')->nullable();
+            $table->string('disability_type')->nullable();
+            $table->string('impairment_details')->nullable();
             $table->date('dob')->nullable();
-            $table->string("identity_number")->nullable();
-            $table->unsignedBigInteger("sublocation_id");
-            $table->unsignedBigInteger("stundent_type_id");
+            $table->string("reg_number")->nullable();
+            $table->unsignedBigInteger("sub_location_id")->nullable();
+              $table->unsignedBigInteger("ward_id")->nullable();
+            $table->unsignedBigInteger("student_type_id")->nullable();
             $table->string('gender')->nullable();
             $table->string('village')->nullable();
+            $table->string('school_id')->nullable();
+              $table->string('passport_photo')->nullable();
             $table->timestamps();
         });
     }

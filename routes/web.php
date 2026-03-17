@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\CommunicationController;
+use App\Http\Controllers\ConstituencyController;
+use App\Http\Controllers\CountyController;
 use App\Http\Controllers\DepartMentWorkersController;
+use App\Http\Controllers\ESchoolController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubLocationController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\VTCStudentController;
 use App\Http\Controllers\VTCTeacherController;
-use App\Http\Controllers\Zones\ConstController;
+use App\Http\Controllers\WardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,19 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
             //sublocation
             // admin/
             //
-            Route::get('create/{id}/sublocations', [SubLocationController::class, 'create_view'])->name('sublocation.create');
-            Route::any('wards/{id}/sublocations', [SubLocationController::class, 'index'])->name('sub-location.all');
-
-            Route::get('/sublocation/{subLocation}/edit', [SubLocationController::class, 'editSubLocations'])->name('sublocation.edit');
-            Route::post('/sublocation/{subLocation}/update', [SubLocationController::class, 'updateSubLocations'])->name('sublocation.update');
-
-
-            //
-            //
-            Route::get('/ward/{ward}/edit', [SubLocationController::class, 'editWard'])->name('ward.edit');
-            Route::post('/ward/{ward}/update', [SubLocationController::class, 'updateWard'])->name('ward.update');
-
-            Route::post('wards/sublocations', [SubLocationController::class, 'store'])->name('sub-location.store');
+         
             //
 
             //Unions
@@ -70,21 +62,11 @@ Route::group(['middleware' => ['auth']], function () {
 
 
             //school
-            Route::get('/new-school', [App\Http\Controllers\ESchoolController::class, 'create'])->name('school.create');
-            Route::any('/all-school', [App\Http\Controllers\ESchoolController::class, 'index'])->name('school.all');
-            Route::post('/save-school', [App\Http\Controllers\ESchoolController::class, 'store'])->name('school.store');
-            Route::get('edit-school/{school}', [App\Http\Controllers\ESchoolController::class, 'editView'])->name('school.edit');
-            Route::post('update-school/{school}', [App\Http\Controllers\ESchoolController::class, 'update'])->name('school.update');
-
+            Route::resource('ecde-schools', ESchoolController::class);
+           
             //feeder school
-            Route::get('/new-feeder_school', [App\Http\Controllers\FeederSchoolsController::class, 'create'])->name('feeder_school.create');
-            Route::any('/all-feeder_school', [App\Http\Controllers\FeederSchoolsController::class, 'index'])->name('feeder_school.all');
-            Route::post('/save-feeder_school', [App\Http\Controllers\FeederSchoolsController::class, 'store'])->name('feeder_school.store');
-            Route::get('edit-feeder_school/{school}', [App\Http\Controllers\FeederSchoolsController::class, 'editView'])->name('feeder_school.edit');
-            Route::post('update-feeder_school/{school}', [App\Http\Controllers\FeederSchoolsController::class, 'update'])->name('feeder_school.update');
-
-
-            //teachers
+            Route::resource('feeder-schools', App\Http\Controllers\FeederSchoolsController::class);
+        
             Route::resource('teachers', TeacherController::class);
             // download teachers cert
             Route::get('download', [TeacherController::class, 'downloadCert'])->name('download.cert');
@@ -110,18 +92,24 @@ Route::group(['middleware' => ['auth']], function () {
             // {{ route('admin.edit-view', $item->id) }}
 
 
-            Route::get('/new-county', [App\Http\Controllers\CountyController::class, 'create'])->name('county.create');
-            Route::any('/all-county', [App\Http\Controllers\CountyController::class, 'index'])->name('county.all');
-            Route::post('/save-county', [App\Http\Controllers\CountyController::class, 'store'])->name('county.store');
-            Route::get('edit-county/{id}', [App\Http\Controllers\CountyController::class, 'edit'])->name('county.edit');
 
-            Route::get('/ecde_students', [StudentsController::class, 'index'])->name('ecde_students.all');
+            Route::resource('ecde-students', StudentsController::class);
        
 
             Route::get('/create_students', [StudentsController::class, 'create'])->name('students.create');
             Route::any('/students_store', [StudentsController::class, 'store'])->name('students.store');
 
-            
+            // loactional details
+            Route::resource('counties', CountyController::class);
+            Route::resource('wards', WardController::class);
+            Route::resource('sub-counties', ConstituencyController::class);
+            Route::resource('sub-locations', SubLocationController::class);
+
+
+                    Route::get('sms-dashboard', [CommunicationController::class, 'index'])->name('sms-dashboard');
+
+        Route::get('sms-logs', [CommunicationController::class, 'sms_logs'])->name('sms-logs.index');
+        Route::post('send-sms', [CommunicationController::class, 'sendSms'])->name('sms.send');
 
 
               //department_workers

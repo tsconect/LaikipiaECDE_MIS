@@ -14,8 +14,13 @@ class Students extends Model
         return $this->hasOne(User::class,'id','user_id');
     }
 
+
     function type(){
         return $this->hasOne(StudentType::class,'id','stundent_type_id');
+    }
+
+    function school(){
+        return $this->hasOne(EcdeSchools::class,'id','school_id');
     }
 
     // school

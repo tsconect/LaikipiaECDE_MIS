@@ -20,7 +20,7 @@
             </h5>
             <div class=" card-body">
                 <div class="table-responsive">
-                    <table id="example" class="table table-hover table-striped table-bordered">
+                    <table id="dt-basic2" class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>ID </th>

@@ -14,23 +14,17 @@ return new class extends Migration
     public function up()
     {
         Schema::create('feeder_schools', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string("school_name");
-            $table->string("number_of_classes");
-            $table->string("class_rooms_status");
-            $table->unsignedBigInteger("constituency");
-            $table->unsignedBigInteger("ward");
-            $table->string("school_contact_first_name");
-            $table->string("school_contact_middle_name");
-            $table->string("school_contact_last_name");
-            $table->string("school_contact_designation");
-            $table->string("school_contact_tsc_number");
-            $table->string("school_contact_id_number");
-            $table->string("school_contact_phone_number");
-            $table->string("school_contact_gender");
-            $table->integer("number_of_students");
-            // $table->integer("number_of_teachers");
-            $table->string('remarks');
+        $table->bigIncrements('id');
+            $table->string("school_name")->nullable();
+            $table->string("number_of_classes")->nullable();
+            $table->string("class_rooms_status")->nullable();
+            $table->string('county_id')->nullable();
+            $table->string('subcounty_id')->nullable();
+            $table->unsignedBigInteger("ward_id")->nullable();
+            $table->string("teacher_id")->nullable();
+            $table->integer("number_of_students")->nullable();
+            $table->string('school_location')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

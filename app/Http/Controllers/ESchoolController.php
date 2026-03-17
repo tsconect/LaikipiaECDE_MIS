@@ -2,21 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\EcdeSchools;
 use App\Models\Constituency;
+use App\Models\County;
+use App\Models\EcdeSchools;
+use App\Models\FeederSchools;
+use App\Models\Teacher;
+use App\Models\Ward;
 use App\Models\Wards;
+use Illuminate\Http\Request;
+
 class ESchoolController extends Controller
 {
        public function index()
        {
-           $data = EcdeSchools::with('const','ward')->get();
-           return view('backoffice.schools.index', compact('data'));
+
+           $schools = EcdeSchools::latest()->get();
+           return view('admin.schools.index', compact('schools'));
        }
        function create(){
-        $constituencies=Constituency::get();
-        $wards=Wards::get();
-           return view('backoffice.schools.create',compact('wards','constituencies'));
+       
+            $sub_counties =Constituency::get();
+            $wards=Ward::get();
+            $ecde_schools = EcdeSchools::get();
+            $counties = County::get();
+            $feeder_schools = FeederSchools::all();
+            $teachers = Teacher::all();
+           return view('admin.schools.create',compact('wards','sub_counties','ecde_schools', 'counties','feeder_schools', 'teachers'));
        }
 
 
@@ -28,32 +39,42 @@ class ESchoolController extends Controller
 
        public function store(Request $request)
        {
-           // $obj = new EcdeSchools();
-           // $obj->name = $request->name;
-           // $obj->constituency_id=$request->const_id;
-           // $obj->ward_id=$request->ward_id;
-           // $obj->save();
-           // return back()->with('success','School Added Successfully');
 
-        EcdeSchools::create($request->only([
-            "school_name",
-            "number_of_classes",
-            "class_rooms_status",
-            "constituency",
-            "ward",
-            "school_contact_first_name",
-            "school_contact_middle_name",
-            "school_contact_last_name",
-            "school_contact_designation",
-            "school_contact_tsc_number",
-            "school_contact_id_number",
-            "school_contact_phone_number",
-            "school_contact_gender",
-            "number_of_students",
-            // "number_of_teachers",
-            "remarks",
-            "feeder_id"
-        ]));
+       $request->validate([
+           'school_name' => 'required',
+           'number_of_classes' => 'required',
+           'number_of_students' => 'required',
+           'class_rooms_status' => 'required',
+           'school_location' => 'required',
+           'teacher_id' => 'required',
+           'county_id' => 'required',
+           'subcounty_id' => 'required',
+           'ward_id' => 'required',
+           'feeder_id' => 'nullable',
+           'remarks' => 'nullable'
+
+       ]);
+
+
+
+           $school = New EcdeSchools();
+           $school->school_name = $request->school_name;
+           $school->number_of_classes = $request->number_of_classes;
+           $school->class_rooms_status = $request->class_rooms_status;
+           $school->school_location = $request->school_location;
+           $school->teacher_id = $request->teacher_id;
+           $school->county_id = $request->county_id;
+           $school->subcounty_id = $request->subcounty_id;
+           $school->ward_id = $request->ward_id;
+           $school->feeder_id = $request->feeder_id;
+           $school->remarks = $request->remarks;    
+
+           $school->save();
+
+           return redirect()->route('admin.ecde-schools.index')->with('success','School Added Successfully');
+
+
+       
 
         return back()->with('success','School Added Successfully');
 

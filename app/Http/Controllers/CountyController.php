@@ -9,10 +9,10 @@ use PHPUnit\Framework\Constraint\Count;
 class CountyController extends Controller
 {
     //
-    function index(County $county)
+    function index()
     {
-        $county = $county->all();
-        return view('backoffice.counties.index', compact('county')) ;
+        $counties = County::latest()->get();
+        return view('admin.counties.index', compact('counties')) ;
         # code...
     }
 

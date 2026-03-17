@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Constituency;
+use App\Models\County;
 use App\Models\FeederSchools;
+use App\Models\Teacher;
+use App\Models\Ward;
 use App\Models\Wards;
 use Illuminate\Http\Request;
 
@@ -12,13 +15,16 @@ class FeederSchoolsController extends Controller
     //
     public function index()
        {
-           $data = FeederSchools::with('const','ward')->get();
-           return view('backoffice.FeederSchools.index', compact('data'));
+           $data = FeederSchools::latest()->get();
+           return view('admin.feeder-schools.index', compact('data'));
        }
        function create(){
-        $constituencies=Constituency::get();
-        $wards=Wards::get();
-           return view('backoffice.FeederSchools.create',compact('wards','constituencies'));
+            $sub_counties =Constituency::get();
+            $wards=Ward::get();
+           
+            $counties = County::get();
+            $teachers = Teacher::all();
+           return view('admin.feeder-schools.create',compact('wards','sub_counties', 'counties', 'teachers'));
        }
 
 
@@ -30,31 +36,36 @@ class FeederSchoolsController extends Controller
 
        public function store(Request $request)
        {
-           // $obj = new EcdeSchools();
-           // $obj->name = $request->name;
-           // $obj->constituency_id=$request->const_id;
-           // $obj->ward_id=$request->ward_id;
-           // $obj->save();
-           // return back()->with('success','School Added Successfully');
+          
+        $request->validate([
+           'school_name' => 'required',
+           'number_of_classes' => 'required',
+           'number_of_students' => 'required',
+           'class_rooms_status' => 'required',
+           'school_location' => 'required',
+           'teacher_id' => 'required',
+           'county_id' => 'required',
+           'subcounty_id' => 'required',
+           'ward_id' => 'required',
+           'remarks' => 'nullable'
 
-        FeederSchools::create($request->only([
-            "school_name",
-            "number_of_classes",
-            "class_rooms_status",
-            "constituency",
-            "ward",
-            "school_contact_first_name",
-            "school_contact_middle_name",
-            "school_contact_last_name",
-            "school_contact_designation",
-            "school_contact_tsc_number",
-            "school_contact_id_number",
-            "school_contact_phone_number",
-            "school_contact_gender",
-            "number_of_students",
-            // "number_of_teachers",
-            "remarks"
-        ]));
+       ]);
+
+
+
+           $school = New FeederSchools();
+           $school->school_name = $request->school_name;
+           $school->number_of_classes = $request->number_of_classes;
+           $school->class_rooms_status = $request->class_rooms_status;
+           $school->school_location = $request->school_location;
+           $school->teacher_id = $request->teacher_id;
+           $school->county_id = $request->county_id;
+           $school->subcounty_id = $request->subcounty_id;
+           $school->ward_id = $request->ward_id;
+           $school->remarks = $request->remarks;    
+           $school->save();
+       
+        return redirect()->route('admin.feeder-schools.index')->with('success','School Added Successfully');
 
         return back()->with('success','School Added Successfully');
 

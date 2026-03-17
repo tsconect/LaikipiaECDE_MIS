@@ -67,22 +67,18 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('admin.school.all')}}">
+                            <a href="{{route('admin.ecde-schools.index')}}">
                                 <i class="metismenu-icon "></i>All Schools
                             </a>
                         </li>
 
                         <li>
-                            <a href="{{route('admin.feeder_school.all')}}">
+                            <a href="{{route('admin.feeder-schools.index')}}">
                                 <i class="metismenu-icon "></i>Feeder Schools
                             </a>
                         </li>
 
-                        <li  >
-                            <a  href="{{route('admin.school.create')}}">
-                                <i class="metismenu-icon"></i>New School
-                            </a>
-                        </li>
+                       
 
                     </ul>
                 </li>
@@ -135,18 +131,46 @@
                     </a>
                     <ul>
                         <li     >
-                            <a     href="{{ url('admin/ecde_students?ecde=') }}">
-                                <i class="metismenu-icon "></i>Ecde Students
+                            <a     href="{{ route('admin.ecde-students.index') }}">
+                                <i class="metismenu-icon "></i>ECDE Students
                             </a>
                         </li>
-                        <li  >
-                            <a  href="{{ url('admin/ecde_students?vtc=') }}">
-                                <i class="metismenu-icon"></i>VTC Students
+                     
+
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"   >
+                        <i class="metismenu-icon pe-7s-rocket"   ></i>Locations
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li     >
+                            <a     href="{{route('admin.counties.index')}}">
+                                <i class="metismenu-icon"></i>Counties
+                            </a>
+                        </li>
+                        <li     >
+                            <a     href="{{route('admin.sub-counties.index')}}">
+                                <i class="metismenu-icon"></i>Sub Counties
+                            </a>
+                        </li>
+                        <li     >
+                            <a     href="{{route('admin.wards.index')}}">
+                                <i class="metismenu-icon"></i>Wards
+                            </a>
+                        </li>
+                        <li     >
+                            <a     href="{{route('admin.sub-locations.index')}}">
+                                <i class="metismenu-icon"></i>Sub Locations
                             </a>
                         </li>
 
                     </ul>
                 </li>
+
+                    
 
                 
 
@@ -174,13 +198,54 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('admin.bursary.application.all')}}">
-                                <i class="fa fa-email"></i>Compose New Message
+                            <a href="{{route('admin.sms-logs.index')}}">
+                                <i class="fa fa-email"></i>SMS Logs
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('admin.bursary.application.create')}}">
-                                <i class="metismenu-icon"></i>Analytics
+                            <a href="{{route('admin.sms-dashboard')}}">
+                                <i class="metismenu-icon"></i>SMS Dashboard
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                 <li>
+                    <a href="#">
+                        <i class="metismenu-icon pe-7s-rocket"></i>System Setup
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('admin.unions.all')}}">
+                                <i class="metismenu-icon "></i> Unions
+                            </a>
+                        </li>
+                       
+
+                    </ul>
+                </li>
+
+                 <li>
+                    <a href="#">
+                        <i class="metismenu-icon pe-7s-rocket"></i>User Management
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('admin.unions.all')}}">
+                                <i class="metismenu-icon "></i>Users
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('admin.unions.create')}}">
+                                <i class="metismenu-icon"></i>Roles
+                            </a>
+                        </li>
+                          <li>
+                            <a href="{{route('admin.unions.create')}}">
+                                <i class="metismenu-icon"></i>Permissions
                             </a>
                         </li>
 
