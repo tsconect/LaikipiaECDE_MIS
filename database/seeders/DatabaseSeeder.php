@@ -33,5 +33,16 @@ class DatabaseSeeder extends Seeder
         ]);
           $this->call(UsersSeeders::class);
 
+        // CMS Seeders
+        $this->call([
+            PageSeeder::class,
+            PostSeeder::class,
+            GallerySeeder::class,
+            TestimonialSeeder::class,
+            AnnouncementSeeder::class,
+            FAQSeeder::class,
+            SettingsSeeder::class,
+        ]);
+
     }
 }

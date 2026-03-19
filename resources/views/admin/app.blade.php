@@ -17,8 +17,9 @@
     <meta name="description" content="Laikipia Cdf management SYstem.">
     <meta name="msapplication-tap-highlight" content="no">
     <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -142,11 +143,10 @@ function goBack() {
                         <div class="widget-content-wrapper">
                             <div class="widget-content-left">
                                 <div class="btn-group">
-                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                        class="p-0 btn">
+                                    <button type="button" class="p-0 btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <img width="42" class="rounded-circle" src="https://cdn-icons-png.flaticon.com/512/0/93.png" alt="">
                                         <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </a>
+                                    </button>
                                     <div style="margin: 2%; !important" tabindex="-1" role="menu" aria-hidden="true"
                                         class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-menu-header">

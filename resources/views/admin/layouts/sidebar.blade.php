@@ -88,26 +88,24 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="#"   >
+                        <i class="metismenu-icon fa fa-user-tie"   ></i>ECDE Coordinators
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{route('admin.coordinators.all')}}">
+                                <i class="metismenu-icon "></i>All Coordinators
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('admin.coordinators.create')}}">
+                                <i class="metismenu-icon"></i>New Coordinators
+                            </a>
+                        </li>
 
-                    <li>
-                        <a href="#"   >
-                            <i class="metismenu-icon fa fa-user-tie"   ></i>ECDE Coordinators
-                            <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
-                        </a>
-                        <ul>
-                            <li   >
-                                <a   href="{{route('admin.coordinators.all')}}">
-                                    <i class="metismenu-icon "></i>All Coordinators
-                                </a>
-                            </li>
-                            <li    >
-                                <a   href="{{route('admin.coordinators.create')}}">
-                                    <i class="metismenu-icon"></i>New Coordinators
-                                </a>
-                            </li>
-
-                        </ul>
-                    </li>
+                    </ul>
+                </li>
 
                 <li>
                     <a href="#"   >
@@ -187,6 +185,55 @@
 
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#">
+                        <i class="metismenu-icon fa fa-cog"></i>Settings
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('admin.cms.settings.index') }}">
+                                <i class="metismenu-icon"></i>Site Settings
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.pages.index') }}">
+                                <i class="metismenu-icon"></i>Pages
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.posts.index') }}">
+                                <i class="metismenu-icon"></i>Blog Posts
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.galleries.index') }}">
+                                <i class="metismenu-icon"></i>Galleries
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.announcements.index') }}">
+                                <i class="metismenu-icon"></i>Announcements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.faqs.index') }}">
+                                <i class="metismenu-icon"></i>FAQs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.testimonials.index') }}">
+                                <i class="metismenu-icon"></i>Testimonials
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cms.contact-messages.index') }}">
+                                <i class="metismenu-icon"></i>Contact Messages
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                
 
 
@@ -198,18 +245,23 @@
 <style>
 .vertical-nav-menu a {
     color: #ffffff !important;
+    text-decoration: none !important;
 }
 .vertical-nav-menu a:hover {
     color: #060c48 !important;
+    text-decoration: none !important;
 }
 .vertical-nav-menu a.active {
     color: #ffffff !important;
+    text-decoration: none !important;
 }
 .vertical-nav-menu li.active a {
     color: #ffffff !important;
+    text-decoration: none !important;
 }
 .vertical-nav-menu a:focus {
     color: #4c77ab !important;
+    text-decoration: none !important;
 }
 .app-sidebar .logo-src {
     color: #ffffff;
@@ -221,4 +273,53 @@
 .metismenu-state-icon {
     color: #ffffff !important;
 }
+
+.vertical-nav-menu > li > ul {
+    display: none !important;
+}
+
+.vertical-nav-menu > li.sidebar-open > ul {
+    display: block !important;
+}
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const menu = document.querySelector('.vertical-nav-menu');
+    if (!menu) return;
+
+    const topItems = menu.querySelectorAll(':scope > li');
+
+    topItems.forEach(function (item) {
+        const trigger = item.querySelector(':scope > a');
+        const submenu = item.querySelector(':scope > ul');
+        if (!trigger || !submenu) return;
+
+        trigger.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            const isOpen = item.classList.contains('sidebar-open');
+
+            topItems.forEach(function (other) {
+                other.classList.remove('sidebar-open');
+            });
+
+            if (!isOpen) {
+                item.classList.add('sidebar-open');
+            }
+        });
+    });
+
+    const currentPath = window.location.pathname + window.location.search;
+    topItems.forEach(function (item) {
+        const submenuLinks = item.querySelectorAll(':scope > ul a[href]');
+        submenuLinks.forEach(function (link) {
+            const href = link.getAttribute('href');
+            if (!href || href === '#') return;
+            if (currentPath === href || currentPath.startsWith(href + '?')) {
+                item.classList.add('sidebar-open');
+            }
+        });
+    });
+});
+</script>

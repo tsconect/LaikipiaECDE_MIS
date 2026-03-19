@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Settings;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function ($view) {
+            static $settingsCache = null;
+
+            if ($settingsCache === null) {
+                $settingsCache = Settings::query()->pluck('value', 'key')->toArray();
+            }
+
+            $view->with('settings', $settingsCache);
+        });
     }
 }
