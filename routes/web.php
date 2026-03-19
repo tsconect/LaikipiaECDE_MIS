@@ -5,6 +5,7 @@ use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\CountyController;
 use App\Http\Controllers\DepartMentWorkersController;
 use App\Http\Controllers\ESchoolController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubLocationController;
 use App\Http\Controllers\TeacherController;
@@ -144,10 +145,11 @@ Route::group(['middleware' => ['auth']], function () {
             
             // dpts within a vtc
             
-        Route::resource('roles', RolesController::class);
-        Route::resource('permissions', PermissionsController::class);
+            Route::resource('roles', RolesController::class);
+            Route::resource('permissions', PermissionsController::class);
 
-        });});
+        });
+        });
 
 });
 

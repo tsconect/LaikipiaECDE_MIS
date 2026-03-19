@@ -37,7 +37,7 @@
             <ul class="vertical-nav-menu">
 
                 <li>
-                    <a href="/home"  >
+                    <a href="{{ route('home') }}"  >
                         <i class="metismenu-icon pe-7s-home" ></i>Dashboard
                     </a>
                 </li>

@@ -6,18 +6,20 @@
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>LAIKIPIA COUNTY - CDF MANAGEMENT SYSTEM</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <meta name="description" content="Laikipia CDF management system.">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
+    <meta name="description" content="Laikipia Cdf management SYstem.">
     <meta name="msapplication-tap-highlight" content="no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-    <link href="{{ asset('main.d810cf0ae7f39f28f336.css') }}" rel="stylesheet">
+    <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
     <style>
         :root {
             --public-primary: #1a3a5c;
             --public-primary-dark: #142e49;
             --public-kenya-green: #006600;
+            --public-accent: #f59e0b;
             --public-surface: #ffffff;
             --public-surface-soft: #f7f9fc;
             --public-border: #e7ecf3;
@@ -26,7 +28,9 @@
             --public-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
         }
 
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
             font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -35,7 +39,14 @@
             min-height: 100vh;
         }
 
-        a, button, .btn, .nav-link, .card, .form-control, .form-select, .accordion-button {
+        a,
+        button,
+        .btn,
+        .nav-link,
+        .card,
+        .form-control,
+        .form-select,
+        .accordion-button {
             transition: all 0.2s ease;
         }
 
@@ -72,56 +83,40 @@
             color: #fff;
         }
 
-        .public-nav-center {
-            gap: .15rem;
-        }
-
         .public-navbar .nav-link {
-            color: rgba(255,255,255,0.92) !important;
-            font-weight: 600;
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
             border-radius: 8px;
-            padding: .5rem .78rem !important;
+            padding: .5rem .7rem !important;
         }
 
         .public-navbar .nav-link:hover,
-        .public-navbar .nav-link:focus,
-        .public-navbar .nav-link.active {
+        .public-navbar .nav-link:focus {
             color: #fff !important;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
         }
 
-        .public-header-actions {
-            gap: .5rem;
-        }
-
-        .public-header-action {
+        .public-navbar .btn {
             border-radius: 8px;
             font-weight: 600;
-            border: 1px solid rgba(255,255,255,0.2);
-            padding: .45rem .85rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .public-header-action.light {
-            background: #fff;
-            color: var(--public-primary) !important;
-        }
-
-        .public-header-action.light:hover {
-            background: #edf2f7;
-            color: var(--public-primary) !important;
-        }
-
-        .public-header-action.signin {
+        .public-navbar .icon-login-btn {
+            border: 1px solid rgba(255,255,255,0.26);
+            color: #fff;
             background: rgba(255,255,255,0.08);
-            color: #fff !important;
+            padding: .5rem .75rem;
         }
 
-        .public-header-action.signin:hover {
+        .public-navbar .icon-login-btn:hover {
             background: rgba(255,255,255,0.16);
+            color: #fff;
+        }
+
+        .public-navbar .dropdown-menu {
+            border-radius: 8px;
+            border: 1px solid var(--public-border);
+            box-shadow: var(--public-shadow);
         }
 
         .public-main {
@@ -137,6 +132,7 @@
             border: 1px solid var(--public-border);
             border-radius: 8px;
             box-shadow: var(--public-shadow);
+            transition: transform .2s ease, box-shadow .2s ease;
             overflow: hidden;
         }
 
@@ -182,10 +178,17 @@
             color: #fff;
         }
 
+        .public-content-wrapper .alert {
+            border-radius: 8px;
+            border: 0;
+            box-shadow: var(--public-shadow);
+        }
+
         .public-content-wrapper .badge {
             border-radius: 999px;
             padding: .4rem .65rem;
             font-weight: 600;
+            letter-spacing: .2px;
         }
 
         .badge-green {
@@ -209,6 +212,34 @@
             margin-bottom: .7rem;
         }
 
+        .public-content-wrapper .form-control,
+        .public-content-wrapper .form-select,
+        .public-content-wrapper textarea {
+            border-radius: 8px;
+            border: 1px solid #d8e1ec;
+            min-height: 46px;
+        }
+
+        .public-content-wrapper textarea {
+            min-height: 130px;
+        }
+
+        .public-content-wrapper .pagination {
+            gap: 0.35rem;
+        }
+
+        .public-content-wrapper .page-link {
+            border-radius: 8px;
+            border: 1px solid var(--public-border);
+            color: var(--public-primary);
+        }
+
+        .public-content-wrapper .page-item.active .page-link {
+            background: var(--public-primary);
+            border-color: var(--public-primary);
+            color: #fff;
+        }
+
         .public-footer {
             background: linear-gradient(135deg, var(--public-primary-dark) 0%, var(--public-primary) 100%);
             color: #fff;
@@ -223,6 +254,7 @@
             color: #fff;
             text-decoration: none;
         }
+
 
         .social-icon-btn {
             width: 38px;
@@ -272,6 +304,14 @@
             filter: brightness(0) invert(1);
         }
 
+        .public-nav-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: .2rem;
+            margin: 0 auto;
+        }
+
         @media (max-width: 991.98px) {
             .public-navbar .navbar-collapse {
                 margin-top: 0.75rem;
@@ -281,18 +321,17 @@
             }
 
             .public-nav-center {
-                margin: .4rem 0;
+                margin: .25rem 0 .6rem;
+                align-items: flex-start;
             }
 
-            .public-header-actions {
-                margin-top: .5rem;
-                display: grid;
-                grid-template-columns: 1fr;
+            .public-navbar .nav-link {
+                margin-bottom: .25rem;
             }
         }
     </style>
 </head>
-<body>
+<body >
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light public-navbar" id="publicNavbar">
             <div class="container">
@@ -300,37 +339,48 @@
                     <span class="public-brand-icon"><i class="fa fa-shield"></i></span>
                     <span>Laikipia CDF Management System</span>
                 </a>
-
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto public-nav-center align-items-lg-center">
-                        <li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('cms.posts') }}">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('cms.announcements') }}">Announcements</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('cms.galleries') }}">Galleries</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('cms.faqs') }}">FAQs</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('cms.contact') }}">Contact</a></li>
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav public-nav-center">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/') }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cms.posts') }}">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cms.announcements') }}">Announcements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cms.galleries') }}">Galleries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cms.faqs') }}">FAQs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('cms.contact') }}">Contact</a>
+                        </li>
                     </ul>
-
-                    <div class="d-flex align-items-center public-header-actions ms-lg-3">
-                        <a class="public-header-action light" href="/">Bursary Application</a>
-                        <a class="public-header-action light" href="/bursary-status-query">Bursary Status</a>
-
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
                         @guest
-                            <a class="public-header-action signin" href="{{ route('login') }}">
-                                <i class="fa fa-user-circle me-1"></i> Sign In
-                            </a>
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="btn icon-login-btn">
+                                    <i class="fa fa-user-circle me-1"></i> Sign In
+                                </a>
+                            </li>
                         @else
-                            <div class="dropdown">
-                                <button class="public-header-action signin dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <li class="nav-item dropdown">
+                                <button class="btn icon-login-btn dropdown-toggle" id="publicUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-user-circle me-1"></i>
-                                    {{ auth()->user()->first_name ?? auth()->user()->name ?? 'Account' }}
+                                    <span class="d-none d-md-inline">{{ auth()->user()->first_name ?? auth()->user()->name ?? 'Account' }}</span>
                                 </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="{{ url('/') }}"><i class="fa fa-home me-2"></i>Home</a></li>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="publicUserMenu">
+                                    <li><a class="dropdown-item" href="{{ route('home') }}"><i class="fa fa-home me-2"></i>Dashboard</a></li>
                                     <li>
                                         <form action="{{ route('logout') }}" method="POST" class="m-0">
                                             @csrf
@@ -338,12 +388,14 @@
                                         </form>
                                     </li>
                                 </ul>
-                            </div>
+                            </li>
                         @endguest
-                    </div>
+
+                    </ul>
                 </div>
             </div>
         </nav>
+
 
         <main class="public-main @hasSection('full_width') py-0 @else py-3 @endif">
             @yield('content')
@@ -374,13 +426,21 @@
                         <div class="mt-3">
                             <h6 class="mb-2">Follow Us</h6>
                             @if(!empty($settings['facebook_url']) || !empty($settings['social_facebook']))
-                                <a href="{{ $settings['facebook_url'] ?? $settings['social_facebook'] }}" target="_blank" class="text-white social-icon-btn" title="Facebook"><i class="fa fa-facebook"></i></a>
+                                <a href="{{ $settings['facebook_url'] ?? $settings['social_facebook'] }}" target="_blank" class="text-white social-icon-btn" title="Facebook">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
                             @endif
+
                             @if(!empty($settings['twitter_url']) || !empty($settings['social_twitter']))
-                                <a href="{{ $settings['twitter_url'] ?? $settings['social_twitter'] }}" target="_blank" class="text-white social-icon-btn" title="Twitter/X"><i class="fa fa-twitter"></i></a>
+                                <a href="{{ $settings['twitter_url'] ?? $settings['social_twitter'] }}" target="_blank" class="text-white social-icon-btn" title="Twitter/X">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
                             @endif
+
                             @if(!empty($settings['youtube_url']) || !empty($settings['social_youtube']))
-                                <a href="{{ $settings['youtube_url'] ?? $settings['social_youtube'] }}" target="_blank" class="text-white social-icon-btn" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+                                <a href="{{ $settings['youtube_url'] ?? $settings['social_youtube'] }}" target="_blank" class="text-white social-icon-btn" title="YouTube">
+                                    <i class="fa fa-youtube-play"></i>
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -396,36 +456,40 @@
             <i class="fa fa-arrow-up"></i>
         </button>
 
-        @yield('scripts')
+@yield('scripts')
     </div>
+</body>
 
-    <script type="text/javascript" src="{{ asset('assets/scripts/main.d810cf0ae7f39f28f336.js') }}"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const navbar = document.getElementById('publicNavbar');
-            const backToTop = document.getElementById('backToTop');
 
-            function updateScrolledState() {
-                if (window.scrollY > 10) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
 
-                if (window.scrollY > 260) {
-                    backToTop.style.display = 'inline-flex';
-                } else {
-                    backToTop.style.display = 'none';
-                }
+<script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const navbar = document.getElementById('publicNavbar');
+        const backToTop = document.getElementById('backToTop');
+
+        function updateScrolledState() {
+            if (window.scrollY > 10) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
             }
 
-            updateScrolledState();
-            window.addEventListener('scroll', updateScrolledState, { passive: true });
+            if (window.scrollY > 260) {
+                backToTop.style.display = 'inline-flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        }
 
-            backToTop?.addEventListener('click', function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+        updateScrolledState();
+        window.addEventListener('scroll', updateScrolledState, { passive: true });
+
+        backToTop?.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-    </script>
-</body>
+    });
+</script>
 </html>
+
