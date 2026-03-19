@@ -1,22 +1,8 @@
-@php
-    $layout = auth()->check() ? 'admin.app' : 'front.app';
-@endphp
-
-@extends($layout)
+@extends('front.app')
 
 @section('full_width', '1')
 
 @section('content')
-@auth
-    <div class="container-fluid py-3">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Dashboard</h1>
-                <p>Welcome {{ auth()->user()->name }}!</p>
-            </div>
-        </div>
-    </div>
-@else
     @php
         $showHomeHero = (int)($settings['show_home_hero'] ?? 1) === 1;
         $showHomePosts = (int)($settings['show_home_posts'] ?? 1) === 1;
@@ -276,5 +262,4 @@
         @endif
     </div>
 
-@endauth
 @endsection
