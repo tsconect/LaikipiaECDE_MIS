@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\CountyController;
@@ -33,7 +34,7 @@ Route::get('/view-bursary-application', [App\Http\Controllers\Student\Applicatio
 Route::post('/store', [App\Http\Controllers\Student\ApplicationsController::class, 'store'])->name('student.store');
 // register.custom
 Route::any('register_custom', [UsersController::class, 'register'])->name('register.custom');
-Auth::routes();
+
 
 // Public CMS Routes
 Route::get('/page/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showPage'])->name('cms.page');
@@ -47,7 +48,11 @@ Route::get('/announcements', [App\Http\Controllers\CMS\PublicCMSController::clas
 Route::get('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'contactForm'])->name('cms.contact');
 Route::post('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'submitContact'])->name('cms.contact.submit');
 
- Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+ Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
+ Route::post('login', [AuthController::class, 'authenticate'])->name('login.submit');
+ Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/admin/dashboard', function () {
@@ -55,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
         return "ok";
 
     })->middleware('permission:Performace Appraisal');
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
     Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {
@@ -86,12 +92,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('download', [TeacherController::class, 'downloadCert'])->name('download.cert');
 
             //coordinators
-            Route::get('/new-coordinators', [App\Http\Controllers\CoordinatorsController::class, 'create'])->name('coordinators.create');
-            Route::any('/all-coordinators', [App\Http\Controllers\CoordinatorsController::class, 'index'])->name('coordinators.all');
-            Route::post('/save-coordinators', [App\Http\Controllers\CoordinatorsController::class, 'store'])->name('coordinators.store');
-            Route::get('edit-coordinators/{id}', [App\Http\Controllers\CoordinatorsController::class, 'edit'])->name('coordinators.edit');
-            Route::get('delete-coordinators/{id}', [App\Http\Controllers\CoordinatorsController::class, 'delete'])->name('coordinators.delete');
-
+            Route::resource('coordinators', App\Http\Controllers\CoordinatorsController::class);
+           
 
              //bursary applications
              Route::get('/new-bursary-application', [App\Http\Controllers\BursaryController::class, 'create'])->name('bursary.application.create');
@@ -125,6 +127,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('sms-logs', [CommunicationController::class, 'sms_logs'])->name('sms-logs.index');
         Route::post('send-sms', [CommunicationController::class, 'sendSms'])->name('sms.send');
 
+        // users
+        Route::resource('users', UsersController::class);
+        Route::get('system-logs', [UsersController::class, 'systemLogs'])->name('system.logs');
+     
+
+        Route::get('/system-logs/{id}', [App\Http\Controllers\UsersController::class, 'system_logs_details'])->name('system_logs_details');
+
 
               //department_workers
             //   Route::get('/new-department_workers', [App\Http\Controllers\DepartMentWorkersController::class, 'create'])->name('department_workers.create');
@@ -154,7 +163,7 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 // CMS Routes
-Route::group(['prefix' => 'admin/cms', 'middleware' => ['auth'], 'as' => 'admin.cms.'], function () {
+Route::group(['prefix' => 'admin/cms', 'as' => 'admin.cms.'], function () {
     
     // Pages
     Route::resource('pages', App\Http\Controllers\CMS\PageController::class);

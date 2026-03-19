@@ -34,11 +34,11 @@ class TeacherController extends Controller
    }
 
    function create(){
-        $sub_counties =Constituency::get();
+         $sub_counties =Constituency::get();
         $wards=Ward::get();
         $ecde_schools = EcdeSchools::get();
         $counties = County::get();
-    return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools', 'counties')); 
+        return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools','counties'));
    }
 
    public function store(Request $request)

@@ -90,15 +90,11 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('admin.coordinators.all')}}">
+                            <a href="{{route('admin.coordinators.index')}}">
                                 <i class="metismenu-icon "></i>All Coordinators
                             </a>
                         </li>
-                        <li>
-                            <a href="{{route('admin.coordinators.create')}}">
-                                <i class="metismenu-icon"></i>New Coordinators
-                            </a>
-                        </li>
+                        
 
                     </ul>
                 </li>
@@ -214,18 +210,18 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('admin.unions.all')}}">
+                            <a href="{{route('admin.users.index')}}">
                                 <i class="metismenu-icon "></i>Users
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('admin.unions.create')}}">
+                            <a href="{{route('admin.roles.index')}}">
                                 <i class="metismenu-icon"></i>Roles
                             </a>
                         </li>
                           <li>
-                            <a href="{{route('admin.unions.create')}}">
-                                <i class="metismenu-icon"></i>Permissions
+                            <a href="{{route('admin.system.logs')}}">
+                                <i class="metismenu-icon"></i>System Logs
                             </a>
                         </li>
 

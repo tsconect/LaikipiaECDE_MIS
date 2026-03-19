@@ -7,52 +7,49 @@
 @section('content')
     @include('flash-message')
       <div class="card-header btn-success">
-              <h5 class="">ECDE COORDINATORS</h5>
+            <h5>SYSTEM USERS</h5>
         </div>
     <div class="card ">
-
-
-    <div class="card-body">
-  
-
-        <h5 class="card-title text-right"> <a href="{{route('admin.coordinators.create')}}"><button class="btn btn-warning ">
-                    <i class="fa fa-plus"></i> New Cordinator</button></a> </h5>
-        <div class=" card-body">
-            <div class="table-responsive">
-                <table id="dt-basic2" class="table table-hover table-striped table-bordered">
+      
+        <div class="card-body">
+            <h5 class="card-title text-right"> 
+                <a href="{{ route('admin.users.create') }}"><button class="btn btn-danger ">
+                        <i class="fa fa-plus"></i> New User</button></a>
+            </h5>
+            <div class=" card-body">
+                <div class="table-responsive">
+                    <table id="dt-basic2" class="table table-hover table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>ID </th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <th>ID Number</th>
-                                <th>Kra Pin</th>
-                                <th>Gender</th>
+                                <th>Role</th>
+                             
                            
                                 <th>Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
+                            @foreach ($users as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->user->first_name . ' ' . $item->user->middle_name . ' ' . $item->user->last_name }}
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->first_name . ' ' . $item->middle_name . ' ' . $item->last_name }}
                                     </td>
-                                    <td>{{ $item->user->email }}</td>
-                                    <td>{{ $item->user->phone_number }}</td>
-                                    <td>{{ $item->id_number }}</td>
-                                    <td>{{ $item->kra_pin }}</td>
-                                    <td>{{ $item->gender }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->phone_number }}</td>
+                                    <td>{{ $item->role }}</td>
+                                    
                                    
                                     <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.teachers.show', $item->id) }}">
+                                            href="{{ route('admin.users.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.teachers.edit', $item->id) }}">
+                                            href="{{ route('admin.users.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>
@@ -61,10 +58,9 @@
 
                             </tfoot>
                     </table>
+                </div>
             </div>
         </div>
+
     </div>
-
-</div>
-
 @endsection

@@ -13,8 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-
-        Schema::create('coordinators', function (Blueprint $table) {
+         Schema::create('coordinators', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable();
             $table->string('id_number')->nullable();
@@ -55,6 +54,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coordinators');
+        //
     }
 };
