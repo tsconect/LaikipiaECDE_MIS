@@ -29,6 +29,19 @@ Route::post('/store', [App\Http\Controllers\Student\ApplicationsController::clas
 // register.custom
 Route::any('register_custom', [UsersController::class, 'register'])->name('register.custom');
 Auth::routes();
+
+// Public CMS Routes
+Route::get('/page/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showPage'])->name('cms.page');
+Route::get('/blog', [App\Http\Controllers\CMS\PublicCMSController::class, 'posts'])->name('cms.posts');
+Route::get('/blog/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showPost'])->name('cms.post');
+Route::get('/galleries', [App\Http\Controllers\CMS\PublicCMSController::class, 'galleries'])->name('cms.galleries');
+Route::get('/gallery/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showGallery'])->name('cms.gallery');
+Route::get('/faqs', [App\Http\Controllers\CMS\PublicCMSController::class, 'faqs'])->name('cms.faqs');
+Route::get('/testimonials', [App\Http\Controllers\CMS\PublicCMSController::class, 'testimonials'])->name('cms.testimonials');
+Route::get('/announcements', [App\Http\Controllers\CMS\PublicCMSController::class, 'announcements'])->name('cms.announcements');
+Route::get('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'contactForm'])->name('cms.contact');
+Route::post('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'submitContact'])->name('cms.contact.submit');
+
  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => ['auth']], function () {
 
@@ -147,4 +160,39 @@ Route::group(['middleware' => ['auth']], function () {
 
         });});
 
+});
+
+// CMS Routes
+Route::group(['prefix' => 'admin/cms', 'middleware' => ['auth'], 'as' => 'admin.cms.'], function () {
+    
+    // Pages
+    Route::resource('pages', App\Http\Controllers\CMS\PageController::class);
+    
+    // Posts/Blog
+    Route::resource('posts', App\Http\Controllers\CMS\PostController::class);
+    
+    // Galleries
+    Route::resource('galleries', App\Http\Controllers\CMS\GalleryController::class);
+    Route::post('galleries/{gallery}/upload-images', [App\Http\Controllers\CMS\GalleryController::class, 'uploadImages'])->name('galleries.upload-images');
+    Route::delete('gallery-images/{image}', [App\Http\Controllers\CMS\GalleryController::class, 'deleteImage'])->name('gallery-images.delete');
+    
+    // Testimonials
+    Route::resource('testimonials', App\Http\Controllers\CMS\TestimonialController::class);
+    
+    // Announcements
+    Route::resource('announcements', App\Http\Controllers\CMS\AnnouncementController::class);
+    
+    // FAQs
+    Route::resource('faqs', App\Http\Controllers\CMS\FAQController::class);
+    
+    // Contact Messages
+    Route::get('contact-messages', [App\Http\Controllers\CMS\ContactMessageController::class, 'index'])->name('contact-messages.index');
+    Route::get('contact-messages/{message}', [App\Http\Controllers\CMS\ContactMessageController::class, 'show'])->name('contact-messages.show');
+    Route::post('contact-messages/{message}/reply', [App\Http\Controllers\CMS\ContactMessageController::class, 'reply'])->name('contact-messages.reply');
+    Route::post('contact-messages/{message}/mark-as-read', [App\Http\Controllers\CMS\ContactMessageController::class, 'markAsRead'])->name('contact-messages.mark-as-read');
+    Route::delete('contact-messages/{message}', [App\Http\Controllers\CMS\ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
+    
+    // Settings
+    Route::get('settings', [App\Http\Controllers\CMS\SettingsController::class, 'index'])->name('settings.index');
+    Route::put('settings', [App\Http\Controllers\CMS\SettingsController::class, 'update'])->name('settings.update');
 });
