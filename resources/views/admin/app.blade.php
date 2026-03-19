@@ -29,7 +29,7 @@
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
     <div class="app-header header-shadow text-white" style="background: #1a3c5e;">
         <div class="app-header__logo">
-            <div class="logo-src">LAIKIPIA CDF</div>
+            <div class="logo-src">LAIKIPIA ECDE</div>
             <div class="header__pane ml-auto">
                 <div>
                     <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"

@@ -1,48 +1,79 @@
 @extends('public.layout')
 
-@section('page-content')
+@section('styles')
 <style>
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .gallery-card {
+        border: 1px solid var(--border);
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
     .gallery-tile {
         position: relative;
         overflow: hidden;
-        border-radius: 8px;
         cursor: pointer;
+        height: 240px;
     }
 
     .gallery-tile img {
         width: 100%;
-        height: 240px;
+        height: 100%;
         object-fit: cover;
+        transition: transform .35s ease;
     }
 
     .gallery-overlay {
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.05));
+        background: linear-gradient(to top, rgba(15, 23, 42, 0.84), rgba(15, 23, 42, 0.10));
         display: flex;
         align-items: flex-end;
         padding: 1rem;
         color: #fff;
         opacity: 0;
+        transition: opacity .25s ease;
     }
 
-    .gallery-tile:hover .gallery-overlay {
-        opacity: 1;
+    .gallery-card:hover .gallery-overlay { opacity: 1; }
+    .gallery-card:hover .gallery-tile img { transform: scale(1.06); }
+
+    .gallery-meta {
+        padding: .9rem 1rem 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--text-muted);
+    }
+
+    .gallery-meta a {
+        color: var(--green);
+        font-weight: 700;
+        text-decoration: none;
     }
 </style>
+@endsection
 
-<div class="mb-5">
-    <h1 class="mb-2">Photo Galleries</h1>
-    <p class="lead">Explore our photo galleries and memories</p>
+@section('page-content')
+<div class="page-header-container">
+    <h1 class="page-title">Photo Galleries</h1>
+    <p class="page-subtitle">Explore our photo galleries and memories from across the programme.</p>
 </div>
 
 @if($galleries->count() > 0)
-    <div class="row g-3">
+    <div class="gallery-grid">
         @foreach($galleries as $gallery)
             @php
                 $cover = $gallery->images->first();
             @endphp
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="gallery-card">
                 <div class="gallery-tile" @if($cover) data-bs-toggle="modal" data-bs-target="#galleryLightbox" data-image="{{ asset('storage/' . $cover->image_path) }}" data-title="{{ $gallery->title }}" data-date="{{ $gallery->created_at->format('M d, Y') }}" @endif>
                     @if($cover)
                         <img src="{{ asset('storage/' . $cover->image_path) }}" alt="{{ $gallery->title }}">
@@ -58,9 +89,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-2 d-flex justify-content-between align-items-center">
+                <div class="gallery-meta">
                     <span class="small text-muted"><i class="fa fa-images"></i> {{ $gallery->images->count() }} photos</span>
-                    <a href="{{ route('cms.gallery', $gallery->slug) }}" class="text-decoration-none fw-semibold">Open</a>
+                    <a href="{{ route('cms.gallery', $gallery->slug) }}">Open</a>
                 </div>
             </div>
         @endforeach

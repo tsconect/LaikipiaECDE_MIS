@@ -1,7 +1,7 @@
 <div class="app-sidebar sidebar-shadow" style="background: #1a3c5e;">
     <div class="app-header__logo">
         <img src="{{asset('assets/images/laikipia.png')}}" alt="Laikipia" style="height: 40px; width: 40px; margin-right: 10px;">
-        <div class="logo-src">Laikipia CDF</div>
+        <div class="logo-src">Laikipia ECDE</div>
         <div class="header__pane ml-auto">
             <div>
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"

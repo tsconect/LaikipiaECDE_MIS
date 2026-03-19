@@ -1,495 +1,402 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="Content-Language" content="en">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>LAIKIPIA COUNTY - CDF MANAGEMENT SYSTEM</title>
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">
-    <meta name="description" content="Laikipia Cdf management SYstem.">
-    <meta name="msapplication-tap-highlight" content="no">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-    <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
-    <style>
-        :root {
-            --public-primary: #1a3a5c;
-            --public-primary-dark: #142e49;
-            --public-kenya-green: #006600;
-            --public-accent: #f59e0b;
-            --public-surface: #ffffff;
-            --public-surface-soft: #f7f9fc;
-            --public-border: #e7ecf3;
-            --public-text: #1f2937;
-            --public-muted: #64748b;
-            --public-shadow: 0 12px 30px rgba(15, 23, 42, 0.1);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{{ $settings['site_name'] ?? 'Laikipia ECDE Management System' }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8lN2R7+P7q6T2A2R4cV2N4s46HoPazg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
 
-        html {
-            scroll-behavior: smooth;
-        }
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-            background: var(--public-surface-soft);
-            color: var(--public-text);
-            min-height: 100vh;
-        }
+    :root {
+      --navy: #0d2235;
+      --navy-mid: #163348;
+      --green: #1a7c3e;
+      --green-light: #25a857;
+      --green-pale: #e8f5ee;
+      --gold: #c8993a;
+      --cream: #f8f6f1;
+      --white: #ffffff;
+      --text: #1a2530;
+      --text-muted: #6b7c8d;
+      --border: rgba(13,34,53,0.10);
+      --primary-color: #0d2235;
+      --secondary-color: #1a7c3e;
+    }
 
-        a,
-        button,
-        .btn,
-        .nav-link,
-        .card,
-        .form-control,
-        .form-select,
-        .accordion-button {
-            transition: all 0.2s ease;
-        }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--cream);
+      overflow-x: hidden;
+    }
 
-        .public-navbar {
-            background: linear-gradient(90deg, var(--public-primary) 0%, #22496f 100%);
-            position: sticky;
-            top: 0;
-            z-index: 1040;
-        }
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+      background: rgba(13,34,53,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-brand img { height: 38px; }
+    .nav-brand span {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600; font-size: 15px;
+      color: #fff; letter-spacing: 0.01em;
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none; font-size: 14px; font-weight: 500;
+      padding: 7px 14px; border-radius: 8px;
+      transition: all .2s;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .nav-user {
+      display: flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff; font-size: 14px; font-weight: 500;
+      padding: 8px 16px; border-radius: 30px; cursor: pointer;
+      transition: background .2s;
+      text-decoration: none;
+    }
+    .nav-user:hover { background: rgba(255,255,255,0.18); }
+    .nav-user svg { width: 16px; height: 16px; }
 
-        .public-navbar.scrolled {
-            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.22);
-        }
+    /* ─── SECTION SHARED ──────────────────────────────── */
+    section { padding: 96px 64px; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 14px;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 28px; height: 2px;
+      background: var(--green);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700; color: var(--navy);
+      line-height: 1.15; margin-bottom: 14px;
+    }
+    .section-sub { font-size: 17px; color: var(--text-muted); max-width: 520px; line-height: 1.7; margin-bottom: 52px; }
 
-        .public-navbar .navbar-brand {
-            color: #fff !important;
-            font-weight: 800;
-            letter-spacing: 0.2px;
-            display: inline-flex;
-            align-items: center;
-            gap: .55rem;
-            font-size: 1.05rem;
-        }
+    .page-header-container {
+      margin-bottom: 2rem;
+    }
 
-        .public-brand-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.12);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.18);
-            color: #fff;
-        }
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--navy);
+      margin-bottom: .5rem;
+    }
 
-        .public-navbar .nav-link {
-            color: rgba(255,255,255,0.9) !important;
-            font-weight: 500;
-            border-radius: 8px;
-            padding: .5rem .7rem !important;
-        }
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 760px;
+    }
 
-        .public-navbar .nav-link:hover,
-        .public-navbar .nav-link:focus {
-            color: #fff !important;
-            background: rgba(255,255,255,0.08);
-        }
+    .page-content-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
 
-        .public-navbar .btn {
-            border-radius: 8px;
-            font-weight: 600;
-        }
+    .page-content-card .card-body {
+      padding: 2rem;
+    }
 
-        .public-navbar .icon-login-btn {
-            border: 1px solid rgba(255,255,255,0.26);
-            color: #fff;
-            background: rgba(255,255,255,0.08);
-            padding: .5rem .75rem;
-        }
+    .page-meta {
+      color: var(--text-muted);
+      font-size: .95rem;
+    }
 
-        .public-navbar .icon-login-btn:hover {
-            background: rgba(255,255,255,0.16);
-            color: #fff;
-        }
+    .home-section-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      background: #fff;
+      overflow: hidden;
+    }
 
-        .public-navbar .dropdown-menu {
-            border-radius: 8px;
-            border: 1px solid var(--public-border);
-            box-shadow: var(--public-shadow);
-        }
+    .home-content-card {
+      border-top: 3px solid var(--green);
+    }
 
-        .public-main {
-            min-height: calc(100vh - 200px);
-        }
+    .home-content-card.announcement-card {
+      border-top-color: var(--gold);
+    }
 
-        .public-content-wrapper {
-            padding-top: 2.25rem;
-            padding-bottom: 3rem;
-        }
+    .home-meta {
+      color: var(--text-muted);
+      font-size: .9rem;
+    }
 
-        .public-content-wrapper .card {
-            border: 1px solid var(--public-border);
-            border-radius: 8px;
-            box-shadow: var(--public-shadow);
-            transition: transform .2s ease, box-shadow .2s ease;
-            overflow: hidden;
-        }
+    .read-more-link {
+      color: var(--green);
+      font-weight: 700;
+    }
 
-        .public-content-wrapper .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 16px 34px rgba(15, 23, 42, 0.12);
-        }
+    .read-more-link:hover {
+      color: var(--green-light);
+    }
 
-        .public-content-wrapper h1,
-        .public-content-wrapper h2,
-        .public-content-wrapper h3,
-        .public-content-wrapper h4 {
-            color: var(--public-primary);
-        }
+    .listing-card-compact {
+      height: 430px;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .public-content-wrapper .lead,
-        .public-content-wrapper .text-muted,
-        .public-content-wrapper p {
-            color: var(--public-muted);
-        }
+    .listing-card-compact .card-img-top {
+      height: 190px !important;
+      object-fit: cover;
+    }
 
-        .public-content-wrapper .btn-primary {
-            background: var(--public-primary);
-            border-color: var(--public-primary);
-            border-radius: 8px;
-            font-weight: 600;
-        }
+    .listing-card-compact .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
 
-        .public-content-wrapper .btn-primary:hover {
-            background: var(--public-primary-dark);
-            border-color: var(--public-primary-dark);
-        }
+    .listing-card-compact .card-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
-        .public-content-wrapper .btn-outline-primary {
-            border-radius: 8px;
-            font-weight: 600;
-            border-color: var(--public-primary);
-            color: var(--public-primary);
-        }
+    .empty-state-container {
+      max-width: 780px;
+      margin: 0 auto;
+    }
 
-        .public-content-wrapper .btn-outline-primary:hover {
-            background: var(--public-primary);
-            color: #fff;
-        }
+    .empty-state {
+      border: 1px dashed #cad4e3;
+      border-radius: 16px;
+      padding: 2rem 1.2rem;
+      text-align: center;
+      color: var(--text-muted);
+      background: linear-gradient(180deg, #fff 0%, #f8fbff 100%);
+    }
 
-        .public-content-wrapper .alert {
-            border-radius: 8px;
-            border: 0;
-            box-shadow: var(--public-shadow);
-        }
+    .empty-state i {
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: .75rem;
+    }
 
-        .public-content-wrapper .badge {
-            border-radius: 999px;
-            padding: .4rem .65rem;
-            font-weight: 600;
-            letter-spacing: .2px;
-        }
+    /* ─── FOOTER ──────────────────────────────────────── */
+    footer {
+      background: var(--navy);
+      padding: 72px 64px 32px;
+      color: rgba(255,255,255,0.65);
+    }
+    .footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1.2fr; gap: 60px; margin-bottom: 56px; }
+    .footer-brand-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; font-weight: 700; margin: 12px 0 10px; }
+    .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.50); }
+    .footer-social { display: flex; gap: 10px; margin-top: 24px; }
+    .social-btn {
+      width: 38px; height: 38px; border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.60); text-decoration: none;
+      transition: all .2s; font-size: 14px;
+    }
+    .social-btn:hover { background: var(--green); color: #fff; border-color: var(--green); transform: translateY(-2px); }
+    .footer-col h4 { font-size: 13px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.40); margin-bottom: 20px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; padding-left: 0; }
+    .footer-col ul a { color: rgba(255,255,255,0.60); text-decoration: none; font-size: 14px; transition: color .2s; }
+    .footer-col ul a:hover { color: #fff; }
+    .footer-contact-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.60); margin-bottom: 14px; }
+    .footer-contact-item svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: var(--green-light); }
+    .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: rgba(255,255,255,0.35); }
 
-        .badge-green {
-            background: rgba(0, 102, 0, 0.12);
-            color: var(--public-kenya-green);
-            border: 1px solid rgba(0, 102, 0, 0.25);
-        }
+    /* ─── BACK TO TOP ─────────────────────────────────── */
+    .back-top {
+      position: fixed; bottom: 28px; right: 28px; z-index: 99;
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--green); color: #fff;
+      display: none; align-items: center; justify-content: center;
+      cursor: pointer; border: none;
+      box-shadow: 0 4px 16px rgba(26,124,62,0.40);
+      transition: all .25s;
+    }
+    .back-top:hover { background: var(--green-light); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,124,62,0.50); }
 
-        .empty-state {
-            border: 1px dashed #c8d3e2;
-            border-radius: 8px;
-            background: linear-gradient(180deg, #f9fbff 0%, #f3f8ff 100%);
-            text-align: center;
-            padding: 2rem 1.2rem;
-            color: var(--public-muted);
-        }
+    /* ─── ANIMATIONS ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
 
-        .empty-state i {
-            font-size: 2rem;
-            color: var(--public-primary);
-            margin-bottom: .7rem;
-        }
+    /* ─── RESPONSIVE ──────────────────────────────────── */
+    @media (max-width: 900px) {
+      section { padding: 72px 28px; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      footer { padding: 56px 28px 28px; }
+    }
+    .public-content-wrapper {
+        padding-top: 0;
+        padding-bottom: 3rem;
+    }
 
-        .public-content-wrapper .form-control,
-        .public-content-wrapper .form-select,
-        .public-content-wrapper textarea {
-            border-radius: 8px;
-            border: 1px solid #d8e1ec;
-            min-height: 46px;
-        }
+    main {
+      padding-top: 88px;
+    }
 
-        .public-content-wrapper textarea {
-            min-height: 130px;
-        }
+    main.main-flush-top {
+      padding-top: 0;
+    }
 
-        .public-content-wrapper .pagination {
-            gap: 0.35rem;
-        }
+    @media (max-width: 900px) {
+      main {
+        padding-top: 82px;
+      }
 
-        .public-content-wrapper .page-link {
-            border-radius: 8px;
-            border: 1px solid var(--public-border);
-            color: var(--public-primary);
-        }
-
-        .public-content-wrapper .page-item.active .page-link {
-            background: var(--public-primary);
-            border-color: var(--public-primary);
-            color: #fff;
-        }
-
-        .public-footer {
-            background: linear-gradient(135deg, var(--public-primary-dark) 0%, var(--public-primary) 100%);
-            color: #fff;
-            margin-top: 2.5rem;
-        }
-
-        .public-footer a {
-            color: rgba(255,255,255,0.9);
-        }
-
-        .public-footer a:hover {
-            color: #fff;
-            text-decoration: none;
-        }
-
-
-        .social-icon-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.08);
-            margin-right: .4rem;
-            font-size: 1rem;
-        }
-
-        .social-icon-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-2px);
-        }
-
-        .back-to-top {
-            position: fixed;
-            right: 18px;
-            bottom: 18px;
-            width: 42px;
-            height: 42px;
-            border-radius: 8px;
-            border: 0;
-            background: var(--public-kenya-green);
-            color: #fff;
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-            z-index: 1050;
-            display: none;
-        }
-
-        .back-to-top:hover {
-            background: #007a00;
-            transform: translateY(-2px);
-        }
-
-        .public-navbar .navbar-toggler {
-            border-color: rgba(255,255,255,0.34);
-            border-radius: 8px;
-            padding: .35rem .55rem;
-        }
-
-        .public-navbar .navbar-toggler-icon {
-            filter: brightness(0) invert(1);
-        }
-
-        .public-nav-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: .2rem;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 991.98px) {
-            .public-navbar .navbar-collapse {
-                margin-top: 0.75rem;
-                background: rgba(16, 42, 66, 0.96);
-                border-radius: 8px;
-                padding: .75rem;
-            }
-
-            .public-nav-center {
-                margin: .25rem 0 .6rem;
-                align-items: flex-start;
-            }
-
-            .public-navbar .nav-link {
-                margin-bottom: .25rem;
-            }
-        }
-    </style>
+      main.main-flush-top {
+        padding-top: 0;
+      }
+    }
+  </style>
+  @yield('styles')
 </head>
-<body >
-    <div id="app">
-        <nav class="navbar navbar-expand-lg navbar-light public-navbar" id="publicNavbar">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <span class="public-brand-icon"><i class="fa fa-shield"></i></span>
-                    <span>Laikipia CDF Management System</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<body>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav public-nav-center">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cms.posts') }}">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cms.announcements') }}">Announcements</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cms.galleries') }}">Galleries</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cms.faqs') }}">FAQs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cms.contact') }}">Contact</a>
-                        </li>
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        @guest
-                            <li class="nav-item">
-                                <a href="{{ route('login') }}" class="btn icon-login-btn">
-                                    <i class="fa fa-user-circle me-1"></i> Sign In
-                                </a>
-                            </li>
-                        @else
-                            <li class="nav-item dropdown">
-                                <button class="btn icon-login-btn dropdown-toggle" id="publicUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user-circle me-1"></i>
-                                    <span class="d-none d-md-inline">{{ auth()->user()->first_name ?? auth()->user()->name ?? 'Account' }}</span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="publicUserMenu">
-                                    <li><a class="dropdown-item" href="{{ route('home') }}"><i class="fa fa-home me-2"></i>Dashboard</a></li>
-                                    <li>
-                                        <form action="{{ route('logout') }}" method="POST" class="m-0">
-                                            @csrf
-                                            <button type="submit" class="dropdown-item"><i class="fa fa-sign-out me-2"></i>Logout</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
+<!-- NAV -->
+<nav>
+  <a href="{{ url('/') }}" class="nav-brand">
+    <img src="{{ !empty($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Coat_of_arms_of_Kenya.svg/800px-Coat_of_arms_of_Kenya.svg.png' }}" alt="Logo" onerror="this.style.display='none'">
+    <span>{{ $settings['site_name'] ?? 'Laikipia ECDE' }}</span>
+  </a>
+  <div class="nav-links">
+    <a href="{{ url('/') }}">Home</a>
+    <a href="{{ route('cms.posts') }}">Blog</a>
+    <a href="{{ route('cms.announcements') }}">Announcements</a>
+    <a href="{{ route('cms.galleries') }}">Galleries</a>
+    <a href="{{ route('cms.faqs') }}">FAQs</a>
+    <a href="{{ route('cms.contact') }}">Contact</a>
+  </div>
+  @guest
+    <a href="{{ route('login') }}" class="nav-user">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Admin
+    </a>
+  @else
+    <a href="{{ route('home') }}" class="nav-user">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        {{ auth()->user()->first_name ?? 'Dashboard' }}
+    </a>
+  @endguest
+</nav>
 
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<main class="@hasSection('flush_topbar') main-flush-top @endif">
+    @yield('content')
+</main>
 
 
-        <main class="public-main @hasSection('full_width') py-0 @else py-3 @endif">
-            @yield('content')
-        </main>
-
-        <footer class="public-footer mt-5 pt-4 pb-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <h5 class="mb-2">{{ $settings['site_name'] ?? 'Laikipia CDF Management System' }}</h5>
-                        <p class="mb-1">{{ $settings['site_description'] ?? 'Empowering communities through education and development.' }}</p>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h6 class="mb-2">Quick Links</h6>
-                        <ul class="list-unstyled mb-0">
-                            <li><a href="{{ route('cms.posts') }}" class="text-white">Blog</a></li>
-                            <li><a href="{{ route('cms.galleries') }}" class="text-white">Galleries</a></li>
-                            <li><a href="{{ route('cms.faqs') }}" class="text-white">FAQs</a></li>
-                            <li><a href="{{ route('cms.announcements') }}" class="text-white">Announcements</a></li>
-                            <li><a href="{{ route('cms.contact') }}" class="text-white">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <h6 class="mb-2">Contact</h6>
-                        <p class="mb-1"><i class="fa fa-envelope"></i> {{ $settings['contact_email'] ?? 'info@laikipia.ecde' }}</p>
-                        <p class="mb-1"><i class="fa fa-phone"></i> {{ $settings['contact_phone'] ?? '+254' }}</p>
-                        <p class="mb-0"><i class="fa fa-map-marker"></i> {{ $settings['site_address'] ?? ($settings['contact_address'] ?? 'Laikipia County') }}</p>
-                        <div class="mt-3">
-                            <h6 class="mb-2">Follow Us</h6>
-                            @if(!empty($settings['facebook_url']) || !empty($settings['social_facebook']))
-                                <a href="{{ $settings['facebook_url'] ?? $settings['social_facebook'] }}" target="_blank" class="text-white social-icon-btn" title="Facebook">
-                                    <i class="fa fa-facebook"></i>
-                                </a>
-                            @endif
-
-                            @if(!empty($settings['twitter_url']) || !empty($settings['social_twitter']))
-                                <a href="{{ $settings['twitter_url'] ?? $settings['social_twitter'] }}" target="_blank" class="text-white social-icon-btn" title="Twitter/X">
-                                    <i class="fa fa-twitter"></i>
-                                </a>
-                            @endif
-
-                            @if(!empty($settings['youtube_url']) || !empty($settings['social_youtube']))
-                                <a href="{{ $settings['youtube_url'] ?? $settings['social_youtube'] }}" target="_blank" class="text-white social-icon-btn" title="YouTube">
-                                    <i class="fa fa-youtube-play"></i>
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-                <hr style="border-color: rgba(255,255,255,0.2);">
-                <div class="text-center">
-                    <small>&copy; {{ date('Y') }} {{ $settings['site_name'] ?? 'Laikipia CDF Management System' }}. All rights reserved.</small>
-                </div>
-            </div>
-        </footer>
-
-        <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
-            <i class="fa fa-arrow-up"></i>
-        </button>
-
-@yield('scripts')
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="{{ !empty($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Coat_of_arms_of_Kenya.svg/800px-Coat_of_arms_of_Kenya.svg.png' }}" height="36" alt="Logo" onerror="this.style.display='none'">
+      </div>
+      <div class="footer-brand-name">{{ $settings['site_name'] ?? 'Laikipia ECDE Management System' }}</div>
+      <div class="footer-tagline">{{ $settings['site_description'] ?? 'Empowering communities through education and development.' }}</div>
+      <div class="footer-social">
+        <a href="{{ $settings['facebook_url'] ?? '#' }}" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="{{ $settings['twitter_url'] ?? '#' }}" class="social-btn" title="X / Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="{{ $settings['youtube_url'] ?? '#' }}" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
     </div>
-</body>
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{{ route('cms.posts') }}">Blog</a></li>
+        <li><a href="{{ route('cms.galleries') }}">Galleries</a></li>
+        <li><a href="{{ route('cms.faqs') }}">FAQs</a></li>
+        <li><a href="{{ route('cms.announcements') }}">Announcements</a></li>
+        <li><a href="{{ route('cms.contact') }}">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <div class="footer-contact-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        {{ $settings['contact_email'] ?? 'info@laikipia-ecde.go.ke' }}
+      </div>
+      <div class="footer-contact-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 01-2.18 2A19.86 19.86 0 013 5.18 2 2 0 015 3h2.09a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 10.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 17.92z"/></svg>
+        {{ $settings['contact_phone'] ?? '+254 707 782 031' }}
+      </div>
+      <div class="footer-contact-item">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        {{ $settings['site_address'] ?? 'Laikipia County, Kenya' }}
+      </div>
+    </div>
+  </div>
+  <hr class="footer-divider">
+  <div class="footer-bottom">
+    <span>&copy; {{ date('Y') }} {{ $settings['site_name'] ?? 'Laikipia ECDE' }}. All rights reserved.</span>
+    <span>Powered by Laikipia County Government</span>
+  </div>
+</footer>
 
-
-
-<script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
+<!-- BACK TO TOP -->
+<button class="back-top" id="backTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">
+  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const navbar = document.getElementById('publicNavbar');
-        const backToTop = document.getElementById('backToTop');
-
-        function updateScrolledState() {
-            if (window.scrollY > 10) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            if (window.scrollY > 260) {
-                backToTop.style.display = 'inline-flex';
-            } else {
-                backToTop.style.display = 'none';
-            }
-        }
-
-        updateScrolledState();
-        window.addEventListener('scroll', updateScrolledState, { passive: true });
-
-        backToTop?.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        io.unobserve(e.target);
+      }
     });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+
+  // Back to top button
+  const backTopBtn = document.getElementById('backTopBtn');
+  window.onscroll = function() {
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+          backTopBtn.style.display = "flex";
+      } else {
+          backTopBtn.style.display = "none";
+      }
+  };
 </script>
+@yield('scripts')
+<script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
+</body>
 </html>
 

@@ -1,8 +1,41 @@
 @extends('public.layout')
 
+@section('styles')
+<style>
+    .gallery-detail-head {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        padding: 1.4rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .gallery-photo-card {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+        background: #fff;
+        height: 100%;
+    }
+
+    .gallery-photo-card img {
+        height: 240px;
+        object-fit: cover;
+        width: 100%;
+        transition: transform .3s ease;
+    }
+
+    .gallery-photo-card:hover img {
+        transform: scale(1.05);
+    }
+</style>
+@endsection
+
 @section('page-content')
-<div class="row mb-5">
-    <div class="col-lg-9">
+<div class="gallery-detail-head row g-3 align-items-center">
+    <div class="col-lg-8">
         <h1 class="mb-2">{{ $gallery->title }}</h1>
         <p class="text-muted mb-4">
             <i class="fa fa-calendar"></i> {{ $gallery->created_at->format('F d, Y') }}
@@ -13,8 +46,8 @@
             <p class="lead">{{ $gallery->description }}</p>
         @endif
     </div>
-    <div class="col-lg-3">
-        <a href="{{ route('cms.galleries') }}" class="btn btn-secondary w-100">
+    <div class="col-lg-4">
+        <a href="{{ route('cms.galleries') }}" class="btn btn-outline-primary w-100">
             <i class="fa fa-arrow-left"></i> Back to Galleries
         </a>
     </div>
@@ -25,12 +58,9 @@
         @foreach($gallery->images()->orderBy('order')->get() as $image)
             <div class="col-md-4">
                 <a href="{{ asset('storage/' . $image->image_path) }}" data-bs-toggle="modal" data-bs-target="#imageModal{{ $loop->index }}">
-                    <div class="card shadow-sm overflow-hidden">
+                    <div class="gallery-photo-card">
                         <img src="{{ asset('storage/' . $image->image_path) }}" 
-                             class="card-img-top" alt="{{ $image->caption }}" 
-                             style="height: 250px; object-fit: cover; cursor: pointer; transition: transform 0.3s ease;"
-                             onmouseover="this.style.transform='scale(1.05)'"
-                             onmouseout="this.style.transform='scale(1)'">
+                             class="card-img-top" alt="{{ $image->caption }}">
                         @if($image->caption)
                             <div class="card-body">
                                 <p class="card-text small">{{ $image->caption }}</p>
