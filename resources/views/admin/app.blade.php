@@ -233,7 +233,11 @@ function goBack() {
     </div>
 
     <div class="app-main">
-       @yield('nav-bar')
+       @hasSection('nav-bar')
+           @yield('nav-bar')
+       @else
+           @include('admin.layouts.sidebar')
+       @endif
         <div class="app-main__outer">
             <div class="app-main__inner">
                 <div class="app-inner-layout">
