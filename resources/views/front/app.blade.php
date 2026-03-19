@@ -20,7 +20,7 @@
 </head>
 <body >
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm "  >
+        <nav class="navbar navbar-expand-md navbar-light shadow-sm" style="background: #1a3c5e;">
             <div class="container">
                 <a class="navbar-brand text-white" href="{{ url('/') }}">
                     Laikipia CDF Management System

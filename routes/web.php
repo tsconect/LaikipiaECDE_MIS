@@ -131,7 +131,8 @@ Route::group(['middleware' => ['auth']], function () {
             
             // dpts within a vtc
             
-
+        Route::resource('roles', RolesController::class);
+        Route::resource('permissions', PermissionsController::class);
 
         });});
 
