@@ -2,35 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Constituency;
+use App\Models\County;
 use App\Models\SubLocation;
-use Illuminate\Http\Request;
-
+use App\Models\Ward;
 use App\Models\Wards;
+use Illuminate\Http\Request;
 
 class SubLocationController extends Controller
 {
     //
 
      //
-     public function index(Wards $id)
+     public function index()
      {
-        $ward = $id;
-        $data = $id->subLocation;
-
-         return view('backoffice.subLocations.index', compact('data', 'ward'));
+        $sublocations = SubLocation::all();
+         return view('admin.subLocations.index', compact('sublocations'));
      }
 
-    function create_view(Wards $id)
+    function create()
     {
-        $ward = $id;
-        return view('backoffice.sublocations.create',compact('ward'));
+        $sub_counties =Constituency::get();
+        $wards=Ward::get();
+        $counties = County::get();
+        return view('admin.sublocations.create',compact('wards', 'sub_counties', 'counties'));
     }
 
     function store(Request $request)
     {
-        $data = $request->only(["name","ward_id"]);
-        $_ =  SubLocation::create($data);
-       return back()->with('success', $_->name .  ' Sublocation was created successfully');
+        $request->validate(['name' => 'required',
+        'ward_id' => 'required'
+        ]);
+        $subLocation =  New SubLocation();
+        $subLocation->name = $request->name;
+        $subLocation->ward_id = $request->ward_id;
+        $subLocation->save();
+      
+       return redirect()->route('admin.sub-locations.index')->with('success', $subLocation->name .  ' Sublocation was created successfully');
     }
 
     function editSubLocations(SubLocation $subLocation)

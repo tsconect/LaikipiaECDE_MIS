@@ -1,108 +1,109 @@
-@extends('backoffice.layouts.app')
-
+@extends('admin.app')
 
 @section('nav-bar')
-
-@include('layouts.main_nav')
-
+@include('admin.layouts.sidebar')
 @endsection
 
 
 @section('content')
-    @include('flash-message')
 
-    <div class="card-body">
-        <form id="teachers" class="" action="{{ route('admin.students.store') }}" method="post">
-            @csrf
-                <div id="smartwizard">
-                <ul class="forms-wizard">
-                    <li>
-                        <a href="#step-1">
-                            <em>1</em><span>Personal Details</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-2">
-                            <em>2</em><span>Student Details</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-3">
-                            <em>3</em><span>School Details</span>
-                        </a>
-                    </li>
-
-                    {{-- <li>
-                        <a href="#step-4">
-                            <em>4</em><span>Education Background & Unions</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-5">
-                            <em>5</em><span>Next of Kin</span>
-                        </a>
-                    </li> --}}
-
-                    <li>
-                        <a href="#step-6">
-                            <em>6</em><span>Finish</span>
-                        </a>
-                    </li>
-
+<div class="card-body">
+    <div class="container mt-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
-                <div class="form-wizard-content">
+            </div>
+        @endif
+    <form method="POST" action="{{ route('admin.ecde-students.store') }}">
+        @csrf
+        <div class="card p-2 shadow-sm mb-4">
 
-            {{-- $table->string('first_name');
-            $table->string('last_name');
-            $table->string('middle_name'); --}}
-                    <div id="step-1">
-                        <div class="form-row">
-                            <div class="col-md-3">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Register New ECDE</h5>
+            </div>
+<div class="card-body">
+
+               <div class="row g-4">
+  
+                            <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="first_name" class="">First Name</label>
                                     <input name="first_name" id="first_name" placeholder="John" required
                                         type="text"class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="middle_name" class="">Middle Name</label>
                                     <input name="middle_name" id="middle_name" placeholder="Doe" required
                                         type="text"class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="last_name" class="">Last Name</label>
                                     <input name="last_name" id="last_name" placeholder="Watt" required
                                         type="text"class="form-control">
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Are you Differently abled?</label>
-                                    <select onchange="hasDisability()"  name="disability" id="disability" class="form-control" required>
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
+                              <!-- PWD Status -->
+                         <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Are you a Person with Disability (PWD)? <span class="text-danger">*</span></label>
+                            <select name="pwd_status" id="pwd_status" 
+                                    class="form-control @error('pwd_status') is-invalid @enderror"
+                                    onchange="togglePWDFields()" required>
+                                <option value="">Select option</option>
+                                <option value="Yes" {{ old('pwd_status') == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                <option value="No" {{ old('pwd_status') == 'No' ? 'selected' : '' }}>No</option>
+                            </select>
+                            @error('pwd_status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Conditional PWD Fields -->
+                        <div id="pwd_fields" class="col-md-12 row g-4" style="display: none;">
+                           <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Disability Type</label>
+                                <select name="disability_type" class="form-control @error('disability_type') is-invalid @enderror">
+                                    <option value="">Select type</option>
+                                    <option value="Visual Impairment">Visual Impairment</option>
+                                    <option value="Hearing Impairment (Deaf)">Hearing Impairment (Deaf)</option>
+                                    <option value="Physical Impairment">Physical Impairment</option>
+                                    <option value="Intellectual Disability">Intellectual Disability</option>
+                                    <option value="Speech &amp; Language Impairment">Speech &amp; Language Impairment</option>
+                                    <option value="Multiple Disabilities">Multiple Disabilities</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                @error('disability_type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="plwd_number" class="">PLWD Number</label>
-                                    <input name="plwd_number" id="plwd_number" placeholder="PLWD-TS128/2012"
-                                        type="text"class="form-control" disabled >
-                                </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Impairment Details</label>
+                                <textarea name="impairment_details" 
+                                          class="form-control @error('impairment_details') is-invalid @enderror"
+                                          rows="3"
+                                          placeholder="Brief description of impairment...">{{ old('impairment_details') }}</textarea>
+                                @error('impairment_details')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="col-md-3">
+                        </div>
+                        
+                            {{-- <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="email" class="">Email</label>
                                     <input name="email" id="email" placeholder="example@xyz.com" required type="email"
                                         class="form-control">
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="gender" class="">Gender</label>
                                     <select name="gender" id="gender" class="form-control" required>
@@ -115,7 +116,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="dob" class="">Date of birth</label>
                                     <input name="dob" id="dob" placeholder="D.O.B" required type="date"
@@ -124,17 +125,14 @@
                             </div>
 
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="photo" class="">Passport Photo (Upload size 2MB Max)</label>
                                     <input name="photo" id="photo" required type="file" class="form-control">
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div id="step-2">
-                        <div id="accordion" class="accordion-wrapper mb-3">
-                            <div class="form-row">
+                      --}}
+                
 
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
@@ -146,8 +144,8 @@
 
                                 <div class="col-md-6">
                                     <label for="stundent_type_id" class="">Student Category</label>
-                                    <select name="stundent_type_id" id="stundent_type_id" class="form-control" required>
-                                        <option>Student Category</option>
+                                    <select name="stundent_type_id" id="stundent_type_id" class="form-control" >
+                                        <option value="" >Student Category</option>
                                         @foreach (App\Models\StudentType::all() as $_)
 
                                         <option value="{{ $_->id }}">{{ $_->student_type_name }}</option>
@@ -157,34 +155,44 @@
 
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label for="county_id" class="">County Of Origin </label>
-                                    <select name="county_id" id="county_id" class="form-control" required>
-                                        <option>Select County</option>
-                                        <option value="Laikipia">Laikipia</option>
+                                  <div class="col-md-6">
+                                    <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
+                                    <select name="county_id" id="countySelect" 
+                                            class="form-control @error('county_id') is-invalid @enderror"
+                                            required>
+                                        <option value="">Select county</option>
+                                            @foreach($counties as $county)
+                                                <option value="{{ $county->county_id }}">{{ $county->name }}</option>
+                                            @endforeach
                                     </select>
+                                    @error('county_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label for="const_id" class="">Select Constituency </label>
-                                    <select name="const_id" id="const_id" class="form-control" required>
-                                        <option>Select Constituency</option>
-                                        @foreach ($constituencies as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-
+                                    <label class="form-label fw-semibold">Sub-County</label>
+                                    <select name="subcounty_id" id="constituencySelect" 
+                                            class="form-control @error('subcounty_id') is-invalid @enderror"
+                                            >
+                                        <option value="">Select sub-county</option>
                                     </select>
+                                    @error('subcounty_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                                 <div class="col-md-6">
-                                    <label for="ward_id" class="">Select Ward </label>
-                                    <select name="ward_id" id="ward_id" class="form-control" required>
-                                        <option>Select Ward</option>
-                                        @foreach ($wards as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-
+                                    <label class="form-label fw-semibold">Ward</label>
+                                    <select name="ward_id" id="wardSelect" 
+                                            class="form-control @error('ward_id') is-invalid @enderror">
+                                        <option value="">Select ward</option>
                                     </select>
-
+                                    @error('ward_id')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
 
                                 <div class="col-md-6">
                                     <label for="sub_location_id" class="">Sub-Location </label>
@@ -209,11 +217,6 @@
                                     </div>
                                 </div>
 
-                            </div>
-                        </div>
-                    </div>
-                    <div id="step-3">
-                        <div class="form-row">
                             <div class="col-md-6">
 
                                 <label for="school_id" class="">Which school does the student attend? </label>
@@ -227,44 +230,96 @@
                             </div>
                         </div>
                     </div>
-
-                    <div id="step-6">
-                        <div class="no-results">
-                            <div class="swal2-icon swal2-success swal2-animate-success-icon">
-                                <div class="swal2-success-circular-line-left"></div>
-                                <span class="swal2-success-line-tip"></span>
-                                <span class="swal2-success-line-long"></span>
-                                <div class="swal2-success-ring"></div>
-                                <div class="swal2-success-fix"></div>
-                                <div class="swal2-success-circular-line-right"
-                                    ></div>
-                            </div>
-                            <div class="results-subtitle mt-4">Finished!</div>
-                            {{-- <div class="results-title">You arrived at the last form wizard step!</div> --}}
-                            <div class="mt-3 mb-3"></div>
-                            <div class="text-center">
-                                <button  type="submit" form="teachers" value="submit" class="btn-shadow btn-wide btn btn-success btn-lg">Register</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-
+     
+              
+                <div class="text-right p-2">
+                    <button class="btn btn-success" type="submit">
+                        Register
+                    </button>
                 </div>
-        </form>
-        </div>
-        <div class="divider"></div>
-        <div class="clearfix">
-            <button type="button" id="reset-btn" class="btn-shadow float-left btn btn-link">Reset</button>
-            <button type="button" id="next-btn"
-                class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">Next</button>
-            <button type="button" id="prev-btn"
-                class="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button>
+
+            </div>
+
         </div>
 
-    </div>
+    </form>
+
+</div>
+          
+                          
+      <script>
+                                
+    const data = {
+        counties: @json($counties),
+        constituencies: @json($sub_counties),
+        wards: @json($wards),
+
+    };
+</script>
+<script>
+    // Toggle PWD fields
+    function togglePWDFields() {
+        const status = document.getElementById('pwd_status').value;
+        const fields = document.getElementById('pwd_fields');
+        fields.style.display = (status === 'Yes') ? 'flex' : 'none';
+    }
+
+   
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+     
+        
+        // Pre-fill PWD fields if editing
+        if (document.getElementById('pwd_status').value === 'Yes') {
+            document.getElementById('pwd_fields').style.display = 'flex';
+        }
+    });
+</script>
+  <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const countySelect = document.getElementById('countySelect');
+        const constituencySelect = document.getElementById('constituencySelect');
+        const wardSelect = document.getElementById('wardSelect');
+       
+        countySelect.addEventListener('change', function () {
+            const countyId = this.value;
+            constituencySelect.innerHTML = '<option value="">Select Sub County</option>';
+            wardSelect.innerHTML = '<option value="">Select Ward</option>';
+           
+            if (countyId) {
+                const constituencies = data.constituencies.filter(c => c.county_code == countyId);
 
 
+                constituencies.forEach(constituency => {
+                    const option = document.createElement('option');
+                    option.value = constituency.constituency_id;
+                    option.textContent = constituency.name;
+                    constituencySelect.appendChild(option);
+                });
+            }
+        });
+
+
+        constituencySelect.addEventListener('change', function () {
+            const constituencyId = this.value;
+            wardSelect.innerHTML = '<option value="">Select Ward</option>';
+
+            if (constituencyId) {
+                const wards = data.wards.filter(w => w.constituency_code == constituencyId);
+                wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.id;
+                    option.textContent = ward.name;
+                                            wardSelect.appendChild(option);
+                                        });
+                                    }
+                                });
+
+                              
+                            });
+
+                            </script>   
 @endsection
 
 

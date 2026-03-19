@@ -1,54 +1,36 @@
-@extends('backoffice.layouts.app')
-
+@extends('admin.app')
 
 @section('nav-bar')
-
-@include('layouts.main_nav')
+@include('admin.layouts.sidebar')
 @endsection
 
 
 @section('content')
-    @include('flash-message')
 
-    <div class="card-body">
-        <form  class="" action="{{ route('admin.school.store') }}" method="post">
-            @csrf
-            <div id="smartwizard">
-                <ul class="forms-wizard">
-                    <li>
-                        <a href="#step-1">
-                            <em>1</em><span>School Details</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-2">
-                            <em>2</em><span>School Contacts Details</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#step-3">
-                            <em>3</em><span>Register</span>
-                        </a>
-                    </li>
-
-
+<div class="card-body">
+    <div class="container mt-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
-                <div class="form-wizard-content">
-                    <div id="step-1">
-                        <div class="form-row">
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="feeder_id" class="">Feeder School </label>
+            </div>
+        @endif
+    <form method="POST" action="{{ route('admin.ecde-schools.store') }}">
+        @csrf
+        <div class="card p-2 shadow-sm mb-4">
 
-                                        <select name="feeder_id" id="feeder_id" class="form-control">
-                                            @foreach (App\Models\FeederSchools::all() as $key => $value)
-                                                <option value="{{ $value->id ?? null }}">{{ $value->school_name }}</option>
-                                            @endforeach
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Register New ECDE</h5>
+            </div>
 
-                                        </select>
-                                </div>
-                            </div>
+            <div class="card-body">
+
+               <div class="row g-4">
+
+                            
 
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
@@ -84,52 +66,101 @@
 
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
-                                    <label for="constituency" class="">Select Constituency </label>
-                                    <select name="constituency" id="constituency" class="form-control" required>
-                                        <option>Select Constituency</option>
-                                        @foreach ($constituencies as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="ward" class="">Select Ward </label>
-                                    <select name="ward" id="consituency" class="form-control" required>
-                                        <option>Select Ward</option>
-                                        @foreach ($wards as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
                                     <label for="school_name" class="">Number of students:</label>
-                                    <input name="number_of_students" id="number_of_students" placeholder="Enter School name" required
+                                    <input name="number_of_students" id="number_of_students" placeholder="Enter of students" required
                                         type="text" class="form-control">
                                 </div>
                             </div>
-
-                            {{-- <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="number_of_teachers" class="">Number of Teachers:</label>
-                                    <input name="number_of_teachers" id="number_of_teachers" placeholder="Number of Teachers:" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div> --}}
 
                             <div class="col-md-6">
-                                <label>School Location</label> <span><button onclick="getCurrentLocation()"
-                                        class="btn-danger">Get Current Location</button></span>
-
+                                <div class="position-relative form-group">
+                                    <label for="school_location" class="">School Location (Latitude, Longitude)</label>
+                                    <input name="school_location" id="school_location" placeholder="Enter School location in terms of latitude, longitude e.g. 37.7749, -122.4194" required
+                                        type="text" class="form-control">
+                                </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="teacher_id" class="">Teacher in Charge</label>
+                                    <select name="teacher_id" id="teacher_id" class="form-control">
+                                        <option value="">Select teacher</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id ?? null }}">{{ $teacher->user->first_name ?? null }} {{ $teacher->user->last_name ?? null }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
+                            <select name="county_id" id="countySelect" 
+                                    class="form-control @error('county_id') is-invalid @enderror"
+                                     required>
+                                <option value="">Select county</option>
+                                     @foreach($counties as $county)
+                                        <option value="{{ $county->county_id }}" {{ old('county_id') == $county->county_id || $county->county_id == 'ob6SxuRcqU4' ? 'selected' : '' }}>{{ $county->name }}</option>
+                                    @endforeach
+                            </select>
+                            @error('county_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Sub-County</label>
+                            <select name="subcounty_id" id="constituencySelect" 
+                                    class="form-control @error('subcounty_id') is-invalid @enderror"
+                                    >
+                                <option value="">Select sub-county</option>
+                            </select>
+                            @error('subcounty_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Ward</label>
+                            <select name="ward_id" id="wardSelect" 
+                                    class="form-control @error('ward_id') is-invalid @enderror">
+                                <option value="">Select ward</option>
+                            </select>
+                            @error('ward_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                            
+
+
+                            
+
+                           
+
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="has_feeder" class="">Does this school have a feeder school?</label>
+                                    <select name="has_feeder" id="has_feeder" class="form-control" onchange="showFeederDiv()">
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                             <div class="col-md-6 d-none" id="feeder_div">
+                                <div class="position-relative form-group">
+                                    <label for="feeder_id" class="">Feeder School </label>
+
+                                    <select name="feeder_id" id="feeder_id" class="form-control">
+                                        <option value="">Select Feeder School</option>
+                                        @foreach ($feeder_schools as $value)
+                                            <option value="{{ $value->id ?? null }}">{{ $value->school_name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <div class="col-12">
                                 <div class="">
@@ -139,125 +170,89 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </div>
+                       
 
-                    <div id="step-2">
-                        <div id="accordion" class="accordion-wrapper mb-3">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_first_name" class="">First Name</label>
-                                        <input name="school_contact_first_name" id="school_contact_first_name"
-                                            placeholder="John" required type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_middle_name" class="">Middle Name</label>
-                                        <input name="school_contact_middle_name" id="school_contact_middle_name"
-                                            placeholder="Doe" required type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_last_name" class="">Last Name</label>
-                                        <input name="school_contact_last_name" id="school_contact_last_name"
-                                            placeholder="Watt" required type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_designation" class=""> Designation </label>
-                                        <select name="school_contact_designation" id="school_contact_designation"
-                                            class="form-control" required>
-                                            <option value="headeteacher">Headteacher</option>
-                                            <option value="deputy_headteacher">Deputy Headteacher</option>
-                                            <option value="senior_master">Senior Master</option>
-                                            <option value="ecde_teacher">ECDE Teacher</option>
-                                            <option value="bom_representative">BOM Representative</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="has_tsc" class=""> Has TSC NUMBER: </label>
-                                    <select onchange="hasTsc()" name="has_tsc" id="has_tsc" class="form-control" required>
-                                        <option value="0">No.</option>
-                                        <option value="1">Yes.</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_tsc_number" class="">TSC Number</label>
-                                        <input name="school_contact_tsc_number" id="school_contact_tsc_number"
-                                            placeholder="TSC Number" required type="text" class="form-control" disabled>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_id_number" class="">ID Number</label>
-                                        <input name="school_contact_id_number" id="school_contact_id_number"
-                                            placeholder="33811804" required type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_phone_number" class="">Phone Number</label>
-                                        <input name="school_contact_phone_number" id="school_contact_phone_number"
-                                            placeholder="0791799466" required type="number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="school_contact_gender" class=""> Gender </label>
-                                        <select name="school_contact_gender" id="" class="form-control"
-                                            required>
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-                                            <option value="none">Consider Not to Say</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="step-3">
-                        <div class="no-results">
-                            <div class="swal2-icon swal2-success swal2-animate-success-icon">
-                                <div class="swal2-success-circular-line-left"></div>
-                                <span class="swal2-success-line-tip"></span>
-                                <span class="swal2-success-line-long"></span>
-                                <div class="swal2-success-ring"></div>
-                                <div class="swal2-success-fix"></div>
-                                <div class="swal2-success-circular-line-right"
-                                    ></div>
-                            </div>
-                            <div class="results-subtitle mt-4">Finished!</div>
-                            <div class="results-title">You arrived at the last form wizard step!</div>
-                            <div class="mt-3 mb-3"></div>
-                            <div class="text-center">
-                                <button type="submit" class="btn-shadow btn-wide btn btn-success btn-lg">Register</button>
-                            </div>
-                        </div>
-                    </div>
-
+                   
                 </div>
-        </form>
-    </div>
-    <div class="divider"></div>
-    <div class="clearfix">
-        <button type="button" id="reset-btn" class="btn-shadow float-left btn btn-link">Reset</button>
-        <button type="button" id="next-btn"
-            class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">Next</button>
-        <button type="button" id="prev-btn"
-            class="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button>
-    </div>
+                <div class="text-right p-2">
+                    <button class="btn btn-success" type="submit">
+                        Register
+                    </button>
+                </div>
 
-    </div>
+            </div>
 
+        </div>
+
+    </form>
+
+</div>
+          
+                            <script>
+                                function showFeederDiv() {
+                                    var has_feeder = document.getElementById("has_feeder").value;
+                                    var feeder_div = document.getElementById("feeder_div");
+
+                                    if (has_feeder == 1) {
+                                        feeder_div.classList.remove("d-none");
+                                    } else {
+                                        feeder_div.classList.add("d-none");
+                                    }
+                                }
+                            </script>
+      <script>
+                                // Pass PHP variables to JavaScript
+    const data = {
+        counties: @json($counties),
+        constituencies: @json($sub_counties),
+        wards: @json($wards),
+
+    };
+</script>
+
+  <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const countySelect = document.getElementById('countySelect');
+        const constituencySelect = document.getElementById('constituencySelect');
+        const wardSelect = document.getElementById('wardSelect');
+       
+        countySelect.addEventListener('change', function () {
+            const countyId = this.value;
+            constituencySelect.innerHTML = '<option value="">Select Sub County</option>';
+            wardSelect.innerHTML = '<option value="">Select Ward</option>';
+           
+            if (countyId) {
+                const constituencies = data.constituencies.filter(c => c.county_code == countyId);
+
+
+                constituencies.forEach(constituency => {
+                    const option = document.createElement('option');
+                    option.value = constituency.constituency_id;
+                    option.textContent = constituency.name;
+                    constituencySelect.appendChild(option);
+                });
+            }
+        });
+
+
+        constituencySelect.addEventListener('change', function () {
+            const constituencyId = this.value;
+            wardSelect.innerHTML = '<option value="">Select Ward</option>';
+
+            if (constituencyId) {
+                const wards = data.wards.filter(w => w.constituency_code == constituencyId);
+                wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.id;
+                    option.textContent = ward.name;
+                                            wardSelect.appendChild(option);
+                                        });
+                                    }
+                                });
+
+                              
+                            });
+
+                            </script>   
 @endsection
 

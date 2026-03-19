@@ -11,11 +11,10 @@ class FeederSchools extends Model
 
     protected $guarded = [];
 
-    function const(){
-        return $this->hasOne(Constituency::class,'id','constituency');
+    public function ward(){
+        return $this->belongsTo(Ward::class);
     }
-    function ward(){
-        return $this->hasOne(Wards::class,'id','ward');
-    }
+
+    
 
 }

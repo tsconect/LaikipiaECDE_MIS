@@ -14,7 +14,9 @@ class ConstituencyController extends Controller
      */
     public function index()
     {
-        //
+        $constituencies = Constituency::all();
+
+        return view('admin.sub-county.index', compact('constituencies'));
     }
 
     /**
