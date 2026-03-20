@@ -1,4 +1,4 @@
-@extends('backoffice.layouts.app')
+@extends('admin.app')
 
 @section('nav-bar')<div class="app-sidebar sidebar-shadow">
     <div class="app-header__logo">
@@ -33,7 +33,7 @@
             </button>
         </span>
     </div>
-    @include('layouts.main_nav')
+    @include('admin.layouts.sidebar')
 </div>
 
 @endsection

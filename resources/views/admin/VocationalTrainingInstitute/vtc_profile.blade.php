@@ -1,4 +1,4 @@
-@extends('backoffice.layouts.app')
+@extends('admin.app')
 
 {{-- this file lists all departments in a vtc --}}
 
@@ -46,7 +46,7 @@ function goBack() {
 }
 </script>
 
-@include('layouts.main_nav')
+@include('admin.layouts.sidebar')
 
 </div>
 

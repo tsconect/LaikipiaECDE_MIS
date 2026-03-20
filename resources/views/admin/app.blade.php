@@ -1,9 +1,310 @@
 <!doctype html>
 <html lang="en">
 <style>
-    body{
-        background-color: #fff;
-        color: #000;
+    :root {
+        --navy-dark: #142240;
+        --navy: #1a2d4d;
+        --gold: #e8a020;
+        --header-h: 60px;
+    }
+
+    body {
+        background-color: #f0f2f5;
+        color: #1a2d4d;
+    }
+
+    .app-header.modern-admin-header {
+        background: var(--navy-dark) !important;
+        height: var(--header-h);
+        border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+    .modern-admin-header .app-header__logo {
+        background: transparent;
+        border-right: 1px solid rgba(255,255,255,.08);
+        padding: 0 16px;
+        min-width: 255px;
+        height: var(--header-h);
+        display: flex;
+        align-items: center;
+    }
+
+    .modern-admin-header .brand-chip {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, var(--gold), #f5c842);
+        color: #1a2d4d;
+        font-weight: 800;
+        margin-right: 10px;
+        font-size: 13px;
+    }
+
+    .modern-admin-header .brand-title {
+        color: #fff;
+        font-weight: 700;
+        letter-spacing: .04em;
+        font-size: 13px;
+    }
+
+    .modern-admin-header .app-header__content {
+        height: var(--header-h);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .modern-admin-header .btn-go-back {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border: 0;
+        border-radius: 7px;
+        background: #28a745;
+        color: #fff;
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .modern-admin-header .btn-go-back:hover {
+        background: #22933d;
+    }
+
+    .modern-admin-header .user-pill {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #fff;
+    }
+
+    .modern-admin-header .avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 2px solid rgba(255,255,255,.25);
+        object-fit: cover;
+    }
+
+    .modern-admin-header .user-name {
+        font-size: 12.5px;
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    .modern-admin-header .user-role {
+        font-size: 11px;
+        color: rgba(255,255,255,.6);
+    }
+
+    .modern-admin-header .profile-btn {
+        border: 0;
+        background: transparent;
+        color: inherit;
+        padding: 0;
+    }
+
+    .modern-admin-header .dropdown-menu {
+        margin-top: 10px;
+        border: 1px solid #e4e8ef;
+        box-shadow: 0 8px 24px rgba(26,45,77,.12);
+    }
+
+    .closed-sidebar .modern-admin-header .app-header__logo {
+        min-width: 80px;
+        width: 80px;
+        padding: 0 8px;
+        justify-content: center;
+        gap: 0;
+    }
+
+    .closed-sidebar .modern-admin-header .brand-title {
+        display: none;
+    }
+
+    .closed-sidebar .modern-admin-header .brand-chip {
+        margin-right: 0;
+    }
+
+    .closed-sidebar .modern-admin-header .header__pane {
+        margin-left: 6px !important;
+    }
+
+    .app-main__inner {
+        background: #f0f2f5;
+    }
+
+    .app-main__inner .card,
+    .app-main__inner .main-card {
+        border: 1px solid #e4e8ef;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(26,45,77,.08);
+        overflow: hidden;
+    }
+
+    .app-main__inner .card-header {
+        border-bottom: 1px solid #eef1f6;
+        background: #f7f9fc;
+        color: #1a2d4d;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 12px 16px;
+    }
+
+    .app-main__inner .card-header.btn-success,
+    .app-main__inner .card-header.bg-success {
+        background: #1a2d4d !important;
+        color: #fff !important;
+        border-bottom-color: #1a2d4d;
+    }
+
+    .app-main__inner .card-body {
+        padding: 16px;
+    }
+
+    .app-main__inner .card-title {
+        color: #1a2d4d;
+        font-weight: 700;
+    }
+
+    .app-main__inner .form-control,
+    .app-main__inner .form-select,
+    .app-main__inner select,
+    .app-main__inner textarea,
+    .app-main__inner input[type="text"],
+    .app-main__inner input[type="email"],
+    .app-main__inner input[type="number"],
+    .app-main__inner input[type="date"],
+    .app-main__inner input[type="file"] {
+        border: 1px solid #dbe2ec;
+        border-radius: 8px;
+        min-height: 40px;
+        box-shadow: none;
+    }
+
+    .app-main__inner .form-control:focus,
+    .app-main__inner .form-select:focus,
+    .app-main__inner select:focus,
+    .app-main__inner textarea:focus,
+    .app-main__inner input:focus {
+        border-color: #3f6ad8;
+        box-shadow: 0 0 0 .18rem rgba(63,106,216,.15);
+    }
+
+    .app-main__inner label,
+    .app-main__inner .form-label {
+        color: #1a2d4d;
+        font-weight: 600;
+        font-size: 12.5px;
+        margin-bottom: 6px;
+    }
+
+    .app-main__inner .btn {
+        border-radius: 8px;
+        font-weight: 600;
+        min-height: 36px;
+        padding: 7px 12px;
+    }
+
+    .app-main__inner .btn-warning {
+        background: #f59e0b;
+        border-color: #f59e0b;
+        color: #fff;
+    }
+
+    .app-main__inner .btn-warning:hover {
+        background: #dd8f0c;
+        border-color: #dd8f0c;
+        color: #fff;
+    }
+
+    .app-main__inner .btn-outline-primary {
+        border-color: #3f6ad8;
+        color: #3f6ad8;
+    }
+
+    .app-main__inner .btn-outline-primary:hover {
+        background: #3f6ad8;
+        border-color: #3f6ad8;
+        color: #fff;
+    }
+
+    .app-main__inner .table {
+        border-color: #e8edf5;
+    }
+
+    .app-main__inner .table thead th {
+        background: #f7f9fc;
+        color: #667085;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+        border-bottom: 1px solid #e4e8ef;
+        padding: 10px 12px;
+        white-space: nowrap;
+    }
+
+    .app-main__inner .table tbody td {
+        padding: 10px 12px;
+        vertical-align: middle;
+        border-color: #eef1f6;
+        color: #334155;
+        font-size: 13px;
+    }
+
+    .app-main__inner .table-hover tbody tr:hover {
+        background: #f8faff;
+    }
+
+    .app-main__inner .badge {
+        border-radius: 999px;
+        font-weight: 600;
+        padding: 4px 8px;
+    }
+
+    .app-main__inner .alert {
+        border-radius: 10px;
+        border: 0;
+        box-shadow: 0 2px 10px rgba(26,45,77,.06);
+    }
+
+    .app-main__inner .dataTables_wrapper .dataTables_filter input,
+    .app-main__inner .dataTables_wrapper .dataTables_length select {
+        border: 1px solid #dbe2ec;
+        border-radius: 8px;
+        min-height: 34px;
+        padding: 4px 8px;
+        background: #fff;
+    }
+
+    .app-main__inner .dataTables_wrapper .dt-buttons .btn {
+        background: #1a2d4d;
+        border-color: #1a2d4d;
+        color: #fff;
+    }
+
+    .app-main__inner .dataTables_wrapper .dt-buttons .btn:hover {
+        background: #223b61;
+        border-color: #223b61;
+    }
+
+    .app-main__inner .pagination .page-link {
+        border-radius: 7px;
+        margin: 0 2px;
+        border-color: #dbe2ec;
+        color: #334155;
+    }
+
+    .app-main__inner .pagination .active .page-link {
+        background: #1a2d4d;
+        border-color: #1a2d4d;
+        color: #fff;
     }
 </style>
 <head>
@@ -27,43 +328,64 @@
 
 
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
-    <div class="app-header header-shadow text-white" style="background: #1a3c5e;">
+    <div class="app-header header-shadow text-white modern-admin-header">
         <div class="app-header__logo">
-            <div class="logo-src">LAIKIPIA ECDE</div>
+            <span class="brand-chip">L</span>
+            <span class="brand-title">LAIKIPIA ECDE</span>
             <div class="header__pane ml-auto">
-                <div>
-                    <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
-                        data-class="closed-sidebar">
-                        <span class="hamburger-box">
-                            <span class="hamburger-inner"></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="app-header__mobile-menu">
-            <div>
-                <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
                     <span class="hamburger-box">
                         <span class="hamburger-inner"></span>
                     </span>
                 </button>
             </div>
         </div>
-        <div class="app-header__menu">
-            <span>
-                <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
-                    <span class="btn-icon-wrapper">
-                        <i class="fa fa-ellipsis-v fa-w-6"></i>
-                    </span>
-                </button>
-            </span>
-        </div> &nbsp;&nbsp;&nbsp;
-           <a>
-        <button onclick="goBack()" class="btn btn-success">
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Go Back
-        </button>
-    </a>
+
+        <div class="app-header__mobile-menu">
+            <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </div>
+
+        <div class="app-header__content">
+            <button onclick="goBack()" class="btn-go-back">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                Go Back
+            </button>
+
+            <div class="app-header-right">
+                <div class="btn-group">
+                    <button type="button" class="profile-btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="user-pill">
+                            <img class="avatar" src="https://cdn-icons-png.flaticon.com/512/0/93.png" alt="User">
+                            <div>
+                                <div class="user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
+                                <div class="user-role">{{ Auth::user()->role }}</div>
+                            </div>
+                            <i class="fa fa-angle-down opacity-8"></i>
+                        </div>
+                    </button>
+
+                    <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
+                        <ul class="nav flex-column">
+                            <li class="nav-item text-right nav-item">
+                                <a href="" class="nav-link">My Profile</a>
+                            </li>
+                            <li class="nav-item text-right nav-item">
+                                <button class="btn-wide btn btn-sm" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                                    Logout
+                                </button>
+                                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 <script>
 function goBack() {
     if (document.referrer == "") {
@@ -135,59 +457,6 @@ function goBack() {
 
 
 </script>
-        <div class="app-header__content">
-            <div class="app-header-right">
-             
-                <div class="header-btn-lg pr-0 ">
-                    <div class="widget-content p-6">
-                        <div class="widget-content-wrapper">
-                            <div class="widget-content-left">
-                                <div class="btn-group">
-                                    <button type="button" class="p-0 btn" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <img width="42" class="rounded-circle" src="https://cdn-icons-png.flaticon.com/512/0/93.png" alt="">
-                                        <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                    </button>
-                                    <div style="margin: 2%; !important" tabindex="-1" role="menu" aria-hidden="true"
-                                        class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
-                                        
-
-                                      
-                                        <ul class="nav flex-column">
-                                            <li class="nav-item-divider nav-item">
-                                            </li>
-                                            <li class="nav-item text-right  nav-item">
-                                                <a href="" class="nav-link">
-                                                    My Profile
-                                                </a>
-                                            </li>
-                                            <li class="nav-item text-right nav-item">
-                                                <button class="btn-wide  btn  btn-sm" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                                                    Logout
-                                                </button>
-                                                <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                                    {{ csrf_field() }}
-                                                </form>
-                                            </li>
-                                            
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget-content-left  ml-3 header-user-info">
-                                <div class="widget-heading"> 
-                                    {{ Auth::user()->first_name }} {{ Auth::user()->last_name }}
-                                </div>
-                                <div class="widget-subheading">
-                                    {{ Auth::user()->role }}
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 
     <div class="app-main">
