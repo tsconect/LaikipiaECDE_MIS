@@ -6,13 +6,12 @@ use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\CountyController;
 use App\Http\Controllers\DepartMentWorkersController;
 use App\Http\Controllers\ESchoolController;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubLocationController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\VTCStudentController;
-use App\Http\Controllers\VTCTeacherController;
 use App\Http\Controllers\WardController;
 use Illuminate\Support\Facades\Route;
 
