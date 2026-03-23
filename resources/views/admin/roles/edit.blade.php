@@ -1,6 +1,15 @@
 @extends('admin.app')
+<<<<<<< HEAD
 @section('nav-bar')
 @include('admin.layouts.sidebar')
+=======
+
+
+@section('nav-bar')
+
+@include('admin.layouts.sidebar')
+
+>>>>>>> 9b52476737316583a322bc5e5b0e877cf91d8e7f
 @endsection
 
 @section('content')

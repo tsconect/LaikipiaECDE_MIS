@@ -261,6 +261,11 @@
                                 <i class="metismenu-icon "></i> Ethnic Groups
                             </a>
                         </li>
+                          <li>
+                            <a href="{{route('admin.job-groups.index')}}">
+                                <i class="metismenu-icon "></i>Job Groups
+                            </a>
+                        </li>
                        
                        
 
@@ -346,7 +351,7 @@
                 @endcan
 
                 <li>
-                    <a href="{{ route('home') }}"  >
+                    <a href="{{ route('admin.my-account') }}"  >
                         <i class="metismenu-icon pe-7s-home" ></i>My Account
                     </a>
                 </li>

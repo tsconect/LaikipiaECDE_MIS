@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\ESchoolController;
 use App\Http\Controllers\EthnicGroupController;
+use App\Http\Controllers\JobGroupController;
 use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
@@ -53,6 +54,7 @@ Route::get('/gallery/{slug}', [App\Http\Controllers\CMS\PublicCMSController::cla
 Route::get('/faqs', [App\Http\Controllers\CMS\PublicCMSController::class, 'faqs'])->name('cms.faqs');
 Route::get('/testimonials', [App\Http\Controllers\CMS\PublicCMSController::class, 'testimonials'])->name('cms.testimonials');
 Route::get('/announcements', [App\Http\Controllers\CMS\PublicCMSController::class, 'announcements'])->name('cms.announcements');
+Route::get('/announcements/{id}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showAnnouncement'])->name('cms.announcement.show');
 Route::get('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'contactForm'])->name('cms.contact');
 Route::post('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'submitContact'])->name('cms.contact.submit');
 
@@ -91,6 +93,12 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('education-histories', EducationHistoryController::class);
             Route::resource('user-unions', UserUnionController::class);
             Route::resource('user-documents', UserDocumentController::class);
+            Route::resource('job-groups', JobGroupController::class);
+            Route::get('my-account', [UsersController::class, 'myAccount'])->name('my-account');
+
+            // {{ route('admin.users.update-password', $user->id) }}
+
+            Route::post('update-password/{id}', [UsersController::class, 'updatePassword'])->name('users.update-password');
 
 
             

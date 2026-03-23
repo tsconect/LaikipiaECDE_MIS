@@ -99,6 +99,12 @@ class PublicCMSController extends Controller
         return view('public.announcements', compact('announcements', 'totalAnnouncements'));
     }
 
+    public function showAnnouncement($id)
+    {
+        $announcement = Announcement::where('id', $id)->where('status', 'published')->firstOrFail();
+        return view('public.announcements.show', compact('announcement'));
+    }
+
     // Contact Form
     public function contactForm()
     {

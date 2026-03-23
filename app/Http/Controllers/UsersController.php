@@ -138,15 +138,18 @@ log_user_activity(
 
         $current_object = json_encode($user);
 
+        $role = $request->get('role')??$user->role;
+
         $user->update([
             'first_name'        => $request->input('first_name'),
             'middle_name'       => $request->input('middle_name'),
             'last_name'         => $request->input('last_name'),
             'email'             => $request->input('email'),
             'phone_number'      => $request->input('phone_number'),
-            'role'              => $request->input('role')
+            'role'              => $role
+        
             ]);
-            $user->syncRoles($request->get('role'));
+            $user->syncRoles($role);
         log_user_activity(
                 $user->id,
                 'users',
@@ -157,7 +160,7 @@ log_user_activity(
                 $current_object
             );
 
-        return redirect()->route('admin.users.index')->with('success', 'User updated successfully.');
+        return redirect()->back()->with('success', 'User updated successfully.');
     }
 
 
@@ -273,5 +276,29 @@ log_user_activity(
         return view('admin.users.systemlogs_details', compact('log'));
 
 
+    }
+
+    public function myAccount(){
+        $user = auth()->user();
+        $roles = Role::all();
+
+        return view('admin.users.my-account', compact('user', 'roles'));
+    }
+
+    public function updatePassword($id, Request $request){
+        $request->validate([
+            'current_password' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        if (!Hash::check($request->current_password, auth()->user()->password)) {
+            return redirect()->back()->with('error', 'Current password is incorrect.');
+        }
+
+
+        $user = User::find($id);
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->back()->with('success', 'Password updated successfully.');
     }
 }

@@ -1,4 +1,4 @@
-@extends('backoffice.layouts.app')
+@extends('admin.app')
 
 
 @section('nav-bar')

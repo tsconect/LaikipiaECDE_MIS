@@ -254,11 +254,9 @@ class TeacherController extends Controller
         'tsc_number',
         //school info
         "school_name",
-        "school_contact_name",
-        "school_contact_designation",
-        "school_contact_phone_number",
+       
         // ------
-        'school_id',
+      
         'ippd_number',
         'date_of_first_appointment',
         'terms_of_engagement',
@@ -279,16 +277,14 @@ class TeacherController extends Controller
             $_->dob,
             $_->tsc_number,
             //school info
-            $_->school->school_name,
-            $_->school->school_contact_first_name . " " . $_->school->school_contact_middle_name,
-            $_->school->school_contact_designation,
-            $_->school->school_contact_phone_number,
+            $_->school->school_name??'-',
+           
             // -----
-            $_->school_id,
+
             $_->ippd_number,
             $_->date_of_first_appointment,
             $_->terms_of_engagement,
-            $_->job_group,
+            $_->job_group_id,
         ]);
     }
 

@@ -109,6 +109,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="youtube_url">YouTube URL</label>
+                            <input type="url" name="youtube_url" id="youtube_url" class="form-control" value="{{ $settings['youtube_url'] ?? ($settings['social_youtube'] ?? '') }}">
+                        </div>
+
+                        <div class="form-group">
                             <label for="site_logo">Site Logo</label>
                             @if($settings['site_logo'] ?? null)
                                 <div class="mb-2">

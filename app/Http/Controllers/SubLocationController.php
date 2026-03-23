@@ -6,7 +6,6 @@ use App\Models\Constituency;
 use App\Models\County;
 use App\Models\SubLocation;
 use App\Models\Ward;
-use App\Models\Wards;
 use Illuminate\Http\Request;
 
 class SubLocationController extends Controller
@@ -17,7 +16,7 @@ class SubLocationController extends Controller
      public function index()
      {
         $sublocations = SubLocation::all();
-         return view('admin.subLocations.index', compact('sublocations'));
+         return view('admin.sublocations.index', compact('sublocations'));
      }
 
     function create()
@@ -41,20 +40,37 @@ class SubLocationController extends Controller
        return redirect()->route('admin.sub-locations.index')->with('success', $subLocation->name .  ' Sublocation was created successfully');
     }
 
-    function editSubLocations(SubLocation $subLocation)
+    public function edit(SubLocation $sub_location)
     {
-        // return $ward;
+        $subLocation = $sub_location;
 
-        return view('backoffice.sublocations.edit', compact('subLocation'));
+        return view('admin.sublocations.edit', compact('subLocation'));
     }
 
-    function updateSubLocations(SubLocation $subLocation)
+    public function update(Request $request, SubLocation $sub_location)
     {
-        // return request()->only(['name']);
-        $subLocation->update(request()->only(['name']));
+        $request->validate([
+            'name' => 'required',
+        ]);
 
-        return  redirect(route('admin.sublocation.edit', $subLocation->id))->with('success', 'Ward '. $subLocation->name .' was updated succesfully');
+        $sub_location->update($request->only(['name']));
 
+        return redirect()->route('admin.sub-locations.index')
+            ->with('success', 'Sub Location ' . $sub_location->name . ' was updated successfully');
+    }
+
+    public function show(SubLocation $sub_location)
+    {
+        return redirect()->route('admin.sub-locations.edit', $sub_location->id);
+    }
+
+    public function destroy(SubLocation $sub_location)
+    {
+        $name = $sub_location->name;
+        $sub_location->delete();
+
+        return redirect()->route('admin.sub-locations.index')
+            ->with('success', 'Sub Location ' . $name . ' was deleted successfully');
     }
 
 
