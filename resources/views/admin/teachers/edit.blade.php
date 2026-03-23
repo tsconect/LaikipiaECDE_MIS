@@ -1,353 +1,533 @@
-@extends('backoffice.layouts.app')
-
-
+@extends('admin.app')
 @section('nav-bar')
-
-@include('layouts.main_nav')
-
+@include('admin.layouts.sidebar')
 @endsection
 
-
 @section('content')
-    @include('flash-message')
 
-    <div class="card-body">
-        <form class="" action="{{ route('admin.teachers.store') }}" method="post">
-            @csrf
-                <div id="smartwizard">
-                <ul class="forms-wizard">
-                    <li>
-                        <a href="#step-1">
-                            <em>1</em><span>Personal Details</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-2">
-                            <em>2</em><span>Residential Details</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-3">
-                            <em>3</em><span>School Details</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#step-4">
-                            <em>4</em><span>Education Background & Unions</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#step-5">
-                            <em>5</em><span>Next of Kin</span>
-                        </a>
-                    </li>
-
+<div class="card-body">
+    <div class="container mt-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
                 </ul>
-                <div class="form-wizard-content">
-                    <div id="step-1">
-                        <div class="form-row">
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">First Name</label>
-                                    <input name="name" id="first_name" placeholder="John" required
-                                        type="text"class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Middle Name</label>
-                                    <input name="name" id="middle_name" placeholder="Doe" required
-                                        type="text"class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Last Name</label>
-                                    <input name="name" id="last_name" placeholder="Watt" required
-                                        type="text"class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Are you Differently abled?</label>
-                                    <select name="disability" id="disability" class="form-control" required>
-                                        <option value="no">No</option>
-                                        <option value="yes">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">PLWD Number</label>
-                                    <input name="plwd_number" id="plwd_number" placeholder="PLWD-TS128/2012" required
-                                        type="text"class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Email</label>
-                                    <input name="email" id="email" placeholder="example@xyz.com" required type="email"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Phone</label>
-                                    <input name="phone" id="phone" placeholder="07**********" required type="text"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">ID Number</label>
-                                    <input name="id_number" id="id_number" placeholder="33603456" required type="number"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">KRA Pin</label>
-                                    <input name="kra_pin" id="kra_pin" placeholder="Teacher name" required type="text"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Gender</label>
-                                    <select name="gender" id="" class="form-control" required>
-                                        <option>Select Gender</option>
+            </div>
+        @endif
+    <form method="POST" action="{{ route('admin.teachers.update', $teacher->id) }}">
+        @csrf
+        @method('PUT')
 
 
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
+        <!-- ================= PERSONAL INFORMATION ================= -->
 
+        <div class="card p-2 shadow-sm mb-4">
 
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Date of birth</label>
-                                    <input name="dob" id="dob" placeholder="D.O.B" required type="date"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Do you have TSC No.</label>
-                                    <select name="gender" id="" class="form-control" required>
-                                        <option value="no_tsc_number">N0</option>
-                                        <option value="yes_tsc_number">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">TSC Number</label>
-                                    <input name="tsc_number" id="tsc_number" placeholder="TSC/0352/3826" required type="text"
-                                        class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Passport Photo (Upload size 2MB Max)</label>
-                                    <input name="photo" id="photo" required type="file" class="form-control">
-                                </div>
-                            </div>
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Edit Teacher</h5>
+            </div>
+
+            <div class="card-body">
+
+               <div class="row g-4">
+                    @if(session()->has('success'))
+                        <div class="alert alert-success">
+                            {{ session()->get('success') }}
                         </div>
+                    @endif
+                    
+                    <div class="col-md-4 mb-3">
+                        <label for="first_name">First Name</label>
+
+                        <input 
+                            type="text"
+                            name="first_name"
+                            id="first_name"
+                            class="form-control"
+                            placeholder="John"
+                            value="{{  $teacher->user->first_name }}"
+                        >
+
+                        @error('first_name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
-                    <div id="step-2">
-                        <div id="accordion" class="accordion-wrapper mb-3">
-                            <div class="form-row">
-                                <div class="col-md-6">
-                                    <label for="name" class="">County Of Origin </label>
-                                    <select name="const_id" id="" class="form-control" required>
-                                        <option>Select County</option>
-                                        <option value="">Laikipia</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="name" class="">Select Constituency </label>
-                                    <select name="const_id" id="" class="form-control" required>
-                                        <option>Select Constituency</option>
-                                        @foreach ($constituencies as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
 
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="name" class="">Select Ward </label>
-                                    <select name="ward_id" id="" class="form-control" required>
-                                        <option>Select Ward</option>
-                                        @foreach ($wards as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
 
-                                    </select>
+                    <div class="col-md-4 mb-3">
+                        <label for="middle_name">Middle Name</label>
 
-                                </div>
+                        <input
+                            type="text"
+                            name="middle_name"
+                            id="middle_name"
+                            class="form-control"
+                            placeholder="Doe"
+                            value="{{  $teacher->user->middle_name }}"
+                        >
 
-                                <div class="col-md-6">
-                                    <label for="name" class="">Sub-Location </label>
-                                    <select name="ward_id" id="" class="form-control" required>
-                                        <option>Select Sublocation</option>
-                                        <option value="">Gatirima</option>
+                        @error('middle_name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
 
-                                    </select>
 
-                                </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="last_name">Last Name</label>
 
-                                <div class="col-md-6">
-                                    <div class="position-relative form-group">
-                                        <label for="name" class="">Village</label>
-                                        <input name="village" id="village" placeholder="village" required type="text"
-                                            class="form-control">
-                                    </div>
-                                </div>
+                        <input
+                            type="text"
+                            name="last_name"
+                            id="last_name"
+                            class="form-control"
+                            placeholder="Watt"
+                            value="{{  $teacher->user->last_name }}"
+                        >
 
-                            </div>
+                        @error('last_name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+                    <!-- PWD Status -->
+                         <div class="col-md-4 mb-3">
+                            <label class="form-label fw-semibold">Are you a Person with Disability (PWD)? <span class="text-danger">*</span></label>
+                            <select name="pwd_status" id="pwd_status" 
+                                    class="form-control @error('pwd_status') is-invalid @enderror"
+                                    onchange="togglePWDFields()" required>
+                                <option value="">Select option</option>
+                                <option value="Yes" {{  $teacher->pwd_status == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                <option value="No" {{  $teacher->pwd_status == 'No' ? 'selected' : '' }}>No</option>
+                            </select>
+                            @error('pwd_status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                    </div>
-                    <div id="step-3">
-                        <div class="form-row">
-                            <div class="col-md-6">
 
-                                <label for="school_id" class="">Which school is the Teacher Posted? </label>
-                                <select name="school_id" id="" class="form-control" required>
-                                    <option>Select School</option>
-                                    @foreach ($ecde_schools as $value)
-                                        <option value="{{ $value->id }}">{{ $value->school_name }}</option>
-                                    @endforeach
-
+                        <!-- Conditional PWD Fields -->
+                        <div id="pwd_fields" class="col-md-12 row g-4" style="display: none;">
+                           <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Disability Type</label>
+                                <select name="disability_type" class="form-control @error('disability_type') is-invalid @enderror">
+                                    <option value="">Select type</option>
+                                    <option value="Visual Impairment">Visual Impairment</option>
+                                    <option value="Hearing Impairment (Deaf)">Hearing Impairment (Deaf)</option>
+                                    <option value="Physical Impairment">Physical Impairment</option>
+                                    <option value="Intellectual Disability">Intellectual Disability</option>
+                                    <option value="Speech &amp; Language Impairment">Speech &amp; Language Impairment</option>
+                                    <option value="Multiple Disabilities">Multiple Disabilities</option>
+                                    <option value="Other">Other</option>
                                 </select>
+                                @error('disability_type')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Impairment Details</label>
+                                <textarea name="impairment_details" 
+                                          class="form-control @error('impairment_details') is-invalid @enderror"
+                                          rows="3"
+                                          placeholder="Brief description of impairment...">{{ old('impairment_details') }}</textarea>
+                                @error('impairment_details')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
+
+
+
+                    <div class="col-md-4 mb-3">
+                        <label for="ethnicity">Ethnicity</label>
+
+                        <select
+                            name="ethnicity_id"
+                            id="ethnicity_id"
+                            class="form-control"
+                        >
+                            <option value="">Select Ethnicity</option>
+                            <option value="kikuyu">Kikuyu</option>
+                            <option value="luhya">Luhya</option>
+                            <option value="luo">Luo</option>
+                            <option value="kalenjin">Kalenjin</option>
+                            <option value="kamba">Kamba</option>
+                            <option value="meru">Meru</option>
+                            <option value="kisii">Kisii</option>
+                            <option value="maasai">Maasai</option>
+                        </select>
+
+                        @error('ethnicity_id')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
-                    <div id="step-4">
-                        <div class="form-row">
 
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Education Level</label>
-                                    <select name="education_level" id="" class="form-control" required>
-                                        <option>Select Education Level</option>
-                                        <option value="degree">Degree</option>
-                                        <option value="diploma">Diploma</option>
-                                        <option value="certificate">Certificate</option>
-                                        <option value="form four certificate">Form Four Certifcate</option>
-                                        <option value="None of Above">None of Above</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Academic Certificates (Upload size 5MB Max Combined as
-                                        one PDF)</label>
-                                    <input name="certificate" id="certificates" required type="file" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="position-relative form-group ">
-                                    <label for="name" class="">Union *(are you a member any Union)</label>
-                                    <div class="row">
-                                        @foreach (\App\Models\Unions::get() as $value)
-                                            <div class="form-check pl-5">
-                                                <input class="form-check-input" type="checkbox" value="{{ $value->id }}"
-                                                    id="flexCheckChecked{{ $value->id }}" name="unions[]">
-                                                <label class="form-check-label" for="flexCheckChecked{{ $value->id }}">
-                                                    {{ $value->name }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                        <div class="form-check pl-5">
-                                            <input type="checkbox" class="form-check-input" name="None" id="none">
-                                            <label>None</label>
-                                        </div>
-                                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="email">Email</label>
 
-                                </div>
-                            </div>
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-control"
+                            placeholder="example@xyz.com"
+                            value="{{  $teacher->user->email }}"
+                        >
 
-                        </div>
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
-                    <div id="step-5">
-                        <div class="form-row">
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">First Name</label>
-                                    <input name="next_kin_name" id="next_kin_first_name" placeholder="John" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Middle Name</label>
-                                    <input name="next_kin_name" id="next_kin_middle_name" placeholder="Doe" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Last Name</label>
-                                    <input name="next_kin_name" id="next_kin_last_name" placeholder="Watt" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Phone</label>
-                                    <input name="next_kin_phone" id="next_kin_phone" placeholder="07**********" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">Gender</label>
-                                    <select name="next_kin_gender" id="" class="form-control" required>
-                                        <option>Select Gender</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
 
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">ID Number</label>
-                                    <input name="next_kin_id_number" id="next_kin_id_number" placeholder="33603456" required
-                                        type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="name" class="">RelationShip </label>
-                                    <input name="next_kin_relationship" id="next_kin_relationship" placeholder="Relationship"
-                                        required type="text" class="form-control">
-                                </div>
-                            </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="phone">Phone</label>
+
+                        <input
+                            type="text"
+                            name="phone_number"
+                            id="phone"
+                            class="form-control"
+                            placeholder="07********"
+                            value="{{  $teacher->user->phone_number }}"
+                        >
+
+                        @error('phone')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label for="id_number">ID Number</label>
+
+                        <input
+                            type="number"
+                            name="id_number"
+                            id="id_number"
+                            class="form-control"
+                            value="{{ $teacher->id_number }}"
+                            placeholder="Enter ID"
+                        >
+
+                        @error('id_number')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label for="kra_pin">KRA PIN</label>
+
+                        <input
+                            type="text"
+                            name="kra_pin"
+                            id="kra_pin"
+                            class="form-control"
+                            value="{{  $teacher->kra_pin }}"
+                            placeholder="A*********"
+                        >
+
+                        @error('kra_pin')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label for="gender">Gender</label>
+
+                        <select
+                            name="gender"
+                            id="gender"
+                            class="form-control"
+                        >
+                            <option value="">Select Gender</option>
+                            <option value="male" @if($teacher->gender == 'male') selected @endif>Male</option>
+                            <option value="female" @if($teacher->gender == 'female') selected @endif>Female</option>
+                        </select>
+
+                        @error('gender')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+                        <label for="dob">Date of Birth</label>
+
+                        <input
+                            type="date"
+                            name="dob"
+                            id="dob"
+                            class="form-control"
+                            value="{{  $teacher->dob }}"
+                        >
+
+                        @error('dob')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
+
+                        <label for="has_tsc">Has TSC Number?</label>
+
+                        <select
+                            name="has_tsc"
+                            id="has_tsc"
+                            class="form-control"
+                            onchange="hasTsc()"
+                        >
+                            <option value="0" @if($teacher->has_tsc == 0) selected @endif>No</option>
+                            <option value="1" @if($teacher->has_tsc == 1) selected @endif>Yes</option>
+                        </select>
+
+                        @error('has_tsc')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+
+                    </div>
+
+
+                    <div class="col-md-4 mb-3" id="school_contact_tsc_number_div" style="display: none">
+
+                        <label for="school_contact_tsc_number">TSC Number</label>
+
+                        <input
+                            type="text"
+                            name="tsc_number"
+                            id="tsc_number"
+                            class="form-control"
+                            value="{{  $teacher->tsc_number }}"
+                            placeholder="Enter TSC number"
+                            
+                        >
+
+                        @error('school_contact_tsc_number')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+
+                    </div>
+
+                    <script type="text/javascript">
+                        function hasTsc()
+                        {
+                            if(document.getElementById('has_tsc').value == 1)
+                            {
+                                document.getElementById('school_contact_tsc_number_div').style.display = 'block';
+                            }
+                            else
+                            {
+                                document.getElementById('school_contact_tsc_number_div').style.display = 'none';
+                            }
+                        }
+                    </script>
+
+
+                    <div class="col-md-4 mb-3">
+
+                        <label for="date_of_first_appointment">
+                            Date of First Appointment
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date_of_first_appointment"
+                            id="date_of_first_appointment"
+                            class="form-control"
+                            value="{{  $teacher->date_of_first_appointment }}"
+                        >
+
+                        @error('date_of_first_appointment')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+
+                    </div>
+
+
+                    <!-- Terms of Service -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Terms of Service <span class="text-danger">*</span></label>
+                        <select name="terms_of_service" class="form-control @error('terms_of_service') is-invalid @enderror" required>
+                            <option value="">Select terms</option>
+                            <option value="Permanent" {{ $teacher->terms_of_service == 'Permanent' ? 'selected' : '' }}>Permanent</option>
+                            <option value="Contract" {{  $teacher->terms_of_service == 'Contract' ? 'selected' : '' }}>Contract</option>
+                        </select>
+                        @error('terms_of_service')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <label for="job_group">Job Group</label>
+
+                        <select
+                            name="job_group_id"
+                            id="job_group"
+                            class="form-control"
+                        >
+                            <option value="">Select Job Group</option>
+                            <option value="K">K</option>
+                            <option value="L">L</option>
+                            <option value="M">M</option>
+                            <option value="N">N</option>
+                            <option value="O">O</option>
+                            <option value="P">P</option>
+                            <option value="Q">Q</option>
+                            <option value="R">R</option>
+                        </select>
+                    </div>
+ <!-- Location Fields (Cascading) -->
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
+                            <select name="county_id" id="countySelect" 
+                                    class="form-control @error('county_id') is-invalid @enderror"
+                                     required>
+                                <option value="">Select county</option>
+                                     @foreach($counties as $county)
+                                        <option value="{{ $county->county_id }}" {{ old('county_id') == $county->county_id || $county->county_id == 'ob6SxuRcqU4' ? 'selected' : '' }}>{{ $county->name }}</option>
+                                    @endforeach
+                            </select>
+                            @error('county_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <button class="mt-5 btn btn-success col-12 ">Submit</button>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Sub-County</label>
+                            <select name="subcounty_id" id="constituencySelect" 
+                                    class="form-control @error('subcounty_id') is-invalid @enderror"
+                                    >
+                                <option value="">Select sub-county</option>
+                            </select>
+                            @error('subcounty_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Ward</label>
+                            <select name="ward_id" id="wardSelect" 
+                                    class="form-control @error('ward_id') is-invalid @enderror">
+                                <option value="">Select ward</option>
+                            </select>
+                            @error('ward_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">School <span class="text-danger">*</span></label>
+                            <select name="school_id" id="schoolSelect" 
+                                    class="form-control @error('school_id') is-invalid @enderror"
+                                    >
+                                <option value="">Select school</option>
+                                @foreach($ecde_schools as $school)
+                                    <option value="{{ $school->id }}"  @if($teacher->school_id == $school->id) selected @endif>{{ $school->school_name }}</option>
+                                @endforeach
+                            </select>
+                            @error('school_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        @error('job_group')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
 
                     </div>
 
                 </div>
-        </form>
+                <div class="text-right">
+                    <button class="btn btn-success" type="submit">
+                        Update
+                    </button>
+                </div>
+
+            </div>
+
         </div>
-        <div class="divider"></div>
-        <div class="clearfix">
-            <button type="button" id="reset-btn" class="btn-shadow float-left btn btn-link">Reset</button>
-            <button type="button" id="next-btn"
-                class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">Next</button>
-            <button type="button" id="prev-btn"
-                class="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button>
-        </div>
 
-    </div>
+    </form>
+
+</div>
+   <script>
+    // Toggle PWD fields
+    function togglePWDFields() {
+        const status = document.getElementById('pwd_status').value;
+        const fields = document.getElementById('pwd_fields');
+        fields.style.display = (status === 'Yes') ? 'flex' : 'none';
+    }
+
+   
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+     
+        
+        // Pre-fill PWD fields if editing
+        if (document.getElementById('pwd_status').value === 'Yes') {
+            document.getElementById('pwd_fields').style.display = 'flex';
+        }
+    });
+</script>
+
+ <script>
+                                // Pass PHP variables to JavaScript
+    const data = {
+        counties: @json($counties),
+        constituencies: @json($sub_counties),
+        wards: @json($wards),
+
+    };
+</script>
+
+  <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const countySelect = document.getElementById('countySelect');
+        const constituencySelect = document.getElementById('constituencySelect');
+        const wardSelect = document.getElementById('wardSelect');
+       
+        countySelect.addEventListener('change', function () {
+            const countyId = this.value;
+            constituencySelect.innerHTML = '<option value="">Select Sub County</option>';
+            wardSelect.innerHTML = '<option value="">Select Ward</option>';
+           
+            if (countyId) {
+                const constituencies = data.constituencies.filter(c => c.county_code == countyId);
 
 
+                constituencies.forEach(constituency => {
+                    const option = document.createElement('option');
+                    option.value = constituency.constituency_id;
+                    option.textContent = constituency.name;
+                    constituencySelect.appendChild(option);
+                });
+            }
+        });
+
+
+        constituencySelect.addEventListener('change', function () {
+            const constituencyId = this.value;
+            wardSelect.innerHTML = '<option value="">Select Ward</option>';
+
+            if (constituencyId) {
+                const wards = data.wards.filter(w => w.constituency_code == constituencyId);
+                wards.forEach(ward => {
+                    const option = document.createElement('option');
+                    option.value = ward.id;
+                    option.textContent = ward.name;
+                                            wardSelect.appendChild(option);
+                                        });
+                                    }
+                                });
+
+                              
+                            });
+
+                            </script>     
 @endsection

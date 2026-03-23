@@ -13,8 +13,8 @@
       
         <div class="card-body">
             <h5 class="card-title text-right">
-                <a href="{{ route('admin.unions.create') }}"><button class="btn btn-danger ">
-                        <i class="fa fa-plus"></i> New Union</button></a>
+                <a href="{{ route('admin.documents.create') }}"><button class="btn btn-danger ">
+                        <i class="fa fa-plus"></i> New Document</button></a>
             </h5>
             <div class=" card-body">
                 <div class="table-responsive">
@@ -24,7 +24,8 @@
                                 <th>S/N </th>
                                 <th>Created On </th>
                                 <th>Name</th>
-                                <th>Members</th>
+                                <th>Required</th>
+                                
                    
                                 
                            
@@ -33,21 +34,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($unions as $item)
+                            @foreach ($documents as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at }}</td>
                                     <td>{{ $item->name }}
                                     </td>
-                                    <td>0</td>
+                                    <td>
+                                        @if ($item->required == 1)
+                                            <span class="badge bg-success">Yes</span>
+                                        @else
+                                            <span class="badge bg-danger">No</span>
+                                        @endif
+                                    </td>
                                     
                                     <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.unions.show', $item->id) }}">
+                                            href="{{ route('admin.documents.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.unions.edit', $item->id) }}">
+                                            href="{{ route('admin.documents.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>

@@ -1,16 +1,24 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\CountyController;
 use App\Http\Controllers\DepartMentWorkersController;
+use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\ESchoolController;
+use App\Http\Controllers\EthnicGroupController;
+use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubLocationController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\UnionController;
+use App\Http\Controllers\UserDocumentController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserUnionController;
 use App\Http\Controllers\VTCStudentController;
 use App\Http\Controllers\VTCTeacherController;
 use App\Http\Controllers\WardController;
@@ -74,12 +82,18 @@ Route::group(['middleware' => ['auth']], function () {
             //
 
             //Unions
-            Route::get('/new-unions', [App\Http\Controllers\UnionController::class, 'create'])->name('unions.create');
-            Route::any('/all-unions', [App\Http\Controllers\UnionController::class, 'index'])->name('unions.all');
-            Route::post('/save-unions', [App\Http\Controllers\UnionController::class, 'store'])->name('unions.store');
-            Route::get('edit-unions/{union}', [App\Http\Controllers\UnionController::class, 'edit'])->name('edit.union');
-            Route::post('update-unions/{union}', [App\Http\Controllers\UnionController::class, 'update'])->name('union.update');
+            Route::resource('unions', UnionController::class);
+            Route::resource('ethnic-groups', EthnicGroupController::class);
+            Route::resource('documents', DocumentController::class);
 
+            Route::resource('next-of-kins', NextOfKinController::class);
+            Route::resource('beneficiaries', BeneficiaryController::class);
+            Route::resource('education-histories', EducationHistoryController::class);
+            Route::resource('user-unions', UserUnionController::class);
+            Route::resource('user-documents', UserDocumentController::class);
+
+
+            
 
             //school
             Route::resource('ecde-schools', ESchoolController::class);

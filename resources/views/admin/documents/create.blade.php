@@ -16,7 +16,7 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.unions.store') }}">
+    <form method="POST" action="{{ route('admin.documents.store') }}">
         @csrf
 
 
@@ -25,7 +25,7 @@
         <div class="card p-2 shadow-sm mb-4">
 
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0">Register New Union</h5>
+                <h5 class="mb-0">Create New Document</h5>
             </div>
             @csrf
             <div class="form-row">
@@ -41,11 +41,26 @@
                     </span>
                     @enderror
                 </div>
+                <div class="col-md-6">
+                    <div class="position-relative form-group">
+                        <label for="is_required" class="">Is Required</label>
+                        <select name="is_required" id="is_required" class="form-control" required>
+                            <option value="">Select</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    @error('is_required')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
             </div>
 
             <div class="text-right">
                     <button class="btn btn-success" type="submit">
-                        Register
+                        Create
                     </button>
                 </div>
         </form>

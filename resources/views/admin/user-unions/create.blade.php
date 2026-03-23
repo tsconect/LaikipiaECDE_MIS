@@ -16,7 +16,7 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.unions.store') }}">
+    <form method="POST" action="{{ route('admin.user-unions.store') }}">
         @csrf
 
 
@@ -25,27 +25,37 @@
         <div class="card p-2 shadow-sm mb-4">
 
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0">Register New Union</h5>
+                <h5 class="mb-0">Add New Academic Qualification</h5>
             </div>
             @csrf
-            <div class="form-row">
+            <div class="form-row p-3">
+
                 <div class="col-md-6">
                     <div class="position-relative form-group">
-                        <label for="name" class="">Name</label>
-                        <input name="name" id="name" placeholder="Enter Union name" required type="text"
+                        <label for="union_id" class="">Union</label>
+                        <select name="union_id" id="union_id" class="form-control" required>
+                            <option value="">Select Union</option>
+                            @foreach ($unions as $union)
+                                <option value="{{ $union->id }}">{{ $union->name }}</option>
+                            @endforeach
+                        </select>
+                        
+                    </div>
+                </div>
+                {{-- memebership no --}}
+                <div class="col-md-6">
+                    <div class="position-relative form-group">
+                        <label for="membership_no" class="">Membership Number</label>
+                        <input name="membership_no" id="membership_no" placeholder="Enter membership number" type="text"
                             class="form-control">
                     </div>
-                    @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
             </div>
 
+
             <div class="text-right">
                     <button class="btn btn-success" type="submit">
-                        Register
+                        Submit
                     </button>
                 </div>
         </form>

@@ -14,7 +14,7 @@
         <div class="card-body">
             <h5 class="card-title text-right">
                 <a href="{{ route('admin.unions.create') }}"><button class="btn btn-danger ">
-                        <i class="fa fa-plus"></i> New Union</button></a>
+                        <i class="fa fa-plus"></i> New Group</button></a>
             </h5>
             <div class=" card-body">
                 <div class="table-responsive">
@@ -22,7 +22,7 @@
                         <thead>
                             <tr>
                                 <th>S/N </th>
-                                <th>Created On </th>
+                       
                                 <th>Name</th>
                                 <th>Members</th>
                    
@@ -33,10 +33,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($unions as $item)
+                            @foreach ($ethinic_groups as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->created_at }}</td>
+                                   
                                     <td>{{ $item->name }}
                                     </td>
                                     <td>0</td>

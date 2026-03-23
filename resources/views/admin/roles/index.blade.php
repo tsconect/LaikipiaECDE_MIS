@@ -39,11 +39,11 @@
                             <td><small class="text-muted">{{ $item->created_at->format('d M Y') }}</small></td>
                              <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.teachers.show', $item->id) }}">
+                                            href="{{ route('admin.roles.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.teachers.edit', $item->id) }}">
+                                            href="{{ route('admin.roles.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>

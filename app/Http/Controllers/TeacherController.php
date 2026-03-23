@@ -130,11 +130,79 @@ class TeacherController extends Controller
 
 
 
-   function edit(Teacher $id)
+   function edit($id)
    {
-    # code...
-    return $id;
+    $teacher = Teacher::find($id);
+    $sub_counties =Constituency::get();
+        $wards=Ward::get();
+        $ecde_schools = EcdeSchools::get();
+        $counties = County::get();
+        return view('admin.teachers.edit',compact('wards','sub_counties','ecde_schools','counties', 'teacher'));
 
+   
+
+   }
+
+   public function update (Request $request, $id)
+   {
+        try{
+            DB::beginTransaction();
+            $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz';
+            $newPassword = Str::random(6, $characters);
+
+            $teacher = Teacher::find($id);
+            
+            $obj = User::find($teacher->user_id);
+            $obj->first_name = $request->first_name;
+            $obj->middle_name = $request->middle_name;
+            $obj->last_name = $request->last_name;
+            $obj->email=$request->email;
+            $obj->phone_number= PhoneHelper::normalizePhoneNumber($request->phone_number);
+            $obj->role='Teacher';
+            $obj->password=Hash::make('teacher');
+            $obj->save();
+
+            $obj->syncRoles('Teacher');
+
+
+            $teacher->id_number=$request->id_number;
+            $teacher->kra_pin=$request->kra_pin;
+            $teacher->gender=$request->gender;
+            $teacher->dob=$request->dob;
+            $teacher->tsc_number=$request->tsc_number;
+            $teacher->ippd_number=$request->ippd_number;
+            $teacher->date_of_first_appointment=$request->date_of_first_appointment;
+            $teacher->terms_of_engagement=$request->terms_of_engagement;
+            $teacher->job_group_id =$request->job_group_id;
+
+            $teacher->ethnicity_id =$request->ethnicity_id;
+            $teacher->school_id=$request->school_id;
+            $teacher->pwd_status=$request->pwd_status;
+            $teacher->disability_type=$request->disability_type;
+            $teacher->impairment_details=$request->impairment_details;
+            $teacher->pwd_number=$request->pwd_number;
+            $teacher->county_id=$request->county_id;
+            $teacher->subcounty_id=$request->subcounty_id;
+            $teacher->ward_id=$request->ward_id;
+            $teacher->school_id = $request->school_id;
+            $teacher->save();
+
+            DB::commit();
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return $e->getMessage();
+            return back()->with('error', $e->getMessage());
+
+        }
+
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher '. $obj->name .   ' updated Successfully');
+
+
+       
+
+       return back()->with('success', 'Teacher '. $obj->name .   ' updated Successfully');
+       
    }
 
    function view(Teacher $id)

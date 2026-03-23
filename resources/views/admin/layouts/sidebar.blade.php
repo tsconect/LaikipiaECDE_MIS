@@ -41,6 +41,7 @@
                         <i class="metismenu-icon pe-7s-home" ></i>Dashboard
                     </a>
                 </li>
+                @can('admin.teachers.index')
                <li>
                     <a href="#"   >
                         <i class="metismenu-icon fa fa-book"   ></i>ECDE Teachers
@@ -60,6 +61,8 @@
 
                     </ul>
                 </li>
+                @endcan
+                @can('admin.ecde-schools.index')
               
                 <li>
                     <a href="#">
@@ -83,6 +86,8 @@
 
                     </ul>
                 </li>
+                @endcan
+                @can('admin.coordinators.index')
                 <li>
                     <a href="#"   >
                         <i class="metismenu-icon fa fa-user-tie"   ></i>ECDE Coordinators
@@ -98,9 +103,49 @@
 
                     </ul>
                 </li>
+                @endcan
+
+                 @can('admin.ecde-students.index')
+                <li>
+                    <a href="#"   >
+                        <i class="metismenu-icon fa fa-graduation-cap"   ></i>My Profile
+                        <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
+                    </a>
+                    <ul>
+                        <li >
+                            <a     href="{{ route('admin.next-of-kins.index') }}">
+                                <i class="metismenu-icon "></i>Nex Of KiN
+                            </a>
+                        </li>
+                         <li >
+                            <a     href="{{ route('admin.beneficiaries.index') }}">
+                                <i class="metismenu-icon "></i>Beneficiaries
+                            </a>
+                        </li>
+                         <li  >
+                            <a     href="{{ route('admin.user-unions.index') }}">
+                                <i class="metismenu-icon "></i>Academic Qualifications
+                            </a>
+                        </li>
+                         <li>
+                            <a     href="{{ route('admin.user-unions.index') }}">
+                                <i class="metismenu-icon "></i>My Unions
+                            </a>
+                        </li>
+                        <li>
+                            <a  href="{{ route('admin.user-documents.index') }}">
+                                <i class="metismenu-icon "></i>My Documents
+                            </a>
+                        </li>
+                     
+                     
+
+                    </ul>
+                </li>
+                @endcan
 
               
-
+                @can('admin.ecde-students.index')
                 <li>
                     <a href="#"   >
                         <i class="metismenu-icon fa fa-graduation-cap"   ></i>Students
@@ -116,6 +161,8 @@
 
                     </ul>
                 </li>
+                @endcan
+                @can('admin.counties.index')
 
                 <li>
                     <a href="#"   >
@@ -146,6 +193,7 @@
 
                     </ul>
                 </li>
+                @endcan
 
                     
 
@@ -167,7 +215,7 @@
                     </ul>
                 </li> --}}
 
-              
+              @can('admin.sms-logs.index')
                 <li>
                     <a href="#">
                         <i class="metismenu-icon fa fa-comments"></i>Communication
@@ -187,6 +235,9 @@
 
                     </ul>
                 </li>
+                @endcan
+                @can('admin.unions.all')    
+                
 
                  <li>
                     <a href="#">
@@ -195,14 +246,28 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="{{route('admin.unions.all')}}">
+                            <a href="{{route('admin.unions.index')}}">
                                 <i class="metismenu-icon "></i> Unions
                             </a>
                         </li>
+                         <li>
+                            <a href="{{route('admin.documents.index')}}">
+                                <i class="metismenu-icon "></i> Documents
+                            </a>
+                        </li>
+                       
+                         <li>
+                            <a href="{{route('admin.ethnic-groups.index')}}">
+                                <i class="metismenu-icon "></i> Ethnic Groups
+                            </a>
+                        </li>
+                       
                        
 
                     </ul>
                 </li>
+                @endcan
+                @can('admin.users.index')
                  <li>
                     <a href="#">
                         <i class="metismenu-icon pe-7s-rocket"></i>User Management
@@ -227,6 +292,8 @@
 
                     </ul>
                 </li>
+                @endcan
+                @can('admin.cms.settings.index')
 
                 <li>
                     <a href="#">
@@ -275,6 +342,13 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                @endcan
+
+                <li>
+                    <a href="{{ route('home') }}"  >
+                        <i class="metismenu-icon pe-7s-home" ></i>My Account
+                    </a>
                 </li>
                
 

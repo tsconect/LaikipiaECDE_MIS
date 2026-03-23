@@ -10,20 +10,23 @@ class UnionController extends Controller
     //
     public function index()
     {
-        $data = Unions::get();
-        return view('backoffice.unions.index', compact('data'));
+        $unions = Unions::get();
+        return view('admin.unions.index', compact('unions'));
     }
     function create(){
-        return view('backoffice.unions.create');
+        return view('admin.unions.create');
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|unique:unions,name',
+        ]);
         $obj = new Unions();
         $obj->name = $request->name;
 
         $obj->save();
-        return back()->with('success','Union Added Successfully');
+        return redirect()->route('admin.unions.index')->with('success', $obj->name . ' Union was created successfully!');
     }
 
     function edit(Unions $union)
