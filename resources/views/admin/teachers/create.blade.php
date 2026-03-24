@@ -214,6 +214,22 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="ippd_number">IPPd Number</label>
+
+                        <input
+                            type="text"
+                            name="ippd_number"
+                            id="ippd_number"
+                            class="form-control"
+                            placeholder="Enter IPPD Number"
+                            value="{{ old('ippd_number') }}"
+                        >
+
+                        @error('ippd_number')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
 
 
                     <div class="col-md-4 mb-3">
@@ -349,15 +365,49 @@
                     <!-- Terms of Service -->
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Terms of Service <span class="text-danger">*</span></label>
-                        <select name="terms_of_service" class="form-control @error('terms_of_service') is-invalid @enderror" required>
+                        <select name="terms_of_service" id="terms_of_service" class="form-control @error('terms_of_service') is-invalid @enderror" required onchange="showContractExpiry()">
                             <option value="">Select terms</option>
-                            <option value="Permanent" {{ old('terms_of_service') == 'Permanent' ? 'selected' : '' }}>Permanent & Pensionable</option>
+                            <option value="Permanent and pensionable" {{ old('terms_of_service') == 'Permanent' ? 'selected' : '' }}>Permanent & Pensionable</option>
                             <option value="Contract" {{ old('terms_of_service') == 'Contract' ? 'selected' : '' }}>Contract</option>
                         </select>
                         @error('terms_of_service')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="col-md-4 mb-3" id="contract_expiry_div" style="display: none">
+                        <label for="contract_expiry">Contract Expiry</label>
+
+                        <input
+                            type="date"
+                            name="contract_expiry"
+                            id="contract_expiry"
+                            class="form-control"
+                            value="{{ old('contract_expiry') }}"
+                            placeholder="Enter contract expiry date"
+                            {{-- cannot be in the past --}}
+                            min="{{ date('Y-m-d') }}"
+                            
+                        >
+
+                        @error('contract_expiry')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+
+                    </div>
+
+                    <script type="text/javascript">
+                        function showContractExpiry()
+                        {
+                            if(document.getElementById('terms_of_service').value == 'Contract')
+                            {
+                                document.getElementById('contract_expiry_div').style.display = 'block';
+                            }
+                            else
+                            {
+                                document.getElementById('contract_expiry_div').style.display = 'none';
+                            }
+                        }
+                    </script>
 
                     <div class="col-md-4 mb-3">
 
@@ -369,14 +419,10 @@
                             class="form-control"
                         >
                             <option value="">Select Job Group</option>
-                            <option value="K">K</option>
-                            <option value="L">L</option>
-                            <option value="M">M</option>
-                            <option value="N">N</option>
-                            <option value="O">O</option>
-                            <option value="P">P</option>
-                            <option value="Q">Q</option>
-                            <option value="R">R</option>
+                            @foreach($job_groups as $job_group)
+                                <option value="{{ $job_group->id }}" {{ old('job_group_id') == $job_group->id ? 'selected' : '' }}>{{ $job_group->name }}</option>
+                            @endforeach
+                           
                         </select>
                     </div>
  <!-- Location Fields (Cascading) -->

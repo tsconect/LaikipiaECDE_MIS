@@ -4,15 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Classes\SendSms;
 use App\Helpers\PhoneHelper;
+use App\Models\Beneficiary;
 use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
+use App\Models\EducationHistory;
+use App\Models\JobGroup;
+use App\Models\NextOfKin;
 use App\Models\Teacher;
 use App\Models\TeacherEducation;
 use App\Models\TeacherResidential;
 use App\Models\TeacherSchoolContact;
 use App\Models\TeachersUnions;
 use App\Models\User;
+use App\Models\UserDocument;
+use App\Models\UserUnion;
 use App\Models\Ward;
 use App\Models\Wards;
 use Carbon\Carbon;
@@ -38,7 +44,8 @@ class TeacherController extends Controller
         $wards=Ward::get();
         $ecde_schools = EcdeSchools::get();
         $counties = County::get();
-        return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools','counties'));
+        $job_groups = JobGroup::all();
+        return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools','counties', 'job_groups'));
    }
 
    public function store(Request $request)
@@ -91,8 +98,9 @@ class TeacherController extends Controller
             $teacher->tsc_number=$request->tsc_number;
             $teacher->ippd_number=$request->ippd_number;
             $teacher->date_of_first_appointment=$request->date_of_first_appointment;
-            $teacher->terms_of_engagement=$request->terms_of_engagement;
+            $teacher->terms_of_engagement=$request->terms_of_service;
             $teacher->job_group_id =$request->job_group_id;
+            $teacher->contract_expiry =$request->contract_expiry;
 
             $teacher->ethnicity_id =$request->ethnicity_id;
             $teacher->school_id=$request->school_id;
@@ -130,11 +138,79 @@ class TeacherController extends Controller
 
 
 
-   function edit(Teacher $id)
+   function edit($id)
    {
-    # code...
-    return $id;
+    $teacher = Teacher::find($id);
+    $sub_counties =Constituency::get();
+        $wards=Ward::get();
+        $ecde_schools = EcdeSchools::get();
+        $counties = County::get();
+        return view('admin.teachers.edit',compact('wards','sub_counties','ecde_schools','counties', 'teacher'));
 
+   
+
+   }
+
+   public function update (Request $request, $id)
+   {
+        try{
+            DB::beginTransaction();
+            $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz';
+            $newPassword = Str::random(6, $characters);
+
+            $teacher = Teacher::find($id);
+            
+            $obj = User::find($teacher->user_id);
+            $obj->first_name = $request->first_name;
+            $obj->middle_name = $request->middle_name;
+            $obj->last_name = $request->last_name;
+            $obj->email=$request->email;
+            $obj->phone_number= PhoneHelper::normalizePhoneNumber($request->phone_number);
+            $obj->role='Teacher';
+            $obj->password=Hash::make('teacher');
+            $obj->save();
+
+            $obj->syncRoles('Teacher');
+
+
+            $teacher->id_number=$request->id_number;
+            $teacher->kra_pin=$request->kra_pin;
+            $teacher->gender=$request->gender;
+            $teacher->dob=$request->dob;
+            $teacher->tsc_number=$request->tsc_number;
+            $teacher->ippd_number=$request->ippd_number;
+            $teacher->date_of_first_appointment=$request->date_of_first_appointment;
+            $teacher->terms_of_engagement=$request->terms_of_engagement;
+            $teacher->job_group_id =$request->job_group_id;
+
+            $teacher->ethnicity_id =$request->ethnicity_id;
+            $teacher->school_id=$request->school_id;
+            $teacher->pwd_status=$request->pwd_status;
+            $teacher->disability_type=$request->disability_type;
+            $teacher->impairment_details=$request->impairment_details;
+            $teacher->pwd_number=$request->pwd_number;
+            $teacher->county_id=$request->county_id;
+            $teacher->subcounty_id=$request->subcounty_id;
+            $teacher->ward_id=$request->ward_id;
+            $teacher->school_id = $request->school_id;
+            $teacher->save();
+
+            DB::commit();
+
+        }catch(\Exception $e){
+            DB::rollBack();
+            return $e->getMessage();
+            return back()->with('error', $e->getMessage());
+
+        }
+
+        return redirect()->route('admin.teachers.index')->with('success', 'Teacher '. $obj->name .   ' updated Successfully');
+
+
+       
+
+       return back()->with('success', 'Teacher '. $obj->name .   ' updated Successfully');
+       
    }
 
    function view(Teacher $id)
@@ -165,6 +241,17 @@ class TeacherController extends Controller
 
    }
 
+   public function show($id)
+   {
+       $teacher = Teacher::find($id);
+       $next_of_kins = NextOfKin::where('user_id', $teacher->user_id)->latest()->get();
+       $beneficiaries = Beneficiary::where('user_id', $teacher->user_id)->latest()->get();
+       $unions = UserUnion::where('user_id', $teacher->user_id)->latest()->get();
+       $documents = UserDocument::where('user_id', $teacher->user_id)->latest()->get();
+       $academic_histories = EducationHistory::where('user_id', $teacher->user_id)->latest()->get();
+       return view('admin.teachers.show', compact('teacher', 'next_of_kins', 'beneficiaries', 'unions', 'documents', 'academic_histories'));
+   }
+
    function generateStaffReturns()
    {
      # code...
@@ -184,17 +271,16 @@ class TeacherController extends Controller
         'gender',
         'dob',
         'tsc_number',
+        'job_group',
         //school info
         "school_name",
-        "school_contact_name",
-        "school_contact_designation",
-        "school_contact_phone_number",
+       
         // ------
-        'school_id',
+      
         'ippd_number',
         'date_of_first_appointment',
         'terms_of_engagement',
-        'job_group'
+       
 
     ]);
 
@@ -204,23 +290,22 @@ class TeacherController extends Controller
             $_->id,
             $_->user->first_name . " " .$_->user->middle_name ,
             $_->user->email,
-            $_->phone,
+            $_->phone_number,
             $_->id_number,
             $_->kra_pin,
             $_->gender,
             $_->dob,
             $_->tsc_number,
+            $_->jobGroup->name??'-',
             //school info
-            $_->school->school_name,
-            $_->school->school_contact_first_name . " " . $_->school->school_contact_middle_name,
-            $_->school->school_contact_designation,
-            $_->school->school_contact_phone_number,
+            $_->school->school_name??'-',
+           
             // -----
-            $_->school_id,
+
             $_->ippd_number,
             $_->date_of_first_appointment,
             $_->terms_of_engagement,
-            $_->job_group,
+           
         ]);
     }
 

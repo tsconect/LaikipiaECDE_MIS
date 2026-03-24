@@ -6,6 +6,7 @@ use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
 use App\Models\Students;
+use App\Models\Teacher;
 use App\Models\Ward;
 use App\Models\Wards;
 use Illuminate\Http\Request;
@@ -18,8 +19,22 @@ class StudentsController extends Controller
     //
    public function index()
    {
+        $user = auth()->user();
+
         
-        $students = Students::all();
+
+        if($user->role == 'Teacher'){
+            $teacher = Teacher::where('user_id', $user->id)->first();
+
+            if(!$teacher){
+                return redirect()->back()->with('error', 'Teacher not found');
+            }
+            $students = Students::where('school_id', $teacher->school_id)->latest()->get();
+        } else{
+            $students = Students::latest()->get();
+        }
+
+        
         return view('admin.students.index', compact('students'));
 
    }
@@ -28,7 +43,24 @@ class StudentsController extends Controller
     $sub_counties =Constituency::get();
     $wards=Ward::get();
     $counties = County::get();
-    $ecde_schools = EcdeSchools::get();
+    
+
+    $user = auth()->user();
+
+
+
+        
+
+    if($user->role == 'Teacher'){
+        $teacher = Teacher::where('user_id', $user->id)->first();
+        $ecde_schools = EcdeSchools::where('id', $teacher->school_id)->get();
+    } else{
+        $ecde_schools = EcdeSchools::get();
+    }
+
+
+
+
     return view('admin.students.create',compact('wards','sub_counties', 'counties', 'ecde_schools' ));
    }
 

@@ -15,7 +15,7 @@ class ESchoolController extends Controller
 {
        public function index()
        {
-
+            
            $schools = EcdeSchools::latest()->get();
            return view('admin.schools.index', compact('schools'));
        }
