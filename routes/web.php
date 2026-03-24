@@ -12,6 +12,7 @@ use App\Http\Controllers\ESchoolController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\JobGroupController;
 use App\Http\Controllers\NextOfKinController;
+use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubLocationController;

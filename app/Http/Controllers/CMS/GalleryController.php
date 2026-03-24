@@ -13,7 +13,17 @@ class GalleryController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:manage-cms', ['except' => []]);
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            $isAdminRole = strtolower((string) ($user->role ?? '')) === 'admin' || (method_exists($user, 'hasRole') && $user->hasRole('admin'));
+            $canManageCms = $user->can('manage-cms');
+
+            if (!$isAdminRole && !$canManageCms) {
+                abort(403, 'User does not have the right permissions.');
+            }
+
+            return $next($request);
+        });
     }
 
     public function index()
@@ -49,6 +59,11 @@ class GalleryController extends Controller
     }
 
     public function edit(Gallery $gallery)
+    {
+        return view('admin.cms.galleries.edit', compact('gallery'));
+    }
+
+    public function show(Gallery $gallery)
     {
         return view('admin.cms.galleries.edit', compact('gallery'));
     }

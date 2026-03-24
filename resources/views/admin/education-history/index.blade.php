@@ -51,13 +51,19 @@
 
 
                                     <td>
-                                        <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.documents.show', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="View Education History"
+                                            href="{{ route('admin.education-histories.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.documents.edit', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="Edit Education History"
+                                            href="{{ route('admin.education-histories.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
+                                        </a>
+                                        <form action="{{ route('admin.education-histories.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this education record?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger" title="Delete Education Record">
+                                                <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>

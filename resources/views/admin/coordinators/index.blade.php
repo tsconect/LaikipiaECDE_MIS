@@ -47,14 +47,21 @@
                                     <td>{{ $item->gender }}</td>
                                    
                                     <td>
-                                        <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.teachers.show', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="View Coordinator"
+                                            href="{{ route('admin.coordinators.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.teachers.edit', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="Edit Coordinator"
+                                            href="{{ route('admin.coordinators.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
+                                        <form action="{{ route('admin.coordinators.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this coordinator?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger" title="Delete Coordinator">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

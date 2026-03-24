@@ -56,6 +56,13 @@
                                             href="{{ route('admin.teachers.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
+                                        <form action="{{ route('admin.teachers.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this teacher?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger" title="Delete Teacher">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

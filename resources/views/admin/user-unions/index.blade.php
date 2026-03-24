@@ -46,12 +46,19 @@
 
                                     <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.documents.show', $item->id) }}">
+                                            href="{{ route('admin.user-unions.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.documents.edit', $item->id) }}">
+                                            href="{{ route('admin.user-unions.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
+                                                                                </a>
+                                                                                <form action="{{ route('admin.user-unions.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this union membership?');">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit" class="btn btn-outline-danger" title="Delete Union Membership">
+                                                                                        <i class="fa fa-trash"></i>
+                                                                                </form>
                                         </a>
                                     </td>
                                 </tr>

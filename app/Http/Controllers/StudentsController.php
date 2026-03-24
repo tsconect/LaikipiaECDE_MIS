@@ -112,6 +112,65 @@ class StudentsController extends Controller
 
    }
 
+   public function show(Students $ecde_student)
+   {
+       return view('admin.students.show', compact('ecde_student'));
+   }
+
+   public function edit(Students $ecde_student)
+   {
+       $sub_counties = Constituency::get();
+       $wards = Ward::get();
+       $counties = County::get();
+       $ecde_schools = EcdeSchools::get();
+
+       return view('admin.students.edit', compact('ecde_student', 'wards', 'sub_counties', 'counties', 'ecde_schools'));
+   }
+
+   public function update(Request $request, Students $ecde_student)
+   {
+       $request->validate([
+          'first_name' => 'required',
+          'middle_name' => 'nullable',
+          'last_name' => 'required',
+          'pwd_status' => 'required',
+          'disability_type' => 'nullable',
+          'impairment_details' => 'nullable',
+          'gender' => 'required',
+          'dob' => 'required',
+          'reg_no' => 'required',
+          'student_type_id' => 'nullable',
+          'ward_id' => 'required',
+          'sub_location_id' => 'required',
+          'village' => 'required',
+          'school_id' => 'required'
+       ]);
+
+       $ecde_student->first_name = $request->first_name;
+       $ecde_student->middle_name = $request->middle_name;
+       $ecde_student->last_name = $request->last_name;
+       $ecde_student->pwd_status = $request->pwd_status;
+       $ecde_student->disability_type = $request->disability_type;
+       $ecde_student->impairment_details = $request->impairment_details;
+       $ecde_student->gender = $request->gender;
+       $ecde_student->dob = $request->dob;
+       $ecde_student->reg_number = $request->reg_no;
+       $ecde_student->student_type_id = $request->student_type_id;
+       $ecde_student->ward_id = $request->ward_id;
+       $ecde_student->sub_location_id = $request->sub_location_id;
+       $ecde_student->village = $request->village;
+       $ecde_student->school_id = $request->school_id;
+       $ecde_student->save();
+
+       return redirect()->route('admin.ecde-students.index')->with('success', 'Student updated successfully');
+   }
+
+   public function destroy(Students $ecde_student)
+   {
+       $ecde_student->delete();
+       return redirect()->route('admin.ecde-students.index')->with('success', 'Student deleted successfully');
+   }
+
 
 
 }

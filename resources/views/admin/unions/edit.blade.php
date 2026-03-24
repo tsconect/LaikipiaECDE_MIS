@@ -17,8 +17,9 @@
 <div class="main-card mb-3 card col-12">
     <div class="card-body">
         <h5 class="card-title">Edit {{ $union->name }} union Details</h5>
-        <form class="" action="{{route('admin.union.update', $union->id)}}" method="post">
+        <form class="" action="{{ route('admin.unions.update', $union->id) }}" method="post">
             @csrf
+            @method('PUT')
             <div class="form-row">
                 <div class="col-md-6">
                     <div class="position-relative form-group">

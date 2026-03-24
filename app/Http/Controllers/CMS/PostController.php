@@ -12,7 +12,17 @@ class PostController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:manage-cms', ['except' => []]);
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            $isAdminRole = strtolower((string) ($user->role ?? '')) === 'admin' || (method_exists($user, 'hasRole') && $user->hasRole('admin'));
+            $canManageCms = $user->can('manage-cms');
+
+            if (!$isAdminRole && !$canManageCms) {
+                abort(403, 'User does not have the right permissions.');
+            }
+
+            return $next($request);
+        });
     }
 
     public function index()
@@ -56,6 +66,11 @@ class PostController extends Controller
     }
 
     public function edit(Post $post)
+    {
+        return view('admin.cms.posts.edit', compact('post'));
+    }
+
+    public function show(Post $post)
     {
         return view('admin.cms.posts.edit', compact('post'));
     }

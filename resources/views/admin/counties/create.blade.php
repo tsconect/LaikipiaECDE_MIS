@@ -17,7 +17,7 @@
 @endif
     <div class="card-body">
         <h5 class="card-title">County Details</h5>
-        <form class="" action="{{route('admin.unions.store')}}" method="post">
+        <form class="" action="{{ route('admin.counties.store') }}" method="post">
             @csrf
             <div class="form-row">
                 <div class="col-md-6">

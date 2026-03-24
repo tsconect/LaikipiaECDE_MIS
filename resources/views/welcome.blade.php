@@ -230,6 +230,11 @@
       display: grid; grid-template-columns: 1fr 1.15fr;
       gap: 72px; align-items: center;
     }
+    .governor-inner.no-image {
+      grid-template-columns: 1fr;
+      max-width: 980px;
+      margin: 0 auto;
+    }
     .governor-photo-wrap { position: relative; }
     .governor-photo-frame {
       position: relative; border-radius: 24px; overflow: hidden;
@@ -393,7 +398,7 @@
         $governorImageUrl = asset('storage/' . ltrim($governorImage, '/'));
       }
     } else {
-      $governorImageUrl = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80';
+      $governorImageUrl = null;
     }
   @endphp
 
@@ -432,7 +437,8 @@
 <div id="home-content-start">
 @if($showHomeGovernor)
 <section class="governor-section">
-  <div class="governor-inner">
+  <div class="governor-inner {{ $governorImageUrl ? '' : 'no-image' }}">
+    @if($governorImageUrl)
     <div class="governor-photo-wrap reveal">
       <div class="governor-photo-frame">
         <img src="{{ $governorImageUrl }}" alt="{{ $governorName }}">
@@ -442,6 +448,7 @@
         <div class="governor-badge-title">{{ $governorBadgeTitle }}</div>
       </div>
     </div>
+    @endif
 
     <div class="governor-content reveal">
       <div class="section-label">{{ $governorSectionLabel }}</div>
@@ -454,7 +461,11 @@
 
       <div class="governor-meta">
         <div class="governor-avatar">
-          <img src="{{ $governorImageUrl }}" alt="{{ $governorName }}">
+          @if($governorImageUrl)
+            <img src="{{ $governorImageUrl }}" alt="{{ $governorName }}">
+          @else
+            {{ strtoupper(substr($governorName, 0, 1)) }}
+          @endif
         </div>
         <div>
           <div class="governor-meta-name">{{ $governorName }}</div>

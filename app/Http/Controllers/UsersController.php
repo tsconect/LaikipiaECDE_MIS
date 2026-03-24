@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Classes\SendSms;
 use App\Models\SystemActivityLog;
 use App\Models\User;
-use Illuminate\Console\View\Components\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -60,6 +59,20 @@ log_user_activity(
                 );
 
         return view('admin.users.edit', compact('user', 'roles'));
+    }
+
+    public function show(User $user)
+    {
+        log_user_activity(
+            $user->id,
+            'users',
+            'show',
+            'User viewed user details for user id ' . $user->id,
+            url()->current(),
+            json_encode($user)
+        );
+
+        return view('admin.users.show', compact('user'));
     }
 
      public function store(Request $request)
@@ -166,6 +179,29 @@ log_user_activity(
         return redirect()->back()->with('success', 'User updated successfully.');
     }
 
+    public function destroy(User $user)
+    {
+        if (auth()->id() === $user->id) {
+            return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+        $oldUser = json_encode($user);
+        $userId = $user->id;
+        $user->delete();
+
+        log_user_activity(
+            $userId,
+            'users',
+            'destroy',
+            'User deleted user with id ' . $userId,
+            url()->current(),
+            null,
+            $oldUser
+        );
+
+        return redirect()->route('admin.users.index')->with('success', 'User deleted successfully.');
+    }
+
 
 
     //
@@ -263,7 +299,6 @@ log_user_activity(
         $log = SystemActivityLog::find($id);
 
         if (!$log) {
-            toast('System log not found', 'error');
            return redirect()->back()->with('error', 'System log not found');
         }
 
