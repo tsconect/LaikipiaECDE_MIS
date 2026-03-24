@@ -45,6 +45,7 @@ Route::get('/faqs', [App\Http\Controllers\CMS\PublicCMSController::class, 'faqs'
 Route::get('/testimonials', [App\Http\Controllers\CMS\PublicCMSController::class, 'testimonials'])->name('cms.testimonials');
 Route::get('/announcements', [App\Http\Controllers\CMS\PublicCMSController::class, 'announcements'])->name('cms.announcements');
 Route::get('/announcements/{id}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showAnnouncement'])->name('cms.announcement.show');
+Route::get('/ecde-schools', [App\Http\Controllers\CMS\PublicCMSController::class, 'schools'])->name('cms.schools');
 Route::get('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'contactForm'])->name('cms.contact');
 Route::post('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'submitContact'])->name('cms.contact.submit');
 
