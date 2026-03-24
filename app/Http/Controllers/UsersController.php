@@ -134,6 +134,8 @@ log_user_activity(
             'last_name'         => 'required|string|max:255',
             'email'             => 'required|email|max:255',
             'phone_number'      => 'required|string|max:20',
+            'id_number'         => 'nullable|string|max:20',
+            
         ]);
 
         $current_object = json_encode($user);
@@ -146,7 +148,8 @@ log_user_activity(
             'last_name'         => $request->input('last_name'),
             'email'             => $request->input('email'),
             'phone_number'      => $request->input('phone_number'),
-            'role'              => $role
+            'role'              => $role,
+            'id_number'         => $request->input('id_number'),
         
             ]);
             $user->syncRoles($role);

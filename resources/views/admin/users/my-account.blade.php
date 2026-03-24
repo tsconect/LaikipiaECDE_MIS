@@ -127,6 +127,27 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+
+                    {{-- id number --}}
+
+                    <div class="col-md-6 mb-3">
+                        <label for="id_number">ID Number</label>
+
+                        <input
+                            type="number"
+                            name="id_number"
+                            id="id_number"
+                            class="form-control"
+                            placeholder="33603456"
+                            value="{{  $user->id_number }}"
+                        >
+
+                        @error('id_number')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+
+
                     <div  class="col-md-6">
                         <label for="role" class="form-label">Role</label>
                         <select class="form-control" 

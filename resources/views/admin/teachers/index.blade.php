@@ -1,5 +1,5 @@
-@extends('admin.app')
 
+@extends('admin.app')
 @section('nav-bar')
 @include('admin.layouts.sidebar')
 @endsection
@@ -15,7 +15,7 @@
             <h5 class="card-title text-right"> <a href="{{ route('admin.generate_staff_returns') }}"><button class="btn btn-warning ">
                         <i class="fa fa-file"></i> Generate <?php $month = date('F ,Y');
                         echo $month; ?> Staff Returns</button></a>
-                <a href="{{ route('admin.teachers.create') }}"><button class="btn btn-warning ">
+                <a href="{{ route('admin.teachers.create') }}"><button class="btn btn-danger ">
                         <i class="fa fa-plus"></i> New Teacher</button></a>
             </h5>
             <div class=" card-body">
@@ -38,7 +38,7 @@
                         <tbody>
                             @foreach ($data as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->user->first_name . ' ' . $item->user->middle_name . ' ' . $item->user->last_name }}
                                     </td>
                                     <td>{{ $item->user->email }}</td>

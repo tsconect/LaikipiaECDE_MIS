@@ -120,6 +120,7 @@
                                 <div class="position-relative form-group">
                                     <label for="dob" class="">Date of birth</label>
                                     <input name="dob" id="dob" placeholder="D.O.B" required type="date"
+                                    max="{{ date('Y-m-d')}}"
                                         class="form-control">
                                 </div>
                             </div>
@@ -223,7 +224,8 @@
                                 <select name="school_id" id="school_id" class="form-control" required>
                                     <option>Select School</option>
                                     @foreach ($ecde_schools as $value)
-                                        <option value="{{ $value->id }}">{{ $value->school_name }}</option>
+                                        <option value="{{ $value->id }}" 
+                                            >{{ $value->school_name }}</option>
                                     @endforeach
 
                                 </select>

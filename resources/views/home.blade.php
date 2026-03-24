@@ -278,10 +278,10 @@
     }
 }
 </style>
-
+@if(Auth::user()->role == 'Admin')
 <div class="dashboard-modern">
     <div class="top-row">
-        <div>
+       
             <div class="stats-row">
                 <div class="stat-card">
                     <div class="stat-label">ECDE Schools</div>
@@ -304,9 +304,9 @@
                     <span class="stat-change amber">+76%</span>
                 </div>
             </div>
-        </div>
+     
 
-        <div class="kes-card">
+        {{-- <div class="kes-card">
             <div class="kes-label">Total Bursary Dispersed</div>
             <div class="kes-amount"><span>KES</span> 628</div>
             <div class="kes-sub">All periods combined</div>
@@ -320,7 +320,7 @@
                 <path d="M0,55 C15,52 20,42 35,44 C50,46 55,36 70,32 C85,28 90,38 105,33 C120,28 125,18 145,14 C165,10 170,22 190,18 C210,14 215,6 235,9 C255,12 260,20 280,16 L300,12 L300,70 L0,70 Z" fill="url(#goldGradHome)"/>
                 <path d="M0,55 C15,52 20,42 35,44 C50,46 55,36 70,32 C85,28 90,38 105,33 C120,28 125,18 145,14 C165,10 170,22 190,18 C210,14 215,6 235,9 C255,12 260,20 280,16 L300,12" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-        </div>
+        </div> --}}
     </div>
 
     <div class="content-row">
@@ -371,7 +371,7 @@
             </table>
         </div>
 
-        <div class="notif-panel">
+        {{-- <div class="notif-panel">
             <div class="notif-header">
                 <div class="notif-title-row">
                     <span>Technical Support</span>
@@ -457,9 +457,111 @@
             <div class="notif-footer">
                 <a class="btn-view-all text-center d-block text-decoration-none" href="{{ route('admin.sms-logs.index') }}">View All Messages</a>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
+
+@else
+<h4>WELCOME, {{ auth()->user()->first_name }}</h4>
+<style>
+.card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.custom-card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.card-icon {
+    font-size: 40px;
+    color: #0d6efd;
+}
+
+.card-title {
+    font-weight: 600;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #6c757d;
+}
+</style>
+
+<div class="row g-4">
+
+    <!-- My Account -->
+    <div class="col-md-3">
+        <a href="#" class="card-link">
+            <div class="card custom-card text-center p-4">
+                <div class="card-body">
+                    <div class="card-icon mb-3">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <h5 class="card-title">My Account</h5>
+                    <p class="card-text">View and manage your account info.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Change Password -->
+    <div class="col-md-3">
+        <a href="#" class="card-link">
+            <div class="card custom-card text-center p-4">
+                <div class="card-body">
+                    <div class="card-icon mb-3">
+                        <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <h5 class="card-title">Change Password</h5>
+                    <p class="card-text">Update your password securely.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+
+
+    <!-- My Details -->
+    <div class="col-md-3">
+        <a href="#" class="card-link">
+            <div class="card custom-card text-center p-4">
+                <div class="card-body">
+                    <div class="card-icon mb-3">
+                        <i class="bi bi-card-list"></i>
+                    </div>
+                    <h5 class="card-title">My Details</h5>
+                    <p class="card-text">Check your personal details.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+        <!-- Login -->
+    <div class="col-md-3">
+        <a href="#" class="card-link">
+            <div class="card custom-card text-center p-4">
+                <div class="card-body">
+                    <div class="card-icon mb-3">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                    </div>
+                    <h5 class="card-title">Logout</h5>
+                    <p class="card-text">Access your account quickly.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+@endif
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {

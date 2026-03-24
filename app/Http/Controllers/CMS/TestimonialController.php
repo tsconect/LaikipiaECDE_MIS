@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('permission:manage-cms', ['except' => []]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    //     $this->middleware('permission:manage-cms', ['except' => []]);
+    // }
 
     public function index()
     {

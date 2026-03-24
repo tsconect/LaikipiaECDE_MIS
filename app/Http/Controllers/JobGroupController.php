@@ -14,7 +14,9 @@ class JobGroupController extends Controller
      */
     public function index()
     {
-        //
+        $job_groups = JobGroup::latest()->get();
+
+        return view('admin.job-groups.index', compact('job_groups'));
     }
 
     /**
@@ -24,7 +26,7 @@ class JobGroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.job-groups.create');
     }
 
     /**
@@ -35,7 +37,17 @@ class JobGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $group = new JobGroup();
+        $group->name = $request->name;
+
+        $group->save();
+
+        return redirect()->route('admin.job-groups.index')
+            ->with('success', 'Job Group created successfully.');
     }
 
     /**

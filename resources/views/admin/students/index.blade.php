@@ -45,7 +45,9 @@
                                 {{$item->school->school_name??'-'}}
                             </td>
                             <td>
-                                {{$item->dob}}
+                                @if($item->dob)
+                                {{\Carbon\Carbon::parse($item->dob)->age}}
+                                @endif
                             </td>
 
 

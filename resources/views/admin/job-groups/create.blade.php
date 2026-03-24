@@ -16,7 +16,7 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.unions.store') }}">
+    <form method="POST" action="{{ route('admin.job-groups.store') }}">
         @csrf
 
 
@@ -25,14 +25,14 @@
         <div class="card p-2 shadow-sm mb-4">
 
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0">Register New Union</h5>
+                <h5 class="mb-0">Register Job Group</h5>
             </div>
             @csrf
             <div class="form-row">
                 <div class="col-md-6">
                     <div class="position-relative form-group">
                         <label for="name" class="">Name</label>
-                        <input name="name" id="name" placeholder="Enter Union name" required type="text"
+                        <input name="name" id="name" placeholder="Enter Job Group name" required type="text"
                             class="form-control">
                     </div>
                     @error('name')

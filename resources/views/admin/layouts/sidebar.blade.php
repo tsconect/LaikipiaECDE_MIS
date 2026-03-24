@@ -41,7 +41,7 @@
                         <i class="metismenu-icon pe-7s-home" ></i>Dashboard
                     </a>
                 </li>
-                @can('admin.teachers.index')
+                 @can('admin.ecde-schools.index')
                <li>
                     <a href="#"   >
                         <i class="metismenu-icon fa fa-book"   ></i>ECDE Teachers
@@ -105,16 +105,21 @@
                 </li>
                 @endcan
 
-                 @can('admin.ecde-students.index')
+                 {{-- @can('admin.ecde-students.index') --}}
                 <li>
                     <a href="#"   >
                         <i class="metismenu-icon fa fa-graduation-cap"   ></i>My Profile
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
                     </a>
                     <ul>
+                         {{-- <li >
+                            <a     href="{{ route('admin.next-of-kins.index') }}">
+                                <i class="metismenu-icon "></i>Profile
+                            </a>
+                        </li> --}}
                         <li >
                             <a     href="{{ route('admin.next-of-kins.index') }}">
-                                <i class="metismenu-icon "></i>Nex Of KiN
+                                <i class="metismenu-icon "></i>Next Of KiN
                             </a>
                         </li>
                          <li >
@@ -123,7 +128,7 @@
                             </a>
                         </li>
                          <li  >
-                            <a     href="{{ route('admin.user-unions.index') }}">
+                            <a     href="{{ route('admin.education-histories.index') }}">
                                 <i class="metismenu-icon "></i>Academic Qualifications
                             </a>
                         </li>
@@ -142,7 +147,7 @@
 
                     </ul>
                 </li>
-                @endcan
+                {{-- @endcan --}}
 
               
                 @can('admin.ecde-students.index')

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
-<style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
     :root {
         --navy-dark: #142240;
         --navy: #1a2d4d;

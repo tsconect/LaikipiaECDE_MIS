@@ -25,6 +25,7 @@
                        
                                 <th>Name</th>
                                 <th>Members</th>
+                                <th></th>
                    
                                 
                            
@@ -40,6 +41,7 @@
                                     <td>{{ $item->name }}
                                     </td>
                                     <td>0</td>
+                                    <td></td>
                                     
                                     <td>
                                         <a class="btn btn-outline-primary" title="View teacher's metadata"

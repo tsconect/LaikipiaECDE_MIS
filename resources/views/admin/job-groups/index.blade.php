@@ -7,14 +7,14 @@
 @section('content')
     @include('flash-message')
       <div class="card-header btn-success">
-            <h5>UNIONS</h5>
+            <h5>JOB GROUPS</h5>
         </div>
     <div class="card ">
       
         <div class="card-body">
             <h5 class="card-title text-right">
-                <a href="{{ route('admin.unions.create') }}"><button class="btn btn-danger ">
-                        <i class="fa fa-plus"></i> New Union</button></a>
+                <a href="{{ route('admin.job-groups.create') }}"><button class="btn btn-danger ">
+                        <i class="fa fa-plus"></i> New Job Group</button></a>
             </h5>
             <div class=" card-body">
                 <div class="table-responsive">
@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($unions as $item)
+                            @foreach ($job_groups as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at }}</td>
