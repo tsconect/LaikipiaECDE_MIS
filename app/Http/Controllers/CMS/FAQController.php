@@ -13,7 +13,7 @@ class FAQController extends Controller
         $this->middleware('auth');
         $this->middleware(function ($request, $next) {
             $user = auth()->user();
-            $isAdminRole = strtolower((string) ($user->role ?? '')) === 'admin' || (method_exists($user, 'hasRole') && $user->hasRole('admin'));
+            $isAdminRole = strtolower((string) ($user->role ?? '')) === 'admin' || ($user->hasRole('admin') ?? false);
             $canManageCms = $user->can('manage-cms');
 
             if (!$isAdminRole && !$canManageCms) {
