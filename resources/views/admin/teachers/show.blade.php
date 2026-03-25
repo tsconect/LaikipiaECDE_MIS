@@ -163,7 +163,7 @@
 
                         <div class="col-md-4">
                             <div class="label">School</div>
-                            <div class="value">{{ $teacher->school->name??'-' }}</div>
+                            <div class="value">{{ $teacher->ecdeSchool->school_name??'-' }}</div>
                         </div>
 
                         <div class="col-md-4">
@@ -178,7 +178,14 @@
 
                         <div class="col-md-4">
                             <div class="label">Terms</div>
-                            <div class="value">{{ $teacher->terms_of_engagement??'-' }}</div>
+                            <div class="value">{{ $teacher->terms_of_engagement??'-' }}
+
+                                @if($teacher->terms_of_engagement == 'Contract')
+                                - Expires on {{$teacher->contract_expiry}}
+                                @endif
+
+
+                            </div>
                         </div>
 
                         <div class="col-md-4">
@@ -186,10 +193,10 @@
                             <div class="value">{{ $teacher->pwd_status??'-' }}</div>
                         </div>
 
-                        <div class="col-md-4">
+                        {{-- <div class="col-md-4">
                             <div class="label">Disability</div>
                             <div class="value">{{ $teacher->disability_type??'-' }}</div>
-                        </div>
+                        </div> --}}
 
                         <div class="col-md-4">
                             <div class="label">PWD Number</div>
@@ -198,7 +205,7 @@
 
                         <div class="col-md-4">
                             <div class="label">Ethnicity</div>
-                            <div class="value">{{ $teacher->ethinicity->name??'-' }}</div>
+                            <div class="value">{{ $teacher->ethnicGroup->name??'-' }}</div>
                         </div>
 
                         <div class="col-md-4">

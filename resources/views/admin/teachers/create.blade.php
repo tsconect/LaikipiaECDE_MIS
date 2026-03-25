@@ -107,6 +107,10 @@
 
                         <!-- Conditional PWD Fields -->
                         <div id="pwd_fields" class="col-md-12 row g-4" style="display: none;">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">PLWD Number</label>
+                                <input name="plwd_number" id="plwd_number" type="text" class="form-control" placeholder="PLWD-TS128/2022" value="{{ old('plwd_number') }}">
+                            </div>
                            <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Disability Type</label>
                                 <select name="disability_type" class="form-control @error('disability_type') is-invalid @enderror">
@@ -145,15 +149,9 @@
                             id="ethnicity_id"
                             class="form-control"
                         >
-                            <option value="">Select Ethnicity</option>
-                            <option value="kikuyu">Kikuyu</option>
-                            <option value="luhya">Luhya</option>
-                            <option value="luo">Luo</option>
-                            <option value="kalenjin">Kalenjin</option>
-                            <option value="kamba">Kamba</option>
-                            <option value="meru">Meru</option>
-                            <option value="kisii">Kisii</option>
-                            <option value="maasai">Maasai</option>
+                            @foreach($ethnicities as $ethnicity)
+                                <option value="{{ $ethnicity->id }}" {{ old('ethnicity_id') == $ethnicity->id ? 'selected' : '' }}>{{ $ethnicity->name }}</option>
+                            @endforeach
                         </select>
 
                         @error('ethnicity_id')
@@ -309,19 +307,19 @@
 
                     <div class="col-md-4 mb-3" id="school_contact_tsc_number_div" style="display: none">
 
-                        <label for="school_contact_tsc_number">TSC Number</label>
+                        <label for="tsc_number">TSC Number</label>
 
                         <input
                             type="text"
                             name="tsc_number"
                             id="tsc_number"
                             class="form-control"
-                            value="{{ old('school_contact_tsc_number') }}"
+                            value="{{ old('tsc_number') }}"
                             placeholder="Enter TSC number"
                             
                         >
 
-                        @error('school_contact_tsc_number')
+                        @error('tsc_number')
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
 

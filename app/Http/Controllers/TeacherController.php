@@ -9,6 +9,7 @@ use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
 use App\Models\EducationHistory;
+use App\Models\EthnicGroup;
 use App\Models\JobGroup;
 use App\Models\NextOfKin;
 use App\Models\Teacher;
@@ -45,7 +46,8 @@ class TeacherController extends Controller
         $ecde_schools = EcdeSchools::get();
         $counties = County::get();
         $job_groups = JobGroup::all();
-        return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools','counties', 'job_groups'));
+        $ethnicities = EthnicGroup::all();
+        return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools','counties', 'job_groups', 'ethnicities'));
    }
 
    public function store(Request $request)
@@ -107,7 +109,7 @@ class TeacherController extends Controller
             $teacher->pwd_status=$request->pwd_status;
             $teacher->disability_type=$request->disability_type;
             $teacher->impairment_details=$request->impairment_details;
-            $teacher->pwd_number=$request->pwd_number;
+            $teacher->pwd_number=$request->plwd_number;
             $teacher->county_id=$request->county_id;
             $teacher->subcounty_id=$request->subcounty_id;
             $teacher->ward_id=$request->ward_id;
