@@ -9,9 +9,8 @@ use App\Models\Post;
 use App\Models\Announcement;
 use App\Models\Testimonial;
 use App\Models\Settings;
-use App\Models\Students;
+use App\Models\Teacher;
 use App\Models\Ward;
-use App\Models\Wards;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -42,6 +41,17 @@ class FrontController extends Controller
             ->limit(3)
             ->get();
 
+        $totalEcdeCentres = $ecde_schools->count();
+        $totalLearners = $ecde_schools->sum(function ($school) {
+            return (int) preg_replace('/[^0-9]/', '', (string) ($school->number_of_students ?? 0));
+        });
+        $totalTeachers = Teacher::count();
+        $totalSubCounties = $ecde_schools->pluck('subcounty_id')->filter()->unique()->count();
+
+        if ($totalSubCounties === 0) {
+            $totalSubCounties = $constituencies->count();
+        }
+
         $settings = Settings::all()->pluck('value', 'key')->toArray();
 
         return view('welcome',compact(
@@ -52,7 +62,11 @@ class FrontController extends Controller
             'recentPosts',
             'activeAnnouncements',
             'featuredTestimonials',
-            'settings'
+            'settings',
+            'totalEcdeCentres',
+            'totalLearners',
+            'totalTeachers',
+            'totalSubCounties'
         ));
     }
 }

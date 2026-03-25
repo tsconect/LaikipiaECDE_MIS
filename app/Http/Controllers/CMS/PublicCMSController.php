@@ -10,6 +10,7 @@ use App\Models\FAQ;
 use App\Models\Testimonial;
 use App\Models\Announcement;
 use App\Models\ContactMessage;
+use App\Models\EcdeSchools;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 
@@ -103,6 +104,17 @@ class PublicCMSController extends Controller
     {
         $announcement = Announcement::where('id', $id)->where('status', 'published')->firstOrFail();
         return view('public.announcements.show', compact('announcement'));
+    }
+
+    public function schools()
+    {
+        $schools = EcdeSchools::with('ward')
+            ->orderBy('school_name')
+            ->paginate(12);
+
+        $totalSchools = EcdeSchools::count();
+
+        return view('public.schools.index', compact('schools', 'totalSchools'));
     }
 
     // Contact Form

@@ -31,14 +31,27 @@ class UnionController extends Controller
 
     function edit(Unions $union)
     {
-        return view('backoffice.unions.edit', compact('union'));
-        # code...
+        return view('admin.unions.edit', compact('union'));
     }
 
-    function update(Unions $union)
+    function update(Request $request, Unions $union)
     {
-        $union->update(request()->only(['name']));
-        return redirect(route('admin.edit.union', $union->id))->with('success', $union->name ." Update successfully");
-        # code...
+        $request->validate([
+            'name' => 'required|unique:unions,name,' . $union->id,
+        ]);
+
+        $union->update($request->only(['name']));
+        return redirect()->route('admin.unions.index')->with('success', $union->name . ' updated successfully');
+    }
+
+    public function show(Unions $union)
+    {
+        return view('admin.unions.edit', compact('union'));
+    }
+
+    public function destroy(Unions $union)
+    {
+        $union->delete();
+        return redirect()->route('admin.unions.index')->with('success', 'Union deleted successfully');
     }
 }

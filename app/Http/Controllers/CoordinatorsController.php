@@ -120,9 +120,78 @@ class CoordinatorsController extends Controller
 
    function edit(Coordinators $id)
    {
-    # code...
-    return $id;
+    $coordinator = $id;
+    $sub_counties = Constituency::get();
+    $wards = Ward::get();
+    $ecde_schools = EcdeSchools::get();
+    $counties = County::get();
 
+    return view('admin.coordinators.edit', compact('coordinator', 'wards', 'sub_counties', 'ecde_schools', 'counties'));
+
+   }
+
+   public function show(Coordinators $coordinator)
+   {
+    return view('admin.coordinators.teacher_view_profile', ['data' => $coordinator]);
+   }
+
+   public function update(Request $request, Coordinators $coordinator)
+   {
+        $request->validate([
+            'first_name' => 'required',
+            'middle_name' => 'nullable',
+            'last_name' => 'required',
+            'pwd_status' => 'required',
+            'disability_type' => 'nullable',
+            'ethnicity_id' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required',
+            'id_number' => 'required',
+            'kra_pin' => 'required',
+            'gender' => 'required',
+            'dob' => 'required',
+            'county_id' => 'required',
+            'subcounty_id' => 'required',
+            'ward_id' => 'required',
+            'school_id' => 'nullable',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $user = $coordinator->user;
+            if ($user) {
+                $user->first_name = $request->first_name;
+                $user->middle_name = $request->middle_name;
+                $user->last_name = $request->last_name;
+                $user->email = $request->email;
+                $user->phone_number = PhoneHelper::normalizePhoneNumber($request->phone_number);
+                $user->role = 'cordinator';
+                $user->save();
+            }
+
+            $coordinator->update([
+                'id_number' => $request->id_number,
+                'kra_pin' => $request->kra_pin,
+                'gender' => $request->gender,
+                'dob' => $request->dob,
+                'ethnicity_id' => $request->ethnicity_id,
+                'school_id' => $request->school_id,
+                'pwd_status' => $request->pwd_status,
+                'disability_type' => $request->disability_type,
+                'impairment_details' => $request->impairment_details,
+                'pwd_number' => $request->pwd_number,
+                'county_id' => $request->county_id,
+                'subcounty_id' => $request->subcounty_id,
+                'ward_id' => $request->ward_id,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return back()->with('error', $th->getMessage());
+        }
+
+        return redirect()->route('admin.coordinators.index')->with('success', 'Coordinator updated successfully');
    }
 
    function view(Coordinators $id)
@@ -151,6 +220,16 @@ class CoordinatorsController extends Controller
 
     // //    return redirect('admin/all-teachers')->with('info', 'Teacher deleted Successfully');
 
+   }
+
+   public function destroy(Coordinators $coordinator)
+   {
+        if ($coordinator->user) {
+            $coordinator->user->delete();
+        }
+        $coordinator->delete();
+
+        return redirect()->route('admin.coordinators.index')->with('success', 'Coordinator deleted successfully');
    }
 
 }

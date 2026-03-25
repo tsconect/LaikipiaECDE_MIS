@@ -37,14 +37,21 @@
                                 <td>{{$item->ward->name}}</td>
                            
                                 <td>
-                                <a class="btn btn-outline-primary" title="View Wards"
-                                        href="">
+                                <a class="btn btn-outline-primary" title="View School"
+                                        href="{{ route('admin.ecde-schools.show', $item->id) }}">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     <a class="btn btn-outline-primary" title="Edit School"
                                         href="{{ route('admin.ecde-schools.edit', $item->id) }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
+                                    <form action="{{ route('admin.ecde-schools.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this school?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger" title="Delete School">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
                                  
                                 </td>
                             </tr>

@@ -52,6 +52,13 @@
                                             href="{{ route('admin.users.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
+                                        <form action="{{ route('admin.users.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this user?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger" title="Delete User">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

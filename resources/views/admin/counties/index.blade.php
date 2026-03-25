@@ -21,7 +21,7 @@
                         <tr>
                             <th>S/N </th>
                             <th>Name</th>
-                            
+                            <th>Action</th>
                             
 
                         </tr>
@@ -31,6 +31,21 @@
                         <tr>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$item->name}}</td>
+                            <td>
+                                <a class="btn btn-outline-primary" href="{{ route('admin.counties.show', $item->id) }}" title="View County">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="btn btn-outline-primary" href="{{ route('admin.counties.edit', $item->id) }}" title="Edit County">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <form action="{{ route('admin.counties.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this county?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger" title="Delete County">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
                            
                         </tr>
                         @endforeach

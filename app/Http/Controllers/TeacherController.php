@@ -243,6 +243,21 @@ class TeacherController extends Controller
 
    }
 
+       public function destroy(Teacher $teacher)
+       {
+            TeacherEducation::where('teacher_id', $teacher->id)->delete();
+            TeacherSchoolContact::where('teacher_id', $teacher->id)->delete();
+            TeacherResidential::where('teacher_id', $teacher->id)->delete();
+
+            if ($teacher->user) {
+                $teacher->user->delete();
+            }
+
+            $teacher->delete();
+
+            return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully');
+       }
+
    public function show($id)
    {
        $teacher = Teacher::find($id);

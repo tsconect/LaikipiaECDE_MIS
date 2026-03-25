@@ -12,8 +12,9 @@
 
     <div class="card-body">
         <h5>Edit {{ $school->school_name }} school... </h5>
-        <form  class="" action="{{ route('admin.school.update', $school->id) }}" method="post">
+        <form  class="" action="{{ route('admin.feeder-schools.update', $school->id) }}" method="post">
             @csrf
+            @method('PUT')
             <div id="smartwizard">
                 <ul class="forms-wizard">
                     <li>

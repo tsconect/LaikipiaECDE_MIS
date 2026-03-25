@@ -31,6 +31,17 @@ class SettingsController extends Controller
             'home_hero_primary_cta_link' => 'nullable|string|max:255',
             'home_hero_secondary_cta_text' => 'nullable|string|max:100',
             'home_hero_secondary_cta_link' => 'nullable|string|max:255',
+            'home_governor_name' => 'nullable|string|max:255',
+            'home_governor_title' => 'nullable|string|max:255',
+            'home_governor_badge_title' => 'nullable|string|max:255',
+            'home_governor_section_label' => 'nullable|string|max:255',
+            'home_governor_heading_line_one' => 'nullable|string|max:255',
+            'home_governor_heading_line_two' => 'nullable|string|max:255',
+            'home_governor_subtitle' => 'nullable|string|max:255',
+            'home_governor_intro' => 'nullable|string|max:1000',
+            'home_governor_quote' => 'nullable|string|max:2000',
+            'home_governor_cta_text' => 'nullable|string|max:100',
+            'home_governor_message_url' => 'nullable|string|max:255',
             'contact_email' => 'required|email',
             'contact_phone' => 'required|string',
             'site_address' => 'nullable|string',
@@ -56,6 +67,17 @@ class SettingsController extends Controller
             'home_hero_primary_cta_link' => $request->home_hero_primary_cta_link,
             'home_hero_secondary_cta_text' => $request->home_hero_secondary_cta_text,
             'home_hero_secondary_cta_link' => $request->home_hero_secondary_cta_link,
+            'home_governor_name' => $request->home_governor_name,
+            'home_governor_title' => $request->home_governor_title,
+            'home_governor_badge_title' => $request->home_governor_badge_title,
+            'home_governor_section_label' => $request->home_governor_section_label,
+            'home_governor_heading_line_one' => $request->home_governor_heading_line_one,
+            'home_governor_heading_line_two' => $request->home_governor_heading_line_two,
+            'home_governor_subtitle' => $request->home_governor_subtitle,
+            'home_governor_intro' => $request->home_governor_intro,
+            'home_governor_quote' => $request->home_governor_quote,
+            'home_governor_cta_text' => $request->home_governor_cta_text,
+            'home_governor_message_url' => $request->home_governor_message_url,
             'contact_email' => $request->contact_email,
             'contact_phone' => $request->contact_phone,
             'site_address' => $request->site_address,
@@ -89,6 +111,8 @@ class SettingsController extends Controller
         $textKeys = [
             'site_description',
             'home_hero_subtext',
+            'home_governor_intro',
+            'home_governor_quote',
             'site_address',
             'contact_address',
         ];
@@ -121,6 +145,14 @@ class SettingsController extends Controller
             Settings::updateOrCreate(
                 ['key' => 'home_hero_image'],
                 ['value' => $heroImage, 'type' => 'string']
+            );
+        }
+
+        if ($request->hasFile('home_governor_image')) {
+            $governorImage = $request->file('home_governor_image')->store('governor', 'public');
+            Settings::updateOrCreate(
+                ['key' => 'home_governor_image'],
+                ['value' => $governorImage, 'type' => 'string']
             );
         }
 

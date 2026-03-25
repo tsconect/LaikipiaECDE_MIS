@@ -78,6 +78,76 @@
                             <input type="file" name="home_hero_image" id="home_hero_image" class="form-control-file" accept="image/*">
                         </div>
 
+                        <hr>
+                        <h6 class="mb-3">Governor Message (Homepage Section)</h6>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="home_governor_name">Governor Name</label>
+                                <input type="text" name="home_governor_name" id="home_governor_name" class="form-control" value="{{ $settings['home_governor_name'] ?? '' }}" placeholder="e.g. H.E. Jane Doe">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="home_governor_title">Governor Title</label>
+                                <input type="text" name="home_governor_title" id="home_governor_title" class="form-control" value="{{ $settings['home_governor_title'] ?? '' }}" placeholder="e.g. Governor, Laikipia County Government">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="home_governor_badge_title">Badge Subtitle (e.g. County Name)</label>
+                                <input type="text" name="home_governor_badge_title" id="home_governor_badge_title" class="form-control" value="{{ $settings['home_governor_badge_title'] ?? '' }}" placeholder="e.g. Laikipia County">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="home_governor_section_label">Section Label</label>
+                                <input type="text" name="home_governor_section_label" id="home_governor_section_label" class="form-control" value="{{ $settings['home_governor_section_label'] ?? '' }}" placeholder="e.g. Message from the Governor">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="home_governor_heading_line_one">Heading Line 1</label>
+                                <input type="text" name="home_governor_heading_line_one" id="home_governor_heading_line_one" class="form-control" value="{{ $settings['home_governor_heading_line_one'] ?? '' }}" placeholder="e.g. A Word from">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="home_governor_heading_line_two">Heading Line 2</label>
+                                <input type="text" name="home_governor_heading_line_two" id="home_governor_heading_line_two" class="form-control" value="{{ $settings['home_governor_heading_line_two'] ?? '' }}" placeholder="e.g. the Governor">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="home_governor_subtitle">Small Title Under Heading</label>
+                                <input type="text" name="home_governor_subtitle" id="home_governor_subtitle" class="form-control" value="{{ $settings['home_governor_subtitle'] ?? '' }}" placeholder="e.g. A Word from the Governor">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home_governor_intro">Governor Intro</label>
+                            <textarea name="home_governor_intro" id="home_governor_intro" class="form-control" rows="3" placeholder="Short intro text shown above the quote">{{ $settings['home_governor_intro'] ?? '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home_governor_quote">Governor Quote</label>
+                            <textarea name="home_governor_quote" id="home_governor_quote" class="form-control" rows="4" placeholder="Main quoted message from the governor">{{ $settings['home_governor_quote'] ?? '' }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home_governor_message_url">Full Message Link</label>
+                            <input type="text" name="home_governor_message_url" id="home_governor_message_url" class="form-control" value="{{ $settings['home_governor_message_url'] ?? '' }}" placeholder="e.g. /about">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home_governor_cta_text">Full Message Button Text</label>
+                            <input type="text" name="home_governor_cta_text" id="home_governor_cta_text" class="form-control" value="{{ $settings['home_governor_cta_text'] ?? '' }}" placeholder="e.g. Read Full Message">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="home_governor_image">Governor Image</label>
+                            @if($settings['home_governor_image'] ?? null)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $settings['home_governor_image']) }}" style="max-width: 220px; border-radius: 6px;">
+                                </div>
+                            @endif
+                            <input type="file" name="home_governor_image" id="home_governor_image" class="form-control-file" accept="image/*">
+                        </div>
+
                         <div class="form-group">
                             <label for="contact_email">Contact Email</label>
                             <input type="email" name="contact_email" id="contact_email" class="form-control" value="{{ $settings['contact_email'] ?? '' }}">
@@ -138,22 +208,17 @@
 
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="show_home_posts" name="show_home_posts" value="1" {{ ($settings['show_home_posts'] ?? 1) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="show_home_posts">Show Latest Posts Section</label>
+                            <label class="form-check-label" for="show_home_posts">Show Governor Message Section</label>
                         </div>
 
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="show_home_announcements" name="show_home_announcements" value="1" {{ ($settings['show_home_announcements'] ?? 1) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="show_home_announcements">Show Announcements Section</label>
+                            <label class="form-check-label" for="show_home_announcements">Show ECDE Schools Section</label>
                         </div>
 
                         <div class="form-check mb-2">
                             <input class="form-check-input" type="checkbox" id="show_home_testimonials" name="show_home_testimonials" value="1" {{ ($settings['show_home_testimonials'] ?? 1) ? 'checked' : '' }}>
                             <label class="form-check-label" for="show_home_testimonials">Show Testimonials Section</label>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="show_home_explore" name="show_home_explore" value="1" {{ ($settings['show_home_explore'] ?? 1) ? 'checked' : '' }}>
-                            <label class="form-check-label" for="show_home_explore">Show Explore Links Section</label>
                         </div>
 
                         <div class="form-group">

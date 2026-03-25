@@ -52,8 +52,8 @@
 
 
                             <td>
-                                <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                href="">
+                                <a class="btn btn-outline-primary" title="View Student"
+                                href="{{ route('admin.ecde-students.show', $item->id) }}">
                                     <i class="fa fa-eye"></i>
                                 </a>
 
@@ -61,6 +61,14 @@
                                     href="{{ route('admin.ecde-students.edit', $item->id) }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
+
+                                <form action="{{ route('admin.ecde-students.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this student?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger" title="Delete Student">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </form>
 
                                 
                             </td>

@@ -308,6 +308,145 @@
         border-color: #1a2d4d;
         color: #fff;
     }
+
+    .delete-confirm-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 20, 35, 0.65);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    .delete-confirm-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .delete-confirm-modal {
+        background: #fff;
+        border-radius: 14px;
+        width: 100%;
+        max-width: 440px;
+        margin: 16px;
+        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 20px 60px -10px rgba(0,0,0,0.25);
+        overflow: hidden;
+        transform: translateY(18px) scale(0.97);
+        transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+        opacity: 0;
+    }
+
+    .delete-confirm-overlay.active .delete-confirm-modal {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+
+    .delete-confirm-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 24px 18px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .delete-confirm-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #1a1a2e;
+        letter-spacing: -0.01em;
+    }
+
+    .delete-confirm-close {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: #f3f4f6;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6b7280;
+        transition: background 0.15s, color 0.15s, transform 0.15s;
+    }
+
+    .delete-confirm-close:hover {
+        background: #fee2e2;
+        color: #e03c3c;
+        transform: rotate(90deg);
+    }
+
+    .delete-confirm-body {
+        padding: 24px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .delete-confirm-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #fee2e2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        color: #e03c3c;
+    }
+
+    .delete-confirm-message {
+        font-size: 14.5px;
+        color: #6b7280;
+        line-height: 1.6;
+        padding-top: 4px;
+    }
+
+    .delete-confirm-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 16px 24px 22px;
+    }
+
+    .btn-delete-confirm {
+        padding: 10px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        letter-spacing: 0.01em;
+    }
+
+    .btn-delete-cancel {
+        background: transparent;
+        color: #6b7280;
+        border: 1.5px solid #e5e7eb;
+    }
+
+    .btn-delete-cancel:hover {
+        background: #f9fafb;
+        border-color: #d1d5db;
+        color: #1a1a2e;
+    }
+
+    .btn-delete-submit {
+        background: #e03c3c;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(224, 60, 60, 0.35);
+    }
+
+    .btn-delete-submit:hover {
+        background: #c52e2e;
+        box-shadow: 0 4px 14px rgba(224, 60, 60, 0.45);
+    }
 </style>
 <head>
     <meta charset="utf-8">
@@ -481,6 +620,36 @@ function goBack() {
     </div>
 </div>
 
+<div class="delete-confirm-overlay" id="deleteConfirmOverlay" aria-hidden="true">
+    <div class="delete-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="deleteConfirmTitle">
+        <div class="delete-confirm-header">
+            <span class="delete-confirm-title" id="deleteConfirmTitle">Confirm Delete</span>
+            <button type="button" class="delete-confirm-close" id="deleteConfirmClose" aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="delete-confirm-body">
+            <div class="delete-confirm-icon">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6l-1 14H6L5 6"></path>
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M9 6V4h6v2"></path>
+                </svg>
+            </div>
+            <p class="delete-confirm-message" id="deleteConfirmMessage">Are you sure you want to delete this record? This action cannot be undone.</p>
+        </div>
+        <div class="delete-confirm-footer">
+            <button type="button" class="btn-delete-confirm btn-delete-cancel" id="deleteConfirmCancel">Cancel</button>
+            <button type="button" class="btn-delete-confirm btn-delete-submit" id="deleteConfirmSubmit">Delete</button>
+        </div>
+    </div>
+</div>
+
 
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -539,6 +708,73 @@ function goBack() {
                 { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
             ]
         });
+</script>
+<script>
+    (function () {
+        const overlay = document.getElementById('deleteConfirmOverlay');
+        const messageEl = document.getElementById('deleteConfirmMessage');
+        const closeBtn = document.getElementById('deleteConfirmClose');
+        const cancelBtn = document.getElementById('deleteConfirmCancel');
+        const submitBtn = document.getElementById('deleteConfirmSubmit');
+        let pendingForm = null;
+
+        function extractMessage(onsubmitValue) {
+            const match = (onsubmitValue || '').match(/confirm\((['\"])(.*?)\1\)/);
+            return match && match[2] ? match[2] : 'Are you sure you want to delete this record? This action cannot be undone.';
+        }
+
+        function showModal(message, form) {
+            pendingForm = form;
+            messageEl.textContent = message;
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeModal() {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            pendingForm = null;
+        }
+
+        document.querySelectorAll('form[onsubmit*="confirm("]').forEach(function (form) {
+            const message = extractMessage(form.getAttribute('onsubmit'));
+            form.dataset.deleteConfirmMessage = message;
+            form.classList.add('js-delete-confirm-form');
+            form.removeAttribute('onsubmit');
+        });
+
+        document.addEventListener('submit', function (event) {
+            const form = event.target;
+            if (!form.classList.contains('js-delete-confirm-form')) {
+                return;
+            }
+
+            event.preventDefault();
+            const message = form.dataset.deleteConfirmMessage || 'Are you sure you want to delete this record? This action cannot be undone.';
+            showModal(message, form);
+        });
+
+        submitBtn.addEventListener('click', function () {
+            if (pendingForm) {
+                pendingForm.submit();
+            }
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+
+        overlay.addEventListener('click', function (event) {
+            if (event.target === overlay) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && overlay.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    })();
 </script>
 <script>
     function btn()

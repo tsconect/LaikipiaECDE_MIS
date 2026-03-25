@@ -11,7 +11,17 @@ class FAQController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:manage-cms', ['except' => []]);
+        $this->middleware(function ($request, $next) {
+            $user = auth()->user();
+            $isAdminRole = strtolower((string) ($user->role ?? '')) === 'admin' || ($user->hasRole('admin') ?? false);
+            $canManageCms = $user->can('manage-cms');
+
+            if (!$isAdminRole && !$canManageCms) {
+                abort(403, 'User does not have the right permissions.');
+            }
+
+            return $next($request);
+        });
     }
 
     public function index()
@@ -44,6 +54,11 @@ class FAQController extends Controller
     }
 
     public function edit(FAQ $faq)
+    {
+        return view('admin.cms.faqs.edit', compact('faq'));
+    }
+
+    public function show(FAQ $faq)
     {
         return view('admin.cms.faqs.edit', compact('faq'));
     }

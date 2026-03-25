@@ -62,6 +62,7 @@
       transition: all .2s;
     }
     .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+    .nav-links a.active { color: #fff; background: rgba(255,255,255,0.12); }
     .nav-user {
       display: flex; align-items: center; gap: 8px;
       background: rgba(255,255,255,0.10);
@@ -294,12 +295,13 @@
     <span>{{ $settings['site_name'] ?? 'Laikipia ECDE' }}</span>
   </a>
   <div class="nav-links">
-    <a href="{{ url('/') }}">Home</a>
-    <a href="{{ route('cms.posts') }}">Blog</a>
-    <a href="{{ route('cms.announcements') }}">Announcements</a>
-    <a href="{{ route('cms.galleries') }}">Galleries</a>
-    <a href="{{ route('cms.faqs') }}">FAQs</a>
-    <a href="{{ route('cms.contact') }}">Contact</a>
+    <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
+    <a href="{{ route('cms.posts') }}" class="{{ request()->routeIs('cms.posts', 'cms.post') ? 'active' : '' }}">Blog</a>
+    <a href="{{ route('cms.schools') }}" class="{{ request()->routeIs('cms.schools') ? 'active' : '' }}">ECDE Schools</a>
+    <a href="{{ route('cms.announcements') }}" class="{{ request()->routeIs('cms.announcements', 'cms.announcement.show') ? 'active' : '' }}">Announcements</a>
+    <a href="{{ route('cms.galleries') }}" class="{{ request()->routeIs('cms.galleries', 'cms.gallery') ? 'active' : '' }}">Galleries</a>
+    <a href="{{ route('cms.faqs') }}" class="{{ request()->routeIs('cms.faqs') ? 'active' : '' }}">FAQs</a>
+    <a href="{{ route('cms.contact') }}" class="{{ request()->routeIs('cms.contact') ? 'active' : '' }}">Contact</a>
   </div>
   @guest
     <a href="{{ route('login') }}" class="nav-user">
@@ -338,6 +340,7 @@
       <h4>Quick Links</h4>
       <ul>
         <li><a href="{{ route('cms.posts') }}">Blog</a></li>
+        <li><a href="{{ route('cms.schools') }}">ECDE Schools</a></li>
         <li><a href="{{ route('cms.galleries') }}">Galleries</a></li>
         <li><a href="{{ route('cms.faqs') }}">FAQs</a></li>
         <li><a href="{{ route('cms.announcements') }}">Announcements</a></li>

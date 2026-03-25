@@ -30,24 +30,18 @@
     }
     .hero-content {
       position: relative; z-index: 2;
-      max-width: 640px; padding: 0 64px;
+      max-width: 980px; padding: 0 64px;
       animation: fadeUp .9s ease both;
     }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(26,124,62,0.25);
-      border: 1px solid rgba(37,168,87,0.40);
-      color: #6ee09a; font-size: 12px; font-weight: 600;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 6px 14px; border-radius: 30px;
-      margin-bottom: 28px;
-    }
-    .hero-eyebrow span { width: 6px; height: 6px; border-radius: 50%; background: #6ee09a; display: inline-block; }
     .hero h1 {
       font-family: 'Playfair Display', serif;
       font-size: clamp(3rem, 6vw, 5.2rem);
       font-weight: 900; line-height: 1.05;
       color: #fff; margin-bottom: 20px;
+      max-width: 860px;
+      text-wrap: balance;
+      overflow-wrap: normal;
+      word-break: normal;
     }
     .hero h1 em { font-style: normal; color: #6ee09a; }
     .hero p {
@@ -108,84 +102,12 @@
       50% { transform: scaleY(1.2); opacity: .8; }
     }
 
-    /* ─── LATEST POSTS ────────────────────────────────── */
-    .posts-section { background: var(--cream); }
-    .posts-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
-    .posts-header .section-sub { margin-bottom: 0; }
-    .view-all {
-      color: var(--green); font-weight: 600; font-size: 14px;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
-      border-bottom: 1.5px solid transparent; transition: border-color .2s;
-      white-space: nowrap; padding-bottom: 2px;
-    }
-    .view-all:hover { border-color: var(--green); }
-
-    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; }
-
-    .post-card {
-      background: var(--white);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      transition: transform .3s, box-shadow .3s;
-      display: flex; flex-direction: column;
-      position: relative;
-      text-decoration: none;
-    }
-    .post-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--green), var(--green-light));
-      opacity: 0; transition: opacity .3s;
-    }
-    .post-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(13,34,53,0.10); }
-    .post-card:hover::before { opacity: 1; }
-
-    .post-image {
-      width: 100%; height: 200px; object-fit: cover;
-      background: linear-gradient(135deg, #e0ede6, #c8dbd0);
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .post-image-placeholder {
-      width: 100%; height: 200px;
-      background: linear-gradient(135deg, var(--green-pale), #d0e8da);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .post-image-placeholder svg { width: 48px; height: 48px; color: var(--green); opacity: .35; }
-
-    .post-body { padding: 28px 28px 32px; flex: 1; display: flex; flex-direction: column; }
-    .post-tag {
-      display: inline-block;
-      background: var(--green-pale); color: var(--green);
-      font-size: 11px; font-weight: 700; letter-spacing: 0.10em; text-transform: uppercase;
-      padding: 5px 12px; border-radius: 30px;
-      margin-bottom: 14px; width: fit-content;
-    }
-    .post-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem; font-weight: 700; color: var(--navy);
-      line-height: 1.35; margin-bottom: 10px;
-    }
-    .post-date {
-      font-size: 13px; color: var(--text-muted);
-      display: flex; align-items: center; gap: 6px; margin-bottom: 14px;
-    }
-    .post-date svg { width: 13px; height: 13px; }
-    .post-excerpt { font-size: 14px; line-height: 1.7; color: var(--text-muted); flex: 1; margin-bottom: 20px; }
-    .post-link {
-      color: var(--green); font-weight: 600; font-size: 14px;
-      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
-      margin-top: auto;
-    }
-    .post-link svg { transition: transform .2s; }
-    .post-link:hover svg { transform: translateX(4px); }
-
-    /* ─── ANNOUNCEMENTS ───────────────────────────────── */
-    .announcements-section {
+    /* ─── ECDE SCHOOLS ─────────────────────────────────── */
+    .schools-section {
       background: var(--navy);
       position: relative; overflow: hidden;
     }
-    .announcements-section::before {
+    .schools-section::before {
       content: ''; position: absolute;
       top: -120px; right: -120px;
       width: 480px; height: 480px;
@@ -193,36 +115,194 @@
       background: radial-gradient(circle, rgba(26,124,62,0.15) 0%, transparent 70%);
       pointer-events: none;
     }
-    .announcements-section .section-label { color: #6ee09a; }
-    .announcements-section .section-label::before { background: #6ee09a; }
-    .announcements-section .section-title { color: #fff; }
-    .announcements-section .section-sub { color: rgba(255,255,255,0.55); }
+    .schools-section .section-label { color: #6ee09a; }
+    .schools-section .section-label::before { background: #6ee09a; }
+    .schools-section .section-title { color: #fff; }
 
-    .ann-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-    .ann-card {
+    .schools-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 48px; gap: 24px; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .schools-header .section-sub { color: rgba(255,255,255,0.55); margin-bottom: 0; }
+    .view-all-light {
+      color: #6ee09a; font-weight: 600; font-size: 14px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      border-bottom: 1.5px solid transparent; transition: border-color .2s; white-space: nowrap;
+    }
+    .view-all-light:hover { border-bottom-color: #6ee09a; }
+
+    .schools-overview-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(170px, 1fr));
+      gap: 16px;
+      margin: 0 0 30px;
+      position: relative;
+      z-index: 1;
+    }
+    .schools-overview-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 20px 18px;
+      min-height: 132px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .schools-overview-value {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+    .schools-overview-title {
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    .schools-overview-desc {
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .schools-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px; position: relative; z-index: 1;
+    }
+    .school-card {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px; padding: 28px 28px 24px;
-      transition: background .3s, transform .3s;
-      position: relative; overflow: hidden;
-      text-decoration: none;
+      border-radius: 20px; overflow: hidden;
+      transition: transform .3s, background .3s;
+      position: relative;
     }
-    .ann-card::after {
-      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: linear-gradient(to bottom, var(--green-light), var(--gold));
-      border-radius: 3px 0 0 3px;
+    .school-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-5px); }
+
+    .school-card-img {
+      width: 100%; height: 180px; object-fit: cover; object-position: center;
+      display: block;
+      background: linear-gradient(135deg, rgba(26,124,62,0.20), rgba(13,34,53,0.40));
     }
-    .ann-card:hover { background: rgba(255,255,255,0.09); transform: translateY(-4px); }
-    .ann-tag {
-      display: inline-block;
-      background: rgba(26,124,62,0.25); color: #6ee09a;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    .school-card-img-placeholder {
+      width: 100%; height: 180px;
+      background: linear-gradient(135deg, rgba(26,124,62,0.18), rgba(13,34,53,0.50));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .school-card-img-placeholder svg { width: 44px; height: 44px; color: rgba(255,255,255,0.25); }
+    .school-card-body { padding: 22px 22px 24px; }
+    .school-subcounty {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(26,124,62,0.22); color: #6ee09a;
+      font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
       padding: 4px 10px; border-radius: 30px; margin-bottom: 12px;
     }
-    .ann-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .ann-date { font-size: 12px; color: rgba(255,255,255,0.40); margin-bottom: 12px; display: flex; align-items: center; gap: 5px; }
-    .ann-excerpt { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.65; margin-bottom: 18px; }
-    .ann-link { color: #6ee09a; font-weight: 600; font-size: 13px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+    .school-subcounty-dot { width: 5px; height: 5px; border-radius: 50%; background: #6ee09a; }
+    .school-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; font-weight: 700; color: #fff;
+      line-height: 1.3; margin-bottom: 10px;
+    }
+    .school-stats { display: flex; gap: 18px; margin-bottom: 16px; }
+    .school-stat { display: flex; flex-direction: column; }
+    .school-stat-num { font-weight: 700; font-size: 15px; color: #fff; }
+    .school-stat-label { font-size: 11px; color: rgba(255,255,255,0.40); margin-top: 1px; }
+    .school-divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 14px 0; }
+    .school-footer { display: flex; align-items: center; justify-content: space-between; }
+    .school-type {
+      font-size: 12px; color: rgba(255,255,255,0.45);
+      display: flex; align-items: center; gap: 5px;
+    }
+    .school-type svg { width: 12px; height: 12px; }
+    .school-link {
+      color: #6ee09a; font-weight: 600; font-size: 13px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 4px;
+    }
+    .school-link svg { transition: transform .2s; }
+    .school-link:hover svg { transform: translateX(4px); }
+
+    /* ─── GOVERNOR'S MESSAGE ─────────────────────────── */
+    .governor-section { background: var(--cream); overflow: hidden; }
+    .governor-inner {
+      display: grid; grid-template-columns: 1fr 1.15fr;
+      gap: 72px; align-items: center;
+    }
+    .governor-inner.no-image {
+      grid-template-columns: 1fr;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .governor-photo-wrap { position: relative; }
+    .governor-photo-frame {
+      position: relative; border-radius: 24px; overflow: hidden;
+      aspect-ratio: 4/5; max-width: 420px;
+      box-shadow: 0 32px 64px rgba(13,34,53,0.16);
+    }
+    .governor-photo-frame img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top;
+      display: block;
+    }
+    .governor-photo-wrap::before {
+      content: ''; position: absolute;
+      top: 24px; left: -24px;
+      width: calc(100% - 24px); height: calc(100% - 24px);
+      max-width: 420px;
+      border-radius: 24px;
+      border: 2px solid var(--green);
+      opacity: .25; z-index: 0;
+    }
+    .governor-photo-frame { position: relative; z-index: 1; }
+    .governor-badge {
+      position: absolute; bottom: -20px; right: 0;
+      background: var(--navy); color: #fff;
+      padding: 14px 20px; border-radius: 16px;
+      box-shadow: 0 12px 32px rgba(13,34,53,0.24);
+      z-index: 2; min-width: 160px;
+    }
+    .governor-badge-name { font-weight: 700; font-size: 14px; }
+    .governor-badge-title { font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+    .governor-badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--green-light); display: inline-block; margin-right: 6px;
+    }
+    .governor-content { padding-top: 8px; }
+    .governor-content .section-sub { margin-bottom: 28px; max-width: 100%; }
+    .governor-quote {
+      background: var(--white);
+      border-left: 4px solid var(--green);
+      border-radius: 0 16px 16px 0;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+    .governor-quote::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem; line-height: .5;
+      color: var(--green-pale);
+      position: absolute; top: 20px; right: 24px;
+      user-select: none; pointer-events: none;
+    }
+    .governor-quote p {
+      font-size: 17px; line-height: 1.8; color: var(--text);
+      font-style: italic; position: relative; z-index: 1;
+    }
+    .governor-meta {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 32px;
+    }
+    .governor-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--navy));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 20px; font-weight: 700; flex-shrink: 0;
+      overflow: hidden;
+    }
+    .governor-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .governor-meta-name { font-weight: 700; font-size: 16px; color: var(--navy); }
+    .governor-meta-role { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
 
     /* ─── TESTIMONIALS ────────────────────────────────── */
     .testimonials-section { background: var(--cream); position: relative; }
@@ -255,45 +335,22 @@
     .testi-name { font-weight: 700; font-size: 15px; color: var(--navy); }
     .testi-role { font-size: 13px; color: var(--text-muted); }
 
-    /* ─── EXPLORE / QUICK LINKS ───────────────────────── */
-    .explore-section {
-      background: var(--green);
-      padding: 72px 64px;
-      position: relative; overflow: hidden;
-    }
-    .explore-section::before {
-      content: ''; position: absolute;
-      width: 600px; height: 600px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-      right: -200px; top: -200px;
-    }
-    .explore-section::after {
-      content: ''; position: absolute;
-      width: 400px; height: 400px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.06);
-      right: -100px; top: -100px;
-    }
-    .explore-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .explore-text .section-title { color: #fff; margin-bottom: 8px; }
-    .explore-text p { color: rgba(255,255,255,0.70); font-size: 16px; }
-    .explore-text .section-label { color: rgba(255,255,255,0.70); }
-    .explore-text .section-label::before { background: rgba(255,255,255,0.70); }
-    .explore-links { display: flex; gap: 12px; flex-wrap: wrap; }
-    .explore-link {
-      background: rgba(255,255,255,0.12); color: #fff;
-      padding: 12px 22px; border-radius: 12px;
-      text-decoration: none; font-weight: 600; font-size: 14px;
-      border: 1px solid rgba(255,255,255,0.20);
-      transition: all .25s;
-      display: inline-flex; align-items: center; gap: 7px;
-    }
-    .explore-link:hover { background: rgba(255,255,255,0.25); transform: translateY(-2px); }
-
     @media (max-width: 900px) {
         .hero-content { padding: 0 28px; }
         .hero-stats { display: none; }
-        .posts-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-        .explore-section { padding: 56px 28px; }
+        .schools-header { flex-direction: column; align-items: flex-start; }
+        .schools-overview-stats { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
+    }
+
+    @media (max-width: 1024px) {
+      .governor-inner { grid-template-columns: 1fr; gap: 48px; }
+      .governor-photo-wrap { display: flex; justify-content: center; }
+      .governor-photo-frame { max-width: 320px; }
+      .schools-overview-stats { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
+    }
+
+    @media (max-width: 560px) {
+      .schools-overview-stats { grid-template-columns: 1fr; }
     }
 </style>
 @endsection
@@ -301,12 +358,12 @@
 @section('content')
   @php
     $showHomeHero = (int)($settings['show_home_hero'] ?? 1) === 1;
-    $showHomePosts = (int)($settings['show_home_posts'] ?? 1) === 1;
-    $showHomeAnnouncements = (int)($settings['show_home_announcements'] ?? 1) === 1;
+    $showHomeGovernor = (int)($settings['show_home_posts'] ?? 1) === 1;
+    $showHomeSchools = (int)($settings['show_home_announcements'] ?? 1) === 1;
     $showHomeTestimonials = (int)($settings['show_home_testimonials'] ?? 1) === 1;
-    $showHomeExplore = (int)($settings['show_home_explore'] ?? 1) === 1;
 
     $heroHeadline = $settings['home_hero_headline'] ?? ($settings['site_name'] ?? 'Laikipia CDF Management System');
+    $heroHeadlineInline = preg_replace('/\s*<br\s*\/?>\s*/i', ' ', (string) $heroHeadline);
     $heroSubtext = $settings['home_hero_subtext'] ?? ($settings['site_description'] ?? 'Empowering communities through education and development.');
     $heroPrimaryText = $settings['home_hero_primary_cta_text'] ?? 'Read News';
     $heroPrimaryLink = $settings['home_hero_primary_cta_link'] ?? route('cms.posts');
@@ -321,6 +378,28 @@
     $heroStatOneLabel = $settings['home_hero_stat_one_label'] ?? 'Latest Posts';
     $heroStatTwoLabel = $settings['home_hero_stat_two_label'] ?? 'Announcements';
     $heroStatThreeLabel = $settings['home_hero_stat_three_label'] ?? 'Testimonials';
+
+    $governorName = $settings['home_governor_name'] ?? 'H.E. The Governor';
+    $governorTitle = $settings['home_governor_title'] ?? 'Governor, Laikipia County Government';
+    $governorBadgeTitle = $settings['home_governor_badge_title'] ?? 'Laikipia County';
+    $governorSectionLabel = $settings['home_governor_section_label'] ?? 'Message from the Governor';
+    $governorHeadingLineOne = $settings['home_governor_heading_line_one'] ?? 'A Word from';
+    $governorHeadingLineTwo = $settings['home_governor_heading_line_two'] ?? 'the Governor';
+    $governorSubtitle = $settings['home_governor_subtitle'] ?? ($settings['home_governor_intro'] ?? 'A Word from the Governor');
+    $governorQuote = $settings['home_governor_quote'] ?? 'Investing in ECDE is investing in the soul of our county. When we equip our youngest learners with quality education and nurturing environments, we build a generation capable of transforming Laikipia and all of Kenya.';
+    $governorCtaText = $settings['home_governor_cta_text'] ?? 'Read Full Message';
+    $governorImage = $settings['home_governor_image'] ?? null;
+    $governorMessageLink = $settings['home_governor_message_url'] ?? route('cms.page', 'about');
+
+    if (!empty($governorImage)) {
+      if (\Illuminate\Support\Str::startsWith($governorImage, ['http://', 'https://'])) {
+        $governorImageUrl = $governorImage;
+      } else {
+        $governorImageUrl = asset('storage/' . ltrim($governorImage, '/'));
+      }
+    } else {
+      $governorImageUrl = null;
+    }
   @endphp
 
 @if($showHomeHero)
@@ -330,8 +409,7 @@
   <div class="hero-strip"></div>
 
   <div class="hero-content">
-    <div class="hero-eyebrow"><span></span> Laikipia County — Early Childhood Education</div>
-    <h1>{!! $heroHeadline !!}</h1>
+    <h1>{!! $heroHeadlineInline !!}</h1>
     <p>{{ $heroSubtext }}</p>
     <div class="hero-actions">
       <a href="{{ $heroPrimaryLink }}" class="btn-primary">
@@ -357,74 +435,138 @@
 
 
 <div id="home-content-start">
-@if($showHomePosts)
-<section class="posts-section">
-  <div class="posts-header reveal">
-    <div>
-      <div class="section-label">Latest Posts</div>
-      <div class="section-title">News &amp; Updates</div>
+@if($showHomeGovernor)
+<section class="governor-section">
+  <div class="governor-inner {{ $governorImageUrl ? '' : 'no-image' }}">
+    @if($governorImageUrl)
+    <div class="governor-photo-wrap reveal">
+      <div class="governor-photo-frame">
+        <img src="{{ $governorImageUrl }}" alt="{{ $governorName }}">
+      </div>
+      <div class="governor-badge">
+        <div><span class="governor-badge-dot"></span><span class="governor-badge-name">{{ $governorName }}</span></div>
+        <div class="governor-badge-title">{{ $governorBadgeTitle }}</div>
+      </div>
     </div>
-    <a href="{{ route('cms.posts') }}" class="view-all">View all posts →</a>
-  </div>
+    @endif
 
-  <div class="posts-grid">
-    @forelse(($recentPosts ?? collect()) as $post)
-    <a href="{{ route('cms.post', $post->slug) }}" class="post-card reveal">
-      <div class="post-image-placeholder">
-        <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+    <div class="governor-content reveal">
+      <div class="section-label">{{ $governorSectionLabel }}</div>
+      <div class="section-title">{{ $governorHeadingLineOne }}<br>{{ $governorHeadingLineTwo }}</div>
+      <div class="section-sub">{{ $governorSubtitle }}</div>
+
+      <div class="governor-quote">
+        <p>{{ $governorQuote }}</p>
       </div>
-      <div class="post-body">
-        <span class="post-tag">Blog</span>
-        <div class="post-title">{{ $post->title }}</div>
-        <div class="post-date">
-          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-          {{ optional($post->published_at ?? $post->created_at)->format('M d, Y') ?? 'N/A' }}
+
+      <div class="governor-meta">
+        <div class="governor-avatar">
+          @if($governorImageUrl)
+            <img src="{{ $governorImageUrl }}" alt="{{ $governorName }}">
+          @else
+            {{ strtoupper(substr($governorName, 0, 1)) }}
+          @endif
         </div>
-        <div class="post-excerpt">{{ \Illuminate\Support\Str::limit(strip_tags($post->content), 110) }}</div>
-        <div class="post-link">Read more <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        <div>
+          <div class="governor-meta-name">{{ $governorName }}</div>
+          <div class="governor-meta-role">{{ $governorTitle }}</div>
+        </div>
       </div>
-    </a>
-    @empty
-        <div class="col-12">
-            <div class="empty-state">
-                <i class="fa fa-newspaper-o"></i>
-                <h5 class="mb-2">No posts yet</h5>
-                <p class="mb-0">Fresh stories and updates will appear here soon.</p>
-            </div>
-        </div>
-    @endforelse
+
+      <a href="{{ $governorMessageLink }}" class="btn-primary" style="width:fit-content;">
+        {{ $governorCtaText }}
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
   </div>
 </section>
 @endif
 
-@if($showHomeAnnouncements)
-<section class="announcements-section">
-  <div class="reveal">
-    <div class="section-label">Announcements</div>
-    <div class="section-title" style="color:#fff;">Important Notices</div>
-    <div class="section-sub">Stay informed with the latest official announcements from Laikipia ECDE.</div>
+@if($showHomeSchools)
+<section class="schools-section">
+  <div class="schools-header reveal">
+    <div>
+      <div class="section-label" style="color:#6ee09a;">Our Schools</div>
+      <div class="section-title" style="color:#fff;">ECDE Schools<br>Across Laikipia</div>
+      <div class="section-sub" style="color:rgba(255,255,255,.55); margin-top:8px;">Explore early childhood centres operating across all sub-counties in Laikipia County.</div>
+    </div>
+    <a href="{{ route('cms.schools') }}" class="view-all-light">View all schools →</a>
   </div>
 
-  <div class="ann-grid">
-    @forelse(($activeAnnouncements ?? collect()) as $announcement)
-    <a href="{{ route('cms.announcement.show', $announcement->id) }}" class="ann-card reveal">
-      <div class="ann-tag">Announcement</div>
-      <div class="ann-title">{{ $announcement->title }}</div>
-      <div class="ann-date">
-        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-        {{ optional($announcement->created_at)->format('M d, Y') }}
-      </div>
-      <div class="ann-excerpt">{{ \Illuminate\Support\Str::limit(strip_tags($announcement->content), 110) }}</div>
-      <div class="ann-link">Read More →</div>
-    </a>
-    @empty
-        <div class="col-12">
-            <div class="empty-state" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);">
-                <i class="fa fa-bullhorn" style="color: #fff;"></i>
-                <h5 class="mb-2" style="color: #fff;">No announcements right now</h5>
-                <p class="mb-0">Important notices will be posted here.</p>
-            </div>
+  <div class="schools-overview-stats reveal">
+    <div class="schools-overview-card">
+      <div class="schools-overview-value">{{ number_format($totalEcdeCentres ?? 0) }}</div>
+      <div class="schools-overview-title">Total ECDE Centres</div>
+      <div class="schools-overview-desc">Across all sub-counties in Laikipia</div>
+    </div>
+    <div class="schools-overview-card">
+      <div class="schools-overview-value">{{ number_format($totalLearners ?? 0) }}</div>
+      <div class="schools-overview-title">Total Learners</div>
+      <div class="schools-overview-desc">Enrolled in current academic term</div>
+    </div>
+    <div class="schools-overview-card">
+      <div class="schools-overview-value">{{ number_format($totalTeachers ?? 0) }}</div>
+      <div class="schools-overview-title">Total Teachers</div>
+      <div class="schools-overview-desc">Trained and deployed county-wide</div>
+    </div>
+    <div class="schools-overview-card">
+      <div class="schools-overview-value">{{ number_format($totalSubCounties ?? 0) }}</div>
+      <div class="schools-overview-title">Sub-Counties</div>
+      <div class="schools-overview-desc">Covered by the ECDE programme</div>
+    </div>
+  </div>
+
+  <div class="schools-grid">
+    @forelse(($ecde_schools ?? collect())->take(6) as $school)
+    @php
+      $schoolImage = $school->image_path ?? null;
+      $schoolImageUrl = null;
+
+      if (!empty($schoolImage)) {
+          if (\Illuminate\Support\Str::startsWith($schoolImage, ['http://', 'https://'])) {
+              $schoolImageUrl = $schoolImage;
+          } elseif (\Illuminate\Support\Str::startsWith($schoolImage, ['/storage/', 'storage/'])) {
+              $schoolImageUrl = asset(ltrim($schoolImage, '/'));
+          } else {
+              $schoolImageUrl = asset('storage/' . ltrim($schoolImage, '/'));
+          }
+      }
+
+      $schoolWard = optional($school->ward)->name ?? 'Laikipia County';
+      $schoolStudents = $school->number_of_students ?? 0;
+      $schoolClasses = $school->number_of_classes ?? 0;
+      $schoolType = $school->class_rooms_status ?? 'Public';
+    @endphp
+
+    <div class="school-card reveal">
+      @if($schoolImageUrl)
+        <img class="school-card-img" src="{{ $schoolImageUrl }}" alt="{{ $school->school_name }}" loading="lazy">
+      @else
+        <div class="school-card-img-placeholder">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
         </div>
+      @endif
+
+      <div class="school-card-body">
+        <div class="school-subcounty"><span class="school-subcounty-dot"></span>{{ $schoolWard }}</div>
+        <div class="school-name">{{ $school->school_name }}</div>
+        <div class="school-stats">
+          <div class="school-stat"><span class="school-stat-num">{{ $schoolStudents }}</span><span class="school-stat-label">Learners</span></div>
+          <div class="school-stat"><span class="school-stat-num">{{ $schoolClasses }}</span><span class="school-stat-label">Classes</span></div>
+          <div class="school-stat"><span class="school-stat-num">{{ $schoolClasses }}</span><span class="school-stat-label">Streams</span></div>
+        </div>
+
+        <div class="school-divider"></div>
+        <div class="school-footer">
+          <div class="school-type">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            {{ $schoolType }}
+          </div>
+          <a href="{{ route('cms.schools') }}" class="school-link">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+      </div>
+    </div>
+    @empty
     @endforelse
   </div>
 </section>
@@ -458,39 +600,6 @@
 </section>
 @endif
 
-@if($showHomeExplore)
-<section class="explore-section">
-  <div class="explore-inner">
-    <div class="explore-text reveal">
-      <div class="section-label">Explore</div>
-      <div class="section-title">Find What You Need</div>
-      <p>Quick access to all sections of the platform.</p>
-    </div>
-    <div class="explore-links reveal">
-      <a href="{{ route('cms.posts') }}" class="explore-link">
-        <i class="fa fa-newspaper"></i>
-        Blog
-      </a>
-      <a href="{{ route('cms.galleries') }}" class="explore-link">
-        <i class="fa fa-images"></i>
-        Galleries
-      </a>
-      <a href="{{ route('cms.faqs') }}" class="explore-link">
-        <i class="fa fa-question-circle"></i>
-        FAQs
-      </a>
-      <a href="{{ route('cms.announcements') }}" class="explore-link">
-        <i class="fa fa-bullhorn"></i>
-        Announcements
-      </a>
-      <a href="{{ route('cms.contact') }}" class="explore-link">
-        <i class="fa fa-phone"></i>
-        Contact
-      </a>
-    </div>
-  </div>
-</section>
-@endif
 </div>
 
 @endsection
