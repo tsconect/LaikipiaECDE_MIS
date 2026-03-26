@@ -35,7 +35,8 @@ class FeederSchoolsController extends Controller
 
       public function show(FeederSchools $feeder_school)
       {
-          return view('admin.feeder-schools.edit', ['school' => $feeder_school]);
+          $school = $feeder_school;
+          return view('admin.feeder-schools.show', compact('school'));
       }
 
 
@@ -79,7 +80,12 @@ class FeederSchoolsController extends Controller
 
        public function edit(FeederSchools $feeder_school)
        {
-            return view('admin.feeder-schools.edit', ['school' => $feeder_school]);
+            $sub_counties = Constituency::get();
+            $wards = Ward::get();
+            $counties = County::get();
+            $teachers = Teacher::all();
+            $school = $feeder_school;
+            return view('admin.feeder-schools.edit', compact('school', 'sub_counties', 'wards', 'counties', 'teachers'));
        }
 
        public function update(Request $request, FeederSchools $feeder_school)

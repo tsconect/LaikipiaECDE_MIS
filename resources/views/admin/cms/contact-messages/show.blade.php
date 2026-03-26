@@ -6,11 +6,7 @@
         <div class="col-md-8">
             <h2>Message from {{ $message->name }}</h2>
         </div>
-        <div class="col-md-4 text-right">
-            <a href="{{ route('admin.cms.contact-messages.index') }}" class="btn btn-secondary">
-                <i class="fa fa-arrow-left"></i> Back
-            </a>
-        </div>
+
     </div>
 
     @if(session('success'))

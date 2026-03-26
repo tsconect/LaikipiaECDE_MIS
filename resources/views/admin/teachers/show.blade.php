@@ -66,8 +66,8 @@
             </div>
         </div>
 
-        <!-- RIGHT: DETAILS -->
-        <div class="d-flex flex-wrap gap-4 mt-3 mt-md-0">
+        <!-- RIGHT: DETAILS AND ACTIONS -->
+        <div class="d-flex flex-wrap gap-4 mt-3 mt-md-0 align-items-center">
 
             <div>
                 <div class="text-muted" style="font-size:12px;">Phone</div>
@@ -81,6 +81,15 @@
                 <div style="font-size:14px;">
                     <i class="bi bi-credit-card"></i> {{ $teacher->user->id_number }}
                 </div>
+            </div>
+
+            <div class="ms-auto">
+                <a href="{{ route('admin.teachers.edit', $teacher->id) }}" class="btn btn-primary btn-sm">
+                    <i class="bi bi-pencil"></i> Edit Teacher
+                </a>
+                <a href="{{ route('admin.teachers.index') }}" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
             </div>
 
         </div>

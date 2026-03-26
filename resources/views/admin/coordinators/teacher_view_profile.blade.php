@@ -176,9 +176,9 @@
                                         {{-- {{ $data->education  }} --}}
                                         <tr>
                                             {{-- <td><b>Usname:</b> </td> --}}
-                                            <td  > Education Level: &nbsp;&nbsp; <b class="text-success">{{ $data->education->education_level }} </b> </td>
-                                            @if (isset($data->educaion->union))
-                                                <td  >  union: &nbsp;&nbsp; <b class="text-success">{{ $data->educaion->union}} </b> </td>
+                                            <td  > Education Level: &nbsp;&nbsp; <b class="text-success">{{ $data->education->education_level ?? 'Not Set' }} </b> </td>
+                                            @if ($data->education && isset($data->education->union))
+                                                <td  >  union: &nbsp;&nbsp; <b class="text-success">{{ $data->education->union}} </b> </td>
 
                                             @else
                                                 <td > union: &nbsp;&nbsp; <span class="text-danger"> Not registered to a union </span> </td>
@@ -207,12 +207,12 @@
                                         {{-- {{ $data->resident  }} --}}
                                         <tr>
                                             {{-- <td><b>Usname:</b> </td> --}}
-                                            <td  > Constituency: &nbsp;&nbsp; <b class="text-success">{{$data->resident->const->name }} </b> </td>
-                                            <td  > Ward: &nbsp;&nbsp; <b class="text-success">{{$data->resident->ward->name }} </b> </td>
+                                            <td  > Constituency: &nbsp;&nbsp; <b class="text-success">{{ $data->resident?->const?->name ?? 'Not Set' }} </b> </td>
+                                            <td  > Ward: &nbsp;&nbsp; <b class="text-success">{{ $data->resident?->ward?->name ?? 'Not Set' }} </b> </td>
                                         </tr>
                                         <tr>
-                                            <td  > Sub_location: &nbsp;&nbsp; <b class="text-success">{{$data->resident->Sub_location }} </b> </td>
-                                            <td  > village: &nbsp;&nbsp; <b class="text-success">{{$data->resident->village }} </b> </td>
+                                            <td  > Sub_location: &nbsp;&nbsp; <b class="text-success">{{ $data->resident?->Sub_location ?? 'Not Set' }} </b> </td>
+                                            <td  > village: &nbsp;&nbsp; <b class="text-success">{{ $data->resident?->village ?? 'Not Set' }} </b> </td>
                                         </tr>
                                     </tbody>
 
@@ -235,26 +235,18 @@
                                         {{-- {{ $data->school_contact  }} --}}
                                         <tr>
                                             {{-- <td><b>Usname:</b> </td> --}}
-                                            <td  > name: &nbsp;&nbsp; <b class="text-success">{{$data->school_contact->name }} </b> </td>
-                                            <td  > phone: &nbsp;&nbsp; <b class="text-success">{{$data->school_contact->phone }} </b> </td>
+                                            <td  > name: &nbsp;&nbsp; <b class="text-success">{{ $data->school_contact?->name ?? 'Not Set' }} </b> </td>
+                                            <td  > phone: &nbsp;&nbsp; <b class="text-success">{{ $data->school_contact?->phone ?? 'Not Set' }} </b> </td>
                                         </tr>
-
-                                    </tbody>
-
-                                    <tbody>
                                         <tr>
-                                            <td  > tsc_number: &nbsp;&nbsp; <b class="text-success">{{$data->school_contact->phone }} </b> </td>
-                                            <td  > P.O Box: &nbsp;&nbsp; <b class="text-success">{{$data->school_contact->box }} </b> </td>
+                                            <td  > tsc_number: &nbsp;&nbsp; <b class="text-success">{{ $data->school_contact?->phone ?? 'Not Set' }} </b> </td>
+                                            <td  > P.O Box: &nbsp;&nbsp; <b class="text-success">{{ $data->school_contact?->box ?? 'Not Set' }} </b> </td>
                                         </tr>
-
-                                    </tbody>
-                                    <tbody>
                                         <tr>
-                                            <td  > Category: &nbsp;&nbsp; <b class="text-success">{{$data->school_contact->category }} </b> </td>
+                                            <td  > Category: &nbsp;&nbsp; <b class="text-success">{{ $data->school_contact?->category ?? 'Not Set' }} </b> </td>
+                                            <td></td>
                                         </tr>
                                     </tbody>
-
-
 
                                 </table>
                             </div>

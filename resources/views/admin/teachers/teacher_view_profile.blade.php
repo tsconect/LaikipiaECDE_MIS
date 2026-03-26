@@ -179,7 +179,7 @@
                                         {{-- {{ $data->education  }} --}}
                                         <tr>
                                             {{-- <td><b>Usname:</b> </td> --}}
-                                            <td  > Education Level: &nbsp;&nbsp; <b class="text-success">{{ $data->education->education_level }} </b> </td>
+                                            <td  > Education Level: &nbsp;&nbsp; <b class="text-success">{{ $data->education->education_level ?? 'Not Set' }} </b> </td>
                                             @if (isset($data->unions))
                                                 <td  >  unions: &nbsp;&nbsp; @foreach ($data->unions as $_)
                                                     <br>

@@ -10,7 +10,20 @@ class Coordinators extends Model
     use HasFactory;
 
     protected $guarded = [];
-      function user(){
+    
+    function user(){
         return $this->hasOne(User::class,'id','user_id');
+    }
+    
+    function education(){
+        return $this->hasOne(TeacherEducation::class,'teacher_id','id');
+    }
+
+    function resident(){
+        return $this->hasOne(TeacherResidential::class,'teacher_id','id');
+    }
+
+    function school_contact(){
+        return $this->hasOne(TeacherSchoolContact::class,'teacher_id','id');
     }
 }

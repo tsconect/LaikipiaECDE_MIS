@@ -38,6 +38,7 @@ class Teacher extends Model
         return $this->belongsTo(EthnicGroup::class, 'ethnicity_id', 'id');
     }
 
-
-
+    public function education(){
+        return $this->hasOne(TeacherEducation::class,'teacher_id','id');
+    }
 }

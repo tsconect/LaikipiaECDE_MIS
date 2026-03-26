@@ -279,188 +279,317 @@
 }
 </style>
 @if(Auth::user()->role == 'Admin')
-<div class="dashboard-modern">
-    <div class="top-row">
-       
-            <div class="stats-row">
-                <div class="stat-card">
-                    <div class="stat-label">ECDE Schools</div>
-                    <div class="stat-value">{{ number_format($schoolsCount) }}</div>
-                    <span class="stat-change up">+14%</span>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Teachers</div>
-                    <div class="stat-value red">{{ number_format($teachersCount) }}</div>
-                    <span class="stat-change up">+8%</span>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Students</div>
-                    <div class="stat-value">{{ number_format($studentsCount) }}</div>
-                    <span class="stat-change down">-15%</span>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Unions</div>
-                    <div class="stat-value">{{ number_format($unionsCount) }}</div>
-                    <span class="stat-change amber">+76%</span>
+<div class="container-fluid">
+    <div class="row g-3">
+
+        <!-- ECDE Schools -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">ECDE Schools</div>
+                    <h4 class="fw-bold mb-1">{{ number_format($schoolsCount) }}</h4>
+                    <span class="text-success small">+14%</span>
                 </div>
             </div>
-     
+        </div>
 
-        {{-- <div class="kes-card">
-            <div class="kes-label">Total Bursary Dispersed</div>
-            <div class="kes-amount"><span>KES</span> 628</div>
-            <div class="kes-sub">All periods combined</div>
-            <svg viewBox="0 0 300 70" preserveAspectRatio="none" style="width:100%;height:70px;">
-                <defs>
-                    <linearGradient id="goldGradHome" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.4"/>
-                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.02"/>
-                    </linearGradient>
-                </defs>
-                <path d="M0,55 C15,52 20,42 35,44 C50,46 55,36 70,32 C85,28 90,38 105,33 C120,28 125,18 145,14 C165,10 170,22 190,18 C210,14 215,6 235,9 C255,12 260,20 280,16 L300,12 L300,70 L0,70 Z" fill="url(#goldGradHome)"/>
-                <path d="M0,55 C15,52 20,42 35,44 C50,46 55,36 70,32 C85,28 90,38 105,33 C120,28 125,18 145,14 C165,10 170,22 190,18 C210,14 215,6 235,9 C255,12 260,20 280,16 L300,12" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </div> --}}
+        <!-- Teachers -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Male Teachers</div>
+                    <h4 class="fw-bold text-danger mb-1">{{ number_format($teachersCount) }}</h4>
+                    <span class="text-success small">+8%</span>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Female Teachers</div>
+                    <h4 class="fw-bold text-danger mb-1">{{ number_format($teachersCount) }}</h4>
+                    <span class="text-success small">+8%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Male Students</div>
+                    <h4 class="fw-bold mb-1">{{ number_format($studentsCount) }}</h4>
+                    <span class="text-danger small">-15%</span>
+                </div>
+            </div>
+        </div>
+
+         <!-- Students -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Female Students</div>
+                    <h4 class="fw-bold mb-1">{{ number_format($studentsCount) }}</h4>
+                    <span class="text-danger small">-15%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unions -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted small">Abled Differently</div>
+                    <h4 class="fw-bold mb-1">{{ number_format($unionsCount) }}</h4>
+                    <span class="text-warning small">+76%</span>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
 
-    <div class="content-row">
-        <div class="panel">
-            <div class="panel-header">
-                <div class="panel-title">Bursary Breakdowns</div>
-            </div>
-            <table>
+<div class="container p-2 mt-3">
+    <div class="card">
+        <div class="card-hearder p-3">
+            <h5>Student-Teacher Registration Progress</h5>
+            <hr>
+        </div>
+        <div class="card-body">
+               <canvas id="registrationChart" height="70"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="container p-2 mt-3">
+    <div class="card">
+        <div class="card-header p-3">
+            <h5>Student Age Distribution</h5>
+            <hr>
+        </div>
+        <div class="card-body">
+            <canvas id="ageChart" height="150"></canvas>
+        </div>
+    </div>
+</div>
+<div class="container p-2 mt-3">
+    <div class="card">
+        <div class="card-hearder p-3">
+            <h5>Retiring Teachers</h5>
+            <hr>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>SN / No</th>
-                        <th>Bursary Opening</th>
-                        <th>Total Applicants</th>
-                        <th>Allocated</th>
-                        <th>Variance</th>
-                        <th>Amount Disbursed</th>
+                        <th>Name</th>
+                        <th>School</th>
+                        <th>Age</th>
+                        <th>Retires In</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><span class="sn-badge">1</span></td>
-                        <td><span class="period-tag">2023 / January</span></td>
-                        <td>1,200</td>
-                        <td>100</td>
-                        <td>1,100</td>
-                        <td><span class="amount-cell">24,000</span></td>
-                    </tr>
+                    {{-- @foreach($retiringTeachers as $teacher)
+                        <tr>
+                            <td>{{ $teacher->name }}</td>
+                            <td>{{ $teacher->school->school_name }}</td>
+                            <td>{{ $teacher->age }}</td>
+                            <td>{{ $teacher->retires_in }}</td>
+                        </tr>
+                    @endforeach --}}
                 </tbody>
             </table>
-
-            <div class="subsection-header">ECDE Teachers Breakdown</div>
-            <table>
+        </div>
+    </div>
+</div>
+<div class="container p-2 mt-3">
+    <div class="card">
+        <div class="card-hearder p-3">
+            <h5>Teacher Distribution per Age Group</h5>
+            <hr>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>SN / NO</th>
-                        <th>Total</th>
-                        <th>With TSC</th>
-                        <th>Male</th>
-                        <th>Female</th>
-                        <th>Disabled</th>
+                        <th>Age Group</th>
+                        <th>Number of Teachers</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="empty-row">
-                        <td colspan="6">No teacher breakdown data available</td>
+                    <tr>
+                        <td>18-20</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>21-24</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>25-29</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>30-34</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>35-39</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>40-44</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>45-49</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>50-54</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>55-59</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>60 and above</td>
+                        <td>0</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-        {{-- <div class="notif-panel">
-            <div class="notif-header">
-                <div class="notif-title-row">
-                    <span>Technical Support</span>
-                    <span class="notif-badge">21</span>
-                </div>
-                <div class="notif-sub">You have <strong>21</strong> unread messages</div>
-            </div>
-
-            <div class="notif-tabs">
-                <button class="n-tab active" type="button" data-tab="messages">Messages</button>
-                <button class="n-tab" type="button" data-tab="events">Events</button>
-                <button class="n-tab" type="button" data-tab="errors">System Errors</button>
-            </div>
-
-            <div class="notif-tab-pane active" data-pane="messages">
-                <div class="notif-item">
-                    <div class="notif-dot dot-red"></div>
-                    <div>
-                        <div class="notif-text">All Hands Meeting</div>
-                        <div class="notif-time">Today, 09:00 AM</div>
-                    </div>
-                </div>
-
-                <div class="notif-item">
-                    <div class="notif-dot dot-amber"></div>
-                    <div>
-                        <div class="notif-text">Yet another one</div>
-                        <div class="notif-time">at 15:00 PM</div>
-                    </div>
-                </div>
-
-                <div class="notif-item">
-                    <div class="notif-dot dot-green"></div>
-                    <div>
-                        <div class="notif-text">Build the production release <span class="new-tag">NEW</span></div>
-                        <div class="notif-time">2 hours ago</div>
-                    </div>
-                </div>
-
-                <div class="notif-item">
-                    <div class="notif-dot dot-blue"></div>
-                    <div>
-                        <div class="notif-text">Something not important</div>
-                        <div class="notif-time">Just now</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="notif-tab-pane" data-pane="events">
-                <div class="notif-item">
-                    <div class="notif-dot dot-blue"></div>
-                    <div>
-                        <div class="notif-text">System maintenance briefing</div>
-                        <div class="notif-time">Tomorrow, 10:30 AM</div>
-                    </div>
-                </div>
-                <div class="notif-item">
-                    <div class="notif-dot dot-amber"></div>
-                    <div>
-                        <div class="notif-text">SMS service update review</div>
-                        <div class="notif-time">Friday, 03:00 PM</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="notif-tab-pane" data-pane="errors">
-                <div class="notif-item">
-                    <div class="notif-dot dot-red"></div>
-                    <div>
-                        <div class="notif-text">Queue worker timeout recovered</div>
-                        <div class="notif-time">20 minutes ago</div>
-                    </div>
-                </div>
-                <div class="notif-item">
-                    <div class="notif-dot dot-amber"></div>
-                    <div>
-                        <div class="notif-text">Email service delay warning</div>
-                        <div class="notif-time">1 hour ago</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="notif-footer">
-                <a class="btn-view-all text-center d-block text-decoration-none" href="{{ route('admin.sms-logs.index') }}">View All Messages</a>
-            </div>
-        </div> --}}
     </div>
 </div>
+</div>
 
+<div class="container p-2 mt-3">
+    <div class="card">
+        <div class="card-header p-3">
+            <h5>Teachers Ethnic Distribution</h5>
+            <hr>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Ethinicity</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- @foreach($ageDistribution as $key => $value)
+                    <tr>
+                        <td>{{ $key }}</td>
+                        <td>{{ $value }}</td>
+                    </tr>
+                    @endforeach --}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const ageCtx = document.getElementById('ageChart').getContext('2d');
+
+const labels_age = [
+    "Under 3",
+    "4 Years",
+    "5 Years",
+    "6 Years",
+    "7 Years",
+    "8 Years",
+    "9 Years",
+    "10 Years",
+    "10+ Years"
+];
+
+
+const maleData = [5, 10, 15, 20, 18, 14, 12, 8, 4];
+const femaleData = [6, 12, 18, 22, 20, 16, 14, 9, 5];
+
+new Chart(ageCtx, {
+    type: 'bar',
+    data: {
+        labels: labels_age,
+        datasets: [
+            {
+                label: 'Male',
+                data: maleData,
+                borderWidth: 1
+            },
+            {
+                label: 'Female',
+                data: femaleData,
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false, 
+        plugins: {
+            legend: {
+                position: 'top'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+<script>
+const ctx = document.getElementById('registrationChart').getContext('2d');
+
+
+const labels = [
+    "Day 1","Day 2","Day 3","Day 4","Day 5","Day 6","Day 7",
+    "Day 8","Day 9","Day 10","Day 11","Day 12","Day 13","Day 14"
+];
+
+// Dummy data
+const teacherData = [5, 8, 12, 10, 15, 18, 20, 22, 25, 28, 30, 32, 35, 40];
+const studentData = [10, 15, 18, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70];
+
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Teachers Registered',
+                data: teacherData,
+                borderWidth: 2,
+                tension: 0.4
+            },
+            {
+                label: 'Students Registered',
+                data: studentData,
+                borderWidth: 2,
+                tension: 0.4
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
 @else
 <h4>WELCOME, {{ auth()->user()->first_name }}</h4>
 <style>

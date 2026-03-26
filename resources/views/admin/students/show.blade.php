@@ -74,7 +74,6 @@
         <a href="{{ route('admin.ecde-students.edit', $ecde_student->id) }}" class="btn btn-primary">
             <i class="fa fa-edit"></i> Edit Student
         </a>
-        <a href="{{ route('admin.ecde-students.index') }}" class="btn btn-light">Back</a>
     </div>
 </div>
 @endsection

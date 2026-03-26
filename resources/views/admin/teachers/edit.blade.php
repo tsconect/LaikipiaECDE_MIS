@@ -147,14 +147,9 @@
                             class="form-control"
                         >
                             <option value="">Select Ethnicity</option>
-                            <option value="kikuyu">Kikuyu</option>
-                            <option value="luhya">Luhya</option>
-                            <option value="luo">Luo</option>
-                            <option value="kalenjin">Kalenjin</option>
-                            <option value="kamba">Kamba</option>
-                            <option value="meru">Meru</option>
-                            <option value="kisii">Kisii</option>
-                            <option value="maasai">Maasai</option>
+                            @foreach($ethnicities as $ethnicity)
+                                <option value="{{ $ethnicity->id }}" {{ $teacher->ethnicity_id == $ethnicity->id ? 'selected' : '' }}>{{ $ethnicity->name }}</option>
+                            @endforeach
                         </select>
 
                         @error('ethnicity_id')

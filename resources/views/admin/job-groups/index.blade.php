@@ -42,12 +42,12 @@
                                     <td>0</td>
                                     
                                     <td>
-                                        <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.unions.show', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="View job group"
+                                            href="{{ route('admin.job-groups.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.unions.edit', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="Edit Job Group"
+                                            href="{{ route('admin.job-groups.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>

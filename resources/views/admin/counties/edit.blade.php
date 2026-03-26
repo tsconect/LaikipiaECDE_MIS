@@ -22,8 +22,9 @@
                 </div>
             </div>
 
-            <button class="mt-2 btn btn-primary">Update</button>
-            <a href="{{ route('admin.counties.index') }}" class="mt-2 btn btn-light">Back</a>
+            <div class="text-end">
+                <button class="mt-2 btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>

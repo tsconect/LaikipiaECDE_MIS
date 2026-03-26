@@ -1,35 +1,75 @@
-@extends('backoffice.layouts.app')
-
-
+@extends('admin.app')
 @section('nav-bar')
-
-@include('layouts.main_nav')
+@include('admin.layouts.sidebar')
 @endsection
 
-@section('title', 'Barriers & Roadblocks')
 @section('content')
 
-@include('flash-message')
+<div class="card-body">
+    <div class="container mt-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    <form method="POST" action="{{ route('admin.user-documents.update', $userDocument->id) }}" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
 
-<h5 class="card-title">  <a href="{{url('admin/all-constituency')}}"><button class="btn btn">  <i class="fa fa-arrow-left"></i> Back</button></a> </h5>
+        <!-- ================= DOCUMENT INFORMATION ================= -->
 
+        <div class="card p-2 shadow-sm mb-4">
 
-<div class="main-card mb-3 card col-12">
-    <div class="card-body">
-        <h5 class="card-title">Edit {{ $union->name }} union Details</h5>
-        <form class="" action="{{route('admin.union.update', $union->id)}}" method="post">
-            @csrf
-            <div class="form-row">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Edit User Document</h5>
+            </div>
+            <div class="form-row p-3">
+
                 <div class="col-md-6">
                     <div class="position-relative form-group">
-                        <label for="name" class="">Name</label>
-                        <input value="{{ $union->name }}" name="name" id="name" placeholder="Enter Constituency name" required type="text"
-                            class="form-control">
+                        <label for="document_id" class="">Document</label>
+                        <select name="document_id" id="document_id" class="form-control" required>
+                            <option value="">Select</option>
+                            @foreach ($documents as $document)
+                                <option value="{{ $document->id }}" {{ old('document_id', $userDocument->document_id) == $document->id ? 'selected' : '' }}>{{ $document->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                     
+                    @error('document_id')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
+                </div>
+
+                <div class="col-md-6">
+                    <div class="position-relative form-group">
+                        <label for="file" class="">File <span class="text-danger">*</span></label>
+                        <input type="file" name="file" id="file" class="form-control" accept=".pdf,.jpg,.png,.jpeg">
+                        <small class="text-muted">Leave blank to keep existing file</small>
+                
+                        @error('file')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
                 </div>
+             
             </div>
 
-            <button class="mt-2 btn btn-primary">Submit</button>
+            <div class="text-right p-3">
+                    <button class="btn btn-success" type="submit">
+                        Update
+                    </button>
+                </div>
+        </div>
         </form>
     </div>
 </div>

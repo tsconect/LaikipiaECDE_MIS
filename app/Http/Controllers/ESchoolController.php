@@ -38,7 +38,8 @@ class ESchoolController extends Controller
 
        public function show(EcdeSchools $ecde_school)
        {
-           return view('admin.schools.edit', ['school' => $ecde_school]);
+           $school = $ecde_school;
+           return view('admin.schools.show', compact('school'));
        }
 
 
@@ -88,7 +89,13 @@ class ESchoolController extends Controller
 
        public function edit(EcdeSchools $ecde_school)
        {
-           return view('admin.schools.edit', ['school' => $ecde_school]);
+           $sub_counties = Constituency::get();
+           $wards = Ward::get();
+           $counties = County::get();
+           $feeder_schools = FeederSchools::all();
+           $teachers = Teacher::all();
+           $school = $ecde_school;
+           return view('admin.schools.edit', compact('school', 'sub_counties', 'wards', 'counties', 'feeder_schools', 'teachers'));
        }
 
        public function update(Request $request, EcdeSchools $ecde_school)

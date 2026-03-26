@@ -7,13 +7,13 @@
 @section('content')
     @include('flash-message')
       <div class="card-header btn-success">
-            <h5>UNIONS</h5>
+            <h5>ETHNIC GROUPS</h5>
         </div>
     <div class="card ">
       
         <div class="card-body">
             <h5 class="card-title text-right">
-                <a href="{{ route('admin.unions.create') }}"><button class="btn btn-danger ">
+                <a href="{{ route('admin.ethnic-groups.create') }}"><button class="btn btn-danger ">
                         <i class="fa fa-plus"></i> New Group</button></a>
             </h5>
             <div class=" card-body">
@@ -44,12 +44,12 @@
                                     <td></td>
                                     
                                     <td>
-                                        <a class="btn btn-outline-primary" title="View teacher's metadata"
-                                            href="{{ route('admin.unions.show', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="View ethnic group"
+                                            href="{{ route('admin.ethnic-groups.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-outline-primary" title="Edit Teacher"
-                                            href="{{ route('admin.unions.edit', $item->id) }}">
+                                        <a class="btn btn-outline-primary" title="Edit Ethnic Group"
+                                            href="{{ route('admin.ethnic-groups.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>

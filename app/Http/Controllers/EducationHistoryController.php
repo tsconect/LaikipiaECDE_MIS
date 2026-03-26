@@ -69,7 +69,7 @@ class EducationHistoryController extends Controller
      */
     public function show(EducationHistory $educationHistory)
     {
-        //
+        return view('admin.education-history.edit', compact('educationHistory'));
     }
 
     /**
@@ -80,7 +80,7 @@ class EducationHistoryController extends Controller
      */
     public function edit(EducationHistory $educationHistory)
     {
-        //
+        return view('admin.education-history.edit', compact('educationHistory'));
     }
 
     /**
@@ -92,7 +92,23 @@ class EducationHistoryController extends Controller
      */
     public function update(Request $request, EducationHistory $educationHistory)
     {
-        //
+        $request->validate([
+            'institution_name' => 'required',
+            'award' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'certificate_no' => 'required|unique:education_histories,certificate_no,' . $educationHistory->id,
+        ]);
+
+        $educationHistory->institution_name = $request->institution_name;
+        $educationHistory->award = $request->award;
+        $educationHistory->start_date = $request->start_date;
+        $educationHistory->end_date = $request->end_date;
+        $educationHistory->grade = $request->grade;
+        $educationHistory->certificate_no = $request->certificate_no;
+        $educationHistory->save();
+
+        return redirect()->route('admin.education-histories.index')->with('success', 'Education history updated successfully');
     }
 
     /**
@@ -103,6 +119,8 @@ class EducationHistoryController extends Controller
      */
     public function destroy(EducationHistory $educationHistory)
     {
-        //
+        $educationHistory->delete();
+
+        return redirect()->route('admin.education-histories.index')->with('success', 'Education history deleted successfully');
     }
 }

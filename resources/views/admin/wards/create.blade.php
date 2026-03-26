@@ -12,9 +12,6 @@
 @include('flash-message')
 
 
-<h5 class="card-title">  <a href="{{url('admin/all-wards', $data->id)}}"><button class="btn btn">  <i class="fa fa-arrow-left"></i> Back</button></a> </h5>
-
-
 <div class="main-card mb-3 card col-12">
 
     <div class="card-body">
@@ -33,7 +30,9 @@
                 </div>
             </div>
 
-            <button class="mt-2 btn btn-primary">Submit</button>
+            <div class="text-end">
+                <button class="mt-2 btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>

@@ -77,10 +77,7 @@ class RolesController extends Controller
      */
     public function show(Role $role)
     {
-        $role = $role;
-        $rolePermissions = $role->permissions;
-    
-        return view('admin.roles.show', compact('role', 'rolePermissions'));
+        return redirect()->route('admin.roles.edit', $role->id);
     }
     
     /**
@@ -130,7 +127,7 @@ class RolesController extends Controller
     {
         $role->delete();
 
-        return redirect()->route('roles.index')
+        return redirect()->route('admin.roles.index')
                         ->with('success','Role deleted successfully');
     }
 }

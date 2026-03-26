@@ -23,6 +23,10 @@ class Students extends Model
         return $this->hasOne(EcdeSchools::class,'id','school_id');
     }
 
+    public function education(){
+        return $this->hasOne(TeacherEducation::class,'teacher_id','id');
+    }
+
     // school
     // this belongs to a vtc
     // function vtc()

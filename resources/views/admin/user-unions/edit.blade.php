@@ -1,38 +1,40 @@
-@extends('backoffice.layouts.app')
-
+@extends('admin.app')
 
 @section('nav-bar')
-
-@include('layouts.main_nav')
+@include('admin.layouts.sidebar')
 @endsection
 
-@section('title', 'Barriers & Roadblocks')
 @section('content')
-
 @include('flash-message')
 
-<h5 class="card-title">  <a href="{{url('admin/all-constituency')}}"><button class="btn btn">  <i class="fa fa-arrow-left"></i> Back</button></a> </h5>
-
-
-<div class="main-card mb-3 card col-12">
+<div class="card">
+    <div class="card-header btn-success">
+        <h5>Edit Union Membership</h5>
+    </div>
     <div class="card-body">
-        <h5 class="card-title">Edit {{ $union->name }} union Details</h5>
-        <form class="" action="{{route('admin.union.update', $union->id)}}" method="post">
+        <form method="POST" action="{{ route('admin.user-unions.update', $userUnion->id) }}">
             @csrf
-            <div class="form-row">
-                <div class="col-md-6">
-                    <div class="position-relative form-group">
-                        <label for="name" class="">Name</label>
-                        <input value="{{ $union->name }}" name="name" id="name" placeholder="Enter Constituency name" required type="text"
-                            class="form-control">
-                    </div>
+            @method('PUT')
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="union_id">Union</label>
+                    <select class="form-control" id="union_id" name="union_id" required>
+                        <option value="">Select Union</option>
+                        @foreach ($unions as $union)
+                            <option value="{{ $union->id }}" {{ old('union_id', $userUnion->union_id) == $union->id ? 'selected' : '' }}>{{ $union->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="membership_no">Membership Number</label>
+                    <input type="text" class="form-control" id="membership_no" name="membership_no" value="{{ old('membership_no', $userUnion->membership_number) }}" required>
                 </div>
             </div>
 
-            <button class="mt-2 btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Update Membership</button>
+
         </form>
     </div>
 </div>
-
-
 @endsection
