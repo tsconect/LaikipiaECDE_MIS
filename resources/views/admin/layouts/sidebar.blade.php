@@ -37,7 +37,7 @@
             <ul class="vertical-nav-menu">
 
                 <li>
-                    <a href="{{ route('home') }}"  >
+                    <a href="{{ route('dashboard') }}"  >
                         <i class="metismenu-icon pe-7s-home" ></i>Dashboard
                     </a>
                 </li>
@@ -160,6 +160,11 @@
                         <li     >
                             <a     href="{{ route('admin.ecde-students.index') }}">
                                 <i class="metismenu-icon "></i>ECDE Students
+                            </a>
+                        </li>
+                        <li     >
+                            <a     href="{{ route('admin.learners.index') }}">
+                                <i class="metismenu-icon "></i>learners
                             </a>
                         </li>
                      

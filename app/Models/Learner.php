@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Learner extends Model
+{
+    use HasFactory;
+
+    function school(){
+        return $this->hasOne(EcdeSchools::class,'id','school_id');
+    }
+}

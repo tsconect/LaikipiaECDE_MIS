@@ -5,12 +5,14 @@ use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ConstituencyController;
 use App\Http\Controllers\CountyController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartMentWorkersController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\ESchoolController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\JobGroupController;
+use App\Http\Controllers\LearnerController;
 use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
@@ -66,13 +68,13 @@ Route::post('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 's
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/dashboard', function () {
         // Only users with the required permissions can access this route
         return "ok";
 
     })->middleware('permission:Performace Appraisal');
-    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 
     Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {
@@ -134,6 +136,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
             Route::resource('ecde-students', StudentsController::class);
+            Route::resource('learners', LearnerController::class);
        
 
             Route::get('/create_students', [StudentsController::class, 'create'])->name('students.create');

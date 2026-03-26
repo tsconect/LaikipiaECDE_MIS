@@ -1,12 +1,7 @@
 @extends('admin.app')
 
 @section('content')
-@php
-    $schoolsCount = \App\Models\EcdeSchools::count();
-    $teachersCount = \App\Models\Teacher::count();
-    $studentsCount = \App\Models\Students::count();
-    $unionsCount = \App\Models\Unions::count();
-@endphp
+
 
 <style>
 .dashboard-modern {
@@ -318,7 +313,7 @@
         <div class="col-12 col-sm-6 col-md-3">
             <div class="card shadow-sm h-100">
                 <div class="card-body">
-                    <div class="text-muted small">Male Students</div>
+                    <div class="text-muted small">Male Learners</div>
                     <h4 class="fw-bold mb-1">{{ number_format($studentsCount) }}</h4>
                     <span class="text-danger small">-15%</span>
                 </div>
@@ -329,7 +324,7 @@
         <div class="col-12 col-sm-6 col-md-3">
             <div class="card shadow-sm h-100">
                 <div class="card-body">
-                    <div class="text-muted small">Female Students</div>
+                    <div class="text-muted small">Female Learners</div>
                     <h4 class="fw-bold mb-1">{{ number_format($studentsCount) }}</h4>
                     <span class="text-danger small">-15%</span>
                 </div>
@@ -353,7 +348,7 @@
 <div class="container p-2 mt-3">
     <div class="card">
         <div class="card-hearder p-3">
-            <h5>Student-Teacher Registration Progress</h5>
+            <h5>Learner-Teacher Registration Progress</h5>
             <hr>
         </div>
         <div class="card-body">
@@ -365,7 +360,7 @@
 <div class="container p-2 mt-3">
     <div class="card">
         <div class="card-header p-3">
-            <h5>Student Age Distribution</h5>
+            <h5>Learner Age Distribution</h5>
             <hr>
         </div>
         <div class="card-body">
@@ -480,6 +475,12 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach($ethnicities as $group)
+                    <tr>
+                        <td>{{ $group->name }}</td>
+                        <td>0</td>
+                    </tr>
+                    @endforeach
                     {{-- @foreach($ageDistribution as $key => $value)
                     <tr>
                         <td>{{ $key }}</td>
@@ -568,7 +569,7 @@ new Chart(ctx, {
                 tension: 0.4
             },
             {
-                label: 'Students Registered',
+                label: 'Learners Registered',
                 data: studentData,
                 borderWidth: 2,
                 tension: 0.4
