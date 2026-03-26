@@ -71,9 +71,11 @@
             </div>
         </div>
 
-        <a href="{{ route('admin.ecde-students.edit', $ecde_student->id) }}" class="btn btn-primary">
-            <i class="fa fa-edit"></i> Edit Student
-        </a>
+        <div class="d-flex justify-content-end">
+            <a href="{{ route('admin.ecde-students.edit', $ecde_student->id) }}" class="btn btn-primary">
+                <i class="fa fa-edit"></i> Edit Student
+            </a>
+        </div>
     </div>
 </div>
 @endsection
