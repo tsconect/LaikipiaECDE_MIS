@@ -102,7 +102,6 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Update Student</button>
-            <a href="{{ route('admin.ecde-students.index') }}" class="btn btn-light">Back</a>
         </form>
     </div>
 </div>

@@ -76,7 +76,7 @@ class NextOfKinController extends Controller
      */
     public function show(NextOfKin $nextOfKin)
     {
-        //
+        return view('admin.next-of-kins.edit', compact('nextOfKin'));
     }
 
     /**
@@ -87,7 +87,7 @@ class NextOfKinController extends Controller
      */
     public function edit(NextOfKin $nextOfKin)
     {
-        //
+        return view('admin.next-of-kins.edit', compact('nextOfKin'));
     }
 
     /**
@@ -99,7 +99,28 @@ class NextOfKinController extends Controller
      */
     public function update(Request $request, NextOfKin $nextOfKin)
     {
-        //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'relationship' => 'required',
+            'dob' => 'required',
+            'phone_number' => 'nullable',
+            'email' => 'nullable|email',
+        ]);
+
+        $nextOfKin->first_name = $request->first_name;
+        $nextOfKin->last_name = $request->last_name;
+        $nextOfKin->middle_name = $request->middle_name;
+        $nextOfKin->gender = $request->gender;
+        $nextOfKin->relationship = $request->relationship;
+        $nextOfKin->phone_number = $request->phone_number;
+        $nextOfKin->email = $request->email;
+        $nextOfKin->dob = $request->dob;
+        $nextOfKin->id_number = $request->id_number;
+        $nextOfKin->save();
+
+        return redirect()->route('admin.next-of-kins.index')->with('success', 'Next of Kin updated successfully');
     }
 
     /**
@@ -110,6 +131,8 @@ class NextOfKinController extends Controller
      */
     public function destroy(NextOfKin $nextOfKin)
     {
-        //
+        $nextOfKin->delete();
+
+        return redirect()->route('admin.next-of-kins.index')->with('success', 'Next of Kin deleted successfully');
     }
 }

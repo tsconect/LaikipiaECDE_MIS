@@ -60,7 +60,7 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        //
+        return view('admin.documents.edit', compact('document'));
     }
 
     /**
@@ -71,7 +71,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
-        //
+        return view('admin.documents.edit', compact('document'));
     }
 
     /**
@@ -83,7 +83,16 @@ class DocumentController extends Controller
      */
     public function update(Request $request, Document $document)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'is_required' => 'required',
+        ]);
+
+        $document->name = $request->name;
+        $document->is_required = $request->is_required;
+        $document->save();
+
+        return redirect()->route('admin.documents.index')->with('success', 'Document updated successfully.');
     }
 
     /**
@@ -94,6 +103,8 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
-        //
+        $document->delete();
+
+        return redirect()->route('admin.documents.index')->with('success', 'Document deleted successfully.');
     }
 }

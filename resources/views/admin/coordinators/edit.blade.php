@@ -130,7 +130,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Update Coordinator</button>
-            <a href="{{ route('admin.coordinators.index') }}" class="btn btn-light">Back</a>
+
         </form>
     </div>
 </div>

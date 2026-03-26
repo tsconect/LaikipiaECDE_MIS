@@ -147,7 +147,9 @@ class TeacherController extends Controller
         $wards=Ward::get();
         $ecde_schools = EcdeSchools::get();
         $counties = County::get();
-        return view('admin.teachers.edit',compact('wards','sub_counties','ecde_schools','counties', 'teacher'));
+        $job_groups = JobGroup::all();
+        $ethnicities = EthnicGroup::all();
+        return view('admin.teachers.edit',compact('wards','sub_counties','ecde_schools','counties', 'teacher', 'job_groups', 'ethnicities'));
 
    
 
@@ -219,6 +221,7 @@ class TeacherController extends Controller
    {
     # code...
 
+    $id->load('education', 'user');
     $data = $id;
 
     return view('admin.teachers.teacher_view_profile', compact('data'));

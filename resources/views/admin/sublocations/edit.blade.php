@@ -11,14 +11,12 @@
 
 @include('flash-message')
 
-<h5 class="card-title">  <a href="{{url('admin/all-constituency')}}"><button class="btn btn">  <i class="fa fa-arrow-left"></i> Back</button></a> </h5>
-
-
 <div class="main-card mb-3 card col-12">
     <div class="card-body">
         <h5 class="card-title">Edit {{ $subLocation->name }} subLocation Details</h5>
-        <form class="" action="{{route('admin.sublocation.update', $subLocation->id)}}" method="post">
+        <form class="" action="{{ route('admin.sub-locations.update', $subLocation->id) }}" method="post">
             @csrf
+            @method('PUT')
             <div class="form-row">
                 <div class="col-md-6">
                     <div class="position-relative form-group">
@@ -29,9 +27,10 @@
                 </div>
             </div>
 
-            <button class="mt-2 btn btn-primary">Submit</button>
-        </form>
-    </div>
+            <div class="text-end">
+                <button class="mt-2 btn btn-primary">Submit</button>
+            </div>
+        </form>    </div>
 </div>
 
 

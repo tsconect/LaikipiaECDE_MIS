@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Models\UserDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserDocumentController extends Controller
 {
@@ -75,7 +76,8 @@ class UserDocumentController extends Controller
      */
     public function show(UserDocument $userDocument)
     {
-        //
+        $documents = Document::latest()->get();
+        return view('admin.user-documents.edit', compact('userDocument', 'documents'));
     }
 
     /**
@@ -86,7 +88,8 @@ class UserDocumentController extends Controller
      */
     public function edit(UserDocument $userDocument)
     {
-        //
+        $documents = Document::latest()->get();
+        return view('admin.user-documents.edit', compact('userDocument', 'documents'));
     }
 
     /**
@@ -98,7 +101,25 @@ class UserDocumentController extends Controller
      */
     public function update(Request $request, UserDocument $userDocument)
     {
-        //
+        $request->validate([
+            'document_id' => 'required',
+            'file' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:5120',
+        ]);
+
+        $userDocument->document_id = $request->document_id;
+
+        if ($request->hasFile('file')) {
+            if ($userDocument->file) {
+                Storage::disk('public')->delete($userDocument->file);
+            }
+            $path = 'file/documents';
+            $filePath = $request->file('file')->store($path, 'public');
+            $userDocument->file = $filePath;
+        }
+
+        $userDocument->save();
+
+        return redirect()->route('admin.user-documents.index')->with('success', 'Document updated successfully');
     }
 
     /**
@@ -109,6 +130,12 @@ class UserDocumentController extends Controller
      */
     public function destroy(UserDocument $userDocument)
     {
-        //
+        if ($userDocument->file) {
+            Storage::disk('public')->delete($userDocument->file);
+        }
+
+        $userDocument->delete();
+
+        return redirect()->route('admin.user-documents.index')->with('success', 'Document deleted successfully');
     }
 }

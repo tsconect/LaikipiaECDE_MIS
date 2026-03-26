@@ -31,7 +31,9 @@
                 </div>
             </div>
 
-            <button class="mt-2 btn btn-primary">Submit</button>
+            <div class="text-end">
+                <button class="mt-2 btn btn-primary">Submit</button>
+            </div>
         </form>
     </div>
 </div>

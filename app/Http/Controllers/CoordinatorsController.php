@@ -132,6 +132,7 @@ class CoordinatorsController extends Controller
 
    public function show(Coordinators $coordinator)
    {
+    $coordinator->load('education', 'user', 'resident.const', 'resident.ward', 'school_contact');
     return view('admin.coordinators.teacher_view_profile', ['data' => $coordinator]);
    }
 

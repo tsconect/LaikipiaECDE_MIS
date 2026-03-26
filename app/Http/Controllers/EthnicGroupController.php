@@ -26,9 +26,8 @@ class EthnicGroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.ethnic-groups.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -37,7 +36,15 @@ class EthnicGroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $ethnicGroup = new EthnicGroup();
+        $ethnicGroup->name = $request->name;
+        $ethnicGroup->save();
+
+        return redirect()->route('admin.ethnic-groups.index')->with('success', 'Ethnic group created successfully.');
     }
 
     /**
@@ -46,22 +53,20 @@ class EthnicGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(EthnicGroup $ethnicGroup)
     {
-        //
+        return view('admin.ethnic-groups.edit', compact('ethnicGroup'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EthnicGroup $ethnicGroup)
     {
-        //
+        return view('admin.ethnic-groups.edit', compact('ethnicGroup'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -69,9 +74,16 @@ class EthnicGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EthnicGroup $ethnicGroup)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $ethnicGroup->name = $request->name;
+        $ethnicGroup->save();
+
+        return redirect()->route('admin.ethnic-groups.index')->with('success', 'Ethnic group updated successfully.');
     }
 
     /**
@@ -80,8 +92,10 @@ class EthnicGroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EthnicGroup $ethnicGroup)
     {
-        //
+        $ethnicGroup->delete();
+
+        return redirect()->route('admin.ethnic-groups.index')->with('success', 'Ethnic group deleted successfully.');
     }
 }

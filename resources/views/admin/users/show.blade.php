@@ -42,7 +42,6 @@
         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-primary">
             <i class="fa fa-edit"></i> Edit User
         </a>
-        <a href="{{ route('admin.users.index') }}" class="btn btn-light">Back</a>
     </div>
 </div>
 @endsection

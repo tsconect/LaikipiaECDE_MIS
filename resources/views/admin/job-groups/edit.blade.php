@@ -1,35 +1,53 @@
 @extends('admin.app')
-
-
 @section('nav-bar')
-
 @include('admin.layouts.sidebar')
 @endsection
 
-@section('title', 'Barriers & Roadblocks')
 @section('content')
 
-@include('flash-message')
+<div class="card-body">
+    <div class="container mt-4">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    <form method="POST" action="{{ route('admin.job-groups.update', $jobGroup->id) }}">
+        @csrf
+        @method('PUT')
 
-<h5 class="card-title">  <a href="{{url('admin/all-constituency')}}"><button class="btn btn">  <i class="fa fa-arrow-left"></i> Back</button></a> </h5>
+        <!-- ================= JOB GROUP INFORMATION ================= -->
 
+        <div class="card p-2 shadow-sm mb-4">
 
-<div class="main-card mb-3 card col-12">
-    <div class="card-body">
-        <h5 class="card-title">Edit {{ $union->name }} union Details</h5>
-        <form class="" action="{{route('admin.union.update', $union->id)}}" method="post">
-            @csrf
-            <div class="form-row">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Edit Job Group</h5>
+            </div>
+            <div class="form-row p-3">
                 <div class="col-md-6">
                     <div class="position-relative form-group">
                         <label for="name" class="">Name</label>
-                        <input value="{{ $union->name }}" name="name" id="name" placeholder="Enter Constituency name" required type="text"
+                        <input name="name" id="name" placeholder="Enter Job Group name" required type="text" value="{{ old('name', $jobGroup->name) }}"
                             class="form-control">
                     </div>
+                    @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                 </div>
             </div>
 
-            <button class="mt-2 btn btn-primary">Submit</button>
+            <div class="text-right p-3">
+                    <button class="btn btn-success" type="submit">
+                        Update
+                    </button>
+                </div>
+        </div>
         </form>
     </div>
 </div>

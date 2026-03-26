@@ -64,7 +64,8 @@ class UserUnionController extends Controller
      */
     public function show(UserUnion $userUnion)
     {
-        //
+        $unions = Unions::latest()->get();
+        return view('admin.user-unions.edit', compact('userUnion', 'unions'));
     }
 
     /**
@@ -75,7 +76,8 @@ class UserUnionController extends Controller
      */
     public function edit(UserUnion $userUnion)
     {
-        //
+        $unions = Unions::latest()->get();
+        return view('admin.user-unions.edit', compact('userUnion', 'unions'));
     }
 
     /**
@@ -87,7 +89,16 @@ class UserUnionController extends Controller
      */
     public function update(Request $request, UserUnion $userUnion)
     {
-        //
+        $request->validate([
+            'union_id' => 'required',
+            'membership_no' => 'required|unique:user_unions,membership_number,' . $userUnion->id,
+        ]);
+
+        $userUnion->union_id = $request->union_id;
+        $userUnion->membership_number = $request->membership_no;
+        $userUnion->save();
+
+        return redirect()->route('admin.user-unions.index')->with('success', 'User Union updated successfully');
     }
 
     /**
@@ -98,6 +109,8 @@ class UserUnionController extends Controller
      */
     public function destroy(UserUnion $userUnion)
     {
-        //
+        $userUnion->delete();
+
+        return redirect()->route('admin.user-unions.index')->with('success', 'User Union deleted successfully');
     }
 }

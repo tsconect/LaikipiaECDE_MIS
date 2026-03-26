@@ -61,50 +61,89 @@
                                 <div class="position-relative form-group">
                                     <label for="class_rooms_status" class=""> Class Rooms Status </label>
                                     <select name="class_rooms_status" id="class_rooms_status" class="form-control" required>
-
                                         <option value="permanent" {{ $school->class_rooms_status == 'permanent' ? 'selected' : '' }}>Permanent</option>
                                         <option value="Semi_Permanent" {{ $school->class_rooms_status == 'Semi_Permanent' ? 'selected' : '' }}>Semi Permanent</option>
-                                        <option  value="one_semipermanent_others_permanent" {{ $school->class_rooms_status == 'one_semipermanent_others_permanent' ? 'selected' : '' }}>One Semi-Permanent, Others
-                                            Permanent
-                                        </option>
+                                        <option  value="one_semipermanent_others_permanent" {{ $school->class_rooms_status == 'one_semipermanent_others_permanent' ? 'selected' : '' }}>One Semi-Permanent, Others Permanent</option>
                                         <option value="temporary" {{ $school->class_rooms_status == 'temporary' ? 'selected' : '' }}>Temporary</option>
                                         <option value="mud_walled" {{ $school->class_rooms_status == 'mud_walled' ? 'selected' : '' }} >Mud Walled</option>
-                                        <option  value="under_tree" {{ $school->class_rooms_status == 'under_tree' ? 'selected' : '' }}  value="under_tree">Under Tree</option>
-
+                                        <option  value="under_tree" {{ $school->class_rooms_status == 'under_tree' ? 'selected' : '' }}>Under Tree</option>
                                     </select>
                                 </div>
                             </div>
 
-                            {{-- <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="constituency" class="">Select Constituency </label>
-                                    <select name="constituency" id="constituency" class="form-control" required>
-                                        <option>Select Constituency</option>
-                                        @foreach ($constituencies as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div> --}}
-
-
-                            {{-- <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="ward" class="">Select Ward </label>
-                                    <select name="ward" id="consituency" class="form-control" required>
-                                        <option>Select Ward</option>
-                                        @foreach ($wards as $key => $value)
-                                            <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-                            </div> --}}
                             <div class="col-md-6">
-                                <label>School Location</label> <span><button onclick="getCurrentLocation()"
-                                        class="btn-danger">Get Current Location</button></span>
+                                <div class="position-relative form-group">
+                                    <label for="number_of_students" class="">Number of students</label>
+                                    <input name="number_of_students" id="number_of_students" placeholder="Enter number of students" value="{{ $school->number_of_students }}"
+                                        type="number" class="form-control">
+                                </div>
+                            </div>
 
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="school_location" class="">School Location (Latitude, Longitude)</label>
+                                    <input name="school_location" id="school_location" placeholder="Enter School location in terms of latitude, longitude e.g. 37.7749, -122.4194" value="{{ $school->school_location }}"
+                                        type="text" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="teacher_id" class="">Teacher in Charge</label>
+                                    <select name="teacher_id" id="teacher_id" class="form-control">
+                                        <option value="">Select teacher</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id ?? null }}" {{ $school->teacher_id == $teacher->id ? 'selected' : '' }}>{{ $teacher->user->first_name ?? null }} {{ $teacher->user->last_name ?? null }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
+                                <select name="county_id" id="countySelect" class="form-control" required>
+                                    <option value="">Select county</option>
+                                    @foreach($counties as $county)
+                                        <option value="{{ $county->county_id }}" {{ $school->county_id == $county->county_id ? 'selected' : '' }}>{{ $county->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Sub-County</label>
+                                <select name="subcounty_id" id="constituencySelect" class="form-control">
+                                    <option value="">Select sub-county</option>
+                                    @foreach($sub_counties as $sub_county)
+                                        <option value="{{ $sub_county->constituency_id }}" {{ $school->subcounty_id == $sub_county->constituency_id ? 'selected' : '' }}>{{ $sub_county->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Ward</label>
+                                <select name="ward_id" id="wardSelect" class="form-control">
+                                    <option value="">Select ward</option>
+                                    @foreach($wards as $ward)
+                                        <option value="{{ $ward->id }}" {{ $school->ward_id == $ward->id ? 'selected' : '' }}>{{ $ward->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="feeder_id" class="">Feeder School</label>
+                                    <select name="feeder_id" id="feeder_id" class="form-control">
+                                        <option value="">Select feeder school</option>
+                                        @foreach ($feeder_schools as $feeder)
+                                            <option value="{{ $feeder->id }}" {{ $school->feeder_id == $feeder->id ? 'selected' : '' }}>{{ $feeder->school_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>School Location (Coordinates)</label> <span><button type="button" onclick="getCurrentLocation()"
+                                        class="btn-danger">Get Current Location</button></span>
                             </div>
                             <div class="col-12">
                                 <div class="">

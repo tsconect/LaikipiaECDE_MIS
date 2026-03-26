@@ -75,7 +75,7 @@ class BeneficiaryController extends Controller
      */
     public function show(Beneficiary $beneficiary)
     {
-        //
+        return view('admin.beneficiaries.edit', compact('beneficiary'));
     }
 
     /**
@@ -86,7 +86,7 @@ class BeneficiaryController extends Controller
      */
     public function edit(Beneficiary $beneficiary)
     {
-        //
+        return view('admin.beneficiaries.edit', compact('beneficiary'));
     }
 
     /**
@@ -98,7 +98,28 @@ class BeneficiaryController extends Controller
      */
     public function update(Request $request, Beneficiary $beneficiary)
     {
-        //
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'gender' => 'required',
+            'relationship' => 'required',
+            'dob' => 'required',
+            'phone_number' => 'nullable',
+            'email' => 'nullable|email',
+        ]);
+
+        $beneficiary->first_name = $request->first_name;
+        $beneficiary->last_name = $request->last_name;
+        $beneficiary->middle_name = $request->middle_name;
+        $beneficiary->gender = $request->gender;
+        $beneficiary->relationship = $request->relationship;
+        $beneficiary->phone_number = $request->phone_number;
+        $beneficiary->email = $request->email;
+        $beneficiary->dob = $request->dob;
+        $beneficiary->id_number = $request->id_number;
+        $beneficiary->save();
+
+        return redirect()->route('admin.beneficiaries.index')->with('success', 'Beneficiary updated successfully');
     }
 
     /**
@@ -109,6 +130,8 @@ class BeneficiaryController extends Controller
      */
     public function destroy(Beneficiary $beneficiary)
     {
-        //
+        $beneficiary->delete();
+
+        return redirect()->route('admin.beneficiaries.index')->with('success', 'Beneficiary deleted successfully');
     }
 }

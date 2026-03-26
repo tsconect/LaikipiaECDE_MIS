@@ -58,7 +58,7 @@ class JobGroupController extends Controller
      */
     public function show(JobGroup $jobGroup)
     {
-        //
+        return view('admin.job-groups.edit', compact('jobGroup'));
     }
 
     /**
@@ -69,7 +69,7 @@ class JobGroupController extends Controller
      */
     public function edit(JobGroup $jobGroup)
     {
-        //
+        return view('admin.job-groups.edit', compact('jobGroup'));
     }
 
     /**
@@ -81,7 +81,14 @@ class JobGroupController extends Controller
      */
     public function update(Request $request, JobGroup $jobGroup)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $jobGroup->name = $request->name;
+        $jobGroup->save();
+
+        return redirect()->route('admin.job-groups.index')->with('success', 'Job Group updated successfully.');
     }
 
     /**
@@ -92,6 +99,8 @@ class JobGroupController extends Controller
      */
     public function destroy(JobGroup $jobGroup)
     {
-        //
+        $jobGroup->delete();
+
+        return redirect()->route('admin.job-groups.index')->with('success', 'Job Group deleted successfully.');
     }
 }

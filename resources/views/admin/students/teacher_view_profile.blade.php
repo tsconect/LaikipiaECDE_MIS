@@ -176,9 +176,9 @@
                                         {{-- {{ $data->education  }} --}}
                                         <tr>
                                             {{-- <td><b>Usname:</b> </td> --}}
-                                            <td  > Education Level: &nbsp;&nbsp; <b class="text-success">{{ $data->education->education_level }} </b> </td>
-                                            @if (isset($data->educaion->union))
-                                                <td  >  union: &nbsp;&nbsp; <b class="text-success">{{ $data->educaion->union}} </b> </td>
+                                            <td  > Education Level: &nbsp;&nbsp; <b class="text-success">{{ $data->education->education_level ?? 'Not Set' }} </b> </td>
+                                            @if ($data->education && isset($data->education->union))
+                                                <td  >  union: &nbsp;&nbsp; <b class="text-success">{{ $data->education->union}} </b> </td>
 
                                             @else
                                                 <td > union: &nbsp;&nbsp; <span class="text-danger"> Not registered to a union </span> </td>
