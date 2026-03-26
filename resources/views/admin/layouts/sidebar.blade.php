@@ -10,9 +10,9 @@
     --sidebar-border: rgba(255,255,255,0.06);
     --accent: #22c55e;
     --accent-dim: rgba(34,197,94,0.12);
-    --text-primary: #f0f4ff;
-    --text-secondary: #8892a4;
-    --text-muted: #4f5a6e;
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --text-muted: #ffffff;
     --hover-bg: rgba(255,255,255,0.05);
     --font: 'DM Sans', sans-serif;
     --transition: 0.18s ease;
@@ -29,6 +29,8 @@
     transition: width 0.3s ease;
     user-select: none;
     pointer-events: auto;
+    opacity: 1 !important;
+    color: #ffffff !important;
 }
 
 /* ── Scrollable nav body ── */
@@ -52,7 +54,7 @@
     align-items: center;
     gap: 11px;
     padding: 10px 18px;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 13.5px;
     font-weight: 400;
@@ -65,10 +67,21 @@
     background: var(--hover-bg);
     color: var(--text-primary);
 }
+.nav-link:visited {
+    color: var(--text-primary);
+}
+.nav-link:link,
+.nav-link:active:visited {
+    color: var(--text-primary);
+}
 .nav-link.active {
-    background: var(--accent-dim);
+    background: transparent;
     color: var(--accent);
     font-weight: 500;
+}
+.nav-link.active:hover {
+    color: var(--accent);
+    background: rgba(34, 197, 94, 0.08);
 }
 .nav-link.active::before {
     content: '';
@@ -113,7 +126,7 @@
     align-items: center;
     gap: 8px;
     padding: 7px 18px 7px 46px;
-    color: var(--text-muted);
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 12.5px;
     font-family: var(--font);
@@ -124,13 +137,13 @@
     content: '';
     width: 5px; height: 5px;
     border-radius: 50%;
-    background: var(--text-muted);
+    background: var(--text-primary);
     flex-shrink: 0;
     transition: background var(--transition);
 }
 .sub-link:hover { color: var(--text-primary); background: var(--hover-bg); }
 .sub-link:hover::before { background: var(--accent); }
-.sub-link.active { color: var(--accent); }
+.sub-link.active { color: var(--accent); background: transparent; }
 .sub-link.active::before { background: var(--accent); }
 
 /* ── Thin divider ── */
@@ -140,33 +153,7 @@
     margin: 6px 18px;
 }
 
-/* ── Header logo section ── */
-.app-header__logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 16px;
-    height: 60px;
-    border-bottom: 1px solid var(--sidebar-border);
-    flex-shrink: 0;
-}
-.app-header__logo img {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-}
-.header__pane {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.header__pane button {
-    padding: 4px;
-    border: none;
-    background: none;
-    cursor: pointer;
-}
+
 
 /* ── Bottom user strip ── */
 .sidebar-footer {
@@ -229,41 +216,9 @@
 .app-sidebar.closed-sidebar .footer-dots {
     display: none;
 }
-.app-sidebar.closed-sidebar .app-header__logo {
-    justify-content: space-between;
-    padding: 0 4px;
-}
-.app-sidebar.closed-sidebar .app-header__logo img {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-}
-.app-sidebar.closed-sidebar .header__pane {
-    margin-left: auto !important;
-    display: flex;
-    align-items: center;
-}
-.app-sidebar.closed-sidebar .brand-logo {
-    width: 36px;
-    height: 36px;
-    font-size: 14px;
-}
 </style>
 
 <div class="app-sidebar">
-    <div class="app-header__logo">
-        <img src="{{asset('assets/images/laikipia.png')}}" alt="Laikipia" style="height: 40px; width: 40px;">
-        <div class="header__pane ml-auto">
-            <div>
-                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
-                    data-class="closed-sidebar">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner" style="background-color:#ffffff"></span>
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
     <div class="app-header__mobile-menu">
         <div>
             <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
@@ -273,21 +228,11 @@
             </button>
         </div>
     </div>
-    <div class="app-header__menu">
-        <span>
-            <button type="button"
-                class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
-                <span class="btn-icon-wrapper">
-                    <i class="fa fa-ellipsis-v fa-w-6"></i>
-                </span>
-            </button>
-        </span>
-    </div>
 
     <nav class="sidebar-nav">
         <!-- Dashboard -->
         <div class="nav-item">
-            <a class="nav-link active" href="{{ route('dashboard') }}">
+            <a class="nav-link" href="{{ route('dashboard') }}">
                 <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4a1 1 0 001-1v-3h2v3a1 1 0 001 1h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
                 <span>Dashboard</span>
             </a>

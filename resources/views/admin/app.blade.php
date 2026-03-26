@@ -31,25 +31,11 @@
         align-items: center;
     }
 
-    .modern-admin-header .brand-chip {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, var(--gold), #f5c842);
-        color: #1a2d4d;
-        font-weight: 800;
+    .modern-admin-header .app-header__logo img {
+        width: 40px;
+        height: 40px;
         margin-right: 10px;
-        font-size: 13px;
-    }
-
-    .modern-admin-header .brand-title {
-        color: #fff;
-        font-weight: 700;
-        letter-spacing: .04em;
-        font-size: 13px;
+        flex-shrink: 0;
     }
 
     .modern-admin-header .app-header__content {
@@ -117,23 +103,22 @@
     }
 
     .closed-sidebar .modern-admin-header .app-header__logo {
-        min-width: 80px;
-        width: 80px;
+        min-width: 60px;
+        width: 60px;
         padding: 0 8px;
-        justify-content: center;
-        gap: 0;
+        justify-content: space-between;
     }
 
-    .closed-sidebar .modern-admin-header .brand-title {
-        display: none;
-    }
-
-    .closed-sidebar .modern-admin-header .brand-chip {
+    .closed-sidebar .modern-admin-header .app-header__logo img {
+        width: 40px;
+        height: 40px;
         margin-right: 0;
     }
 
     .closed-sidebar .modern-admin-header .header__pane {
-        margin-left: 6px !important;
+        margin-left: auto !important;
+        display: flex;
+        align-items: center;
     }
 
     .app-main__inner {
@@ -471,8 +456,7 @@
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
     <div class="app-header header-shadow text-white modern-admin-header">
         <div class="app-header__logo">
-            <span class="brand-chip">L</span>
-            <span class="brand-title">LAIKIPIA ECDE</span>
+            <img src="{{asset('assets/images/laikipia.png')}}" alt="Laikipia" style="height: 40px; width: 40px;">
             <div class="header__pane ml-auto">
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
                     <span class="hamburger-box">
