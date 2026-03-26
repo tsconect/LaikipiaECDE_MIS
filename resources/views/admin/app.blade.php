@@ -664,8 +664,20 @@ function goBack() {
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
-
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success') || session('error') || session('warning') || session('info'))
+<script>
+Swal.fire({
+    // position: "top-end",
+    icon: "{{ session('success') ? 'success' : (session('error') ? 'error' : (session('warning') ? 'warning' : 'info')) }}",
+    title: "{{ session('success') ?? session('error') ?? session('warning') ?? session('info') }}",
+    showConfirmButton: false,
+    timer: 1500,
+    width: '400px',
+    padding: '0.5em'
+});
+</script>
+@endif
 <script>
       new DataTable('#dt-basic2', {
             info: true,

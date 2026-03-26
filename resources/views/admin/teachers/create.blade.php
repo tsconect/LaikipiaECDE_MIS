@@ -275,6 +275,7 @@
                             name="dob"
                             id="dob"
                             class="form-control"
+max="{{ date('Y-m-d', strtotime('-18 years')) }}"
                             value="{{ old('dob') }}"
                         >
 
@@ -306,7 +307,7 @@
 
 
                     <div class="col-md-4 mb-3" id="school_contact_tsc_number_div" style="display: none">
-gfgfg
+
                         <label for="tsc_number">TSC Number</label>
 
                         <input
