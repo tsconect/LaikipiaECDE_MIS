@@ -79,6 +79,13 @@ class TeacherController extends Controller
             DB::beginTransaction();
             $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijklmnpqrstuvwxyz';
             $newPassword = Str::random(6, $characters);
+
+              if ($request['dob']) {
+                $dob = Carbon::parse($request['dob']);
+                $retirement_date = ($request['pwd_status'] == 'yes') ? $dob->addYears(65)->toDateString() : $dob->addYears(60)->toDateString();
+            } else {
+                $retirement_date = null;
+            }
             
             $obj = new \App\Models\User();
             $obj->first_name = $request->first_name;
@@ -114,6 +121,7 @@ class TeacherController extends Controller
             $teacher->subcounty_id=$request->subcounty_id;
             $teacher->ward_id=$request->ward_id;
             $teacher->school_id = $request->school_id;
+            $teacher->retirement_date = $retirement_date;
             $teacher->save();
 
             DB::commit();
@@ -174,6 +182,13 @@ class TeacherController extends Controller
 
             $obj->syncRoles('Teacher');
 
+            if ($request['dob']) {
+                $dob = Carbon::parse($request['dob']);
+                $retirement_date = ($request['pwd_status'] == 'yes') ? $dob->addYears(65)->toDateString() : $dob->addYears(60)->toDateString();
+            } else {
+                $retirement_date = null;
+            }
+
 
             $teacher->id_number=$request->id_number;
             $teacher->kra_pin=$request->kra_pin;
@@ -195,6 +210,7 @@ class TeacherController extends Controller
             $teacher->subcounty_id=$request->subcounty_id;
             $teacher->ward_id=$request->ward_id;
             $teacher->school_id = $request->school_id;
+            $teacher->retirement_date = $retirement_date;
             $teacher->save();
 
             DB::commit();

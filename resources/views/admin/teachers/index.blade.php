@@ -28,7 +28,8 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>ID Number</th>
-                                <th>Kra Pin</th>
+                                <th>Age</th>
+                                <th>Retirement Date</th>
                                 <th>Gender</th>
                            
                                 <th>Action</th>
@@ -44,15 +45,16 @@
                                     <td>{{ $item->user->email }}</td>
                                     <td>{{ $item->user->phone_number }}</td>
                                     <td>{{ $item->id_number }}</td>
-                                    <td>{{ $item->kra_pin }}</td>
-                                    <td>{{ $item->gender }}</td>
+                                    <td>{{ Carbon\Carbon::parse($item->dob)->age }} years</td>
+                                    <td>{{ $item->retirement_date??'-' }}</td>
+                                    <td>{{ ucfirst($item->gender) }}</td>
                                    
-                                    <td>
-                                        <a class="btn btn-outline-primary" title="View teacher's metadata"
+                                    <td class="d-flex">
+                                        <a class="btn btn-outline-primary mr-2 " title="View teacher's metadata"
                                             href="{{ route('admin.teachers.show', $item->id) }}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a class="btn btn-outline-primary" title="Edit Teacher"
+                                        <a class="btn btn-outline-primary mr-2" title="Edit Teacher"
                                             href="{{ route('admin.teachers.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>

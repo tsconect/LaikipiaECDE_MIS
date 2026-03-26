@@ -44,7 +44,7 @@
                  @can('admin.ecde-schools.index')
                <li>
                     <a href="#"   >
-                        <i class="metismenu-icon fa fa-book"   ></i>ECDE Teachers
+                        <i class="metismenu-icon fa fa-book"   ></i> Teachers
                         <i class="metismenu-state-icon pe-7s-angle-down caret-left "></i>
                     </a>
                     <ul>
