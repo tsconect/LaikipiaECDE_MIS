@@ -64,6 +64,15 @@
                                 </div>
                             </div>
 
+                            {{-- center_code --}}
+                            <div class="col-md-6">
+                                <div class="position-relative form-group">
+                                    <label for="center_code" class="">Center Code</label>
+                                    <input name="center_code" id="center_code" placeholder="Enter center code" required
+                                        type="text" class="form-control">
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="position-relative form-group">
                                     <label for="school_name" class="">Number of students:</label>
@@ -98,7 +107,7 @@
                                      required>
                                 <option value="">Select county</option>
                                      @foreach($counties as $county)
-                                        <option value="{{ $county->county_id }}" {{ old('county_id') == $county->county_id || $county->county_id == 'ob6SxuRcqU4' ? 'selected' : '' }}>{{ $county->name }}</option>
+                                        <option value="{{ $county->county_id }}" {{ old('county_id') == $county->county_id ? 'selected' : '' }}>{{ $county->name }}</option>
                                     @endforeach
                             </select>
                             @error('county_id')

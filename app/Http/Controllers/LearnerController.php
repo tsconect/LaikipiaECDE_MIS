@@ -6,9 +6,12 @@ use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
 use App\Models\Learner;
+use App\Models\LearnerParent;
+use App\Models\SubLocation;
 use App\Models\Teacher;
 use App\Models\Ward;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LearnerController extends Controller
 {
@@ -48,6 +51,7 @@ class LearnerController extends Controller
        $sub_counties =Constituency::get();
         $wards=Ward::get();
         $counties = County::get();
+        $sub_locations = SubLocation::get();
         
 
         $user = auth()->user();
@@ -66,7 +70,7 @@ class LearnerController extends Controller
 
 
 
-    return view('admin.learners.create',compact('wards','sub_counties', 'counties', 'ecde_schools' ));
+    return view('admin.learners.create',compact('wards','sub_counties', 'counties', 'ecde_schools', 'sub_locations' ));
     }
 
     /**
@@ -91,28 +95,66 @@ class LearnerController extends Controller
         'nemis_number' => 'required',
       
         'ward_id' => 'required',
-        'sub_location_id' => 'required',
+        // 'sub_location_id' => 'required',
         'village' => 'required',
-        'school_id' => 'required'
+        'school_id' => 'required',
+        'nationality_id' => 'required',
+        'birth_certificate_number' => 'required|unique:learners,birth_certificate_number',
     ]);
 
-    $student = new \App\Models\Learner();
-    $student->first_name = $request->first_name;
-    $student->middle_name = $request->middle_name;
-    $student->last_name = $request->last_name;
-    $student->pwd_status = $request->pwd_status;
-    $student->disability_type = $request->disability_type;
-    $student->impairment_details = $request->impairment_details;
-    $student->gender = $request->gender;
-    $student->dob = $request->dob;
-    $student->nemis_number = $request->nemis_number;
-    $student->student_type_id = $request->student_type_id;  
-    $student->ward_id = $request->ward_id;
-    $student->sub_location_id = $request->sub_location_id;
-    $student->village = $request->village;
-    $student->school_id = $request->school_id;
+       try{
+            DB::beginTransaction();
 
-    $student->save();
+            $student = new \App\Models\Learner();
+            $student->first_name = $request->first_name;
+            $student->middle_name = $request->middle_name;
+            $student->last_name = $request->last_name;
+            $student->pwd_status = $request->pwd_status;
+            $student->disability_type = $request->disability_type;
+            $student->impairment_details = $request->impairment_details;
+            $student->gender = $request->gender;
+            $student->dob = $request->dob;
+            $student->nemis_number = $request->nemis_number;
+            $student->student_type_id = $request->student_type_id;  
+            $student->ward_id = $request->ward_id;
+            $student->sub_location_id = $request->sub_location_id??null;
+            $student->village = $request->village;
+            $student->school_id = $request->school_id;
+            $student->nationality_id = $request->nationality_id;
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $path = 'learners/passport-photos';
+                $filePath = $request->file('photo')->store($path, 'public');
+                $student->passport_photo = $filePath;
+            }
+            $student->admission_number = $request->admission_number;
+            $student->date_of_admission = $request->date_of_admission;
+            $student->class = $request->class;
+            $student->mode_of_admission = $request->mode_of_admission;
+            $student->birth_certificate_number = $request->birth_certificate_number;    
+
+            $student->save();
+
+            $parent = new LearnerParent();
+            $parent->learner_id = $student->id;
+            $parent->first_name = $request->parent_first_name;
+            $parent->last_name = $request->parent_last_name;
+            $parent->relationship = $request->parent_relationship;
+            $parent->id_number = $request->parent_id_number;
+            $parent->phone_number = $request->parent_phone_number;
+            $parent->alernative_phone_number = $request->parent_alernative_phone_number;
+            $parent->email = $request->parent_email;
+            $parent->ward_id = $request->parent_ward_id;
+            $parent->village = $request->parent_village;
+            $parent->save();
+
+            DB::commit();   
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $e->getMessage();
+            return back()->with('error', 'Error: ' . $e->getMessage());
+        }
 
 
    

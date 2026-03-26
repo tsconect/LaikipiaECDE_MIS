@@ -19,6 +19,7 @@
                             <tr>
                                 <th>ID </th>
                                 <th>School Name</th>
+                                <th>Center Code</th>
                                 <th>NO. C/Rooms</th>
                                 <th>Status</th>
                                 <th>Ward</th>
@@ -32,6 +33,7 @@
                             <tr>
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->school_name}}</td>
+                                <td>{{$item->center_code }}</td>
                                 <td>{{$item->number_of_classes }}</td>
                                 <td>{{$item->class_rooms_status }}</td>
                                 <td>{{$item->ward->name}}</td>

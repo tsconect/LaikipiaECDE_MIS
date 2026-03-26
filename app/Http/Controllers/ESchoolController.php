@@ -57,7 +57,8 @@ class ESchoolController extends Controller
            'subcounty_id' => 'required',
            'ward_id' => 'required',
            'feeder_id' => 'nullable',
-           'remarks' => 'nullable'
+           'remarks' => 'nullable',
+           'center_code' => 'nullable'
 
        ]);
 
@@ -74,6 +75,7 @@ class ESchoolController extends Controller
            $school->ward_id = $request->ward_id;
            $school->feeder_id = $request->feeder_id;
            $school->remarks = $request->remarks;    
+           $school->center_code = $request->center_code;
 
            $school->save();
 
@@ -111,6 +113,7 @@ class ESchoolController extends Controller
                 'ward_id' => 'nullable',
                 'feeder_id' => 'nullable',
                 'remarks' => 'nullable',
+                'center_code' => 'nullable'
             ]);
 
             $ecde_school->update($request->only([
@@ -133,6 +136,7 @@ class ESchoolController extends Controller
                 'school_contact_id_number',
                 'school_contact_phone_number',
                 'school_contact_gender',
+                'center_code'
             ]));
 
             return redirect()->route('admin.ecde-schools.index')->with('success', 'School updated successfully');
