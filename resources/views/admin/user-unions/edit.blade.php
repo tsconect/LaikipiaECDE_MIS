@@ -32,7 +32,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Membership</button>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update Membership</button>
+            </div>
 
         </form>
     </div>

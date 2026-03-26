@@ -101,7 +101,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Student</button>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update Student</button>
+            </div>
         </form>
     </div>
 </div>

@@ -62,7 +62,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Beneficiary</button>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update Beneficiary</button>
+            </div>
 
         </form>
     </div>

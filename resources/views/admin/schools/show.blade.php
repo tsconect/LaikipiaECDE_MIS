@@ -15,13 +15,6 @@
             </a>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-12">
-                <a href="{{ route('admin.ecde-schools.index') }}" class="btn btn-secondary btn-sm">
-                    <i class="fas fa-arrow-left"></i> Back to Schools
-                </a>
-            </div>
-        </div>
 
         <div class="card p-4">
             <h5 class="card-title mb-4">School Information</h5>
@@ -209,16 +202,6 @@
                 </div>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-12">
-                    <a href="{{ route('admin.ecde-schools.edit', $school->id) }}" class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Edit School
-                    </a>
-                    <a href="{{ route('admin.ecde-schools.index') }}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Back to Schools
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
 @endsection
