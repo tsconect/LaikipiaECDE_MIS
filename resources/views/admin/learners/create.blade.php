@@ -64,11 +64,14 @@
                                 <label class="form-label fw-semibold">Nationality</label>
                                 <select name="nationality_id" id="nationality_id" class="form-control" required>
                                     <option value="">Select option</option>
+                                    @foreach($nationalities as $nationality)
+                                        <option value="{{ $nationality->id }}" {{ $nationality->name == 'Kenyan' ? 'selected' : '' }}>{{ $nationality->name }}</option>
+                                    @endforeach
                                     <option value="1" {{ old('nationality_id') == '1' ? 'selected' : '' }}>Kenyan</option>
                                 </select>
                             </div>
                               <!-- PWD Status -->
-                         <div class="col-md-4 mb-3">
+                         <div class="col-md-4  ">
                             <label class="form-label fw-semibold">Abled Differently(PWD)? <span class="text-danger">*</span></label>
                             <select name="pwd_status" id="pwd_status" 
                                     class="form-control @error('pwd_status') is-invalid @enderror"
@@ -81,10 +84,19 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
+                        
                         <!-- Conditional PWD Fields -->
                         <div id="pwd_fields" class="col-md-12 row g-4" style="display: none;">
-                           <div class="col-md-4 mb-3">
+                             <div class="col-md-4  ">
+                                <label class="form-label fw-semibold">PWD Number</label>
+                                <input name="pwd_number" id="pwd_number" placeholder="Enter PWD Number" required
+                                    type="text"class="form-control @error('pwd_number') is-invalid @enderror">
+                                @error('pwd_number')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                           <div class="col-md-4  ">
                                 <label class="form-label fw-semibold">Disability Type</label>
                                 <select name="disability_type" class="form-control @error('disability_type') is-invalid @enderror">
                                     <option value="">Select type</option>
@@ -100,7 +112,8 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="col-md-4 mb-3">
+                           
+                            <div class="col-md-4  ">
                                 <label class="form-label fw-semibold">Impairment Details</label>
                                 <textarea name="impairment_details" 
                                           class="form-control @error('impairment_details') is-invalid @enderror"

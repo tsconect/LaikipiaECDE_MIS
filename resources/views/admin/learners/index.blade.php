@@ -25,7 +25,7 @@
                         <tr>
                             <th>ID </th>
                             <th>Full Names</th>
-                            <th>Reg No</th>
+                            <th>NEMIS No</th>
 
                             <th>Gender</th>
                             <th>School Posted</th>
@@ -39,7 +39,7 @@
                         <tr>
                             <td>{{$item->id}}</td>
                             <td>{{$item->first_name . ' '. $item->middle_name . ' '. $item->last_name}}  </td>
-                            <td>{{$item->reg_number}}</td>
+                            <td>{{$item->nemis_number}}</td>
                             <td>{{$item->gender}}</td>
                             <td>
                                 {{$item->school->school_name??'-'}}

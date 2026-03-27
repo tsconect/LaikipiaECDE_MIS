@@ -18,5 +18,17 @@ class Learner extends Model
         return $this->hasOne(LearnerParent::class,'learner_id','id');
     }
 
+    public function nationality(){
+        return $this->hasOne(Nationality::class,'id','nationality_id');
+    }
+
+    public function ward(){
+        return $this->hasOne(Ward::class,'id','ward_id');
+    }
+
+    public function subLocation(){
+        return $this->hasOne(SubLocation::class,'id','sub_location_id');
+    }
+
 
 }

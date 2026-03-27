@@ -25,12 +25,13 @@ return new class extends Migration
             $table->date('dob')->nullable();
             $table->string("nemis_number")->nullable();
             $table->unsignedBigInteger("sub_location_id")->nullable();
-            $table->unsignedBigInteger("ward_id")->nullable();
+            $table->string("ward_id")->nullable();
             $table->unsignedBigInteger("student_type_id")->nullable();
             $table->string('gender')->nullable();
             $table->string('village')->nullable();
             $table->string('school_id')->nullable();
             $table->string('passport_photo')->nullable();
+             $table->string('pwd_number')->nullable();
             $table->timestamps();
         });
     }

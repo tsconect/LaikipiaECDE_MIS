@@ -7,6 +7,7 @@ use App\Models\County;
 use App\Models\EcdeSchools;
 use App\Models\Learner;
 use App\Models\LearnerParent;
+use App\Models\Nationality;
 use App\Models\SubLocation;
 use App\Models\Teacher;
 use App\Models\Ward;
@@ -52,6 +53,7 @@ class LearnerController extends Controller
         $wards=Ward::get();
         $counties = County::get();
         $sub_locations = SubLocation::get();
+        $nationalities = Nationality::get();
         
 
         $user = auth()->user();
@@ -70,7 +72,7 @@ class LearnerController extends Controller
 
 
 
-    return view('admin.learners.create',compact('wards','sub_counties', 'counties', 'ecde_schools', 'sub_locations' ));
+    return view('admin.learners.create',compact('wards','sub_counties', 'counties', 'ecde_schools', 'sub_locations', 'nationalities'));
     }
 
     /**
@@ -102,6 +104,8 @@ class LearnerController extends Controller
         'birth_certificate_number' => 'required|unique:learners,birth_certificate_number',
     ]);
 
+
+
        try{
             DB::beginTransaction();
 
@@ -121,6 +125,7 @@ class LearnerController extends Controller
             $student->village = $request->village;
             $student->school_id = $request->school_id;
             $student->nationality_id = $request->nationality_id;
+            $student->pwd_number = $request->pwd_number;
             if ($request->hasFile('photo')) {
                 $file = $request->file('photo');
                 $path = 'learners/passport-photos';

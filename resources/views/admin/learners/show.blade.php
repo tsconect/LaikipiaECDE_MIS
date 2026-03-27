@@ -144,11 +144,11 @@
                         </div>
                         <div class="col-md-4">
                             <div class="label">Ward ID</div>
-                            <div class="value">{{$learner->ward_id ?? '' }}</div>
+                            <div class="value">{{$learner->ward->name ?? '' }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="label">Sub Location ID</div>
-                            <div class="value">{{$learner->sub_location_id ?? '' }}</div>
+                            <div class="value">{{$learner->subLocation->name ?? '' }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="label">Village</div>
@@ -160,7 +160,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="label">Nationality ID</div>
-                            <div class="value">{{$learner->nationality_id }}</div>
+                            <div class="value">{{$learner->nationality->name??'-' }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="label">Passport Photo</div>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="label">Date of Admission</div>
-                            <div class="value">{{$learner->date_of_admission }}</div>
+                            <div class="value">{{ ucfirst($learner->date_of_admission) }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="label">Class</div>
@@ -186,7 +186,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="label">Mode of Admission</div>
-                            <div class="value">{{$learner->mode_of_admission }}</div>
+                            <div class="value">{{ ucfirst($learner->mode_of_admission) }}</div>
                         </div>
                         <div class="col-md-4">
                             <div class="label">Birth Certificate Number</div>

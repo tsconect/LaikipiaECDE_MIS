@@ -25,13 +25,13 @@ class DatabaseSeeder extends Seeder
         // $this->call(VTCCoursesSeeder::class);
         // $this->call(VTCTeacherSeeder::class);
         // $this->call(StudentSeeder::class);
-        $this->call([
-             CountySeeder::class,
-            ConstituencySeeder::class,
-            WardSeeder::class,
+        // $this->call([
+        //      CountySeeder::class,
+        //     ConstituencySeeder::class,
+        //     WardSeeder::class,
        
-        ]);
-          $this->call(UsersSeeders::class);
+        // ]);
+        //   $this->call(UsersSeeders::class);
 
         // CMS Seeders
         $this->call([
@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             AnnouncementSeeder::class,
             FAQSeeder::class,
             SettingsSeeder::class,
+            NationalitySeeder::class
         ]);
 
     }
