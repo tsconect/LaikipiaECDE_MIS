@@ -188,12 +188,14 @@ class LearnerController extends Controller
      */
     public function edit(Learner $learner)
     {
-         $sub_counties = Constituency::get();
+       $sub_counties = Constituency::get();
        $wards = Ward::get();
        $counties = County::get();
        $ecde_schools = EcdeSchools::get();
+       $sub_locations = SubLocation::get();
+       $nationalities = Nationality::get();
 
-       return view('admin.learners.edit', compact('learner', 'wards', 'sub_counties', 'counties', 'ecde_schools'));
+       return view('admin.learners.edit', compact('learner', 'wards', 'sub_counties', 'counties', 'ecde_schools', 'sub_locations', 'nationalities'));
     }
 
     /**
@@ -214,31 +216,72 @@ class LearnerController extends Controller
           'impairment_details' => 'nullable',
           'gender' => 'required',
           'dob' => 'required',
-
           'nemis_number' => 'required',
           'ward_id' => 'required',
-          'sub_location_id' => 'required',
           'village' => 'required',
-          'school_id' => 'required'
+          'school_id' => 'required',
+          'nationality_id' => 'required',
+          'birth_certificate_number' => 'required|unique:learners,birth_certificate_number,'.$learner->id,
        ]);
 
-       $learner->first_name = $request->first_name;
-       $learner->middle_name = $request->middle_name;
-       $learner->last_name = $request->last_name;
-       $learner->pwd_status = $request->pwd_status;
-       $learner->disability_type = $request->disability_type;
-       $learner->impairment_details = $request->impairment_details;
-       $learner->gender = $request->gender;
-       $learner->dob = $request->dob;
-       $learner->nemis_number = $request->nemis_number;
-       $learner->student_type_id = $request->student_type_id;
-       $learner->ward_id = $request->ward_id;
-       $learner->sub_location_id = $request->sub_location_id;
-       $learner->village = $request->village;
-       $learner->school_id = $request->school_id;
-       $learner->save();
+       try {
+            DB::beginTransaction();
 
-       return redirect()->route('admin.learners.index')->with('success', 'learners updated successfully');
+            $learner->first_name = $request->first_name;
+            $learner->middle_name = $request->middle_name;
+            $learner->last_name = $request->last_name;
+            $learner->pwd_status = $request->pwd_status;
+            $learner->disability_type = $request->disability_type;
+            $learner->impairment_details = $request->impairment_details;
+            $learner->gender = $request->gender;
+            $learner->dob = $request->dob;
+            $learner->nemis_number = $request->nemis_number;
+            $learner->student_type_id = $request->student_type_id;
+            $learner->ward_id = $request->ward_id;
+            $learner->sub_location_id = $request->sub_location_id;
+            $learner->village = $request->village;
+            $learner->school_id = $request->school_id;
+            $learner->nationality_id = $request->nationality_id;
+            $learner->pwd_number = $request->pwd_number;
+            $learner->admission_number = $request->admission_number;
+            $learner->date_of_admission = $request->date_of_admission;
+            $learner->class = $request->class;
+            $learner->mode_of_admission = $request->mode_of_admission;
+            $learner->birth_certificate_number = $request->birth_certificate_number;
+
+            if ($request->hasFile('photo')) {
+                $file = $request->file('photo');
+                $path = 'learners/passport-photos';
+                $filePath = $request->file('photo')->store($path, 'public');
+                $learner->passport_photo = $filePath;
+            }
+
+            $learner->save();
+
+            $parent = LearnerParent::where('learner_id', $learner->id)->first();
+            if (!$parent) {
+                $parent = new LearnerParent();
+                $parent->learner_id = $learner->id;
+            }
+            $parent->first_name = $request->parent_first_name;
+            $parent->last_name = $request->parent_last_name;
+            $parent->relationship = $request->parent_relationship;
+            $parent->id_number = $request->parent_id_number;
+            $parent->phone_number = $request->parent_phone_number;
+            $parent->alernative_phone_number = $request->parent_alernative_phone_number;
+            $parent->email = $request->parent_email;
+            $parent->ward_id = $request->parent_ward_id;
+            $parent->village = $request->parent_village;
+            $parent->save();
+
+            DB::commit();
+
+            return redirect()->route('admin.learners.index')->with('success', 'Learner updated successfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Error: ' . $e->getMessage());
+        }
     }
 
     /**

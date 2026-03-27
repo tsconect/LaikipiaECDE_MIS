@@ -8,6 +8,13 @@
         --navy: #1a2d4d;
         --gold: #e8a020;
         --header-h: 60px;
+        
+        /* ── Action Button Variables ── */
+        --btn-view:   #F9A826;
+        --btn-edit:   #2ECBCB;
+        --btn-delete: #F2547D;
+        --radius: 12px;
+        --size: 38px;
     }
 
     body {
@@ -596,60 +603,132 @@
     }
 
     /* ── ACTION BUTTONS (icon buttons) ── */
-    .app-main__inner .table .action-btns {
+    .app-main__inner .table .action-btns, 
+    .app-main__inner .table .table-actions,
+    .app-main__inner .table td:last-child,
+    .actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+    }
+
+    /* Fix for form wrapping the delete button causing alignment issues */
+    .actions form,
+    .table-actions form,
+    .action-btns form,
+    .app-main__inner .table td form {
+        display: inline-flex !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        vertical-align: middle !important;
+        align-items: center;
+    }
+
+    .app-main__inner .table .action-btn, 
+    .app-main__inner .table .btn,
+    .btn-action {
+        width: var(--size) !important;
+        height: var(--size) !important;
+        border: none !important;
+        border-radius: var(--radius) !important;
+        cursor: pointer;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #fff !important;
+        font-size: 15px;
+        transition: 
+          transform .18s cubic-bezier(.34,1.56,.64,1), 
+          box-shadow .18s ease, 
+          filter .18s ease;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        padding: 0 !important;
+        min-height: var(--size) !important;
+        margin: 0 !important; /* Reset margins */
+        vertical-align: middle;
+    }
+
+    .app-main__inner .table .action-btn i,
+    .btn-action i {
         display: flex;
         align-items: center;
-        gap: 6px;
-    }
-    .app-main__inner .table .action-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 7px;
-        border: 1.5px solid;
-        display: inline-flex;
-        align-items: center;
         justify-content: center;
-        cursor: pointer;
-        background: #fff;
-        transition: background 0.15s, transform 0.12s;
-        padding: 0;
-        text-decoration: none;
+        line-height: 1;
     }
-    .app-main__inner .table .action-btn:hover { transform: translateY(-1px); }
-    .app-main__inner .table .action-btn:active { transform: scale(0.95); }
-    .app-main__inner .table .action-btn svg { width: 14px; height: 14px; }
 
-    /* View */
-    .app-main__inner .table .action-btn.view { border-color: #bfdbfe; color: #3b82f6; }
-    .app-main__inner .table .action-btn.view:hover { background: #eff6ff; }
-    /* Edit */
-    .app-main__inner .table .action-btn.edit { border-color: #bbf7d0; color: #16a34a; }
-    .app-main__inner .table .action-btn.edit:hover { background: #f0fdf4; }
-    /* Delete */
-    .app-main__inner .table .action-btn.delete { border-color: #fecaca; color: #ef4444; }
-    .app-main__inner .table .action-btn.delete:hover { background: #fef2f2; }
-
-    /* Fallback — keep Bootstrap outline buttons looking polished */
-    .app-main__inner .table .btn {
-        min-height: 30px;
-        height: 30px;
-        padding: 0 10px;
-        font-size: 12px;
-        border-radius: 6px;
-        font-weight: 500;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        margin: 1px;
-        transition: background .15s, transform .12s;
+    /* ripple */
+    .app-main__inner .table .action-btn::after, 
+    .app-main__inner .table .btn::after,
+    .btn-action::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(255,255,255,.25);
+        border-radius: inherit;
+        opacity: 0;
+        transform: scale(0);
+        transition: transform .35s ease, opacity .35s ease;
     }
-    .app-main__inner .table .btn:hover { transform: translateY(-1px); }
-    .app-main__inner .table .btn-outline-primary { border-color: #bfdbfe; color: #3b82f6; background: #fff; }
-    .app-main__inner .table .btn-outline-primary:hover { background: #eff6ff; }
-    .app-main__inner .table .btn-outline-danger { border-color: #fecaca; color: #ef4444; background: #fff; }
-    .app-main__inner .table .btn-outline-danger:hover { background: #fef2f2; }
-    .app-main__inner .table .btn-outline-warning { border-color: #fde68a; color: #d97706; background: #fff; }
-    .app-main__inner .table .btn-outline-warning:hover { background: #fffbeb; }
+
+    .app-main__inner .table .action-btn:active::after, 
+    .app-main__inner .table .btn:active::after,
+    .btn-action:active::after {
+        transform: scale(2);
+        opacity: 1;
+        transition: 0s;
+    }
+
+    .app-main__inner .table .action-btn:hover, 
+    .app-main__inner .table .btn:hover,
+    .btn-action:hover {
+        transform: scale(1.12);
+        filter: brightness(1.08);
+        box-shadow: 0 6px 16px rgba(0,0,0,.18);
+    }
+
+    .app-main__inner .table .action-btn:active, 
+    .app-main__inner .table .btn:active,
+    .btn-action:active {
+        transform: scale(.95);
+    }
+
+    /* ── Colors ── */
+    /* View / Primary */
+    .app-main__inner .table .action-btn.view, 
+    .app-main__inner .table .btn-primary,
+    .app-main__inner .table .btn-outline-primary,
+    .btn-view { background-color: var(--btn-view) !important; color: #fff !important; }
+    
+    /* Edit / Warning / Info — Targeting "Edit" keywords for un-updated views */
+    .app-main__inner .table .action-btn.edit, 
+    .app-main__inner .table .btn-warning,
+    .app-main__inner .table .btn-outline-warning,
+    .app-main__inner .table .btn-info,
+    .app-main__inner .table .btn-outline-info,
+    .app-main__inner .table .btn-primary[title*="Edit"],
+    .app-main__inner .table .btn-outline-primary[title*="Edit"],
+    .app-main__inner .table .btn-primary[title*="edit"],
+    .app-main__inner .table .btn-outline-primary[title*="edit"],
+    .btn-edit { background-color: var(--btn-edit) !important; color: #fff !important; }
+    
+    /* Delete / Danger — Targeting "Delete" keywords for un-updated views */
+    .app-main__inner .table .action-btn.delete, 
+    .app-main__inner .table .btn-danger,
+    .app-main__inner .table .btn-outline-danger,
+    .app-main__inner .table .btn-primary[title*="Delete"],
+    .app-main__inner .table .btn-outline-primary[title*="Delete"],
+    .app-main__inner .table .btn-primary[title*="delete"],
+    .app-main__inner .table .btn-outline-primary[title*="delete"],
+    .btn-delete { background-color: var(--btn-delete) !important; color: #fff !important; }
+
+    /* subtle bottom glow on hover */
+    .app-main__inner .table .action-btn.view:hover, .app-main__inner .table .btn-outline-primary:hover, .btn-view:hover { box-shadow: 0 8px 18px rgba(249,168,38,.45); }
+    .app-main__inner .table .action-btn.edit:hover, .app-main__inner .table .btn-outline-warning:hover, .btn-edit:hover { box-shadow: 0 8px 18px rgba(46,203,203,.45); }
+    .app-main__inner .table .action-btn.delete:hover, .app-main__inner .table .btn-outline-danger:hover, .btn-delete:hover { box-shadow: 0 8px 18px rgba(242,84,125,.45); }
 
     /* ── BADGES ── */
     .app-main__inner .badge {
@@ -817,44 +896,6 @@
     /* Action column — keep it tight */
     .app-main__inner .table tbody td:last-child {
         white-space: nowrap;
-    }
-
-    /* ---- ACTION BUTTONS in tables ---- */
-    .app-main__inner .table .btn {
-        min-height: 30px;
-        padding: 4px 10px;
-        font-size: 12px;
-        border-radius: 6px;
-        font-weight: 600;
-        line-height: 1.4;
-        margin: 1px;
-    }
-
-    .app-main__inner .table .btn-outline-primary {
-        border-color: #3f6ad8;
-        color: #3f6ad8;
-    }
-    .app-main__inner .table .btn-outline-primary:hover {
-        background: #3f6ad8;
-        color: #fff;
-    }
-
-    .app-main__inner .table .btn-outline-danger {
-        border-color: #e03c3c;
-        color: #e03c3c;
-    }
-    .app-main__inner .table .btn-outline-danger:hover {
-        background: #e03c3c;
-        color: #fff;
-    }
-
-    .app-main__inner .table .btn-outline-warning {
-        border-color: #f59e0b;
-        color: #b45309;
-    }
-    .app-main__inner .table .btn-outline-warning:hover {
-        background: #f59e0b;
-        color: #fff;
     }
 
     /* ---- BADGE / STATUS PILLS ---- */
