@@ -65,7 +65,7 @@ class GalleryController extends Controller
 
     public function show(Gallery $gallery)
     {
-        return view('admin.cms.galleries.edit', compact('gallery'));
+        return view('admin.cms.galleries.show', compact('gallery'));
     }
 
     public function update(Request $request, Gallery $gallery)

@@ -77,7 +77,7 @@ class UserDocumentController extends Controller
     public function show(UserDocument $userDocument)
     {
         $documents = Document::latest()->get();
-        return view('admin.user-documents.edit', compact('userDocument', 'documents'));
+        return view('admin.user-documents.show', compact('userDocument'));
     }
 
     /**

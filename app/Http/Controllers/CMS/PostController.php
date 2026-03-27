@@ -72,7 +72,7 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
-        return view('admin.cms.posts.edit', compact('post'));
+        return view('admin.cms.posts.show', compact('post'));
     }
 
     public function update(Request $request, Post $post)

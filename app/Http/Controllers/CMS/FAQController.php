@@ -60,7 +60,7 @@ class FAQController extends Controller
 
     public function show(FAQ $faq)
     {
-        return view('admin.cms.faqs.edit', compact('faq'));
+        return view('admin.cms.faqs.show', compact('faq'));
     }
 
     public function update(Request $request, FAQ $faq)

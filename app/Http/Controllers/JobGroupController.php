@@ -58,7 +58,7 @@ class JobGroupController extends Controller
      */
     public function show(JobGroup $jobGroup)
     {
-        return view('admin.job-groups.edit', compact('jobGroup'));
+        return view('admin.job-groups.show', compact('jobGroup'));
     }
 
     /**

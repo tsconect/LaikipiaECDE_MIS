@@ -75,7 +75,7 @@ class BeneficiaryController extends Controller
      */
     public function show(Beneficiary $beneficiary)
     {
-        return view('admin.beneficiaries.edit', compact('beneficiary'));
+        return view('admin.beneficiaries.show', compact('beneficiary'));
     }
 
     /**

@@ -55,7 +55,7 @@ class AnnouncementController extends Controller
 
     public function show(Announcement $announcement)
     {
-        return view('admin.cms.announcements.edit', compact('announcement'));
+        return view('admin.cms.announcements.show', compact('announcement'));
     }
 
     public function update(Request $request, Announcement $announcement)

@@ -55,7 +55,7 @@ class EthnicGroupController extends Controller
      */
     public function show(EthnicGroup $ethnicGroup)
     {
-        return view('admin.ethnic-groups.edit', compact('ethnicGroup'));
+        return view('admin.ethnic-groups.show', compact('ethnicGroup'));
     }
     /**
      * Show the form for editing the specified resource.
