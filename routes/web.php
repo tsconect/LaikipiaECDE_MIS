@@ -12,6 +12,7 @@ use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\ESchoolController;
 use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\JobGroupController;
+use App\Http\Controllers\LearnerAttendanceController;
 use App\Http\Controllers\LearnerController;
 use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\PermissionsController;
@@ -130,6 +131,7 @@ Route::group(['middleware' => ['auth']], function () {
               //teachers
             Route::get('edit-teacher/{id}', [TeacherController::class, 'edit'])->name('teacher-edit-view');
             Route::get('view-teacher/{id}', [TeacherController::class, 'view'])->name('teacher-view');
+            Route::resource('learner-attendances', LearnerAttendanceController::class);
            
             // {{ route('admin.edit-view', $item->id) }}
 

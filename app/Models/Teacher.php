@@ -10,15 +10,22 @@ class Teacher extends Model
 {
 
     use HasFactory;
+    use HasFactory;
+
+    protected $casts = [
+        'retirement_date' => 'date:Y-m-d',
+    ];
     function user(){
         return $this->hasOne(User::class,'id','user_id');
     }
+
+
 
     public function jobGroup(){
         return $this->hasOne(JobGroup::class,'id','job_group_id');
     }
 
-    function ecdeSchool(){
+    function school(){
         return $this->hasOne(EcdeSchools::class,'id','school_id');
     }
 
