@@ -41,7 +41,7 @@ class DashboardController extends Controller
         $absent_today = \App\Models\LearnerAttendance::where('date', $today)->where('status', 'absent')->count();
 
         $ethnicities = \App\Models\EthnicGroup::take(10)->get();
-        $retiring_teachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+70 years'))])->get();
+        $retiring_teachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+5 years'))])->get();
 
         return view('admin.index', compact(
             'schoolsCount', 'teachersCount', 'studentsCount', 'ethnicities', 'retiring_teachers',

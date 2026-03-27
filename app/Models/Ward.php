@@ -12,4 +12,9 @@ class Ward extends Model
     protected $casts = [
         'id' => 'string'
     ];
+
+    public function subCounty()
+    {
+        return $this->belongsTo(Constituency::class, 'constituency_code', 'constituency_id');
+    }
 }

@@ -312,6 +312,8 @@
       </table>
     </div>
   </div>
+  </div>{{-- /charts-row --}}
+
 
   <!-- ── Distribution Tables ── -->
   <div class="stats-grid-2">
@@ -353,6 +355,60 @@
   </div>
 
 </div>
+  </div>{{-- /tables-row --}}
+
+  <!-- ════════ RETIRING TEACHERS ════════ -->
+  <div class="panel" style="animation-delay:0.2s">
+    <div class="panel-hd">
+      <div class="panel-title">
+        <span class="panel-title-dot" style="background:linear-gradient(180deg,#f59e0b,#fbbf24)"></span>
+        Retiring Teachers
+      </div>
+      <span class="panel-badge" style="background:#fffbeb;color:#b45309">In 5 Years</span>
+    </div>
+    <div class="panel-body-flush">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>School</th>
+            <th>Age</th>
+            <th style="text-align:right">Retires In</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            @if($retiring_teachers->count() > 0)
+              @foreach($retiring_teachers as $teacher)
+              <tr>
+
+              
+                <td>{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->middle_name ?? '' }} {{ $teacher->user->last_name ?? 'Teacher Name' }}</td>
+                <td>{{ $teacher->school->school_name??'-' }}</td>
+                <td>{{Carbon\Carbon::parse($teacher->dob)->age}} years</td>
+                <td style="text-align:right">{{ $teacher->retirement_date->diffForHumans() }}</td>
+              </tr>
+              @endforeach
+            @else
+            <td colspan="4">
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
+                  </svg>
+                </div>
+                No retiring teachers at this time
+                <p>Teachers nearing retirement age will appear here.</p>
+              </div>
+            </td>
+            @endif
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>{{-- /dash-wrap --}}
 
 <!-- ════════ CHART.JS ════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>

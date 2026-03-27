@@ -6,6 +6,9 @@ use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
 use App\Models\FeederSchools;
+use App\Models\Learner;
+use App\Models\LearnerAttendance;
+use App\Models\SubLocation;
 use App\Models\Teacher;
 use App\Models\Ward;
 use App\Models\Wards;
@@ -27,7 +30,8 @@ class ESchoolController extends Controller
             $counties = County::get();
             $feeder_schools = FeederSchools::all();
             $teachers = Teacher::all();
-           return view('admin.schools.create',compact('wards','sub_counties','ecde_schools', 'counties','feeder_schools', 'teachers'));
+            $sub_locations =SubLocation::get();
+           return view('admin.schools.create',compact('wards','sub_counties','ecde_schools', 'counties','feeder_schools', 'teachers', 'sub_locations'));
        }
 
 
@@ -39,7 +43,13 @@ class ESchoolController extends Controller
        public function show(EcdeSchools $ecde_school)
        {
            $school = $ecde_school;
-           return view('admin.schools.show', compact('school'));
+           $learners = Learner::where('school_id', $ecde_school->id)->get();
+           $teachers = Teacher::where('school_id', $ecde_school->id)->get();
+            $learnerIds = $learners->pluck('id');
+
+            $attendances = LearnerAttendance::whereIn('learner_id', $learnerIds)->get();
+             $absents = LearnerAttendance::whereIn('learner_id', $learnerIds)->where('status', 'absent')->get();
+           return view('admin.schools.show', compact('school', 'learners', 'teachers', 'attendances', 'absents'));
        }
 
 
@@ -48,17 +58,14 @@ class ESchoolController extends Controller
 
        $request->validate([
            'school_name' => 'required',
-           'number_of_classes' => 'required',
-           'number_of_students' => 'required',
-           'class_rooms_status' => 'required',
-           'school_location' => 'required',
            'teacher_id' => 'required',
            'county_id' => 'required',
            'subcounty_id' => 'required',
            'ward_id' => 'required',
+           'sub_location_id' => 'required',
            'feeder_id' => 'nullable',
            'remarks' => 'nullable',
-           'center_code' => 'nullable'
+           'center_code' => 'required'
 
        ]);
 
@@ -78,7 +85,6 @@ class ESchoolController extends Controller
            $school->center_code = $request->center_code;
 
            $school->save();
-
            return redirect()->route('admin.ecde-schools.index')->with('success','School Added Successfully');
 
 

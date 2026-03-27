@@ -20,8 +20,7 @@
                                 <th>ID </th>
                                 <th>School Name</th>
                                 <th>Center Code</th>
-                                <th>NO. C/Rooms</th>
-                                <th>Status</th>
+                             
                                 <th>Ward</th>
                                
                                 <th>Action</th>
@@ -34,10 +33,7 @@
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->school_name}}</td>
                                 <td>{{$item->center_code }}</td>
-                                <td>{{$item->number_of_classes }}</td>
-                                <td>{{$item->class_rooms_status }}</td>
-                                <td>{{$item->ward->name}}</td>
-                           
+                                <td>{{$item->ward->name??'-'}}</td>
                                 <td>
                                 <a class="btn btn-outline-primary" title="View School"
                                         href="{{ route('admin.ecde-schools.show', $item->id) }}">
