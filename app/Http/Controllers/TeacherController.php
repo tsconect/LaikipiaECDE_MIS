@@ -179,7 +179,6 @@ class TeacherController extends Controller
             $obj->email=$request->email;
             $obj->phone_number= PhoneHelper::normalizePhoneNumber($request->phone_number);
             $obj->role='Teacher';
-            $obj->password=Hash::make('teacher');
             $obj->save();
 
             $obj->syncRoles('Teacher');

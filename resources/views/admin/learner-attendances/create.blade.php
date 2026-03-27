@@ -18,14 +18,19 @@
                 </ul>
             </div>
         @endif
+      
         <form action="{{ route('admin.learner-attendances.store') }}" method="POST">
             @csrf
 
-            <div class="card">
+            <div class="card p-2">
                 <div class="card-header">
                     <h5>Mark Attendance </h5>
                 </div>
-
+                    @if($learners->isEmpty())
+                    <div class="alert alert-danger">
+                        <p>No learners found.</p>
+                    </div>
+                @else
                 <div class="card-body table-responsive">
                     <div class="mb-3">
                         <label class="form-label">Select Date</label>
@@ -84,6 +89,7 @@
                 </div>
             </div>
         </form>
+        @endif
 
     </div>
        <script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Learner;
 use App\Models\LearnerAttendance;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class LearnerAttendanceController extends Controller
@@ -15,7 +16,18 @@ class LearnerAttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = LearnerAttendance::latest()->get();
+
+     $user = auth()->user();
+
+        
+        if($user->role == 'Teacher'){
+          
+               $attendances = LearnerAttendance::where('user_id', $user->id)->latest()->get();
+
+        } else{
+               $attendances = LearnerAttendance::latest()->get();
+        }
+     
 
         return view('admin.learner-attendances.index', compact('attendances'));
     }
@@ -27,7 +39,20 @@ class LearnerAttendanceController extends Controller
      */
     public function create()
     {
-        $learners = Learner::latest()->get();
+        $user = auth()->user();
+
+        
+        if($user->role == 'Teacher'){
+            $teacher = Teacher::where('user_id', $user->id)->first();
+
+            if(!$teacher){
+                return redirect()->back()->with('error', 'Teacher not found');
+            }
+            $learners = Learner::where('school_id', $teacher->school_id)->latest()->get();
+        } else{
+            $learners = Learner::latest()->get();
+        }
+
 
         return view('admin.learner-attendances.create', compact('learners'));
     }
