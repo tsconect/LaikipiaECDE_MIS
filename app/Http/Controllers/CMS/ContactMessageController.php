@@ -11,7 +11,8 @@ class ContactMessageController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:manage-cms', ['except' => []]);
+        // allow either Admin role or manage-cms permission to access contact messages
+        $this->middleware('role_or_permission:Admin|manage-cms', ['except' => []]);
     }
 
     public function index()
