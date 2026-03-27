@@ -36,9 +36,17 @@ class FeederSchoolsController extends Controller
       public function show(FeederSchools $feeder_school)
       {
           $school = $feeder_school;
-          return view('admin.feeder-schools.show', compact('school'));
-      }
+          // Assuming learners/teachers might be linked via school_id even for feeders, 
+          // or we might need a separate way to link them. 
+          // For now, let's fetch based on school_id if available.
+          $learners = \App\Models\Learner::where('school_id', $feeder_school->id)->get();
+          $teachers = \App\Models\Teacher::where('school_id', $feeder_school->id)->get();
+          $learnerIds = $learners->pluck('id');
+          $attendances = \App\Models\LearnerAttendance::whereIn('learner_id', $learnerIds)->get();
+          $absents = \App\Models\LearnerAttendance::whereIn('learner_id', $learnerIds)->where('status', 'absent')->get();
 
+          return view('admin.feeder-schools.show', compact('school', 'learners', 'teachers', 'attendances', 'absents'));
+      }
 
        public function store(Request $request)
        {

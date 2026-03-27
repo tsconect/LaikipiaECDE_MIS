@@ -98,6 +98,9 @@
 .section-title { font-size: 14px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px; }
 .section-title::before { content: ''; width: 3px; height: 16px; background: #22c55e; border-radius: 3px; display: block; }
 .section-body { padding: 20px 22px; }
+.section-body-flush { padding: 0; }
+
+.panel-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: #eff6ff; color: #3b82f6; }
 
 /* ══ TABLES ══ */
 .data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -153,11 +156,11 @@
       <div class="stat-label">Absenteeism Rate</div>
       <div class="attend-row">
         @php
-            $total_attendance = $present_today + $absent_today;
+            $total_attendance = ($present_today ?? 0) + ($absent_today ?? 0);
             $absent_pct = ($total_attendance > 0) ? round(($absent_today / $total_attendance) * 100) : 0;
         @endphp
         <span class="attend-big">{{ $absent_pct }}%</span>
-        <span class="attend-pct absent">{{ $absent_today }} absent</span>
+        <span class="attend-pct absent">{{ $absent_today ?? 0 }} absent</span>
       </div>
       <div class="attend-bar"><div class="attend-fill" style="width:{{ $absent_pct }}%; background:#ef4444;"></div></div>
     </div>
@@ -278,16 +281,20 @@
   <!-- ── Retiring Teachers Table ── -->
   <div class="section-card">
     <div class="section-header">
-      <div class="section-title">Retiring Teachers</div>
+      <div class="section-title">
+        <span class="panel-title-dot" style="background:linear-gradient(180deg,#f59e0b,#fbbf24)"></span>
+        Retiring Teachers
+      </div>
+      <span class="panel-badge" style="background:#fffbeb;color:#b45309">In 5 Years</span>
     </div>
-    <div class="section-body" style="padding:0">
+    <div class="section-body-flush">
       <table class="data-table">
         <thead>
           <tr>
             <th>Name</th>
             <th>School</th>
             <th>Age</th>
-            <th>Retires In</th>
+            <th style="text-align:right">Retires In</th>
           </tr>
         </thead>
         <tbody>
@@ -296,14 +303,19 @@
             <td style="font-weight:600;">{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->last_name ?? '' }}</td>
             <td>{{ $teacher->school->school_name ?? '-' }}</td>
             <td>{{ \Carbon\Carbon::parse($teacher->dob)->age }} yrs</td>
-            <td>{{ $teacher->retirement_date->diffForHumans() }}</td>
+            <td style="text-align:right">{{ $teacher->retirement_date->diffForHumans() }}</td>
           </tr>
           @empty
           <tr>
             <td colspan="4">
               <div class="empty-state">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+                <div class="empty-state-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
+                  </svg>
+                </div>
                 No retiring teachers at this time
+                <p>Teachers nearing retirement age will appear here.</p>
               </div>
             </td>
           </tr>
@@ -312,8 +324,6 @@
       </table>
     </div>
   </div>
-  </div>{{-- /charts-row --}}
-
 
   <!-- ── Distribution Tables ── -->
   <div class="stats-grid-2">
@@ -355,60 +365,6 @@
   </div>
 
 </div>
-  </div>{{-- /tables-row --}}
-
-  <!-- ════════ RETIRING TEACHERS ════════ -->
-  <div class="panel" style="animation-delay:0.2s">
-    <div class="panel-hd">
-      <div class="panel-title">
-        <span class="panel-title-dot" style="background:linear-gradient(180deg,#f59e0b,#fbbf24)"></span>
-        Retiring Teachers
-      </div>
-      <span class="panel-badge" style="background:#fffbeb;color:#b45309">In 5 Years</span>
-    </div>
-    <div class="panel-body-flush">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>School</th>
-            <th>Age</th>
-            <th style="text-align:right">Retires In</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            @if($retiring_teachers->count() > 0)
-              @foreach($retiring_teachers as $teacher)
-              <tr>
-
-              
-                <td>{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->middle_name ?? '' }} {{ $teacher->user->last_name ?? 'Teacher Name' }}</td>
-                <td>{{ $teacher->school->school_name??'-' }}</td>
-                <td>{{Carbon\Carbon::parse($teacher->dob)->age}} years</td>
-                <td style="text-align:right">{{ $teacher->retirement_date->diffForHumans() }}</td>
-              </tr>
-              @endforeach
-            @else
-            <td colspan="4">
-              <div class="empty-state">
-                <div class="empty-state-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
-                  </svg>
-                </div>
-                No retiring teachers at this time
-                <p>Teachers nearing retirement age will appear here.</p>
-              </div>
-            </td>
-            @endif
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>{{-- /dash-wrap --}}
 
 <!-- ════════ CHART.JS ════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
