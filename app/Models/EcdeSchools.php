@@ -14,4 +14,10 @@ class EcdeSchools extends Model
     public function ward(){
         return $this->hasOne(Ward::class,'id','ward_id');
     }
+
+    public function teacher(){
+        return $this->hasOne(Teacher::class,'id','teacher_id');
+    }
+
+    
 }

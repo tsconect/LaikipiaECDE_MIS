@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $studentsCount = \App\Models\Students::count();
         $unionsCount = \App\Models\Unions::count();
         $ethnicities = \App\Models\EthnicGroup::take(10)->get();
-        $retiring_teachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+70 years'))])->get();
+        $retiring_teachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+5 years'))])->get();
 
 
 

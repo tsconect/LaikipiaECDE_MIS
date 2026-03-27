@@ -52,8 +52,8 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
-                                    <label for="birth_certificate_number" class="">Birth Certificte Number</label>
-                                    <input name="birth_certificate_number" id="birth_certificate_number" placeholder="Enter Birth Certificte Number" required
+                                    <label for="birth_certificate_number" class="">Birth Certificate Number</label>
+                                    <input name="birth_certificate_number" id="birth_certificate_number" placeholder="Enter Birth Certificate Number" required
                                         type="text"class="form-control">
                                 </div>
                                 @error('birth_certificate_number')
@@ -146,7 +146,7 @@
                                 <div class="position-relative form-group">
                                     <label for="dob" class="">Date of birth</label>
                                     <input name="dob" id="dob" placeholder="D.O.B" required type="date"
-                                    max="{{ date('Y-m-d')}}"
+                                    max="{{ date('Y-m-d', strtotime('-4 years'))}}"
                                         class="form-control">
                                 </div>
                             </div>

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('subcounty_id')->nullable();
 
             $table->string("feeder_id")->nullable();
-            $table->unsignedBigInteger("ward_id")->nullable();
+            $table->string("ward_id")->nullable();
             $table->string("teacher_id")->nullable();
            
             $table->integer("number_of_students")->nullable();

@@ -9,6 +9,9 @@
         --gold: #e8a020;
         --header-h: 60px;
     }
+    .nav-item .nav-link{
+        color: grey !important;
+    }
 
     body {
         background-color: #f0f2f5;
@@ -1328,6 +1331,48 @@ Swal.fire({
 @endif
 <script>
       new DataTable('#dt-basic2', {
+            info: true,
+            paging: true,
+            searchable: true,
+            fixedHeight: true,
+            lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
+            pageLength: 50,
+            order: [],
+            dom: 'lBfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                {
+                    extend: 'print',
+                    customize: function (win) {
+                        // You can customize the print window if needed
+                    }
+                },
+                'colvis' // Add column visibility button
+            ],
+            language: {
+                lengthMenu: " _MENU_ records per page",
+                zeroRecords: "No records available",
+                info: "Showing page _PAGE_ of _PAGES_",
+                infoEmpty: "No records available",
+                search: "",
+                searchPlaceholder: "Search... ",
+                infoFiltered: "(filtered from _MAX_ total records)",
+                paginate: {
+                    first: '<i class="fas fa-angle-double-left"></i>',
+                    last: '<i class="fas fa-angle-double-right"></i>',
+                    previous: '<i class="fas fa-angle-left"></i>',
+                    next: '<i class="fas fa-angle-right"></i>'
+                },
+            },
+            columnDefs: [
+                { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
+            ]
+        });
+
+        new DataTable('.dt-basic2', {
             info: true,
             paging: true,
             searchable: true,

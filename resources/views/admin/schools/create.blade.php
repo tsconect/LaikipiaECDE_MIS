@@ -32,7 +32,7 @@
 
                             
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="school_name" class="">School Name</label>
                                     <input name="school_name" id="school_name" placeholder="Enter School name" required
@@ -40,32 +40,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="number_of_classes" class="">Number of class Rooms</label>
-                                    <input name="number_of_classes" id="number_of_classes" placeholder="3" required
-                                        type="number" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="class_rooms_status" class=""> Class Rooms Status </label>
-                                    <select name="class_rooms_status" id="class_rooms_status" class="form-control" required>
-                                        <option value="permanent">Permanent</option>
-                                        <option value="Semi_Permanent">Semi Permanent</option>
-                                        <option value="one_semipermanent_others_permanent">One Semi-Permanent, Others
-                                            Permanent
-                                        </option>
-                                        <option value="temporary">Temporary</option>
-                                        <option value="mud_walled">Mud Walled</option>
-                                        <option value="under_tree">Under Tree</option>
-
-                                    </select>
-                                </div>
-                            </div>
-
+                            
+                          
                             {{-- center_code --}}
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="center_code" class="">Center Code</label>
                                     <input name="center_code" id="center_code" placeholder="Enter center code" required
@@ -73,22 +51,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="school_name" class="">Number of students:</label>
-                                    <input name="number_of_students" id="number_of_students" placeholder="Enter of students" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div>
+                          
 
-                            <div class="col-md-6">
-                                <div class="position-relative form-group">
-                                    <label for="school_location" class="">School Location (Latitude, Longitude)</label>
-                                    <input name="school_location" id="school_location" placeholder="Enter School location in terms of latitude, longitude e.g. 37.7749, -122.4194" required
-                                        type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="teacher_id" class="">Teacher in Charge</label>
                                     <select name="teacher_id" id="teacher_id" class="form-control">
@@ -100,7 +65,7 @@
                                     </select>
                                 </div>
                             </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
                             <select name="county_id" id="countySelect" 
                                     class="form-control @error('county_id') is-invalid @enderror"
@@ -115,7 +80,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label fw-semibold">Sub-County</label>
                             <select name="subcounty_id" id="constituencySelect" 
                                     class="form-control @error('subcounty_id') is-invalid @enderror"
@@ -127,7 +92,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label fw-semibold">Ward</label>
                             <select name="ward_id" id="wardSelect" 
                                     class="form-control @error('ward_id') is-invalid @enderror">
@@ -138,6 +103,22 @@
                             @enderror
                         </div>
 
+                        
+                        <div class="col-md-4">
+                            <label for="sub_location_id" class="">Sub-Location </label>
+                            <select name="sub_location_id" id="sub_location_id" class="form-control" required>
+                                <option value="">Select Sublocation</option>
+                                @foreach ($sub_locations as $value)
+                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('sub_location_id')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+
+                        </div>
+
+
 
                             
 
@@ -146,7 +127,7 @@
 
                            
 
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="has_feeder" class="">Does this school have a feeder school?</label>
                                     <select name="has_feeder" id="has_feeder" class="form-control" onchange="showFeederDiv()">
@@ -156,7 +137,7 @@
                                 </div>
                             </div>
 
-                             <div class="col-md-6 d-none" id="feeder_div">
+                             <div class="col-md-4 d-none" id="feeder_div">
                                 <div class="position-relative form-group">
                                     <label for="feeder_id" class="">Feeder School </label>
 
