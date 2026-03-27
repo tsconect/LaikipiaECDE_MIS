@@ -60,7 +60,7 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
-        return view('admin.documents.edit', compact('document'));
+        return view('admin.documents.show', compact('document'));
     }
 
     /**

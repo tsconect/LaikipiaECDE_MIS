@@ -72,7 +72,7 @@ log_user_activity(
             json_encode($user)
         );
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.edit', compact('user'));
     }
 
      public function store(Request $request)

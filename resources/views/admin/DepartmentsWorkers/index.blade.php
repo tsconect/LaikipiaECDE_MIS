@@ -69,7 +69,7 @@
                                             href="{{ route('admin.delete-constituency', $item->id) }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
-                                    </td>
+</div></td>
                                 </tr>
                             @endforeach
 

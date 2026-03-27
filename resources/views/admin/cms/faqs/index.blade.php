@@ -47,7 +47,7 @@
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 </form>
-                            </td>
+</div></td>
                         </tr>
                     @empty
                         <tr>

@@ -66,7 +66,7 @@
                                                                                         <i class="fa fa-trash"></i>
                                                                                 </form>
                                         </a>
-                                    </td>
+</div></td>
                                 </tr>
                             @endforeach
 

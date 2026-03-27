@@ -58,7 +58,7 @@ class PageController extends Controller
 
     public function show(Page $page)
     {
-        return view('admin.cms.pages.edit', compact('page'));
+        return view('admin.cms.pages.show', compact('page'));
     }
 
     public function update(Request $request, Page $page)

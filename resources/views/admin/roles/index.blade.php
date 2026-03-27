@@ -46,7 +46,7 @@
                                             href="{{ route('admin.roles.edit', $item->id) }}">
                                             <i class="fa fa-edit"></i>
                                         </a>
-                                    </td>
+</div></td>
                         </tr>
                         @endforeach
 

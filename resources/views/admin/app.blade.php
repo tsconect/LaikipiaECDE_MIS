@@ -192,73 +192,687 @@
         margin-bottom: 6px;
     }
 
+    /* ============================================================
+       GLOBAL SHOW/PROFILE PAGE — detail grid system
+       ============================================================ */
+
+    /* Profile header card */
+    .app-main__inner .prof-header {
+        background: linear-gradient(135deg, #0f1b2d 0%, #1a2d4d 100%);
+        border-radius: 14px;
+        padding: 22px 26px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 20px rgba(15,27,45,.22);
+    }
+    .app-main__inner .prof-header-title {
+        font-size: 18px; font-weight: 700; color: #fff; line-height: 1.2;
+    }
+    .app-main__inner .prof-header-meta {
+        font-size: 13px; color: #c8d8f0; margin-top: 5px;
+        display: flex; flex-wrap: wrap; gap: 14px;
+    }
+    .app-main__inner .prof-header-meta span { display: flex; align-items: center; gap: 5px; }
+    .app-main__inner .prof-header-meta i { color: #22c55e; }
+
+    /* Detail grid */
+    .app-main__inner .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+        gap: 14px;
+        padding: 4px 0 16px;
+    }
+    .app-main__inner .detail-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 14px 16px;
+        transition: box-shadow .15s;
+    }
+    .app-main__inner .detail-item:hover { box-shadow: 0 2px 10px rgba(0,0,0,.07); }
+
+    .app-main__inner .detail-label {
+        font-size: 10.5px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .07em;
+        color: #94a3b8;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .app-main__inner .detail-label i { color: #22c55e; font-size: 12px; }
+
+    .app-main__inner .detail-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #0f172a;
+        word-break: break-word;
+    }
+    .app-main__inner .detail-value.muted { color: #94a3b8; font-weight: 400; font-style: italic; }
+
+    /* Wide text block (content/body fields) */
+    .app-main__inner .detail-item.full {
+        grid-column: 1 / -1;
+    }
+    .app-main__inner .detail-item.full .detail-value {
+        font-size: 13.5px;
+        font-weight: 400;
+        color: #334155;
+        white-space: pre-wrap;
+        line-height: 1.6;
+    }
+
+    /* Section divider */
+    .app-main__inner .section-title {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: #94a3b8;
+        margin: 0 0 14px;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed #e2e8f0;
+    }
+
+    /* Profile card shell */
+    .app-main__inner .prof-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 14px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.06);
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+    .app-main__inner .prof-card-body { padding: 22px 26px; }
+
+    /* ============================================================
+       GLOBAL BUTTON COLOUR — green accent system
+       ============================================================ */
+
     .app-main__inner .btn {
         border-radius: 8px;
         font-weight: 600;
         min-height: 36px;
-        padding: 7px 12px;
+        padding: 7px 14px;
+        transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.12s;
+    }
+    .app-main__inner .btn:hover { transform: translateY(-1px); }
+    .app-main__inner .btn:active { transform: scale(0.97); }
+
+    /* ── Solid green (replaces primary, success, warning, info, secondary) ── */
+    .app-main__inner .btn-primary,
+    .app-main__inner .btn-success,
+    .app-main__inner .btn-warning,
+    .app-main__inner .btn-info,
+    .app-main__inner .btn-secondary {
+        background: #22c55e;
+        border-color: #22c55e;
+        color: #fff !important;
+        box-shadow: 0 2px 8px rgba(34,197,94,.25);
+    }
+    .app-main__inner .btn-primary:hover,
+    .app-main__inner .btn-success:hover,
+    .app-main__inner .btn-warning:hover,
+    .app-main__inner .btn-info:hover,
+    .app-main__inner .btn-secondary:hover {
+        background: #16a34a;
+        border-color: #16a34a;
+        color: #fff !important;
+        box-shadow: 0 4px 12px rgba(34,197,94,.35);
+    }
+    .app-main__inner .btn-primary:focus,
+    .app-main__inner .btn-success:focus,
+    .app-main__inner .btn-warning:focus,
+    .app-main__inner .btn-info:focus,
+    .app-main__inner .btn-secondary:focus {
+        box-shadow: 0 0 0 .2rem rgba(34,197,94,.3);
     }
 
-    .app-main__inner .btn-warning {
-        background: #f59e0b;
-        border-color: #f59e0b;
-        color: #fff;
+    /* ── Outline green ── */
+    .app-main__inner .btn-outline-primary,
+    .app-main__inner .btn-outline-success,
+    .app-main__inner .btn-outline-warning,
+    .app-main__inner .btn-outline-info,
+    .app-main__inner .btn-outline-secondary {
+        border-color: #22c55e;
+        color: #16a34a;
+        background: transparent;
+    }
+    .app-main__inner .btn-outline-primary:hover,
+    .app-main__inner .btn-outline-success:hover,
+    .app-main__inner .btn-outline-warning:hover,
+    .app-main__inner .btn-outline-info:hover,
+    .app-main__inner .btn-outline-secondary:hover {
+        background: #22c55e;
+        border-color: #22c55e;
+        color: #fff !important;
     }
 
-    .app-main__inner .btn-warning:hover {
-        background: #dd8f0c;
-        border-color: #dd8f0c;
-        color: #fff;
+    /* ── Danger stays red — delete actions need clear distinction ── */
+    .app-main__inner .btn-danger {
+        background: #ef4444;
+        border-color: #ef4444;
+        color: #fff !important;
+        box-shadow: 0 2px 8px rgba(239,68,68,.25);
+    }
+    .app-main__inner .btn-danger:hover {
+        background: #dc2626;
+        border-color: #dc2626;
+        box-shadow: 0 4px 12px rgba(239,68,68,.35);
+        color: #fff !important;
+    }
+    .app-main__inner .btn-outline-danger {
+        border-color: #fecaca;
+        color: #ef4444;
+        background: #fff;
+    }
+    .app-main__inner .btn-outline-danger:hover {
+        background: #fef2f2;
+        border-color: #ef4444;
+        color: #ef4444;
     }
 
-    .app-main__inner .btn-outline-primary {
-        border-color: #3f6ad8;
-        color: #3f6ad8;
+    /* ============================================================
+       MODERN TABLE SYSTEM — design v2
+       ============================================================ */
+
+    /* ── Table card shell ── */
+    .app-main__inner .table-card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+        overflow: hidden;
+        margin-bottom: 16px;
     }
 
-    .app-main__inner .btn-outline-primary:hover {
-        background: #3f6ad8;
-        border-color: #3f6ad8;
-        color: #fff;
+    /* ── Table header banner (dark strip) ── */
+    .app-main__inner .table-banner {
+        background: #0f1b2d;
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
     }
-
-    .app-main__inner .table {
-        border-color: #e8edf5;
-    }
-
-    .app-main__inner .table thead th {
-        background: #f7f9fc;
-        color: #667085;
-        font-size: 11px;
+    .app-main__inner .table-banner-title {
+        font-size: 17px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.04em;
         text-transform: uppercase;
-        letter-spacing: .06em;
-        border-bottom: 1px solid #e4e8ef;
-        padding: 10px 12px;
-        white-space: nowrap;
+    }
+    .app-main__inner .table-banner-title .accent { color: #22c55e; margin-right: 4px; }
+
+    /* Card fallback — existing blade views use .card-header */
+    .app-main__inner .card-header {
+        border-bottom: 1px solid #eef1f6;
+        background: #f7f9fc;
+        color: #1a2d4d;
+        font-weight: 700;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 12px 16px;
+    }
+    .app-main__inner .card-header.btn-success,
+    .app-main__inner .card-header.bg-success {
+        background: #0f1b2d !important;
+        color: #fff !important;
+        border-bottom-color: #0f1b2d;
+        font-size: 14px;
+        padding: 14px 20px;
+        letter-spacing: .05em;
     }
 
-    .app-main__inner .table tbody td {
+    /* ── Toolbar (controls row above table) ── */
+    .app-main__inner .dataTables_wrapper {
+        padding: 0;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_length,
+    .app-main__inner .dataTables_wrapper .dt-buttons,
+    .app-main__inner .dataTables_wrapper .dataTables_filter {
+        display: flex;
+        align-items: center;
+    }
+    .app-main__inner .dataTables_wrapper > .row:first-child {
+        background: #fafcff;
+        border-bottom: 1px solid #e2e8f0;
         padding: 10px 12px;
-        vertical-align: middle;
-        border-color: #eef1f6;
-        color: #334155;
+        margin: 0;
+        align-items: center;
+        gap: 0;
+    }
+
+    /* Records per page select */
+    .app-main__inner .dataTables_wrapper .dataTables_length label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12.5px;
+        color: #475569;
+        margin: 0;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_length select {
+        height: 32px;
+        padding: 0 8px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12.5px;
+        background: #fff;
+        color: #0f172a;
+        cursor: pointer;
+        margin: 0 4px;
+        box-shadow: none;
+        outline: none;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_length select:focus {
+        border-color: #22c55e;
+    }
+
+    /* Export buttons */
+    .app-main__inner .dataTables_wrapper .dt-buttons {
+        gap: 5px;
+        flex-wrap: wrap;
+        margin-left: 8px;
+    }
+    .app-main__inner .dataTables_wrapper .dt-buttons .btn {
+        height: 32px;
+        padding: 0 12px;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 6px;
+        background: #fff !important;
+        color: #475569 !important;
+        font-size: 12px;
+        font-weight: 500;
+        min-height: unset;
+        margin: 0;
+        box-shadow: none;
+        transition: background 0.15s, border-color 0.15s;
+        display: flex;
+        align-items: center;
+    }
+    .app-main__inner .dataTables_wrapper .dt-buttons .btn:hover {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #0f172a !important;
+    }
+
+    /* Search input */
+    .app-main__inner .dataTables_wrapper .dataTables_filter {
+        margin: 0;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_filter label {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12.5px;
+        color: #475569;
+        margin: 0;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_filter input {
+        height: 32px;
+        padding: 0 10px ;
+        width: 220px;
+        border: 1px solid #e2e8f0;
+        border-radius: 6px;
+        font-size: 12.5px;
+        background: #fff;
+        color: #0f172a;
+        box-shadow: none;
+        outline: none;
+        transition: border-color 0.15s, width 0.2s;
+        margin-left: 4px;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_filter input::placeholder { color: #94a3b8; }
+    .app-main__inner .dataTables_wrapper .dataTables_filter input:focus {
+        border-color: #22c55e;
+        width: 260px;
+    }
+
+    /* ── TABLE ITSELF ── */
+    .app-main__inner .table-responsive {
+        border-radius: 0;
+        overflow: hidden;
+        border: none;
+    }
+    .app-main__inner .table {
+        margin-bottom: 0;
+        border-collapse: collapse;
+        width: 100% !important;
         font-size: 13px;
     }
 
-    .app-main__inner .table-hover tbody tr:hover {
-        background: #f8faff;
+    /* Head */
+    .app-main__inner .table thead {
+        background: #0f1b2d;
+    }
+    .app-main__inner .table thead th {
+        background: transparent;
+        color: #c8d8f0;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: .07em;
+        border-bottom: none;
+        border-top: none;
+        padding: 11px 14px;
+        white-space: nowrap;
+        user-select: none;
+    }
+    /* Subtle divider between header cells */
+    .app-main__inner .table thead th + th {
+        border-left: 1px solid rgba(255,255,255,0.07);
     }
 
+    /* Body */
+    .app-main__inner .table tbody td {
+        padding: 13px 14px;
+        vertical-align: middle;
+        border-top: none;
+        border-bottom: 1px solid #f1f5f9;
+        color: #475569;
+        font-size: 13px;
+        background: #fff;
+        transition: background .13s ease;
+    }
+    .app-main__inner .table tbody tr:last-child td { border-bottom: none; }
+    .app-main__inner .table-striped tbody tr:nth-of-type(even) td { background: #fafcff; }
+    .app-main__inner .table-hover tbody tr:hover td { background: #f8fafc !important; }
+    .app-main__inner .table-striped tbody tr:nth-of-type(even):hover td { background: #f1f5f9 !important; }
+
+    /* S/N column */
+    .app-main__inner .table tbody td:first-child {
+        color: #94a3b8;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    /* ── ACTION BUTTONS (icon buttons) ── */
+    .app-main__inner .table .action-btns {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .app-main__inner .table .action-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 7px;
+        border: 1.5px solid;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #fff;
+        transition: background 0.15s, transform 0.12s;
+        padding: 0;
+        text-decoration: none;
+    }
+    .app-main__inner .table .action-btn:hover { transform: translateY(-1px); }
+    .app-main__inner .table .action-btn:active { transform: scale(0.95); }
+    .app-main__inner .table .action-btn svg { width: 14px; height: 14px; }
+
+    /* View */
+    .app-main__inner .table .action-btn.view { border-color: #bfdbfe; color: #3b82f6; }
+    .app-main__inner .table .action-btn.view:hover { background: #eff6ff; }
+    /* Edit */
+    .app-main__inner .table .action-btn.edit { border-color: #bbf7d0; color: #16a34a; }
+    .app-main__inner .table .action-btn.edit:hover { background: #f0fdf4; }
+    /* Delete */
+    .app-main__inner .table .action-btn.delete { border-color: #fecaca; color: #ef4444; }
+    .app-main__inner .table .action-btn.delete:hover { background: #fef2f2; }
+
+    /* Fallback — keep Bootstrap outline buttons looking polished */
+    .app-main__inner .table .btn {
+        min-height: 30px;
+        height: 30px;
+        padding: 0 10px;
+        font-size: 12px;
+        border-radius: 6px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin: 1px;
+        transition: background .15s, transform .12s;
+    }
+    .app-main__inner .table .btn:hover { transform: translateY(-1px); }
+    .app-main__inner .table .btn-outline-primary { border-color: #bfdbfe; color: #3b82f6; background: #fff; }
+    .app-main__inner .table .btn-outline-primary:hover { background: #eff6ff; }
+    .app-main__inner .table .btn-outline-danger { border-color: #fecaca; color: #ef4444; background: #fff; }
+    .app-main__inner .table .btn-outline-danger:hover { background: #fef2f2; }
+    .app-main__inner .table .btn-outline-warning { border-color: #fde68a; color: #d97706; background: #fff; }
+    .app-main__inner .table .btn-outline-warning:hover { background: #fffbeb; }
+
+    /* ── BADGES ── */
     .app-main__inner .badge {
         border-radius: 999px;
-        font-weight: 600;
-        padding: 4px 8px;
+        font-weight: 500;
+        padding: 3px 10px;
+        font-size: 11.5px;
+        letter-spacing: .02em;
     }
 
+    /* ── DataTables info & pagination row ── */
+    .app-main__inner .dataTables_wrapper > .row:last-child {
+        background: #fafcff;
+        border-top: 1px solid #e2e8f0;
+        padding: 10px 14px;
+        margin: 0;
+        align-items: center;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_info {
+        font-size: 12.5px;
+        color: #94a3b8;
+        padding: 0;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_paginate {
+        padding: 0;
+    }
+
+    /* ── PAGINATION (DataTables) ── */
+    .app-main__inner .dataTables_wrapper .dataTables_paginate .paginate_button {
+        width: 32px !important;
+        height: 32px !important;
+        border-radius: 7px !important;
+        border: 1px solid #e2e8f0 !important;
+        background: #fff !important;
+        color: #475569 !important;
+        font-size: 12.5px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 2px !important;
+        padding: 0 !important;
+        transition: background 0.15s, border-color 0.15s !important;
+        box-shadow: none !important;
+        text-decoration: none !important;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background: #f1f5f9 !important;
+        border-color: #cbd5e1 !important;
+        color: #0f172a !important;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .app-main__inner .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+        background: #22c55e !important;
+        border-color: #22c55e !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+    }
+    .app-main__inner .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+    .app-main__inner .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+        opacity: 0.4 !important;
+        cursor: default !important;
+    }
+
+    /* Bootstrap pagination */
+    .app-main__inner .pagination .page-link {
+        border-radius: 7px;
+        margin: 0 2px;
+        border-color: #e2e8f0;
+        color: #475569;
+        min-width: 32px;
+        text-align: center;
+        font-size: 12.5px;
+        transition: all .15s;
+    }
+    .app-main__inner .pagination .page-link:hover {
+        background: #f1f5f9;
+        border-color: #cbd5e1;
+        color: #0f172a;
+    }
+    .app-main__inner .pagination .active .page-link {
+        background: #22c55e;
+        border-color: #22c55e;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(34,197,94,.25);
+    }
+
+    /* ── ALERT ── */
     .app-main__inner .alert {
         border-radius: 10px;
         border: 0;
         box-shadow: 0 2px 10px rgba(26,45,77,.06);
+    }
+
+    .app-main__inner .table {
+        margin-bottom: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+        width: 100% !important;
+    }
+
+    /* ---- HEAD ---- */
+    .app-main__inner .table thead tr {
+        background: linear-gradient(135deg, #1a2d4d 0%, #243b5e 100%);
+    }
+
+    .app-main__inner .table thead th {
+        background: transparent;
+        color: #c8d8f0;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        border: none;
+        padding: 13px 14px;
+        white-space: nowrap;
+        position: relative;
+    }
+
+    /* Thin separator between header cells */
+    .app-main__inner .table thead th + th::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 25%;
+        height: 50%;
+        width: 1px;
+        background: rgba(255,255,255,.12);
+    }
+
+    /* ---- BODY ---- */
+    .app-main__inner .table tbody td {
+        padding: 11px 14px;
+        vertical-align: middle;
+        border-top: none;
+        border-bottom: 1px solid #eef1f6;
+        color: #334155;
+        font-size: 13px;
+        background: #fff;
+        transition: background .15s ease;
+    }
+
+    .app-main__inner .table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    /* Alternating row tint */
+    .app-main__inner .table-striped tbody tr:nth-of-type(even) td {
+        background: #f8faff;
+    }
+
+    /* Hover glow */
+    .app-main__inner .table-hover tbody tr:hover td {
+        background: #eef4ff !important;
+    }
+
+    /* Serial-number cell — muted & narrow */
+    .app-main__inner .table tbody td:first-child {
+        color: #94a3b8;
+        font-size: 12px;
+        font-weight: 600;
+        width: 48px;
+        text-align: center;
+    }
+
+    /* Action column — keep it tight */
+    .app-main__inner .table tbody td:last-child {
+        white-space: nowrap;
+    }
+
+    /* ---- ACTION BUTTONS in tables ---- */
+    .app-main__inner .table .btn {
+        min-height: 30px;
+        padding: 4px 10px;
+        font-size: 12px;
+        border-radius: 6px;
+        font-weight: 600;
+        line-height: 1.4;
+        margin: 1px;
+    }
+
+    .app-main__inner .table .btn-outline-primary {
+        border-color: #3f6ad8;
+        color: #3f6ad8;
+    }
+    .app-main__inner .table .btn-outline-primary:hover {
+        background: #3f6ad8;
+        color: #fff;
+    }
+
+    .app-main__inner .table .btn-outline-danger {
+        border-color: #e03c3c;
+        color: #e03c3c;
+    }
+    .app-main__inner .table .btn-outline-danger:hover {
+        background: #e03c3c;
+        color: #fff;
+    }
+
+    .app-main__inner .table .btn-outline-warning {
+        border-color: #f59e0b;
+        color: #b45309;
+    }
+    .app-main__inner .table .btn-outline-warning:hover {
+        background: #f59e0b;
+        color: #fff;
+    }
+
+    /* ---- BADGE / STATUS PILLS ---- */
+    .app-main__inner .badge {
+        border-radius: 999px;
+        font-weight: 600;
+        padding: 4px 10px;
+        font-size: 11px;
+        letter-spacing: .03em;
+    }
+
+    /* ---- DataTables toolbar ---- */
+    .app-main__inner .dataTables_wrapper {
+        padding: 0;
+    }
+
+    .app-main__inner .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 10px;
     }
 
     .app-main__inner .dataTables_wrapper .dataTables_filter input,
@@ -266,32 +880,82 @@
         border: 1px solid #dbe2ec;
         border-radius: 8px;
         min-height: 34px;
-        padding: 4px 8px;
+        padding: 4px 10px;
         background: #fff;
+        font-size: 13px;
+        box-shadow: none;
+        outline: none;
+    }
+
+    .app-main__inner .dataTables_wrapper .dataTables_filter input:focus,
+    .app-main__inner .dataTables_wrapper .dataTables_length select:focus {
+        border-color: #3f6ad8;
+        box-shadow: 0 0 0 .18rem rgba(63,106,216,.12);
+    }
+
+    .app-main__inner .dataTables_wrapper .dt-buttons {
+        margin-bottom: 10px;
     }
 
     .app-main__inner .dataTables_wrapper .dt-buttons .btn {
         background: #1a2d4d;
         border-color: #1a2d4d;
         color: #fff;
+        border-radius: 7px;
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px 12px;
+        min-height: 32px;
+        margin-right: 4px;
+        transition: background .15s;
     }
 
     .app-main__inner .dataTables_wrapper .dt-buttons .btn:hover {
-        background: #223b61;
-        border-color: #223b61;
+        background: #243b5e;
+        border-color: #243b5e;
     }
 
+    /* DataTables info & paginator row */
+    .app-main__inner .dataTables_wrapper .dataTables_info {
+        font-size: 12px;
+        color: #94a3b8;
+        padding-top: 10px;
+    }
+
+    .app-main__inner .dataTables_wrapper .dataTables_paginate {
+        padding-top: 8px;
+    }
+
+    /* ---- PAGINATION ---- */
     .app-main__inner .pagination .page-link {
         border-radius: 7px;
         margin: 0 2px;
         border-color: #dbe2ec;
         color: #334155;
+        min-width: 34px;
+        text-align: center;
+        font-size: 13px;
+        transition: all .15s;
+    }
+
+    .app-main__inner .pagination .page-link:hover {
+        background: #eef4ff;
+        border-color: #3f6ad8;
+        color: #3f6ad8;
     }
 
     .app-main__inner .pagination .active .page-link {
         background: #1a2d4d;
         border-color: #1a2d4d;
         color: #fff;
+        box-shadow: 0 2px 8px rgba(26,45,77,.25);
+    }
+
+    /* ---- ALERT ---- */
+    .app-main__inner .alert {
+        border-radius: 10px;
+        border: 0;
+        box-shadow: 0 2px 10px rgba(26,45,77,.06);
     }
 
     .delete-confirm-overlay {

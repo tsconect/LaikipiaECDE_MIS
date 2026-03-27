@@ -158,8 +158,7 @@
                                 <a href="{{ route('services.edit', $item->id) }}" class="btn btn-sm btn-info">
                                     <i class="fas fa-edit me-1"></i> Edit
                                 </a>
-                           
-                            </td> --}}
+</div></td> --}}
 
                         </tr>
                         @endforeach

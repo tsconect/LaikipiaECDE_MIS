@@ -76,7 +76,7 @@ class NextOfKinController extends Controller
      */
     public function show(NextOfKin $nextOfKin)
     {
-        return view('admin.next-of-kins.edit', compact('nextOfKin'));
+        return view('admin.next-of-kins.show', compact('nextOfKin'));
     }
 
     /**

@@ -65,7 +65,7 @@ class UserUnionController extends Controller
     public function show(UserUnion $userUnion)
     {
         $unions = Unions::latest()->get();
-        return view('admin.user-unions.edit', compact('userUnion', 'unions'));
+        return view('admin.user-unions.show', compact('userUnion'));
     }
 
     /**

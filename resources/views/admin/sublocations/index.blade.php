@@ -40,8 +40,7 @@
                                         href="{{ route('admin.sub-locations.edit', $item->id) }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                   
-                                </td>
+</div></td>
                             </tr>
                             @endforeach
 

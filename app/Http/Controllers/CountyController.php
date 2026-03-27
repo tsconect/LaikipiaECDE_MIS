@@ -35,7 +35,7 @@ class CountyController extends Controller
 
     public function show(County $county)
     {
-        return view('admin.counties.edit', compact('county'));
+        return view('admin.counties.show', compact('county'));
     }
 
     public function edit(County $county)

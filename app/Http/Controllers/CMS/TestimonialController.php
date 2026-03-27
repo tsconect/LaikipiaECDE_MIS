@@ -57,7 +57,7 @@ class TestimonialController extends Controller
 
     public function show(Testimonial $testimonial)
     {
-        return view('admin.cms.testimonials.edit', compact('testimonial'));
+        return view('admin.cms.testimonials.show', compact('testimonial'));
     }
 
     public function update(Request $request, Testimonial $testimonial)

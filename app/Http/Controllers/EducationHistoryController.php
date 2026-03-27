@@ -69,7 +69,7 @@ class EducationHistoryController extends Controller
      */
     public function show(EducationHistory $educationHistory)
     {
-        return view('admin.education-history.edit', compact('educationHistory'));
+        return view('admin.education-history.show', compact('educationHistory'));
     }
 
     /**

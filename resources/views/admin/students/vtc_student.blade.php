@@ -57,7 +57,7 @@
                                     href="{{ route('admin.teachers.delete', $item->id) }}">
                                     <i class="fa fa-trash"></i>
                                 </a>
-                            </td>
+</div></td>
                         </tr>
                         @endforeach
 

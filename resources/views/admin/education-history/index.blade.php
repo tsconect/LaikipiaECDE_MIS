@@ -65,7 +65,7 @@
                                             <button type="submit" class="btn btn-outline-danger" title="Delete Education Record">
                                                 <i class="fa fa-trash"></i>
                                         </a>
-                                    </td>
+</div></td>
                                 </tr>
                             @endforeach
 

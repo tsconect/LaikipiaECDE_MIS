@@ -118,9 +118,9 @@ class CoordinatorsController extends Controller
    }
 
 
-   function edit(Coordinators $id)
+   function edit($id)
    {
-    $coordinator = $id;
+    $coordinator = Coordinators::findOrFail($id);
     $sub_counties = Constituency::get();
     $wards = Ward::get();
     $ecde_schools = EcdeSchools::get();
