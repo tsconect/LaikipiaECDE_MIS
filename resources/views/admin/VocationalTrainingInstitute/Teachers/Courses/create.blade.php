@@ -10,7 +10,7 @@
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
                     data-class="closed-sidebar">
                     <span class="hamburger-box">
-                        <span class="hamburger-inner" style="background-color:#ffffff"></span>
+                        <span class="hamburger-inner"></span>
                     </span>
                 </button>
             </div>
@@ -372,8 +372,8 @@
 
     <div class="main-card mb-3 card col-12">
         <div class="card-body">
-            <h5 class="card-title">Vocational Course Details</h5>
-            <form class="" action="{{ route('admin.vtc_courses.store') }}" method="post">
+            <h5 class="card-title modern-form-card-header-title">Vocational Course Details</h5>
+            <form class=" modern-form-shell" action="{{ route('admin.vtc_courses.store') }}" method="post">
                 @csrf
                 <div class="form-row">
                     <div class="col-md-6">

@@ -17,10 +17,10 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('admin.permissions.store') }}">
+        <form class="modern-form-shell" method="POST" action="{{ route('admin.permissions.store') }}">
             @csrf
-            <div class="card p-2 shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header btn-success">
                     <h5 class="mb-0">Create Permission</h5>
                 </div>
                 <div class="card-body">

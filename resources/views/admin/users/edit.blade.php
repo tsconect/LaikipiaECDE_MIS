@@ -16,16 +16,16 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.users.update', $user->id) }}">
         @csrf
         @method('PUT')
 
 
         <!-- ================= PERSONAL INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Edit  User</h5>
             </div>
 

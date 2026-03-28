@@ -105,31 +105,16 @@
     </div>
 
     {{-- Top-Up History Table --}}
-    <div class="card border-0"
-        style="border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);">
-
-        <div class="card-header bg-white d-flex justify-content-between align-items-center"
-            style="border-bottom: 1px solid #f3f4f6; border-radius: 16px 16px 0 0; padding: 16px 24px;">
-            <div class="d-flex align-items-center gap-2">
-                <div
-                    style="background: linear-gradient(135deg, #059669, #047857); width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-size:16px;">
-                    <i class="bi bi-clock-history"></i>
-                </div>
-                <div>
-                    <h6 class="mb-0 fw-bold text-dark">Top-Up History</h6>
-                    <small class="text-muted">All SMS credit top-ups</small>
-                </div>
-            </div>
-            <span
-                style="background: linear-gradient(135deg, #d1fae515, #a7f3d015); color: #059669; border: 1px solid rgba(5,150,105,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
-                {{ count($history) }} Records
-            </span>
+    <div class="table-card">
+        <div class="table-banner">
+            <div class="table-banner-title"><span>TOP-UP</span> HISTORY</div>
+            <div class="showing-text text-white-50">{{ count($history) }} records</div>
         </div>
 
-        <div class="card-body p-0">
+        <div class="section-body section-body-flush">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0" id="sms-history-table">
-                    <thead style="background: linear-gradient(135deg, #f8f9fa 0%, #f3f4f6 100%);">
+                <table class="data-table" id="sms-history-table">
+                    <thead>
                         <tr>
                             <th class="px-4 py-3"
                                 style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#6b7280; border:none;">

@@ -16,19 +16,18 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.education-histories.store') }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.education-histories.store') }}">
         @csrf
 
 
         <!-- ================= PERSONAL INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Add New Academic Qualification</h5>
             </div>
-            @csrf
-            <div class="form-row p-3">
+            <div class="form-row modern-form-body">
                 
                 <div class="col-md-6">
                     <div class="position-relative form-group">
@@ -95,11 +94,12 @@
                 </div>
             </div>
 
-            <div class="text-right">
-                    <button class="btn btn-success" type="submit">
+            <div class="modern-form-footer px-3 pb-3">
+                    <button class="btn modern-form-submit" type="submit">
                         Submit
                     </button>
                 </div>
+        </div>
         </form>
     </div>
 </div>

@@ -1,25 +1,22 @@
-@extends('admin.app')
+@extends('admin.cms.layout')
 
-@section('content')
+@section('cms-title', 'Site Settings')
+@section('cms-description', 'Configure branding, homepage content, and platform defaults')
+
+@section('cms-content')
 <div class="container-fluid mt-4">
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <h2>Site Settings</h2>
-        </div>
-    </div>
-
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h5>Configuration</h5>
+                <div class="card-header btn-success">
+                    <h5 class="mb-0">Configuration</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.cms.settings.update') }}" method="POST" enctype="multipart/form-data">
+                    <form class="modern-form-shell" action="{{ route('admin.cms.settings.update') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -221,36 +218,12 @@
                             <label class="form-check-label" for="show_home_testimonials">Show Testimonials Section</label>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-end">
                             <button type="submit" class="btn btn-success">
                                 <i class="fa fa-save"></i> Save Settings
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <div class="card-header">
-                    <strong>Current Logo</strong>
-                </div>
-                <div class="card-body text-center">
-                    @if($settings['site_logo'] ?? null)
-                        <img src="{{ asset('storage/' . $settings['site_logo']) }}" style="max-width: 100%; max-height: 200px;">
-                    @else
-                        <p class="text-muted">No logo set</p>
-                    @endif
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <strong>Info</strong>
-                </div>
-                <div class="card-body">
-                    <p><small>These settings are used throughout your website for branding, contact information, and default configurations.</small></p>
                 </div>
             </div>
         </div>

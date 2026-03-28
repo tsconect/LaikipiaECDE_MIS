@@ -2,119 +2,6 @@
 
 @section('content')
 
-<style>
-/* ══ SCHOOL HEADER CARD ══ */
-.school-header-card {
-  background: #fff;
-  border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  padding: 20px 24px;
-  display: flex; align-items: center; gap: 16px;
-  margin-bottom: 16px;
-}
-.school-avatar {
-  width: 52px; height: 52px; border-radius: 12px;
-  background: linear-gradient(135deg, #0f1b2d, #1e3a5f);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.school-avatar svg { width: 26px; height: 26px; color: #7eb8f7; }
-.school-name { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
-.school-meta { display: flex; align-items: center; gap: 6px; }
-.school-meta-icon { width: 14px; height: 14px; color: #94a3b8; }
-.school-meta-text { font-size: 12.5px; color: #94a3b8; }
-.school-status { margin-left: auto; display: flex; align-items: center; gap: 6px; }
-.status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #fefce8; color: #92400e; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; }
-
-/* ══ TABS CARD ══ */
-.tabs-card { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.07); overflow: hidden; }
-
-.tab-nav { display: flex; border-bottom: 1px solid #e2e8f0; padding: 0 20px; overflow-x: auto; scrollbar-width: none; gap: 0; }
-.tab-nav::-webkit-scrollbar { display: none; }
-
-.tab-btn {
-  display: flex; align-items: center; gap: 7px;
-  padding: 14px 18px; font-size: 13px; font-weight: 500;
-  color: #94a3b8; background: none; border: none;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px; white-space: nowrap;
-  transition: color 0.15s, border-color 0.15s;
-}
-.tab-btn:hover { color: #475569; }
-.tab-btn.active { color: #f59e0b; font-weight: 600; border-bottom-color: #f59e0b; }
-.tab-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
-
-/* ══ TAB PANELS ══ */
-.tab-panel { display: none; padding: 24px; }
-.tab-panel.active { display: block; animation: fadeUp 0.4s ease both; }
-
-/* ══ SCHOOL STAT CARDS ══ */
-.school-stats-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; margin-bottom: 24px; }
-@media (max-width: 1100px) { .school-stats-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 700px) { .school-stats-grid { grid-template-columns: 1fr; } }
-
-.sc-card {
-  border-radius: 10px;
-  padding: 14px 16px;
-  border: 1px solid #e2e8f0;
-  position: relative; overflow: hidden;
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-.sc-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
-.sc-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-.sc-card.blue { background: #fafcff; } .sc-card.blue::before { background: #3b82f6; }
-.sc-card.green { background: #fafffe; } .sc-card.green::before { background: #22c55e; }
-.sc-card.amber { background: #fffdf5; } .sc-card.amber::before { background: #f59e0b; }
-.sc-card.red { background: #fffafa; } .sc-card.red::before { background: #ef4444; }
-.sc-card.violet { background: #fdfbff; } .sc-card.violet::before { background: #7c3aed; }
-
-.sc-icon { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
-.sc-icon svg { width: 15px; height: 15px; }
-.sc-card.blue .sc-icon { background: #eff6ff; color: #3b82f6; }
-.sc-card.green .sc-icon { background: #f0fdf4; color: #22c55e; }
-.sc-card.amber .sc-icon { background: #fffbeb; color: #f59e0b; }
-.sc-card.red .sc-icon { background: #fef2f2; color: #ef4444; }
-.sc-card.violet .sc-icon { background: #f5f3ff; color: #7c3aed; }
-
-.sc-label { font-size: 11px; color: #94a3b8; font-weight: 600; letter-spacing: 0.03em; margin-bottom: 4px; text-transform: uppercase; }
-.sc-value { font-size: 26px; font-weight: 700; color: #0f172a; line-height: 1; font-family: 'DM Mono', monospace; }
-.sc-sub { font-size: 11px; color: #94a3b8; margin-top: 4px; }
-
-/* ══ PROFILE INFO GRID ══ */
-.profile-divider { height: 1px; background: #e2e8f0; margin: 20px 0; }
-.profile-section-title { font-size: 11px; font-weight: 700; color: #94a3b8; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
-
-.info-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px 28px; }
-@media (max-width: 800px) { .info-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 500px) { .info-grid { grid-template-columns: 1fr; } }
-
-.info-item { display: flex; flex-direction: column; gap: 4px; }
-.info-item.full { grid-column: 1 / -1; }
-.info-label { font-size: 12px; font-weight: 700; color: #0f172a; }
-.info-value { font-size: 13.5px; color: #475569; }
-.info-value.empty { color: #94a3b8; font-style: italic; }
-
-/* ══ DATA TABLE ══ */
-.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th { text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
-.data-table td { padding: 12px 16px; color: #475569; border-bottom: 1px solid #f1f5f9; }
-.data-table tbody tr:hover td { background: #f8fafc; }
-
-/* ══ EMPTY STATE ══ */
-.empty-tab {
-  display: flex; flex-direction: column; align-items: center;
-  padding: 48px 20px; text-align: center;
-}
-.empty-tab svg { width: 40px; height: 40px; color: #94a3b8; opacity: 0.3; margin-bottom: 12px; }
-.empty-tab-title { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 4px; }
-.empty-tab-sub { font-size: 12.5px; color: #94a3b8; }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-</style>
-
 <div class="dash-content">
 
   <!-- School Header Card -->
@@ -285,7 +172,8 @@
     <!-- ══ LEARNERS TAB ══ -->
     <div class="tab-panel" id="tab-learners">
       @if($learners->count() > 0)
-        <table class="data-table">
+        <div class="table-card">
+            <table class="data-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -300,7 +188,7 @@
             @foreach($learners as $item)
             <tr>
               <td>{{ $item->id }}</td>
-              <td style="font-weight:600;">{{ $item->first_name }} {{ $item->last_name }}</td>
+              <td class="td-strong">{{ $item->first_name }} {{ $item->last_name }}</td>
               <td>{{ $item->nemis_number }}</td>
               <td>{{ ucfirst($item->gender) }}</td>
               <td>{{ $item->dob ? \Carbon\Carbon::parse($item->dob)->age . ' yrs' : '-' }}</td>
@@ -315,6 +203,7 @@
             @endforeach
           </tbody>
         </table>
+        </div>
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
@@ -327,7 +216,8 @@
     <!-- ══ TEACHERS TAB ══ -->
     <div class="tab-panel" id="tab-teachers">
       @if($teachers->count() > 0)
-        <table class="data-table">
+        <div class="table-card">
+            <table class="data-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -342,7 +232,7 @@
             @foreach ($teachers as $item)
             <tr>
               <td>{{ $item->id }}</td>
-              <td style="font-weight:600;">{{ $item->user->first_name ?? '' }} {{ $item->user->last_name ?? '' }}</td>
+              <td class="td-strong">{{ $item->user->first_name ?? '' }} {{ $item->user->last_name ?? '' }}</td>
               <td>{{ $item->user->phone_number ?? '-' }}</td>
               <td>{{ ucfirst($item->gender) }}</td>
               <td>{{ $item->dob ? \Carbon\Carbon::parse($item->dob)->age . ' yrs' : '-' }}</td>
@@ -357,6 +247,7 @@
             @endforeach
           </tbody>
         </table>
+        </div>
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
@@ -369,7 +260,8 @@
     <!-- ══ ATTENDANCE SHEET TAB ══ -->
     <div class="tab-panel" id="tab-attendance">
       @if($attendances->count() > 0)
-        <table class="data-table">
+        <div class="table-card">
+            <table class="data-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -384,11 +276,11 @@
             @foreach($attendances as $item)
             <tr>
               <td>{{ $item->id }}</td>
-              <td style="font-weight:600;">{{ $item->learner->first_name ?? '' }} {{ $item->learner->last_name ?? '' }}</td>
+              <td class="td-strong">{{ $item->learner->first_name ?? '' }} {{ $item->learner->last_name ?? '' }}</td>
               <td>{{ $item->date }}</td>
               <td>{{ $item->teacher->first_name ?? '-' }} {{ $item->teacher->last_name ?? '' }}</td>
               <td>
-                <span class="status-badge" style="background: {{ $item->status == 'present' ? '#f0fdf4' : '#fef2f2' }}; color: {{ $item->status == 'present' ? '#16a34a' : '#ef4444' }};">
+                <span class="status-badge {{ $item->status == 'present' ? 'present' : 'absent' }}">
                     {{ ucfirst($item->status) }}
                 </span>
               </td>
@@ -397,6 +289,7 @@
             @endforeach
           </tbody>
         </table>
+        </div>
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -409,7 +302,8 @@
     <!-- ══ ABSENTEEISM SHEET TAB ══ -->
     <div class="tab-panel" id="tab-absenteeism">
       @if($absents->count() > 0)
-        <table class="data-table">
+        <div class="table-card">
+            <table class="data-table">
           <thead>
             <tr>
               <th>ID</th>
@@ -423,7 +317,7 @@
             @foreach($absents as $item)
             <tr>
               <td>{{ $item->id }}</td>
-              <td style="font-weight:600;">{{ $item->learner->first_name ?? '' }} {{ $item->learner->last_name ?? '' }}</td>
+              <td class="td-strong">{{ $item->learner->first_name ?? '' }} {{ $item->learner->last_name ?? '' }}</td>
               <td>{{ $item->date }}</td>
               <td>{{ $item->reason ?? 'Not provided' }}</td>
               <td>{{ $item->teacher->first_name ?? '-' }} {{ $item->teacher->last_name ?? '' }}</td>
@@ -431,6 +325,7 @@
             @endforeach
           </tbody>
         </table>
+        </div>
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>

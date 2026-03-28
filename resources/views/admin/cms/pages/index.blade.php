@@ -2,23 +2,26 @@
 
 @section('cms-title', 'Pages Management')
 @section('cms-description', 'Create, edit, and manage your website pages')
-
-@section('cms-action')
-<a href="{{ route('admin.cms.pages.create') }}" class="btn btn-primary">
-    <i class="fas fa-plus"></i> Create New Page
-</a>
-@endsection
+@section('hide-cms-header', true)
 
 @section('cms-content')
-<div class="card">
-    <div class="card-header">
-        <i class="fas fa-file-alt"></i> All Pages
+<div class="table-card">
+    <div class="table-banner">
+        <div class="table-banner-title"><span>CMS</span> PAGES</div>
+        <div class="banner-actions">
+            <a href="{{ route('admin.cms.pages.create') }}">
+                <button class="btn-new">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                    Create New Page
+                </button>
+            </a>
+        </div>
     </div>
-    <div class="card-body">
+    <div class="section-body">
         @if($pages->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+                <table class="data-table">
+                    <thead>
                         <tr>
                             <th>Title</th>
                             <th>Slug</th>
@@ -73,7 +76,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="{{ route('admin.cms.pages.destroy', $page) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('admin.cms.pages.destroy', $page) }}" method="POST" class="inline-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -88,8 +91,8 @@
             </div>
 
             <!-- Pagination -->
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <div class="text-muted small">
+            <div class="table-footer mt-3">
+                <div class="showing-text">
                     Showing {{ $pages->firstItem() }} to {{ $pages->lastItem() }} of {{ $pages->total() }} pages
                 </div>
                 {{ $pages->links() }}

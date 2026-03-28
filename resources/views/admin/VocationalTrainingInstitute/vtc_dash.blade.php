@@ -320,7 +320,7 @@
         {{-- {{count( App\Models\VTC::find($vtc->id)->students )}} --}}
 
 
-        <div class="main-card mb-3 card">
+        <div class="main-card mb-3 card table-card">
             <div class="card-body">
                 <h5 class="card-title">VTC overview</h5>
                 <div class="mb-3">
@@ -336,8 +336,8 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab-eg12-0" role="tabpanel">
 
-                        <table style="width: 100%;" id="example"
-                            class="table table-hover table-striped table-bordered">
+                        <table id="example"
+                            class="data-table">
                             <thead>
                                 <tr>
                                     <th>ID </th>
@@ -384,8 +384,8 @@
                         </table>
                     </div>
                     <div class="tab-pane " id="tab-eg12-1" role="tabpanel">
-                        <table style="width: 100%;" id="example"
-                            class="table table-hover table-striped table-bordered">
+                        <table id="example"
+                            class="data-table">
                             <thead>
                                 <tr>
                                     <th>ID </th>
@@ -433,8 +433,8 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="tab-eg12-2" role="tabpanel">
-                        <table style="width: 100%;" id="example"
-                            class="table table-hover table-striped table-bordered">
+                        <table id="example"
+                            class="data-table">
                             <thead>
                                 <tr>
                                     <th>ID </th>
@@ -481,8 +481,8 @@
                     </div>
 
                     <div class="tab-pane" id="tab-eg12-3" role="tabpanel">
-                        <table style="width: 100%;" id="example"
-                            class="table table-hover table-striped table-bordered">
+                        <table id="example"
+                            class="data-table">
                             <thead>
                                 <tr>
                                     <th>ID </th>
@@ -529,8 +529,8 @@
                     </div>
 
                     <div class="tab-pane" id="tab-eg12-4" role="tabpanel">
-                        <table style="width: 100%;" id="example"
-                            class="table table-hover table-striped table-bordered">
+                        <table id="example"
+                            class="data-table">
                             <thead>
                                 <tr>
                                     <th>ID </th>

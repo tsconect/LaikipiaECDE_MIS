@@ -13,8 +13,8 @@
 
 <div class="main-card mb-3 card col-12">
     <div class="card-body">
-        <h5 class="card-title">Edit {{ $union->name }} union Details</h5>
-        <form class="" action="{{ route('admin.unions.update', $union->id) }}" method="post">
+        <h5 class="card-title modern-form-card-header-title">Edit {{ $union->name }} union Details</h5>
+        <form class=" modern-form-shell" action="{{ route('admin.unions.update', $union->id) }}" method="post">
             @csrf
             @method('PUT')
             <div class="form-row">

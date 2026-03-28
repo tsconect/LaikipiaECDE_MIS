@@ -1,10 +1,12 @@
-@extends('admin.app')
+@extends('admin.cms.layout')
 
-@section('content')
+@section('cms-title', 'Edit Testimonial')
+@section('cms-description', 'Update testimonial details and publish status')
+
+@section('cms-content')
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2 class="mb-4">Edit Testimonial: {{ $testimonial->name }}</h2>
+        <div class="col-12">
 
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -17,8 +19,11 @@
             @endif
 
             <div class="card">
+                <div class="card-header btn-success">
+                    <i class="fas fa-comment-dots"></i> Testimonial Details
+                </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.cms.testimonials.update', $testimonial) }}" method="POST" enctype="multipart/form-data">
+                    <form class="modern-form-shell" action="{{ route('admin.cms.testimonials.update', $testimonial) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -72,7 +77,7 @@
                             <small class="text-muted">Only published testimonials appear on the public website.</small>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-end gap-2 flex-wrap">
                             <button type="submit" class="btn btn-success">Update Testimonial</button>
                             <a href="{{ route('admin.cms.testimonials.index') }}" class="btn btn-secondary">Cancel</a>
                         </div>

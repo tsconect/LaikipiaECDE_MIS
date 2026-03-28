@@ -11,7 +11,7 @@
     @include('flash-message')
 
     <div class="card-body">
-        <form id="teachers" class="" action="{{ route('admin.other_vtc_staff.store') }}" method="post" enctype="multipart/form-data">
+        <form id="teachers" class=" modern-form-shell" action="{{ route('admin.other_vtc_staff.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div id="smartwizard">
                 <ul class="forms-wizard">
@@ -281,7 +281,7 @@
                             <div class="results-subtitle mt-4">Finished!</div>
                             {{-- <div class="results-title">You arrived at the last form wizard step!</div> --}}
                             <div class="mt-3 mb-3"></div>
-                            <div class="text-center">
+                            <div class="d-flex justify-content-end">
                                 <button type="submit" form="teachers" value="submit"
                                     class="btn-shadow btn-wide btn btn-success btn-lg">Register new Teacher</button>
                             </div>
@@ -294,12 +294,12 @@
         </form>
     </div>
     <div class="divider"></div>
-    <div class="clearfix">
-        <button type="button" id="reset-btn" class="btn-shadow float-left btn btn-link">Reset</button>
+    <div class="d-flex justify-content-end align-items-center gap-2 flex-wrap">
+        <button type="button" id="reset-btn" class="btn-shadow btn btn-link">Reset</button>
         <button type="button" id="next-btn"
-            class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">Next</button>
+            class="btn-shadow btn-wide btn-pill btn-hover-shine btn btn-primary">Next</button>
         <button type="button" id="prev-btn"
-            class="btn-shadow float-right btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button>
+            class="btn-shadow btn-wide btn-pill mr-3 btn btn-outline-secondary">Previous</button>
     </div>
 
     </div>

@@ -2,118 +2,6 @@
 
 @section('content')
 
-<style>
-/* ══ STAT CARDS ══ */
-.stats-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin-bottom: 22px; }
-.stats-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-bottom: 22px; }
-.stats-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-bottom: 22px; }
-
-@media (max-width: 1200px) {
-  .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 800px) {
-  .stats-grid-4, .stats-grid-3, .stats-grid-2 { grid-template-columns: 1fr; }
-}
-
-.stat-card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 18px 20px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
-  position: relative;
-  overflow: hidden;
-  transition: box-shadow 0.2s, transform 0.2s;
-  animation: fadeUp 0.4s ease both;
-}
-.stat-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
-
-.stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; }
-.stat-card.c-blue::after { background: #3b82f6; }
-.stat-card.c-green::after { background: #22c55e; }
-.stat-card.c-pink::after { background: #ec4899; }
-.stat-card.c-amber::after { background: #f59e0b; }
-.stat-card.c-red::after { background: #ef4444; }
-.stat-card.c-teal::after { background: #14b8a6; }
-.stat-card.c-violet::after { background: #7c3aed; }
-.stat-card.c-indigo::after { background: #4f46e5; }
-.stat-card.c-sky::after { background: #0284c7; }
-
-.stat-label { font-size: 11.5px; color: #94a3b8; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 10px; text-transform: uppercase; }
-.stat-value { font-size: 32px; font-weight: 700; color: #0f172a; line-height: 1; margin-bottom: 8px; font-family: 'DM Mono', monospace; }
-.stat-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 20px; }
-.stat-badge.up { background: #f0fdf4; color: #16a34a; }
-.stat-badge.down { background: #fef2f2; color: #dc2626; }
-
-.stat-icon {
-  position: absolute; top: 16px; right: 16px;
-  width: 36px; height: 36px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-}
-.stat-icon svg { width: 20px; height: 20px; }
-.stat-card.c-blue .stat-icon { background: #eff6ff; color: #3b82f6; }
-.stat-card.c-green .stat-icon { background: #f0fdf4; color: #22c55e; }
-.stat-card.c-pink .stat-icon { background: #fdf2f8; color: #ec4899; }
-.stat-card.c-amber .stat-icon { background: #fffbeb; color: #f59e0b; }
-.stat-card.c-red .stat-icon { background: #fef2f2; color: #ef4444; }
-.stat-card.c-indigo .stat-icon { background: #eef2ff; color: #4f46e5; }
-.stat-card.c-violet .stat-icon { background: #f5f3ff; color: #7c3aed; }
-.stat-card.c-sky .stat-icon { background: #f0f9ff; color: #0284c7; }
-
-/* ══ SPLIT STAT ══ */
-.split-stat { display: flex; gap: 0; margin-top: 6px; }
-.split-half { flex: 1; }
-.split-half + .split-half { border-left: 1px solid #e2e8f0; padding-left: 14px; margin-left: 2px; }
-.split-label { font-size: 10.5px; color: #94a3b8; font-weight: 500; letter-spacing: 0.04em; margin-bottom: 3px; }
-.split-value { font-size: 22px; font-weight: 700; color: #0f172a; font-family: 'DM Mono', monospace; line-height: 1; }
-.split-value.f { color: #ec4899; }
-.split-value.m { color: #3b82f6; }
-.split-value.pwd { color: #7c3aed; }
-
-/* ══ RATIO / ATTENDANCE ══ */
-.ratio-display { display: flex; align-items: baseline; gap: 6px; margin: 6px 0 8px; }
-.ratio-main { font-size: 28px; font-weight: 700; color: #0f172a; font-family: 'DM Mono', monospace; }
-.ratio-sub { font-size: 13px; color: #94a3b8; }
-.ratio-bar { height: 6px; background: #e2e8f0; border-radius: 6px; overflow: hidden; margin-top: 4px; }
-.ratio-fill { height: 100%; background: #22c55e; border-radius: 6px; }
-
-.attend-row { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-.attend-big { font-size: 28px; font-weight: 700; color: #0f172a; font-family: 'DM Mono', monospace; }
-.attend-pct { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
-.attend-pct.present { background: #f0fdf4; color: #16a34a; }
-.attend-pct.absent { background: #fef2f2; color: #dc2626; }
-.attend-bar { height: 5px; background: #e2e8f0; border-radius: 6px; overflow: hidden; margin-top: 10px; }
-.attend-fill { height: 100%; border-radius: 6px; }
-
-/* ══ INFRA ══ */
-.infra-list { display: flex; flex-direction: column; gap: 7px; margin-top: 6px; }
-.infra-row { display: flex; align-items: center; gap: 8px; font-size: 12px; }
-.infra-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.infra-name { flex: 1; color: #475569; }
-.infra-count { font-weight: 700; color: #0f172a; font-family: 'DM Mono', monospace; font-size: 13px; }
-
-/* ══ PANELS ══ */
-.section-card { background: #fff; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 22px; }
-.section-header { padding: 18px 22px 14px; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: space-between; }
-.section-title { font-size: 14px; font-weight: 700; color: #0f172a; display: flex; align-items: center; gap: 8px; }
-.section-title::before { content: ''; width: 3px; height: 16px; background: #22c55e; border-radius: 3px; display: block; }
-.section-body { padding: 20px 22px; }
-.section-body-flush { padding: 0; }
-
-.panel-badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: #eff6ff; color: #3b82f6; }
-
-/* ══ TABLES ══ */
-.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.data-table th { text-align: left; padding: 12px 16px; font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; background: #f8fafc; }
-.data-table td { padding: 12px 16px; color: #475569; border-bottom: 1px solid #f1f5f9; }
-.data-table tbody tr:hover td { background: #f8fafc; }
-
-.empty-state { text-align: center; padding: 32px 20px; color: #94a3b8; font-size: 13px; }
-.empty-state svg { width: 36px; height: 36px; opacity: 0.3; margin: 0 auto 10px; display: block; }
-
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-</style>
-
 @if(Auth::user()->role == 'Admin')
 
 <div class="dash-content">
@@ -125,7 +13,7 @@
       <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg></div>
       <div class="stat-label">Total ECDE Centres Registered</div>
       <div class="stat-value">{{ number_format($schoolsCount ?? 0) }}</div>
-      <span class="stat-badge up" style="background:#eff6ff;color:#1d4ed8;">— centres</span>
+      <span class="stat-badge up centres">— centres</span>
     </div>
 
     <!-- Total Learners Enrolled -->
@@ -133,7 +21,7 @@
       <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/></svg></div>
       <div class="stat-label">Total ECDE Learners Enrolled</div>
       <div class="stat-value">{{ number_format($studentsCount ?? 0) }}</div>
-      <span class="stat-badge up" style="background:#f0fdf4;color:#16a34a;">— enrolled</span>
+      <span class="stat-badge up enrolled">— enrolled</span>
     </div>
 
     <!-- Learner-Teacher Ratio -->
@@ -147,7 +35,7 @@
         <span class="ratio-main">{{ $ratio }}:1</span>
         <span class="ratio-sub">per teacher</span>
       </div>
-      <div class="ratio-bar"><div class="ratio-fill" style="width:{{ min(100, $ratio * 2) }}%"></div></div>
+      <div class="ratio-bar"><div class="ratio-fill js-width" data-width="{{ min(100, $ratio * 2) }}"></div></div>
     </div>
 
     <!-- Absenteeism % -->
@@ -162,7 +50,7 @@
         <span class="attend-big">{{ $absent_pct }}%</span>
         <span class="attend-pct absent">{{ $absent_today ?? 0 }} absent</span>
       </div>
-      <div class="attend-bar"><div class="attend-fill" style="width:{{ $absent_pct }}%; background:#ef4444;"></div></div>
+      <div class="attend-bar"><div class="attend-fill absent-fill js-width" data-width="{{ $absent_pct }}"></div></div>
     </div>
   </div>
 
@@ -230,7 +118,7 @@
         @endphp
         <span class="attend-pct present">{{ $present_pct }}% present</span>
       </div>
-      <div class="attend-bar"><div class="attend-fill" style="width:{{ $present_pct }}%; background:#22c55e;"></div></div>
+      <div class="attend-bar"><div class="attend-fill present-fill js-width" data-width="{{ $present_pct }}"></div></div>
     </div>
 
     <!-- Infrastructure Distribution -->
@@ -238,54 +126,54 @@
       <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg></div>
       <div class="stat-label">Infrastructure Distribution</div>
       <div class="infra-list">
-        <div class="infra-row"><div class="infra-dot" style="background:#22c55e"></div><span class="infra-name">Permanent</span><span class="infra-count">{{ number_format($infra_permanent ?? 0) }}</span></div>
-        <div class="infra-row"><div class="infra-dot" style="background:#f59e0b"></div><span class="infra-name">Semi-Permanent</span><span class="infra-count">{{ number_format($infra_semi ?? 0) }}</span></div>
-        <div class="infra-row"><div class="infra-dot" style="background:#ef4444"></div><span class="infra-name">Temporary</span><span class="infra-count">{{ number_format($infra_temp ?? 0) }}</span></div>
-        <div class="infra-row"><div class="infra-dot" style="background:#94a3b8"></div><span class="infra-name">Other / Open Air</span><span class="infra-count">{{ number_format($infra_other ?? 0) }}</span></div>
+        <div class="infra-row"><div class="infra-dot permanent"></div><span class="infra-name">Permanent</span><span class="infra-count">{{ number_format($infra_permanent ?? 0) }}</span></div>
+        <div class="infra-row"><div class="infra-dot semi-permanent"></div><span class="infra-name">Semi-Permanent</span><span class="infra-count">{{ number_format($infra_semi ?? 0) }}</span></div>
+        <div class="infra-row"><div class="infra-dot temporary"></div><span class="infra-name">Temporary</span><span class="infra-count">{{ number_format($infra_temp ?? 0) }}</span></div>
+        <div class="infra-row"><div class="infra-dot other"></div><span class="infra-name">Other / Open Air</span><span class="infra-count">{{ number_format($infra_other ?? 0) }}</span></div>
       </div>
     </div>
   </div>
 
   <!-- ── Registration Progress Chart ── -->
-  <div class="section-card">
+  <div class="section-card table-card">
     <div class="section-header">
       <div class="section-title">Learner-Teacher Registration Progress</div>
     </div>
     <div class="section-body">
       <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div>Teachers Registered</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#f472b6"></div>Learners Registered</div>
+        <div class="legend-item"><div class="legend-dot teachers"></div>Teachers Registered</div>
+        <div class="legend-item"><div class="legend-dot learners"></div>Learners Registered</div>
       </div>
-      <div class="chart-wrap" style="height: 240px;">
+      <div class="chart-wrap chart-wrap-240">
         <canvas id="registrationChart"></canvas>
       </div>
     </div>
   </div>
 
   <!-- ── Learner Age Distribution Chart ── -->
-  <div class="section-card">
+  <div class="section-card table-card">
     <div class="section-header">
       <div class="section-title">Learner Age Distribution</div>
     </div>
     <div class="section-body">
       <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#60a5fa"></div>Male</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#f472b6"></div>Female</div>
+        <div class="legend-item"><div class="legend-dot male"></div>Male</div>
+        <div class="legend-item"><div class="legend-dot female"></div>Female</div>
       </div>
-      <div class="chart-wrap" style="height: 240px;">
+      <div class="chart-wrap chart-wrap-240">
         <canvas id="ageDistChart"></canvas>
       </div>
     </div>
   </div>
 
   <!-- ── Retiring Teachers Table ── -->
-  <div class="section-card">
+  <div class="section-card table-card">
     <div class="section-header">
       <div class="section-title">
-        <span class="panel-title-dot" style="background:linear-gradient(180deg,#f59e0b,#fbbf24)"></span>
+        <span class="panel-title-dot retiring"></span>
         Retiring Teachers
       </div>
-      <span class="panel-badge" style="background:#fffbeb;color:#b45309">In 5 Years</span>
+      <span class="panel-badge retiring">In 5 Years</span>
     </div>
     <div class="section-body-flush">
       <table class="data-table">
@@ -294,23 +182,23 @@
             <th>Name</th>
             <th>School</th>
             <th>Age</th>
-            <th style="text-align:right">Retires In</th>
+            <th class="ta-right">Retires In</th>
           </tr>
         </thead>
         <tbody>
           @forelse($retiring_teachers as $teacher)
           <tr>
-            <td style="font-weight:600;">{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->last_name ?? '' }}</td>
+            <td class="td-strong">{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->last_name ?? '' }}</td>
             <td>{{ $teacher->school->school_name ?? '-' }}</td>
             <td>{{ \Carbon\Carbon::parse($teacher->dob)->age }} yrs</td>
-            <td style="text-align:right">{{ $teacher->retirement_date->diffForHumans() }}</td>
+            <td class="ta-right">{{ $teacher->retirement_date->diffForHumans() }}</td>
           </tr>
           @empty
           <tr>
             <td colspan="4">
               <div class="empty-state">
                 <div class="empty-state-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <svg class="retiring-empty-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
                   </svg>
                 </div>
@@ -328,11 +216,11 @@
   <!-- ── Distribution Tables ── -->
   <div class="stats-grid-2">
     <!-- Teacher Age Distribution -->
-    <div class="section-card">
+    <div class="section-card table-card">
       <div class="section-header">
         <div class="section-title">Teacher Age Distribution</div>
       </div>
-      <div class="section-body" style="padding:0">
+      <div class="section-body section-body-flush">
         <table class="data-table">
           <thead><tr><th>Age Group</th><th>Count</th></tr></thead>
           <tbody>
@@ -345,11 +233,11 @@
     </div>
 
     <!-- Ethnic Distribution -->
-    <div class="section-card">
+    <div class="section-card table-card">
       <div class="section-header">
         <div class="section-title">Teachers Ethnic Distribution</div>
       </div>
-      <div class="section-body" style="padding:0">
+      <div class="section-body section-body-flush">
         <table class="data-table">
           <thead><tr><th>Ethnicity</th><th>Count</th></tr></thead>
           <tbody>
@@ -370,6 +258,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.js-width').forEach(function (el) {
+      const raw = Number(el.dataset.width || 0);
+      const width = Math.max(0, Math.min(100, raw));
+      el.style.width = width + '%';
+    });
+
     setTimeout(function () {
       // Registration Progress Chart
       const regCtx = document.getElementById('registrationChart');
@@ -434,39 +328,28 @@
 
 @else
 
-<style>
-  .welcome-msg { font-size: 22px; font-weight: 700; color: #1e2d40; margin-bottom: 22px; }
-  .welcome-msg span { color: #22c55e; }
-  .quick-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  @media (max-width: 860px) { .quick-cards { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px) { .quick-cards { grid-template-columns: 1fr; } }
-  .quick-card { background: #fff; border-radius: 16px; border: 1px solid #e8edf4; padding: 24px; text-align: center; text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
-  .quick-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.1); text-decoration: none; }
-  .quick-card-icon { width: 54px; height: 54px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; }
-</style>
-
 <div class="welcome-msg">Welcome back, <span>{{ auth()->user()->first_name }}</span> 👋</div>
 
 <div class="quick-cards">
   <a href="#" class="quick-card">
-    <div class="quick-card-icon" style="background:#eff6ff;"><i class="bi bi-person" style="color:#3b82f6"></i></div>
-    <h6 style="font-weight:700;">My Account</h6>
-    <p style="font-size:12px; color:#64748b;">Manage your info.</p>
+    <div class="quick-card-icon account"><i class="bi bi-person icon-account"></i></div>
+    <h6 class="quick-card-title">My Account</h6>
+    <p class="quick-card-desc">Manage your info.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon" style="background:#f0fdf4;"><i class="bi bi-lock" style="color:#22c55e"></i></div>
-    <h6 style="font-weight:700;">Password</h6>
-    <p style="font-size:12px; color:#64748b;">Change password.</p>
+    <div class="quick-card-icon password"><i class="bi bi-lock icon-password"></i></div>
+    <h6 class="quick-card-title">Password</h6>
+    <p class="quick-card-desc">Change password.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon" style="background:#fdf4ff;"><i class="bi bi-file-earmark-text" style="color:#a855f7"></i></div>
-    <h6 style="font-weight:700;">My Details</h6>
-    <p style="font-size:12px; color:#64748b;">Personal profile.</p>
+    <div class="quick-card-icon details"><i class="bi bi-file-earmark-text icon-details"></i></div>
+    <h6 class="quick-card-title">My Details</h6>
+    <p class="quick-card-desc">Personal profile.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon" style="background:#fff1f2;"><i class="bi bi-box-arrow-right" style="color:#ef4444"></i></div>
-    <h6 style="font-weight:700;">Logout</h6>
-    <p style="font-size:12px; color:#64748b;">Sign out.</p>
+    <div class="quick-card-icon logout"><i class="bi bi-box-arrow-right icon-logout"></i></div>
+    <h6 class="quick-card-title">Logout</h6>
+    <p class="quick-card-desc">Sign out.</p>
   </a>
 </div>
 

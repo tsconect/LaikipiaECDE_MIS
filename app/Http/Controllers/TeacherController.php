@@ -34,9 +34,26 @@ use League\Csv\Writer;
 class TeacherController extends Controller
 {
    //
-   public function index()
+   public function index(Request $request)
    {
-       $data = Teacher::latest()->get();
+       $perPage = $request->get('per_page', 50);
+       $search = $request->get('search');
+
+       $query = Teacher::with('user');
+
+       if ($search) {
+           $query->whereHas('user', function($q) use ($search) {
+               $q->where('first_name', 'like', '%' . $search . '%')
+                 ->orWhere('middle_name', 'like', '%' . $search . '%')
+                 ->orWhere('last_name', 'like', '%' . $search . '%')
+                 ->orWhere('email', 'like', '%' . $search . '%')
+                 ->orWhere('phone_number', 'like', '%' . $search . '%');
+           })
+           ->orWhere('id_number', 'like', '%' . $search . '%')
+           ->orWhere('gender', 'like', '%' . $search . '%');
+       }
+
+       $data = $query->latest()->paginate($perPage);
        return view('admin.teachers.index', compact('data'));
    }
 
@@ -292,8 +309,8 @@ class TeacherController extends Controller
      # code...
      $_ecde_teachers = Teacher::all();
 
-   // Create a new CSV writer instance
-    $csv = Writer::createFromString('');
+    // Create a new CSV writer instance
+     $csv = Writer::createFromString('');
 
     // Add the CSV headers
     $csv->insertOne([
@@ -344,8 +361,12 @@ class TeacherController extends Controller
         ]);
     }
 
-    // Output the CSV to the browser
-    $csv->output(Carbon::now().'_ecde_teachers.csv');
+    $filename = Carbon::now()->format('Ymd_His') . '_ecde_teachers.csv';
+
+    return response($csv->toString(), 200, [
+        'Content-Type' => 'text/csv; charset=UTF-8',
+        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+    ]);
    }
 
    public function downloadCert()

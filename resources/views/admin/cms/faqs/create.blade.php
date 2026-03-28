@@ -1,10 +1,12 @@
-@extends('admin.app')
+@extends('admin.cms.layout')
 
-@section('content')
+@section('cms-title', 'Create New FAQ')
+@section('cms-description', 'Add a frequently asked question for the public website')
+
+@section('cms-content')
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2 class="mb-4">Create New FAQ</h2>
+        <div class="col-12">
 
             @if($errors->any())
                 <div class="alert alert-danger">
@@ -17,8 +19,11 @@
             @endif
 
             <div class="card">
+                <div class="card-header btn-success">
+                    <i class="fas fa-question-circle"></i> FAQ Details
+                </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.cms.faqs.store') }}" method="POST">
+                    <form class="modern-form-shell" action="{{ route('admin.cms.faqs.store') }}" method="POST">
                         @csrf
 
                         <div class="form-group">
@@ -51,7 +56,7 @@
                             <small class="text-muted">Only published FAQs appear on the public website.</small>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-end gap-2 flex-wrap">
                             <button type="submit" class="btn btn-success">Create FAQ</button>
                             <a href="{{ route('admin.cms.faqs.index') }}" class="btn btn-secondary">Cancel</a>
                         </div>

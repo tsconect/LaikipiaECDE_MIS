@@ -13,8 +13,8 @@
 
 <div class="main-card mb-3 card col-12">
     <div class="card-body">
-        <h5 class="card-title">Edit {{ $subLocation->name }} subLocation Details</h5>
-        <form class="" action="{{ route('admin.sub-locations.update', $subLocation->id) }}" method="post">
+        <h5 class="card-title modern-form-card-header-title">Edit {{ $subLocation->name }} subLocation Details</h5>
+        <form class=" modern-form-shell" action="{{ route('admin.sub-locations.update', $subLocation->id) }}" method="post">
             @csrf
             @method('PUT')
             <div class="form-row">

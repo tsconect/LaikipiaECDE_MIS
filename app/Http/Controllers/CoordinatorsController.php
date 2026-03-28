@@ -23,8 +23,8 @@ class CoordinatorsController extends Controller
     //
    public function index()
    {
-       $data = Coordinators::latest()->get();
-       return view('admin.coordinators.index', compact('data'));
+       $coordinators = Coordinators::latest()->paginate(15);
+       return view('admin.coordinators.index', compact('coordinators'));
    }
    function create(){
     $sub_counties =Constituency::get();

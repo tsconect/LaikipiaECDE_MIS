@@ -9,7 +9,7 @@
                 <div>
                     <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
                         <span class="hamburger-box">
-                            <span class="hamburger-inner" style="background-color:#ffffff"></span>
+                            <span class="hamburger-inner"></span>
                         </span>
                     </button>
                 </div>
@@ -355,12 +355,12 @@
         <div class="card-body">
 
             @if ($dpt)
-                <h5 class="card-title">Create Vocational Training Course  <small>within
+                <h5 class="card-title modern-form-card-header-title">Create Vocational Training Course  <small>within
                         {{ App\Models\VTCDepartments::find($dpt)->department_name }}</small></h5>
             @else
-                <h5 class="card-title">Vocational Course Details</h5>
+                <h5 class="card-title modern-form-card-header-title">Vocational Course Details</h5>
             @endif
-            <form class="" action="{{ route('admin.vtc_courses.store') }}" method="post">
+            <form class=" modern-form-shell" action="{{ route('admin.vtc_courses.store') }}" method="post">
                 @csrf
                 <div class="form-row">
 

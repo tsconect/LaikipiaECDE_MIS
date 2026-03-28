@@ -9,8 +9,8 @@
 
 <div class="main-card mb-3 card col-12">
     <div class="card-body">
-        <h5 class="card-title">Edit County</h5>
-        <form action="{{ route('admin.counties.update', $county->id) }}" method="post">
+        <h5 class="card-title modern-form-card-header-title">Edit County</h5>
+        <form class="modern-form-shell" action="{{ route('admin.counties.update', $county->id) }}" method="post">
             @csrf
             @method('PUT')
             <div class="form-row">

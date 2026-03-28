@@ -12,7 +12,7 @@
         <h5>Edit Union Membership</h5>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.user-unions.update', $userUnion->id) }}">
+        <form class="modern-form-shell" method="POST" action="{{ route('admin.user-unions.update', $userUnion->id) }}">
             @csrf
             @method('PUT')
 

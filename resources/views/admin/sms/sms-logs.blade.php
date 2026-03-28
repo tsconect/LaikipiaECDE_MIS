@@ -6,16 +6,20 @@
 
 @section('content')
     @include('flash-message')
-      <div class="card-header btn-success">
-            <h5>SMS LOGS</h5>
+<div class="sms-logs-page">
+    <div class="table-card sms-logs-hero mb-4">
+        <div class="table-banner">
+            <div class="table-banner-title"><span>SMS</span> LOGS</div>
+            <div class="sms-logs-hero-meta">Delivery performance and communication history</div>
         </div>
-<div class="card ">
-<div class="container-fluid mt-4">
+    </div>
+
+<div class="container-fluid px-0 mt-3">
     <!-- Stats Bar -->
-    <div class="row g-4 mb-5">
+    <div class="row g-4 mb-5 sms-stats-row">
         {{-- Total SMS --}}
         <div class="col-xl-3 col-md-6">
-            <div class="modern-card kpi-card" style="background: linear-gradient(135deg, #0a304a 0%, #0e4a70 100%);">
+            <div class="modern-card kpi-card sms-kpi-card sms-kpi-total">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="icon-wrapper">
@@ -36,7 +40,7 @@
 
         {{-- Sent --}}
         <div class="col-xl-3 col-md-6">
-            <div class="modern-card kpi-card" style="background: linear-gradient(135deg, #176e54 0%, #0d5240 100%);">
+            <div class="modern-card kpi-card sms-kpi-card sms-kpi-delivered">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="icon-wrapper">
@@ -57,7 +61,7 @@
 
         {{-- Failed --}}
         <div class="col-xl-3 col-md-6">
-            <div class="modern-card kpi-card" style="background: linear-gradient(135deg, #072e48 0%, #1f5b82 100%);">
+            <div class="modern-card kpi-card sms-kpi-card sms-kpi-failed">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="icon-wrapper">
@@ -78,7 +82,7 @@
 
         {{-- Today --}}
         <div class="col-xl-3 col-md-6">
-            <div class="modern-card kpi-card" style="background: linear-gradient(135deg, #bb3534 0%, #b12e2e 100%);">
+            <div class="modern-card kpi-card sms-kpi-card sms-kpi-daily">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div class="icon-wrapper">
@@ -97,37 +101,29 @@
             </div>
         </div>
     </div>
-    <div class="card shadow-sm border-0">
-        <div class="card-header bg-white py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 class="mb-0 text-primary fw-bold">SMS Communication Logs</h5>
-                </div>
-
-                <div class="d-flex align-items-center gap-2">
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#sendSmsModal">
-                        <i class="bi bi-send me-1"></i> Send Single SMS
-                    </button>
-                   
-                </div>
+    <div class="table-card">
+        <div class="table-banner">
+            <div class="table-banner-title"><span>SMS</span> COMMUNICATION LOGS</div>
+            <div class="banner-actions">
+                <button type="button" class="btn-generate" data-bs-toggle="modal" data-bs-target="#sendSmsModal">
+                    <i class="bi bi-send me-1"></i> Send Single SMS
+                </button>
             </div>
-
-           
         </div>
 
-        <div class="card-body">
+        <div class="section-body section-body-flush">
             <div class="table-responsive">
-                <table id="example" class="table table-striped table-hover align-middle">
-                    <thead class="table-light">
+                <table id="example" class="data-table">
+                    <thead>
                         <tr>
                             <th width="50">S/N</th>
                             {{-- <th>Name</th> --}}
                             <th>Phone Number</th>
                             <th>Message</th>
                             <th>Message Length</th>
-                               <td>Cost</td>
-                             <td>Sent On</td>
-                             <th>Status</th>
+                                                        <th>Cost</th>
+                                                        <th>Sent On</th>
+                                                        <th>Status</th>
                           
                             {{-- <th width="150">Actions</th> --}}
                         </tr>
@@ -167,6 +163,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <!-- Send SMS Modal -->

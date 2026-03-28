@@ -16,15 +16,15 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.coordinators.store') }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.coordinators.store') }}">
         @csrf
 
 
         <!-- ================= PERSONAL INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Register New Cordinator</h5>
             </div>
 
@@ -384,13 +384,15 @@
     });
 </script>
 
- <script>
-                                // Pass PHP variables to JavaScript
-    const data = {
-        counties: @json($counties),
-        constituencies: @json($sub_counties),
-        wards: @json($wards),
+<input type="hidden" id="counties-data" value='{{ json_encode($counties) }}'>
+<input type="hidden" id="constituencies-data" value='{{ json_encode($sub_counties) }}'>
+<input type="hidden" id="wards-data" value='{{ json_encode($wards) }}'>
 
+<script>
+    const data = {
+        counties: JSON.parse(document.getElementById('counties-data').value || '[]'),
+        constituencies: JSON.parse(document.getElementById('constituencies-data').value || '[]'),
+        wards: JSON.parse(document.getElementById('wards-data').value || '[]'),
     };
 </script>
 

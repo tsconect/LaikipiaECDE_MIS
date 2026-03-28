@@ -12,7 +12,7 @@
         <h5>Edit Coordinator</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.coordinators.update', $coordinator->id) }}" method="POST">
+        <form class="modern-form-shell" action="{{ route('admin.coordinators.update', $coordinator->id) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -129,7 +129,9 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Coordinator</button>
+            <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Update Coordinator</button>
+            </div>
 
         </form>
     </div>

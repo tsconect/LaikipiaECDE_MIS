@@ -12,7 +12,7 @@
         <h5>Edit Next of Kin</h5>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.next-of-kins.update', $nextOfKin->id) }}">
+        <form class="modern-form-shell" method="POST" action="{{ route('admin.next-of-kins.update', $nextOfKin->id) }}">
             @csrf
             @method('PUT')
 

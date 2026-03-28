@@ -16,16 +16,16 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.users.update', $user->id) }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.users.update', $user->id) }}">
         @csrf
         @method('PUT')
 
 
         <!-- ================= PERSONAL INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">   MY ACCOUNT DETAILS</h5>
             </div>
 
@@ -171,8 +171,8 @@
                     </div>
 
                 </div>
-                <div class="text-right">
-                    <button class="btn btn-success" type="submit">
+                <div class="modern-form-footer px-3 pb-3">
+                    <button class="btn modern-form-submit" type="submit">
                         Update
                     </button>
                 </div>
@@ -188,11 +188,11 @@
 {{-- update password --}}
 
 <div class="col-md-12">
-    <form method="POST" action="{{ route('admin.users.update-password', $user->id) }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.users.update-password', $user->id) }}">
         @csrf
         
-        <div class="card p-2 shadow-sm mb-4">
-            <div class="card-header bg-success text-white">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Change Password</h5>
             </div>
             <div class="card-body">
@@ -227,8 +227,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-right">
-                    <button class="btn btn-success" type="submit">
+                <div class="modern-form-footer px-3 pb-3">
+                    <button class="btn modern-form-submit" type="submit">
                         Update Password
                     </button>
                 </div>

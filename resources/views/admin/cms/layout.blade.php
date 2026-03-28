@@ -2,89 +2,22 @@
 
 @push('css')
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-<style>
-    .cms-header {
-        background: linear-gradient(135deg, #1a3c5e 0%, #2a5a8e 100%);
-        color: white;
-        padding: 30px 0;
-        margin-bottom: 30px;
-        border-radius: 8px;
-    }
-    .cms-header h1 {
-        margin: 0;
-        font-weight: 600;
-    }
-    .card-header {
-        background-color: #1a3c5e;
-        color: white;
-        font-weight: 600;
-    }
-    .table-actions {
-        display: flex;
-        gap: 5px;
-    }
-    .badge-status {
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-    .badge-published {
-        background-color: #28a745;
-        color: white;
-    }
-    .badge-draft {
-        background-color: #ffc107;
-        color: #333;
-    }
-    .badge-active {
-        background-color: #28a745;
-        color: white;
-    }
-    .badge-inactive {
-        background-color: #6c757d;
-        color: white;
-    }
-    .badge-approved {
-        background-color: #28a745;
-        color: white;
-    }
-    .badge-pending {
-        background-color: #ffc107;
-        color: #333;
-    }
-    .form-section {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-    .form-section-title {
-        font-size: 16px;
-        font-weight: 600;
-        color: #1a3c5e;
-        margin-bottom: 15px;
-        display: flex;
-        align-items: center;
-    }
-    .form-section-title i {
-        margin-right: 10px;
-    }
-</style>
 @endpush
 
 @section('content')
-<div class="cms-header">
-    <div class="container-fluid">
-        <div class="d-flex justify-content-between align-items-center">
+@unless(View::hasSection('hide-cms-header'))
+<div class="cms-header-shell table-card mb-4">
+    <div class="table-banner cms-table-banner">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 w-100">
             <div>
-                <h1>@yield('cms-title', 'CMS Management')</h1>
-                <p class="text-muted mb-0">@yield('cms-description', '')</p>
+                <h1 class="cms-title">@yield('cms-title', 'CMS Management')</h1>
+                <p class="cms-subtitle mb-0">@yield('cms-description', '')</p>
             </div>
             @yield('cms-action')
         </div>
     </div>
 </div>
+@endunless
 
 <div class="container-fluid">
     @if ($errors->any())

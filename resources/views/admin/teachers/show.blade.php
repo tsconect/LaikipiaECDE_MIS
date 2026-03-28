@@ -6,137 +6,6 @@
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
-    /* ── Profile Header Card ── */
-    .tp-header {
-        background: linear-gradient(135deg, #0f1b2d 0%, #1a2d4d 100%);
-        border-radius: 14px;
-        padding: 24px 28px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 20px rgba(15,27,45,.25);
-    }
-    .tp-avatar {
-        width: 68px; height: 68px;
-        border-radius: 50%;
-        border: 3px solid rgba(34,197,94,.5);
-        object-fit: cover;
-        flex-shrink: 0;
-    }
-    .tp-name {
-        font-size: 18px;
-        font-weight: 700;
-        color: #ffffff;
-        line-height: 1.2;
-    }
-    .tp-meta {
-        font-size: 13px;
-        color: #94a3b8;
-        margin-top: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 14px;
-    }
-    .tp-meta span {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        color: #c8d8f0;
-    }
-    .tp-meta span i { color: #22c55e; }
-
-    /* ── Tabs ── */
-    .tp-tabs {
-        display: flex;
-        gap: 4px;
-        border-bottom: 2px solid #e2e8f0;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-        padding-bottom: 0;
-    }
-    .tp-tabs .nav-link {
-        font-size: 13px;
-        font-weight: 500;
-        color: #475569;
-        border: none;
-        border-bottom: 2px solid transparent;
-        border-radius: 0;
-        padding: 10px 16px;
-        margin-bottom: -2px;
-        background: none;
-        cursor: pointer;
-        transition: color .15s, border-color .15s;
-    }
-    .tp-tabs .nav-link:hover { color: #22c55e; }
-    .tp-tabs .nav-link.active {
-        color: #22c55e;
-        border-bottom-color: #22c55e;
-        font-weight: 600;
-    }
-    .tp-tabs .nav-link i { margin-right: 5px; }
-
-    /* ── Detail Grid ── */
-    .detail-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 16px;
-        padding: 4px 0 16px;
-    }
-    .detail-item {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 14px 16px;
-        transition: box-shadow .15s;
-    }
-    .detail-item:hover { box-shadow: 0 2px 10px rgba(0,0,0,.07); }
-    .detail-label {
-        font-size: 10.5px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: .07em;
-        color: #94a3b8;
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .detail-label i { color: #22c55e; font-size: 12px; }
-    .detail-value {
-        font-size: 14px;
-        font-weight: 600;
-        color: #0f172a;
-        word-break: break-word;
-    }
-    .detail-value.muted { color: #94a3b8; font-weight: 400; }
-
-    /* ── Tab content card ── */
-    .tp-card {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 14px;
-        box-shadow: 0 1px 3px rgba(0,0,0,.06);
-        overflow: hidden;
-    }
-    .tp-card-body { padding: 20px 24px; }
-
-    /* Section divider title */
-    .section-title {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        color: #94a3b8;
-        margin: 0 0 14px;
-        padding-bottom: 8px;
-        border-bottom: 1px dashed #e2e8f0;
-    }
-</style>
-
 {{-- ══ PROFILE HEADER ══ --}}
 <div class="tp-header">
     <div class="d-flex align-items-center gap-3">
@@ -288,7 +157,8 @@
             <div class="tab-pane fade" id="nextofkin">
                 <p class="section-title">Next of Kin Records</p>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped">
+                    <div class="table-card">
+            <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -314,6 +184,7 @@
                             @endforelse
                         </tbody>
                     </table>
+        </div>
                 </div>
             </div>
 
@@ -321,7 +192,8 @@
             <div class="tab-pane fade" id="beneficiaries">
                 <p class="section-title">Beneficiary Records</p>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped">
+                    <div class="table-card">
+            <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -347,6 +219,7 @@
                             @endforelse
                         </tbody>
                     </table>
+        </div>
                 </div>
             </div>
 
@@ -354,7 +227,8 @@
             <div class="tab-pane fade" id="unions">
                 <p class="section-title">Union Memberships</p>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped">
+                    <div class="table-card">
+            <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -376,6 +250,7 @@
                             @endforelse
                         </tbody>
                     </table>
+        </div>
                 </div>
             </div>
 
@@ -383,7 +258,8 @@
             <div class="tab-pane fade" id="academic">
                 <p class="section-title">Academic Qualifications</p>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped">
+                    <div class="table-card">
+            <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -413,6 +289,7 @@
                             @endforelse
                         </tbody>
                     </table>
+        </div>
                 </div>
             </div>
 
@@ -420,7 +297,8 @@
             <div class="tab-pane fade" id="documents">
                 <p class="section-title">Uploaded Documents</p>
                 <div class="table-responsive">
-                    <table class="table table-hover table-striped">
+                    <div class="table-card">
+            <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -450,6 +328,7 @@
                             @endforelse
                         </tbody>
                     </table>
+        </div>
                 </div>
             </div>
 
