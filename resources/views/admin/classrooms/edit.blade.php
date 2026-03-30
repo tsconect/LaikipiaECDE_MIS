@@ -34,8 +34,14 @@
                             </div>
                         </div>
 
-                       
-                        {{-- <div class="col-md-6">
+                        <div class="col-md-6">
+                            <div class="position-relative form-group">
+                                <label for="number_of_classes" class="">Number of class Rooms</label>
+                                <input name="number_of_classes" id="number_of_classes" value="{{ $school->number_of_classes }}" placeholder="3" required
+                                    type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <div class="position-relative form-group">
                                 <label for="class_rooms_status" class=""> Class Rooms Status </label>
                                 <select name="class_rooms_status" id="class_rooms_status" class="form-control" required>
@@ -47,7 +53,7 @@
                                     <option value="under_tree" {{ $school->class_rooms_status == 'under_tree' ? 'selected' : '' }}>Under Tree</option>
                                 </select>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="col-md-6">
                             <div class="position-relative form-group">
@@ -57,21 +63,21 @@
                             </div>
                         </div>
 
-                        {{-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="position-relative form-group">
                                 <label for="number_of_students" class="">Number of students:</label>
                                 <input name="number_of_students" id="number_of_students" value="{{ $school->number_of_students }}" placeholder="Enter of students" required
                                     type="text" class="form-control">
                             </div>
-                        </div> --}}
+                        </div>
 
-                        {{-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="position-relative form-group">
                                 <label for="school_location" class="">School Location (Latitude, Longitude)</label>
                                 <input name="school_location" id="school_location" value="{{ $school->school_location }}" placeholder="Enter School location" required
                                     type="text" class="form-control">
                             </div>
-                        </div> --}}
+                        </div>
                         <div class="col-md-6">
                             <div class="position-relative form-group">
                                 <label for="teacher_id" class="">Teacher in Charge</label>

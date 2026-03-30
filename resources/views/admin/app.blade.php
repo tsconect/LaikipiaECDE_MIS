@@ -628,30 +628,29 @@
         vertical-align: middle !important;
         align-items: center;
     }
-
     .app-main__inner .table .action-btn, 
     .app-main__inner .table .btn,
     .btn-action {
-        width: var(--size) !important;
-        height: var(--size) !important;
+        width: 22px !important;
+        height: 22px !important;
         border: none !important;
-        border-radius: var(--radius) !important;
+        border-radius: 4px !important;
         cursor: pointer;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         color: #fff !important;
-        font-size: 15px;
+        font-size: 11px; /* smaller icon/text */
         transition: 
-          transform .18s cubic-bezier(.34,1.56,.64,1), 
-          box-shadow .18s ease, 
-          filter .18s ease;
+        transform .15s ease, 
+        box-shadow .15s ease, 
+        filter .15s ease;
         position: relative;
         overflow: hidden;
         text-decoration: none;
         padding: 0 !important;
-        min-height: var(--size) !important;
-        margin: 0 !important; /* Reset margins */
+        min-height: unset !important; /* remove stretching */
+        margin: 0 !important;
         vertical-align: middle;
     }
 
@@ -691,6 +690,8 @@
         transform: scale(1.12);
         filter: brightness(1.08);
         box-shadow: 0 6px 16px rgba(0,0,0,.18);
+        /* remove underline */
+        text-decoration:none;
     }
 
     .app-main__inner .table .action-btn:active, 

@@ -1,23 +1,81 @@
 <?php
 
-namespace App\Http\Controllers\CMS;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Page;
-use App\Models\Post;
-use App\Models\Gallery;
-use App\Models\FAQ;
-use App\Models\Testimonial;
 use App\Models\Announcement;
+use App\Models\BursaryApplications;
+use App\Models\Constituency;
 use App\Models\ContactMessage;
 use App\Models\EcdeSchools;
+use App\Models\FAQ;
+use App\Models\Gallery;
+use App\Models\Page;
+use App\Models\Post;
 use App\Models\Settings;
+use App\Models\Teacher;
+use App\Models\Testimonial;
+use App\Models\Ward;
 use Illuminate\Http\Request;
 
-class PublicCMSController extends Controller
+class WebController extends Controller
 {
-    // Pages
-    public function showPage($slug)
+      function index(Request $request){
+        $applications=BursaryApplications::get();
+
+        $constituencies = Constituency::all();
+        $wards = Ward::all();
+        $ecde_schools = EcdeSchools::all();
+
+        $recentPosts = Post::where('status', 'published')
+            ->orderBy('published_at', 'desc')
+            ->limit(3)
+            ->get();
+
+        $activeAnnouncements = Announcement::where('status', 'published')
+            ->whereDate('start_date', '<=', now())
+            ->whereDate('end_date', '>=', now())
+            ->orderBy('priority', 'desc')
+            ->orderBy('start_date', 'desc')
+            ->limit(3)
+            ->get();
+
+        $featuredTestimonials = Testimonial::where('status', 'published')
+            ->orderBy('order')
+            ->limit(3)
+            ->get();
+
+        $totalEcdeCentres = $ecde_schools->count();
+        $totalLearners = $ecde_schools->sum(function ($school) {
+            return (int) preg_replace('/[^0-9]/', '', (string) ($school->number_of_students ?? 0));
+        });
+        $totalTeachers = Teacher::count();
+        $totalSubCounties = $ecde_schools->pluck('subcounty_id')->filter()->unique()->count();
+
+        if ($totalSubCounties === 0) {
+            $totalSubCounties = $constituencies->count();
+        }
+
+        $settings = Settings::all()->pluck('value', 'key')->toArray();
+
+        return view('web.index',compact(
+            'applications',
+            'constituencies',
+            'wards',
+            'ecde_schools',
+            'recentPosts',
+            'activeAnnouncements',
+            'featuredTestimonials',
+            'settings',
+            'totalEcdeCentres',
+            'totalLearners',
+            'totalTeachers',
+            'totalSubCounties'
+        ));
+    }
+
+    
+     public function showPage($slug)
     {
         $page = Page::where('slug', $slug)->where('status', 'published')->firstOrFail();
         return view('web.pages.show', compact('page'));
@@ -108,13 +166,10 @@ class PublicCMSController extends Controller
 
     public function schools()
     {
-        $schools = EcdeSchools::with('ward')
-            ->orderBy('school_name')
-            ->paginate(12);
+        $schools = EcdeSchools::latest()->get();
 
-        $totalSchools = EcdeSchools::count();
-
-        return view('web.schools.index', compact('schools', 'totalSchools'));
+        
+        return view('web.schools.index', compact('schools'));
     }
 
     // Contact Form

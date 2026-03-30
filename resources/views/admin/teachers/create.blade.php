@@ -463,20 +463,38 @@ max="{{ date('Y-m-d', strtotime('-18 years')) }}"
                             @enderror
                         </div>
 
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">School <span class="text-danger">*</span></label>
-                            <select name="school_id" id="schoolSelect" 
-                                    class="form-control @error('school_id') is-invalid @enderror"
-                                    >
-                                <option value="">Select school</option>
-                                @foreach($ecde_schools as $school)
-                                    <option value="{{ $school->id }}" {{ old('school_id') == $school->id ? 'selected' : '' }}>{{ $school->school_name }}</option>
-                                @endforeach
-                            </select>
-                            @error('school_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                         @if($school_id)
+
+                            
+                                <input type="hidden" name="school_id" value="{{ $school_id }}">
+                                <div class="col-md-4 ">
+                                <div class="position-relative form-group">
+                                        <label for="school_id" class=""> School </label>
+                                        <select name="school_id" id="school_id" class="form-control" disabled>
+                                            {{-- <option value="">Select School</option> --}}
+                                            @foreach ($schools as $value)
+                                                <option value="{{ $value->id ?? null }}" @if($school_id == $value->id) selected @endif>{{ $value->school_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    
+                                </div>
+                            @else
+                             <div class="col-md-4 " >
+                                <div class="position-relative form-group">
+                                    <label for="school_id" class=""> School </label>
+                                    <select name="school_id" id="school_id" class="form-control">
+                                        <option value="">Select School</option>
+                                        @foreach ($schools as $value)
+                                            <option value="{{ $value->id ?? null }}">{{ $value->school_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                  
+                            </div>
+                            @endif
 
                         @error('job_group')
                             <small class="text-danger">{{ $message }}</small>

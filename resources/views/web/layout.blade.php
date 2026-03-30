@@ -1,4 +1,4 @@
-@extends('front.app')
+@extends('web.app')
 
 @section('content')
 <div class="public-content-wrapper">

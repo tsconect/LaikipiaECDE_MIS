@@ -217,7 +217,7 @@
         <div class="sc-card violet">
           <div class="sc-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg></div>
           <div class="sc-label">Classrooms</div>
-          <div class="sc-value">{{ $classrooms->count()?? 0 }}</div>
+          <div class="sc-value">{{ $school->number_of_classes ?? 0 }}</div>
           <div class="sc-sub">{{ ucfirst($school->class_rooms_status) ?? '-' }}</div>
         </div>
       </div>
@@ -278,13 +278,7 @@
 
     <!-- ══ LEARNERS TAB ══ -->
     <div class="tab-panel" id="tab-learners">
-       <div class="table-actions p-3 text-right">
-             <a  style="font-size: 12px;" href="{{ route('admin.learners.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
-                <i class="fa fa-plus"></i> Add Learner
-            </a>
-          </div>
       @if($learners->count() > 0)
-       
         <table class="data-table">
           <thead>
             <tr>
@@ -326,13 +320,7 @@
 
     <!-- ══ TEACHERS TAB ══ -->
     <div class="tab-panel" id="tab-teachers">
-       <div class="table-actions p-3 text-right">
-             <a  style="font-size: 12px;" href="{{ route('admin.teachers.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
-                <i class="fa fa-plus"></i> Add Teacher
-            </a>
-          </div>
       @if($teachers->count() > 0)
-     
         <table class="data-table">
           <thead>
             <tr>
@@ -448,46 +436,11 @@
 
     <!-- ══ CLASSROOMS TAB ══ -->
     <div class="tab-panel" id="tab-classrooms">
-       <div class="table-actions p-3 text-right">
-             <a  style="font-size: 12px;" href="{{ route('admin.classrooms.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
-                <i class="fa fa-plus"></i> Add Classroom
-            </a>
-          </div>
-      @if($classrooms->count() > 0)
-        <table class="data-table">
-         
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Capacity</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($classrooms as $item)
-            <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td style="font-weight:600;">{{ $item->name }}</td>
-              <td>{{ $item->number_of_students ?? '-' }}</td>
-              <td>{{ ucfirst(str_replace('_', ' ', $item->status)) }}</td>
-            </tr>
-            @endforeach
-          </tbody>
-        </table>
-      @else
-        <div class="empty-tab">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13a4 4 0 014-4h14a4 4 0 014 4v6a4 4 0 01-4 4H7a4 4 0 01-4-4v-6zM3 13l1.664-1.664M3 13l1.664 1.664M21 13l-1.664-1.664M21 13l-1.664 1.664"/></svg>
-          <div class="empty-tab-title">No classrooms added yet <a  style="font-size: 12px;" href="{{ route('admin.classrooms.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
-                <i class="fa fa-plus"></i> Add Classroom
-            </a>
-          </div>
-          <div class="empty-tab-sub">
-            <
-          </div>
-        </div>
-      @endif
-     
+      <div class="empty-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+        <div class="empty-tab-title">Classroom Infrastructure</div>
+        <div class="empty-tab-sub">Status: {{ ucfirst(str_replace('_', ' ', $school->class_rooms_status)) }} · Total: {{ $school->number_of_classes ?? 0 }} rooms</div>
+      </div>
     </div>
 
   </div><!-- /tabs-card -->

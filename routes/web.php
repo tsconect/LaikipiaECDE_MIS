@@ -27,6 +27,7 @@ use App\Http\Controllers\UserUnionController;
 use App\Http\Controllers\VTCStudentController;
 use App\Http\Controllers\VTCTeacherController;
 use App\Http\Controllers\WardController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,33 +41,28 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', [App\Http\Controllers\FrontController::class, 'index']);
-Route::get('/bursary-status-query', [App\Http\Controllers\Student\ApplicationsController::class, 'applicationStatus'])->name('applicationStatus');
-Route::get('/view-bursary-application', [App\Http\Controllers\Student\ApplicationsController::class, 'viewApplication'])->name('viewApplication');
+Route::get('/', [WebController::class, 'index'])->name('home');
 
-Route::post('/store', [App\Http\Controllers\Student\ApplicationsController::class, 'store'])->name('student.store');
-// register.custom
-Route::any('register_custom', [UsersController::class, 'register'])->name('register.custom');
 
 
 // Public CMS Routes
-Route::get('/page/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showPage'])->name('cms.page');
-Route::get('/blog', [App\Http\Controllers\CMS\PublicCMSController::class, 'posts'])->name('cms.posts');
-Route::get('/blog/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showPost'])->name('cms.post');
-Route::get('/galleries', [App\Http\Controllers\CMS\PublicCMSController::class, 'galleries'])->name('cms.galleries');
-Route::get('/gallery/{slug}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showGallery'])->name('cms.gallery');
-Route::get('/faqs', [App\Http\Controllers\CMS\PublicCMSController::class, 'faqs'])->name('cms.faqs');
-Route::get('/testimonials', [App\Http\Controllers\CMS\PublicCMSController::class, 'testimonials'])->name('cms.testimonials');
-Route::get('/announcements', [App\Http\Controllers\CMS\PublicCMSController::class, 'announcements'])->name('cms.announcements');
-Route::get('/announcements/{id}', [App\Http\Controllers\CMS\PublicCMSController::class, 'showAnnouncement'])->name('cms.announcement.show');
-Route::get('/ecde-schools', [App\Http\Controllers\CMS\PublicCMSController::class, 'schools'])->name('cms.schools');
-Route::get('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'contactForm'])->name('cms.contact');
-Route::post('/contact', [App\Http\Controllers\CMS\PublicCMSController::class, 'submitContact'])->name('cms.contact.submit');
+Route::get('/page/{slug}', [WebController::class, 'showPage'])->name('cms.page');
+Route::get('/blog', [WebController::class, 'posts'])->name('cms.posts');
+Route::get('/blog/{slug}', [WebController::class, 'showPost'])->name('cms.post');
+Route::get('/galleries', [WebController::class, 'galleries'])->name('cms.galleries');
+Route::get('/gallery/{slug}', [WebController::class, 'showGallery'])->name('cms.gallery');
+Route::get('/faqs', [WebController::class, 'faqs'])->name('cms.faqs');
+Route::get('/testimonials', [WebController::class, 'testimonials'])->name('cms.testimonials');
+Route::get('/announcements', [WebController::class, 'announcements'])->name('cms.announcements');
+Route::get('/announcements/{id}', [WebController::class, 'showAnnouncement'])->name('cms.announcement.show');
+Route::get('/ecde-schools', [WebController::class, 'schools'])->name('cms.schools');
+Route::get('/contact', [WebController::class, 'contactForm'])->name('cms.contact');
+Route::post('/contact', [WebController::class, 'submitContact'])->name('cms.contact.submit');
 
  Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
  Route::post('login', [AuthController::class, 'authenticate'])->name('login.submit');
  Route::post('logout', [AuthController::class, 'logout'])->name('logout');
-  Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -132,6 +128,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('edit-teacher/{id}', [TeacherController::class, 'edit'])->name('teacher-edit-view');
             Route::get('view-teacher/{id}', [TeacherController::class, 'view'])->name('teacher-view');
             Route::resource('learner-attendances', LearnerAttendanceController::class);
+            Route::resource('classrooms', App\Http\Controllers\ClassRoomController::class);
            
             // {{ route('admin.edit-view', $item->id) }}
 

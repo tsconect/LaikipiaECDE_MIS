@@ -1,5 +1,4 @@
-@extends('front.app')
-
+@extends('web.app')
 @section('title', 'Contact Us')
 
 @section('content')

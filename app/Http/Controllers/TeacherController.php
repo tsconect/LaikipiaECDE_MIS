@@ -40,14 +40,22 @@ class TeacherController extends Controller
        return view('admin.teachers.index', compact('data'));
    }
 
-   function create(){
+   function create( Request $request){
+
+        $school_id = $request->input('school_id');
+        
+        if (!$school_id) {
+            $school_id == null;
+        }
+
+
          $sub_counties =Constituency::get();
         $wards=Ward::get();
-        $ecde_schools = EcdeSchools::get();
+        $schools = EcdeSchools::get();
         $counties = County::get();
         $job_groups = JobGroup::all();
         $ethnicities = EthnicGroup::all();
-        return view('admin.teachers.create',compact('wards','sub_counties','ecde_schools','counties', 'job_groups', 'ethnicities'));
+        return view('admin.teachers.create',compact('wards','sub_counties','schools','counties', 'job_groups', 'ethnicities', 'school_id'));
    }
 
    public function store(Request $request)
@@ -138,7 +146,9 @@ class TeacherController extends Controller
 
         }
 
-        return redirect()->route('admin.teachers.index')->with('success', 'Teacher '. $obj->name .   ' Added Successfully');
+          return redirect()->route('admin.ecde-schools.show', $teacher->school_id)->with('success', 'Teacher '. $obj->first_name .   ' Added Successfully');
+
+    
 
 
        

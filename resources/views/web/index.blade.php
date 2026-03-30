@@ -1,4 +1,4 @@
-@extends('front.app')
+@extends('web.app')
 
 @section('flush_topbar', '1')
 
@@ -482,7 +482,6 @@
 </section>
 @endif
 
-@if($showHomeSchools)
 <section class="schools-section">
   <div class="schools-header reveal">
     <div>
@@ -516,61 +515,9 @@
     </div>
   </div>
 
-  <div class="schools-grid">
-    @forelse(($ecde_schools ?? collect())->take(6) as $school)
-    @php
-      $schoolImage = $school->image_path ?? null;
-      $schoolImageUrl = null;
-
-      if (!empty($schoolImage)) {
-          if (\Illuminate\Support\Str::startsWith($schoolImage, ['http://', 'https://'])) {
-              $schoolImageUrl = $schoolImage;
-          } elseif (\Illuminate\Support\Str::startsWith($schoolImage, ['/storage/', 'storage/'])) {
-              $schoolImageUrl = asset(ltrim($schoolImage, '/'));
-          } else {
-              $schoolImageUrl = asset('storage/' . ltrim($schoolImage, '/'));
-          }
-      }
-
-      $schoolWard = optional($school->ward)->name ?? 'Laikipia County';
-      $schoolStudents = $school->number_of_students ?? 0;
-      $schoolClasses = $school->number_of_classes ?? 0;
-      $schoolType = $school->class_rooms_status ?? 'Public';
-    @endphp
-
-    <div class="school-card reveal">
-      @if($schoolImageUrl)
-        <img class="school-card-img" src="{{ $schoolImageUrl }}" alt="{{ $school->school_name }}" loading="lazy">
-      @else
-        <div class="school-card-img-placeholder">
-          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        </div>
-      @endif
-
-      <div class="school-card-body">
-        <div class="school-subcounty"><span class="school-subcounty-dot"></span>{{ $schoolWard }}</div>
-        <div class="school-name">{{ $school->school_name }}</div>
-        <div class="school-stats">
-          <div class="school-stat"><span class="school-stat-num">{{ $schoolStudents }}</span><span class="school-stat-label">Learners</span></div>
-          <div class="school-stat"><span class="school-stat-num">{{ $schoolClasses }}</span><span class="school-stat-label">Classes</span></div>
-          <div class="school-stat"><span class="school-stat-num">{{ $schoolClasses }}</span><span class="school-stat-label">Streams</span></div>
-        </div>
-
-        <div class="school-divider"></div>
-        <div class="school-footer">
-          <div class="school-type">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            {{ $schoolType }}
-          </div>
-          <a href="{{ route('cms.schools') }}" class="school-link">View <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-        </div>
-      </div>
-    </div>
-    @empty
-    @endforelse
   </div>
 </section>
-@endif
+
 
 @if($showHomeTestimonials)
 <section class="testimonials-section">

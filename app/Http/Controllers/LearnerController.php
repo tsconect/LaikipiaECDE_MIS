@@ -47,8 +47,14 @@ class LearnerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( Request $request)
     {
+         $school_id = $request->input('school_id');
+        
+        if (!$school_id) {
+            $school_id == null;
+        }
+
        $sub_counties =Constituency::get();
         $wards=Ward::get();
         $counties = County::get();
@@ -62,17 +68,17 @@ class LearnerController extends Controller
 
         
 
-    if($user->role == 'Teacher'){
-        $teacher = Teacher::where('user_id', $user->id)->first();
-        $ecde_schools = EcdeSchools::where('id', $teacher->school_id)->get();
-    } else{
-        $ecde_schools = EcdeSchools::get();
-    }
+        if($user->role == 'Teacher'){
+            $teacher = Teacher::where('user_id', $user->id)->first();
+            $schools = EcdeSchools::where('id', $teacher->school_id)->get();
+        } else{
+            $schools = EcdeSchools::get();
+        }
 
 
 
 
-    return view('admin.learners.create',compact('wards','sub_counties', 'counties', 'ecde_schools', 'sub_locations', 'nationalities'));
+    return view('admin.learners.create',compact('wards','sub_counties', 'counties', 'schools', 'sub_locations', 'nationalities', 'school_id'));
     }
 
     /**
@@ -162,7 +168,7 @@ class LearnerController extends Controller
         }
 
 
-   
+     return redirect()->route('admin.ecde-schools.show', $student->school_id)->with('success', 'leaners '. $student->name .   ' Added Successfully');
    
     return redirect()->route('admin.learners.index')->with('success', 'leaners '. $student->name .   ' Added Successfully');
 
