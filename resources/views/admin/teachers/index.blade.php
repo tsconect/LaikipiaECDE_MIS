@@ -64,7 +64,7 @@
         </div>
 
         <!-- Table -->
-        <table class="data-table" id="teachersTable">
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>ID <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>

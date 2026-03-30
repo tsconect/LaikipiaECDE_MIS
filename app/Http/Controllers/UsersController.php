@@ -23,7 +23,7 @@ class UsersController extends Controller
             'users',
             'index',
             'User accessed the users index page',
-            'users'
+            'admin/users'
         );
         return view('admin.users.index', compact('users'));
     }
@@ -53,8 +53,8 @@ log_user_activity(
                 $user->id,
                 'users',
                 'edit',
-                'User accessed edit user page for user id ' . $user->id,
-                url()->current(),
+                'User accessed edit user page for user name ' . $user->first_name . ' ' . $user->last_name,
+                'admin/users/' . $user->id . '/edit',
                 json_encode($user)
                 );
 
