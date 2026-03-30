@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8lN2R7+P7q6T2A2R4cV2N4s46HoPazg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -398,6 +399,122 @@
       }
   };
 </script>
+
+
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+   <!-- jQuery -->
+   
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success') || session('error') || session('warning') || session('info'))
+<script>
+Swal.fire({
+    // position: "top-end",
+    icon: "{{ session('success') ? 'success' : (session('error') ? 'error' : (session('warning') ? 'warning' : 'info')) }}",
+    title: "{{ session('success') ?? session('error') ?? session('warning') ?? session('info') }}",
+    showConfirmButton: false,
+    timer: 1500,
+    width: '400px',
+    padding: '0.5em'
+});
+</script>
+@endif
+<script>
+      new DataTable('#dt-basic2', {
+            info: true,
+            paging: true,
+            searchable: true,
+            fixedHeight: true,
+            lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
+            pageLength: 50,
+            order: [],
+            dom: 'lBfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                {
+                    extend: 'print',
+                    customize: function (win) {
+                        // You can customize the print window if needed
+                    }
+                },
+                'colvis' // Add column visibility button
+            ],
+            language: {
+                lengthMenu: " _MENU_ records per page",
+                zeroRecords: "No records available",
+                info: "Showing page _PAGE_ of _PAGES_",
+                infoEmpty: "No records available",
+                search: "",
+                searchPlaceholder: "Search... ",
+                infoFiltered: "(filtered from _MAX_ total records)",
+                paginate: {
+                    first: '<i class="fas fa-angle-double-left"></i>',
+                    last: '<i class="fas fa-angle-double-right"></i>',
+                    previous: '<i class="fas fa-angle-left"></i>',
+                    next: '<i class="fas fa-angle-right"></i>'
+                },
+            },
+            columnDefs: [
+                { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
+            ]
+        });
+
+        new DataTable('.dt-basic2', {
+            info: true,
+            paging: true,
+            searchable: true,
+            fixedHeight: true,
+            lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
+            pageLength: 50,
+            order: [],
+            dom: 'lBfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5',
+                {
+                    extend: 'print',
+                    customize: function (win) {
+                        // You can customize the print window if needed
+                    }
+                },
+                'colvis' // Add column visibility button
+            ],
+            language: {
+                lengthMenu: " _MENU_ records per page",
+                zeroRecords: "No records available",
+                info: "Showing page _PAGE_ of _PAGES_",
+                infoEmpty: "No records available",
+                search: "",
+                searchPlaceholder: "Search... ",
+                infoFiltered: "(filtered from _MAX_ total records)",
+                paginate: {
+                    first: '<i class="fas fa-angle-double-left"></i>',
+                    last: '<i class="fas fa-angle-double-right"></i>',
+                    previous: '<i class="fas fa-angle-left"></i>',
+                    next: '<i class="fas fa-angle-right"></i>'
+                },
+            },
+            columnDefs: [
+                { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
+            ]
+        });
+</script>
+
+
+
 @yield('scripts')
 <script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
 </body>

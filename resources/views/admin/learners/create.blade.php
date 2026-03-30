@@ -89,7 +89,7 @@
                         <div id="pwd_fields" class="col-md-12 row g-4" style="display: none;">
                              <div class="col-md-4  ">
                                 <label class="form-label fw-semibold">PWD Number</label>
-                                <input name="pwd_number" id="pwd_number" placeholder="Enter PWD Number" required
+                                <input name="pwd_number" id="pwd_number" placeholder="Enter PWD Number" 
                                     type="text"class="form-control @error('pwd_number') is-invalid @enderror">
                                 @error('pwd_number')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -239,18 +239,38 @@
                                     </div>
                                 </div>
 
-                            <div class="col-md-4">
+                            @if($school_id)
 
-                                <label for="school_id" class="">School Name </label>
-                                <select name="school_id" id="school_id" class="form-control" required>
-                                    <option>Select School</option>
-                                    @foreach ($ecde_schools as $value)
-                                        <option value="{{ $value->id }}" 
-                                            >{{ $value->school_name }}</option>
-                                    @endforeach
+                            
+                                <input type="hidden" name="school_id" value="{{ $school_id }}">
+                                <div class="col-md-4 ">
+                                <div class="position-relative form-group">
+                                        <label for="school_id" class=""> School </label>
+                                        <select name="school_id" id="school_id" class="form-control" disabled>
+                                            {{-- <option value="">Select School</option> --}}
+                                            @foreach ($schools as $value)
+                                                <option value="{{ $value->id ?? null }}" @if($school_id == $value->id) selected @endif>{{ $value->school_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
 
-                                </select>
+                                    
+                                </div>
+                            @else
+                             <div class="col-md-4 " >
+                                <div class="position-relative form-group">
+                                    <label for="school_id" class=""> School </label>
+                                    <select name="school_id" id="school_id" class="form-control">
+                                        <option value="">Select School</option>
+                                        @foreach ($schools as $value)
+                                            <option value="{{ $value->id ?? null }}">{{ $value->school_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                  
                             </div>
+                            @endif
                             <div class="col-md-4">
                                 <label for="admission_number" class="">Admission Number</label>
                                 <input name="admission_number" id="admission_number" placeholder="admission number" required type="text"

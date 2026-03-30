@@ -1,4 +1,4 @@
-@extends('public.layout')
+@extends('web.app')
 
 @section('styles')
 <style>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRoom;
 use App\Models\Constituency;
 use App\Models\County;
 use App\Models\EcdeSchools;
@@ -49,7 +50,8 @@ class ESchoolController extends Controller
 
             $attendances = LearnerAttendance::whereIn('learner_id', $learnerIds)->get();
              $absents = LearnerAttendance::whereIn('learner_id', $learnerIds)->where('status', 'absent')->get();
-           return view('admin.schools.show', compact('school', 'learners', 'teachers', 'attendances', 'absents'));
+             $classrooms = ClassRoom::where('school_id', $ecde_school->id)->get();
+           return view('admin.schools.show', compact('school', 'learners', 'teachers', 'attendances', 'absents', 'classrooms'));
        }
 
 
@@ -110,9 +112,9 @@ class ESchoolController extends Controller
        {
             $request->validate([
                 'school_name' => 'required',
-                'number_of_classes' => 'required',
-                'class_rooms_status' => 'required',
-                'school_location' => 'nullable',
+                // 'number_of_classes' => 'required',
+                // 'class_rooms_status' => 'required',
+                // 'school_location' => 'nullable',
                 'teacher_id' => 'nullable',
                 'county_id' => 'nullable',
                 'subcounty_id' => 'nullable',
