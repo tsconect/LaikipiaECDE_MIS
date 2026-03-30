@@ -98,8 +98,8 @@
             $abs = $attendances->where('date', $today)->where('status', 'absent')->count();
             $a_pct = $total_t > 0 ? round(($abs / $total_t) * 100) : 0;
           @endphp
-          <div class="sc-value">{{ $a_pct }}%</div>
-          <div class="sc-sub">{{ $abs }} absent today</div>
+          <div class="sc-value"> {{ $abs }} </div>
+          <div class="sc-sub">{{ $a_pct }}%  absent today</div>
         </div>
         <div class="sc-card violet">
           <div class="sc-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg></div>
@@ -172,7 +172,7 @@
           </div>
       @if($learners->count() > 0)
        
-        <table class="data-table">
+        <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -202,7 +202,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+        
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
@@ -221,7 +221,7 @@
           </div>
       @if($teachers->count() > 0)
      
-        <table class="data-table">
+        <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -251,7 +251,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+       
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
@@ -263,9 +263,15 @@
 
     <!-- ══ ATTENDANCE SHEET TAB ══ -->
     <div class="tab-panel" id="tab-attendance">
+      <div class="table-actions p-3 text-right">
+             <a  style="font-size: 12px;" href="{{ route('admin.learner-attendances.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
+                <i class="fa fa-plus"></i> Mark Attendance
+            </a>
+          </div>
       @if($attendances->count() > 0)
-        <div class="table-card">
-            <table class="data-table">
+     
+        
+            <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -293,7 +299,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+       
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -306,8 +312,8 @@
     <!-- ══ ABSENTEEISM SHEET TAB ══ -->
     <div class="tab-panel" id="tab-absenteeism">
       @if($absents->count() > 0)
-        <div class="table-card">
-            <table class="data-table">
+      
+            <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -329,7 +335,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+      
       @else
         <div class="empty-tab">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
@@ -347,7 +353,7 @@
             </a>
           </div>
       @if($classrooms->count() > 0)
-        <table class="data-table">
+        <table class="data-table p-2">
          
           <thead>
             <tr>
@@ -355,6 +361,7 @@
               <th>Name</th>
               <th>Capacity</th>
               <th>Status</th>
+              <th>Added On</th>
             </tr>
           </thead>
           <tbody>
@@ -364,6 +371,7 @@
               <td style="font-weight:600;">{{ $item->name }}</td>
               <td>{{ $item->number_of_students ?? '-' }}</td>
               <td>{{ ucfirst(str_replace('_', ' ', $item->status)) }}</td>
+              <td>{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('d M Y') : '-' }}</td>
             </tr>
             @endforeach
           </tbody>
