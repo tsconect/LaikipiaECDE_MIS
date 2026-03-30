@@ -83,7 +83,7 @@
                                 <a class="act-btn edit" title="Edit Union" href="{{ route('admin.unions.edit', $item->id) }}">
                                     <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg>
                                 </a>
-                                <form action="{{ route('admin.unions.destroy', $item->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this union?');">
+                                <form action="{{ route('admin.unions.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this union?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="act-btn delete" title="Delete Union">
@@ -101,11 +101,11 @@
         <div class="table-footer">
             <div class="showing-text">Showing page 1 of 1</div>
             <div class="pagination">
-                <div class="page-arrow is-disabled">
+                <div class="page-arrow" style="opacity: 0.4; cursor: not-allowed;">
                     <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
                 </div>
                 <div class="page-num">1</div>
-                <div class="page-arrow is-disabled">
+                <div class="page-arrow" style="opacity: 0.4; cursor: not-allowed;">
                     <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/></svg>
                 </div>
             </div>

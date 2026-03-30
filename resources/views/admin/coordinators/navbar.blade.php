@@ -26,7 +26,7 @@
             <button type="button"
                 class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                 <span class="btn-icon-wrapper">
-                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
                 </span>
             </button>
         </span>
@@ -213,7 +213,7 @@
                     <ul>
                         <li>
                             <a href="{{route('admin.bursary.application.all')}}">
-                                <i class="fa fa-email"></i>Compose New Message
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M2 4a2 2 0 012-2h16a2 2 0 012 2v16a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v.01L12 13l8-8.99V4H4zm16 2.243l-7.071 7.071a2 2 0 01-2.828 0L4 6.243V20h16V6.243z"></path></svg>Compose New Message
                             </a>
                         </li>
                         <li>

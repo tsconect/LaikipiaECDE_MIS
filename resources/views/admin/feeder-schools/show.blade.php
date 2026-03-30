@@ -194,9 +194,9 @@
               <td>{{ $item->dob ? \Carbon\Carbon::parse($item->dob)->age . ' yrs' : '-' }}</td>
               <td>
                 <div class="table-actions">
-                    <a class="btn-action btn-view" title="View Student" href="{{ route('admin.learners.show', $item->id) }}">
-                        <i class="fa fa-eye"></i>
-                    </a>
+                  <a class="btn-action btn-view" title="View Student" href="{{ route('admin.learners.show', $item->id) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </a>
                 </div>
               </td>
             </tr>
@@ -238,9 +238,9 @@
               <td>{{ $item->dob ? \Carbon\Carbon::parse($item->dob)->age . ' yrs' : '-' }}</td>
               <td>
                 <div class="table-actions">
-                    <a class="btn-action btn-view" title="View Teacher" href="{{ route('admin.teachers.show', $item->id) }}">
-                        <i class="fa fa-eye"></i>
-                    </a>
+                  <a class="btn-action btn-view" title="View Teacher" href="{{ route('admin.teachers.show', $item->id) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12s-3.75 7.5-10.5 7.5S1.5 12 1.5 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </a>
                 </div>
               </td>
             </tr>

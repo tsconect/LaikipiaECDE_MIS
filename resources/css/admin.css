@@ -1,3 +1,57 @@
+/* Print styles for DataTables export/print */
+@media print {
+    body, .app-main__inner, .data-table, .data-table th, .data-table td {
+        font-family: 'Manrope', sans-serif !important;
+        color: #222 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+    .data-table {
+        border: 1px solid #e2e8f0 !important;
+        width: 100% !important;
+        border-collapse: collapse !important;
+        font-size: 13px !important;
+    }
+    .data-table th, .data-table td {
+        border: 1px solid #e2e8f0 !important;
+        padding: 8px 12px !important;
+        background: #fff !important;
+        color: #222 !important;
+    }
+    .data-table th {
+        background: #f8fafc !important;
+        color: #222 !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+    }
+    .data-table td {
+        color: #222 !important;
+    }
+    .btn, .dt-button, button {
+        display: none !important;
+    }
+    .app-header, .app-sidebar, .sidebar-footer, .app-header__logo, .app-header__content, .app-header__mobile-menu, .app-main__outer > :not(.app-main__inner) {
+        display: none !important;
+    }
+    .app-main__inner {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    /* Ensure icons are visible in print */
+    .fa, .fas, .far, .fal, .fab, .bi, .nav-icon, .sc-icon, .school-meta-icon, .status-dot {
+        color: #222 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        filter: none !important;
+        opacity: 1 !important;
+    }
+    /* Remove box shadows and backgrounds */
+    * {
+        box-shadow: none !important;
+        background-image: none !important;
+    }
+}
 :root {
     --navy-dark: #142240;
     --navy: #1a2d4d;
@@ -18,6 +72,7 @@
 body {
     background-color: #f0f2f5;
     color: #1a2d4d;
+    font-family: 'Manrope', sans-serif;
 }
 
 .app-header.modern-admin-header {

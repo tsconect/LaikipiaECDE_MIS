@@ -458,7 +458,7 @@
                                             <div class="widget-number">Tab 1</div>
                                             <div class="tab-subheading">
                                                 <span class="pr-2 opactiy-6">
-                                                    <i class="fa fa-comment-dots"></i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10zm-2 0V5H5v13.17L7.17 17H19z"></path><circle cx="8" cy="10" r="1"/><circle cx="12" cy="10" r="1"/><circle cx="16" cy="10" r="1"/></svg>
                                                 </span>
                                                 Totals
                                             </div>
@@ -475,7 +475,7 @@
                                             <div class="widget-number text-danger">Tab 3</div>
                                             <div class="tab-subheading">
                                                 <span class="pr-2 opactiy-6">
-                                                    <i class="fa fa-bullhorn"></i>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M21 6.5a1 1 0 00-1-1H5.21l-.94-2.34A1 1 0 003.34 2.5H2a1 1 0 000 2h1.34l3.6 9.01A2.5 2.5 0 0010.5 16h7a1 1 0 001-1v-8.5zm-1 8.5h-7a.5.5 0 01-.5-.5V7h7v8zm-8.5-1.5a.5.5 0 01-.5-.5V7h-1.38l-1.6-4H5.21l.94 2.34A1 1 0 007.66 6.5H19a1 1 0 011 1v7.5a1 1 0 01-1 1z"></path></svg>
                                                 </span>
                                                 Income
                                             </div>

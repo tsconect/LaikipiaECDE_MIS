@@ -332,22 +332,22 @@
 
 <div class="quick-cards">
   <a href="#" class="quick-card">
-    <div class="quick-card-icon account"><i class="bi bi-person icon-account"></i></div>
+    <div class="quick-card-icon account"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a8 8 0 0116 0v2"/></svg></div>
     <h6 class="quick-card-title">My Account</h6>
     <p class="quick-card-desc">Manage your info.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon password"><i class="bi bi-lock icon-password"></i></div>
+    <div class="quick-card-icon password"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 016 0v3"/></svg></div>
     <h6 class="quick-card-title">Password</h6>
     <p class="quick-card-desc">Change password.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon details"><i class="bi bi-file-earmark-text icon-details"></i></div>
+    <div class="quick-card-icon details"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h8"/></svg></div>
     <h6 class="quick-card-title">My Details</h6>
     <p class="quick-card-desc">Personal profile.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon logout"><i class="bi bi-box-arrow-right icon-logout"></i></div>
+    <div class="quick-card-icon logout"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M16 17l5-5-5-5M21 12H9"/><rect x="3" y="5" width="6" height="14" rx="2"/></svg></div>
     <h6 class="quick-card-title">Logout</h6>
     <p class="quick-card-desc">Sign out.</p>
   </a>
