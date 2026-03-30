@@ -18,11 +18,11 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.feeder-schools.store') }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.feeder-schools.store') }}">
         @csrf
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Register New Feeder School</h5>
             </div>
 
@@ -139,7 +139,7 @@
                                 <div class="">
                                     <label for="remarks"> Remarks</label>
                                     <textarea name="remarks" class=" form-control col-12" placeholder="Built on a public land" id="remarks" colspan="4"
-                                        style="width: 100%;"></textarea>
+                                       ></textarea>
                                 </div>
                             </div>
 
@@ -147,8 +147,8 @@
 
                    
                 </div>
-                <div class="text-right p-2">
-                    <button class="btn btn-success" type="submit">
+                <div class="modern-form-footer px-3 pb-3">
+                    <button class="btn modern-form-submit" type="submit">
                         Register
                     </button>
                 </div>
@@ -161,13 +161,15 @@
 
 </div>
                               
-      <script>
-                                // Pass PHP variables to JavaScript
-    const data = {
-        counties: @json($counties),
-        constituencies: @json($sub_counties),
-        wards: @json($wards),
+<input type="hidden" id="counties-data" value='{{ json_encode($counties) }}'>
+<input type="hidden" id="constituencies-data" value='{{ json_encode($sub_counties) }}'>
+<input type="hidden" id="wards-data" value='{{ json_encode($wards) }}'>
 
+<script>
+    const data = {
+        counties: JSON.parse(document.getElementById('counties-data').value || '[]'),
+        constituencies: JSON.parse(document.getElementById('constituencies-data').value || '[]'),
+        wards: JSON.parse(document.getElementById('wards-data').value || '[]'),
     };
 </script>
 

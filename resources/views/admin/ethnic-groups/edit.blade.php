@@ -16,15 +16,15 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.ethnic-groups.update', $ethnicGroup->id) }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.ethnic-groups.update', $ethnicGroup->id) }}">
         @csrf
         @method('PUT')
 
         <!-- ================= ETHNIC GROUP INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Edit Ethnic Group</h5>
             </div>
             <div class="form-row p-3">

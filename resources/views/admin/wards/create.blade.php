@@ -16,8 +16,8 @@
 
     <div class="card-body">
 
-        <h5 class="card-title">Create Ward in {{ $data->name }} Constituency.</h5>
-        <form class="" action="{{route('admin.wards.store')}}" method="post">
+        <h5 class="card-title modern-form-card-header-title">Create Ward in {{ $data->name }} Constituency.</h5>
+        <form class=" modern-form-shell" action="{{route('admin.wards.store')}}" method="post">
             @csrf
             <div class="form-row">
                 <div class="col-md-6">

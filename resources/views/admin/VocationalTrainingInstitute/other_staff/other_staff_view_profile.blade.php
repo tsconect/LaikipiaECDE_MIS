@@ -58,7 +58,8 @@
                                                             </div>
                                                             <div class="widget-content-left flex2">
                                                                 <div class="widget-heading">
-                                                                    <table class="mb-0 table table-borderless">
+                                                                    <div class="table-card">
+            <table class="data-table">
                                                                         <tbody>
 
                                                                             <tr>
@@ -77,6 +78,7 @@
                                                                             </tr>
                                                                         </tbody>
                                                                     </table>
+        </div>
                                                                 </div>
                                                             </div>
 
@@ -101,7 +103,8 @@
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-eg2-0" role="tabpanel">
                                         <div class="card-body">
-                                            <table class="mb-0 table table-borderless">
+                                            <div class="table-card">
+            <table class="data-table">
                                                 <tbody>
 
                                                     <tr>
@@ -132,6 +135,7 @@
                                                 </tbody>
 
                                             </table>
+        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -151,7 +155,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="mb-0 table table-borderless">
+                                <div class="table-card">
+            <table class="data-table">
                                     <tbody>
                                         {{-- {{ $data->education  }} --}}
                                         <tr>
@@ -176,6 +181,7 @@
 
 
                                 </table>
+        </div>
                             </div>
 
 
@@ -192,7 +198,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="mb-0 table table-borderless">
+                                <div class="table-card">
+            <table class="data-table">
                                     <tbody>
                                         {{-- {{ $data->resident  }} --}}
                                         <tr>
@@ -209,6 +216,7 @@
 
 
                                 </table>
+        </div>
                             </div>
 
                         </div>
@@ -220,7 +228,8 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="mb-0 table table-borderless">
+                                <div class="table-card">
+            <table class="data-table">
                                     <tbody>
                                         {{-- {{ $data->school  }} --}}
                                         <tr>
@@ -248,6 +257,7 @@
 
 
                                 </table>
+        </div>
                             </div>
 
                         </div>

@@ -13,8 +13,8 @@
 
 <div class="main-card mb-3 card col-12">
     <div class="card-body">
-        <h5 class="card-title">Edit {{ $ward->name }} Ward Details</h5>
-        <form class="" action="{{route('admin.ward.update', $ward->id)}}" method="post">
+        <h5 class="card-title modern-form-card-header-title">Edit {{ $ward->name }} Ward Details</h5>
+        <form class=" modern-form-shell" action="{{route('admin.ward.update', $ward->id)}}" method="post">
             @csrf
             <div class="form-row">
                 <div class="col-md-6">

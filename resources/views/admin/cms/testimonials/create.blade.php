@@ -1,11 +1,12 @@
-@extends('admin.app')
+@extends('admin.cms.layout')
 
-@section('content')
+@section('cms-title', 'Create New Testimonial')
+@section('cms-description', 'Add a testimonial for the public website')
+
+@section('cms-content')
 <div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <h2 class="mb-4">Create New Testimonial</h2>
-
+        <div class="col-12">
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -17,8 +18,11 @@
             @endif
 
             <div class="card">
+                <div class="card-header btn-success">
+                    <i class="fas fa-comment-dots"></i> Testimonial Details
+                </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.cms.testimonials.store') }}" method="POST" enctype="multipart/form-data">
+                    <form class="modern-form-shell" action="{{ route('admin.cms.testimonials.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">
@@ -66,7 +70,7 @@
                             <small class="text-muted">Only published testimonials appear on the public website.</small>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group d-flex justify-content-end gap-2 flex-wrap">
                             <button type="submit" class="btn btn-success">Create Testimonial</button>
                             <a href="{{ route('admin.cms.testimonials.index') }}" class="btn btn-secondary">Cancel</a>
                         </div>

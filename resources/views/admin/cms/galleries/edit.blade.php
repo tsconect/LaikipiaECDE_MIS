@@ -3,21 +3,15 @@
 @section('cms-title', 'Edit Gallery')
 @section('cms-description', 'Manage gallery images and settings')
 
-@section('cms-action')
-<a href="{{ route('admin.cms.galleries.index') }}" class="btn btn-secondary">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
-@endsection
-
 @section('cms-content')
 <div class="row">
     <div class="col-lg-8">
         <div class="card mb-4">
-            <div class="card-header">
+            <div class="card-header btn-success">
                 <i class="fas fa-cog"></i> Gallery Settings
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.cms.galleries.update', $gallery) }}" method="POST">
+                <form class="modern-form-shell" action="{{ route('admin.cms.galleries.update', $gallery) }}" method="POST">
                     @csrf
                     @method('PUT')
 
@@ -51,7 +45,7 @@
         </div>
 
         <div class="card">
-            <div class="card-header">
+            <div class="card-header btn-success">
                 <i class="fas fa-images"></i> Gallery Images ({{ $gallery->images()->count() }})
             </div>
             <div class="card-body">
@@ -80,7 +74,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="{{ route('admin.cms.gallery-images.delete', $image) }}" method="POST" style="display:inline;">
+                                        <form action="{{ route('admin.cms.gallery-images.delete', $image) }}" method="POST" class="inline-form modern-form-shell">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -100,11 +94,11 @@
 
     <div class="col-lg-4">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header btn-success">
                 <i class="fas fa-cloud-upload-alt"></i> Upload Images
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.cms.galleries.upload-images', $gallery) }}" method="POST" enctype="multipart/form-data">
+                <form class="modern-form-shell" action="{{ route('admin.cms.galleries.upload-images', $gallery) }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-3">

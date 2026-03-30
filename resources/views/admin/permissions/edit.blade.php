@@ -17,11 +17,11 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('admin.permissions.update', $permission->id) }}">
+        <form class="modern-form-shell" method="POST" action="{{ route('admin.permissions.update', $permission->id) }}">
             @csrf
             @method('PUT')
-            <div class="card p-2 shadow-sm mb-4">
-                <div class="card-header bg-success text-white">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header btn-success">
                     <h5 class="mb-0">Edit Permission</h5>
                 </div>
                 <div class="card-body">

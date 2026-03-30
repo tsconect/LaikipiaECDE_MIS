@@ -6,48 +6,6 @@
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-<style>
-.small-text {
-    font-size: 13px;
-    color: #6c757d;
-}
-
-.label {
-    font-weight: 700;
-    font-size: 15px;
-}
-
-.value {
-    font-size: 14px;
-}
-
-.profile-card {
-    border-radius: 12px;
-    border: none;
-}
-
-.nav-tabs .nav-link {
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.nav-tabs .nav-link i {
-    margin-right: 5px;
-}
-
-.table {
-    font-size: 13px;
-}
-
-.profile-img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #eee;
-}
-</style>
-
 <div class="card mb-3 shadow-sm border-0" style="border-radius:12px;">
     <div class="card-body d-flex align-items-center justify-content-between flex-wrap">
 
@@ -204,35 +162,30 @@
 
         <!-- NEXT OF KIN -->
         <div class="tab-pane fade" id="nextofkin">
-            <table  class="table table-hover table-striped table-bordered">
-                <thead>
-                    <tr>
-                        <th>S/N </th>
-                        <th>Name </th>
-                        <th>Relationship</th>
-                        
-                        <th>ID Number</th>
-                        <th>Phone Number</th>
-                        <th>Village</th>
-                        
-            
-                        
-              
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <td>1</td>
-                    <td>{{$learner->parent->first_name??'-' }} {{$learner->parent->middle_name??'-' }} {{$learner->parent->last_name??'-' }}</td>
-                    <td>{{$learner->parent->relationship??'-' }}</td>
-
-                    <td>{{$learner->parent->id_number??'-' }}</td>
-                    <td>{{$learner->parent->phone_number??'-' }}</td>
-                    <td>{{$learner->parent->village??'-' }}</td>
-                    
-
-                </tfoot>
-            </table>
+            <div class="table-card">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>NAME</th>
+                            <th>RELATIONSHIP</th>
+                            <th>ID NUMBER</th>
+                            <th>PHONE NUMBER</th>
+                            <th>VILLAGE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-id">1</td>
+                            <td>{{ $learner->parent->first_name ?? '-' }} {{ $learner->parent->middle_name ?? '-' }} {{ $learner->parent->last_name ?? '-' }}</td>
+                            <td>{{ $learner->parent->relationship ?? '-' }}</td>
+                            <td>{{ $learner->parent->id_number ?? '-' }}</td>
+                            <td>{{ $learner->parent->phone_number ?? '-' }}</td>
+                            <td>{{ $learner->parent->village ?? '-' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
        

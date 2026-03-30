@@ -6,7 +6,7 @@
 @section('content')
 
 <div class="card-body">
-    <div class="container mt-4">
+    <div class="container mt-4 modern-form-page">
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -16,22 +16,22 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.teachers.update', $teacher->id) }}">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.teachers.update', $teacher->id) }}" class="modern-form-shell">
         @csrf
         @method('PUT')
 
 
         <!-- ================= PERSONAL INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card p-0 shadow-sm mb-4 modern-form-card">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success modern-form-card-header">
                 <h5 class="mb-0">Edit Teacher</h5>
             </div>
 
-            <div class="card-body">
+            <div class="card-body modern-form-body">
 
-               <div class="row g-4">
+               <div class="row g-4 modern-form-grid">
                     @if(session()->has('success'))
                         <div class="alert alert-success">
                             {{ session()->get('success') }}
@@ -437,8 +437,8 @@
                     </div>
 
                 </div>
-                <div class="text-right">
-                    <button class="btn btn-success" type="submit">
+                <div class="text-right modern-form-footer">
+                    <button class="btn btn-success modern-form-submit" type="submit">
                         Update
                     </button>
                 </div>
@@ -471,13 +471,15 @@
     });
 </script>
 
- <script>
-                                // Pass PHP variables to JavaScript
-    const data = {
-        counties: @json($counties),
-        constituencies: @json($sub_counties),
-        wards: @json($wards),
+<input type="hidden" id="counties-data" value='{{ json_encode($counties) }}'>
+<input type="hidden" id="constituencies-data" value='{{ json_encode($sub_counties) }}'>
+<input type="hidden" id="wards-data" value='{{ json_encode($wards) }}'>
 
+<script>
+    const data = {
+        counties: JSON.parse(document.getElementById('counties-data').value || '[]'),
+        constituencies: JSON.parse(document.getElementById('constituencies-data').value || '[]'),
+        wards: JSON.parse(document.getElementById('wards-data').value || '[]'),
     };
 </script>
 

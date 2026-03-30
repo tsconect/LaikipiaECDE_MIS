@@ -7,16 +7,17 @@
 @section('content')
 @include('flash-message')
 
-<div class="card">
-    <div class="card-header btn-success">
-        <h5>Edit Student</h5>
+<div class="container mt-4 modern-form-page">
+<div class="card modern-form-card">
+    <div class="card-header btn-success modern-form-card-header">
+        <h5 class="mb-0">Edit Student</h5>
     </div>
-    <div class="card-body">
-        <form action="{{ route('admin.ecde-students.update', $ecde_student->id) }}" method="POST">
+    <div class="card-body modern-form-body">
+        <form class="modern-form-shell" action="{{ route('admin.ecde-students.update', $ecde_student->id) }}" method="POST" class="modern-form-shell">
             @csrf
             @method('PUT')
 
-            <div class="form-row">
+            <div class="form-row modern-form-grid">
                 <div class="form-group col-md-4">
                     <label>First Name</label>
                     <input type="text" name="first_name" class="form-control" value="{{ $ecde_student->first_name }}" required>
@@ -31,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row modern-form-grid">
                 <div class="form-group col-md-4">
                     <label>Reg Number</label>
                     <input type="text" name="reg_no" class="form-control" value="{{ $ecde_student->reg_number }}" required>
@@ -49,7 +50,7 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row modern-form-grid">
                 <div class="form-group col-md-4">
                     <label>PWD Status</label>
                     <select name="pwd_status" class="form-control" required>
@@ -67,7 +68,7 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row modern-form-grid">
                 <div class="form-group col-md-3">
                     <label>Student Type</label>
                     <input type="number" name="student_type_id" class="form-control" value="{{ $ecde_student->student_type_id }}">
@@ -90,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="form-row">
+            <div class="form-row modern-form-grid">
                 <div class="form-group col-md-6">
                     <label>School</label>
                     <select name="school_id" class="form-control" required>
@@ -101,10 +102,11 @@
                 </div>
             </div>
 
-            <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-primary">Update Student</button>
+            <div class="d-flex justify-content-end modern-form-footer">
+                <button type="submit" class="btn btn-primary modern-form-submit">Update Student</button>
             </div>
         </form>
     </div>
+</div>
 </div>
 @endsection

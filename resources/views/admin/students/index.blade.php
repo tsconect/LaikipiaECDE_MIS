@@ -5,78 +5,66 @@
 @endsection
 
 @section('content')
-    @include('flash-message')
-      <div class="card-header btn-success">
-            <h5>ECDE <small>STUDENTS</small></h5>
-        </div>
-<div class="card ">
+@include('flash-message')
 
-
-
-    <div class="card-body">
-
-
-        <h5 class="card-title text-right"> <a href="{{route('admin.ecde-students.create')}}"><button class="btn btn-danger ">
-                    <i class="fa fa-plus"></i> New ECDE STUDENTS</button></a> </h5>
-        <div class=" card-body">
-            <div class="table-responsive">
-                <table  id="dt-basic2" class="table table-hover table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID </th>
-                            <th>Full Names</th>
-                            <th>Reg No</th>
-
-                            <th>Gender</th>
-                            <th>School Posted</th>
-                           <th>Age</th>  
-                            <th>Action</th>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($students as $item)
-                        <tr>
-                            <td>{{$item->id}}</td>
-                            <td>{{$item->first_name . ' '. $item->middle_name . ' '. $item->last_name}}  </td>
-                            <td>{{$item->reg_number}}</td>
-                            <td>{{$item->gender}}</td>
-                            <td>
-                                {{$item->school->school_name??'-'}}
-                            </td>
-                            <td>
-                                @if($item->dob)
-                                {{\Carbon\Carbon::parse($item->dob)->age}}
-                                @endif
-                            </td>
-
-
-                            <td>
-                                <a class="btn btn-outline-primary" title="View Student"
-                                href="{{ route('admin.ecde-students.show', $item->id) }}">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-
-                                <a class="btn btn-outline-primary" title="Edit Teacher"
-                                    href="{{ route('admin.ecde-students.edit', $item->id) }}">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-
-                                <form action="{{ route('admin.ecde-students.destroy', $item->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Delete this student?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="action-btn delete" title="Delete"><svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg></button>
-                                </form>
-</div></td>
-                        </tr>
-                        @endforeach
-
-                        </tfoot>
-                </table>
-            </div>
+<div class="table-card">
+    <div class="table-banner">
+        <div class="table-banner-title"><span>ECDE</span> STUDENTS</div>
+        <div class="banner-actions">
+            <a href="{{ route('admin.ecde-students.create') }}">
+                <button class="btn-new" type="button">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                    New ECDE Student
+                </button>
+            </a>
         </div>
     </div>
 
+    <table class="data-table" id="studentsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FULL NAMES</th>
+                <th>REG NO</th>
+                <th>GENDER</th>
+                <th>SCHOOL POSTED</th>
+                <th>AGE</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($students as $item)
+                <tr>
+                    <td class="td-id">{{ $item->id }}</td>
+                    <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
+                    <td>{{ $item->reg_number }}</td>
+                    <td>{{ $item->gender }}</td>
+                    <td>{{ $item->school->school_name ?? '-' }}</td>
+                    <td>
+                        @if($item->dob)
+                            {{ \Carbon\Carbon::parse($item->dob)->age }}
+                        @endif
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <a class="act-btn view" title="View Student" href="{{ route('admin.ecde-students.show', $item->id) }}">
+                                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                            </a>
+                            <a class="act-btn edit" title="Edit Student" href="{{ route('admin.ecde-students.edit', $item->id) }}">
+                                <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/></svg>
+                            </a>
+                            <form action="{{ route('admin.ecde-students.destroy', $item->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this student?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="act-btn delete" title="Delete">
+                                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
-
 @endsection

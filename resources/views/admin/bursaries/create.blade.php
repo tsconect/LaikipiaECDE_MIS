@@ -8,7 +8,7 @@
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
                     data-class="closed-sidebar">
                     <span class="hamburger-box">
-                        <span class="hamburger-inner" style="background-color:#ffffff"></span>
+                        <span class="hamburger-inner"></span>
                     </span>
                 </button>
             </div>
@@ -50,7 +50,7 @@
     </div>
 @endif
     <div class="card-body">
-        <form class="" action="{{route('admin.bursary.application.store')}}" method="post">
+        <form class=" modern-form-shell" action="{{route('admin.bursary.application.store')}}" method="post">
             @csrf
             <div class="form-row">
                 <div class="col-md-6">

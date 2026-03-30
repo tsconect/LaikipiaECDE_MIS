@@ -3,19 +3,13 @@
 @section('cms-title', 'Create New Gallery')
 @section('cms-description', 'Set up a new photo gallery')
 
-@section('cms-action')
-<a href="{{ route('admin.cms.galleries.index') }}" class="btn btn-secondary">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
-@endsection
-
 @section('cms-content')
 <div class="card">
-    <div class="card-header">
+    <div class="card-header btn-success">
         <i class="fas fa-plus-circle"></i> Gallery Information
     </div>
     <div class="card-body">
-        <form action="{{ route('admin.cms.galleries.store') }}" method="POST">
+        <form class="modern-form-shell" action="{{ route('admin.cms.galleries.store') }}" method="POST">
             @csrf
 
             <div class="row">
@@ -49,10 +43,12 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-success">
-                        <i class="fas fa-save"></i> Create Gallery
-                    </button>
-                    <a href="{{ route('admin.cms.galleries.index') }}" class="btn btn-secondary">Cancel</a>
+                    <div class="d-flex justify-content-end gap-2 flex-wrap">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i> Create Gallery
+                        </button>
+                        <a href="{{ route('admin.cms.galleries.index') }}" class="btn btn-secondary">Cancel</a>
+                    </div>
                 </div>
 
                 <div class="col-lg-4">

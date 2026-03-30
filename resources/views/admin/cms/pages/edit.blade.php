@@ -3,22 +3,16 @@
 @section('cms-title', 'Edit Page')
 @section('cms-description', 'Update page information')
 
-@section('cms-action')
-<a href="{{ route('admin.cms.pages.index') }}" class="btn btn-secondary">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
-@endsection
-
 @section('cms-content')
 <div class="row">
     <div class="col-lg-8">
-        <form action="{{ route('admin.cms.pages.update', $page) }}" method="POST" enctype="multipart/form-data">
+        <form class="modern-form-shell" action="{{ route('admin.cms.pages.update', $page) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
             <!-- Basic Information -->
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-header btn-success">
                     <i class="fas fa-info-circle"></i> Page Information
                 </div>
                 <div class="card-body">
@@ -54,7 +48,7 @@
 
             <!-- Featured Image -->
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-header btn-success">
                     <i class="fas fa-image"></i> Featured Image
                 </div>
                 <div class="card-body">
@@ -80,7 +74,7 @@
 
             <!-- Settings -->
             <div class="card mb-4">
-                <div class="card-header">
+                <div class="card-header btn-success">
                     <i class="fas fa-cog"></i> Settings
                 </div>
                 <div class="card-body">
@@ -107,7 +101,7 @@
             </div>
 
             <!-- Actions -->
-            <div class="mb-4">
+            <div class="mb-4 d-flex justify-content-end gap-2 flex-wrap">
                 <button type="submit" class="btn btn-success btn-lg">
                     <i class="fas fa-save"></i> Update Page
                 </button>
@@ -120,7 +114,7 @@
 
     <div class="col-lg-4">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header btn-success">
                 <i class="fas fa-lightbulb"></i> Tips
             </div>
             <div class="card-body">

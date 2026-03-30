@@ -19,12 +19,12 @@
     <div class="main-card mb-3 card col-12">
         <div class="card-body">
             @if ($dpt)
-                <h5 class="card-title">Create Vocational Training Deptment Details <small>within
+                <h5 class="card-title modern-form-card-header-title">Create Vocational Training Deptment Details <small>within
                         {{ App\Models\VTC::find($dpt)->name }}</small></h5>
             @else
-                <h5 class="card-title">Create Vocational Training Deptment Details </small></h5>
+                <h5 class="card-title modern-form-card-header-title">Create Vocational Training Deptment Details </small></h5>
             @endif
-            <form class="" action="{{ route('admin.vtc_dept.store') }}" method="post">
+            <form class=" modern-form-shell" action="{{ route('admin.vtc_dept.store') }}" method="post">
                 @csrf
                 <div class="form-row">
 

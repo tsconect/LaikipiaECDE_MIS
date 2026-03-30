@@ -16,15 +16,15 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.user-documents.update', $userDocument->id) }}" enctype="multipart/form-data">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.user-documents.update', $userDocument->id) }}" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <!-- ================= DOCUMENT INFORMATION ================= -->
 
-        <div class="card p-2 shadow-sm mb-4">
+        <div class="card shadow-sm mb-4">
 
-            <div class="card-header bg-success text-white">
+            <div class="card-header btn-success">
                 <h5 class="mb-0">Edit User Document</h5>
             </div>
             <div class="form-row p-3">

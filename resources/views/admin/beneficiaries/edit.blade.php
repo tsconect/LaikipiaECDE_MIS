@@ -12,7 +12,7 @@
         <h5>Edit Beneficiary</h5>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ route('admin.beneficiaries.update', $beneficiary->id) }}">
+        <form class="modern-form-shell" method="POST" action="{{ route('admin.beneficiaries.update', $beneficiary->id) }}">
             @csrf
             @method('PUT')
 

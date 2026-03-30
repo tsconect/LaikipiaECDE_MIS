@@ -2,23 +2,27 @@
 
 @section('cms-title', 'Blog Posts Management')
 @section('cms-description', 'Create, edit, and manage your blog posts')
-
-@section('cms-action')
-<a href="{{ route('admin.cms.posts.create') }}" class="btn btn-primary">
-    <i class="fas fa-plus"></i> Create New Post
-</a>
-@endsection
+@section('hide-cms-header', true)
 
 @section('cms-content')
-<div class="card">
-    <div class="card-header">
-        <i class="fas fa-newspaper"></i> All Posts
+<div class="table-card">
+    <div class="table-banner">
+        <div class="table-banner-title"><span>BLOG</span> POSTS</div>
+        <div class="banner-actions">
+            <a href="{{ route('admin.cms.posts.create') }}">
+                <button class="btn-new">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                    Create New Post
+                </button>
+            </a>
+        </div>
     </div>
-    <div class="card-body">
+
+    <div class="section-body">
         @if($posts->count() > 0)
             <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
+                <table class="data-table" id="postsTable">
+                    <thead>
                         <tr>
                             <th>Title</th>
                             <th>Author</th>
@@ -46,13 +50,13 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <a href="{{ route('admin.cms.posts.edit', $post) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('admin.cms.posts.edit', $post) }}" class="btn btn-sm btn-warning" title="Edit Post">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('admin.cms.posts.destroy', $post) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('admin.cms.posts.destroy', $post) }}" method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to delete this post?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
@@ -64,17 +68,18 @@
                 </table>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <div class="text-muted small">
+            <div class="table-footer mt-3">
+                <div class="showing-text">
                     Showing {{ $posts->firstItem() }} to {{ $posts->lastItem() }} of {{ $posts->total() }} posts
                 </div>
                 {{ $posts->links() }}
             </div>
         @else
-            <div class="alert alert-info text-center py-5">
-                <i class="fas fa-info-circle fa-2x mb-3"></i>
-                <h5>No posts found</h5>
-                <p class="mb-0">Start by <a href="{{ route('admin.cms.posts.create') }}">creating a new post</a></p>
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <p>No posts found. <a href="{{ route('admin.cms.posts.create') }}">Create your first post</a>.</p>
             </div>
         @endif
     </div>

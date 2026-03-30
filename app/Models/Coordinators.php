@@ -15,6 +15,10 @@ class Coordinators extends Model
         return $this->hasOne(User::class,'id','user_id');
     }
     
+    function constituency(){
+        return $this->belongsTo(Constituency::class);
+    }
+    
     function education(){
         return $this->hasOne(TeacherEducation::class,'teacher_id','id');
     }

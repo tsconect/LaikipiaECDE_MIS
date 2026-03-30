@@ -6,7 +6,7 @@
                 <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
                     data-class="closed-sidebar">
                     <span class="hamburger-box">
-                        <span class="hamburger-inner" style="background-color:#ffffff"></span>
+                        <span class="hamburger-inner"></span>
                     </span>
                 </button>
             </div>
