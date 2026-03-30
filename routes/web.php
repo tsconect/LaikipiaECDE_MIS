@@ -56,6 +56,7 @@ Route::get('/testimonials', [WebController::class, 'testimonials'])->name('cms.t
 Route::get('/announcements', [WebController::class, 'announcements'])->name('cms.announcements');
 Route::get('/announcements/{id}', [WebController::class, 'showAnnouncement'])->name('cms.announcement.show');
 Route::get('/ecde-schools', [WebController::class, 'schools'])->name('cms.schools');
+Route::get('/ecde-schools/{school}', [WebController::class, 'showSchool'])->name('cms.schools.show');
 Route::get('/contact', [WebController::class, 'contactForm'])->name('cms.contact');
 Route::post('/contact', [WebController::class, 'submitContact'])->name('cms.contact.submit');
 

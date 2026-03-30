@@ -12,11 +12,26 @@ class EcdeSchools extends Model
     protected $guarded = [];
 
     public function ward(){
-        return $this->hasOne(Ward::class,'id','ward_id');
+        return $this->belongsTo(Ward::class, 'ward_id', 'id');
     }
 
     public function teacher(){
-        return $this->hasOne(Teacher::class,'id','teacher_id');
+        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
+    }
+
+    public function county()
+    {
+        return $this->belongsTo(County::class, 'county_id', 'county_id');
+    }
+
+    public function subCounty()
+    {
+        return $this->belongsTo(Constituency::class, 'subcounty_id', 'constituency_id');
+    }
+
+    public function subLocation()
+    {
+        return $this->belongsTo(SubLocation::class, 'sub_location_id', 'id');
     }
 
     
