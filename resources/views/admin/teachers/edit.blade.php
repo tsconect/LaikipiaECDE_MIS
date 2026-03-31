@@ -16,7 +16,7 @@
                 </ul>
             </div>
         @endif
-    <form class="modern-form-shell" method="POST" action="{{ route('admin.teachers.update', $teacher->id) }}" class="modern-form-shell">
+    <form class="modern-form-shell" method="POST" action="{{ route('admin.teachers.update', $teacher->id) }}" class="modern-form-shell" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -108,7 +108,11 @@
 
                         <!-- Conditional PWD Fields -->
                         <div id="pwd_fields" class="col-md-12 row g-4" style="display: none;">
-                           <div class="col-md-6 mb-3">
+                              <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">PLWD Number</label>
+                                <input name="plwd_number" id="plwd_number" type="text" class="form-control" placeholder="PLWD-TS128/2022" value="{{ old('plwd_number') }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
                                 <label class="form-label fw-semibold">Disability Type</label>
                                 <select name="disability_type" class="form-control @error('disability_type') is-invalid @enderror">
                                     <option value="">Select type</option>
@@ -210,6 +214,22 @@
                             <small class="text-danger">{{ $message }}</small>
                         @enderror
                     </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="ippd_number">IPPd Number</label>
+
+                        <input
+                            type="text"
+                            name="ippd_number"
+                            id="ippd_number"
+                            class="form-control"
+                            placeholder="Enter IPPD Number"
+                            value="{{ old('ippd_number') }}"
+                        >
+
+                        @error('ippd_number')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
 
 
                     <div class="col-md-4 mb-3">
@@ -257,6 +277,7 @@
                             name="dob"
                             id="dob"
                             class="form-control"
+                            max="{{ date('Y-m-d', strtotime('-18 years')) }}"
                             value="{{  $teacher->dob }}"
                         >
 
@@ -346,15 +367,50 @@
                     <!-- Terms of Service -->
                     <div class="col-md-4">
                         <label class="form-label fw-semibold">Terms of Service <span class="text-danger">*</span></label>
-                        <select name="terms_of_service" class="form-control @error('terms_of_service') is-invalid @enderror" required>
+                        <select name="terms_of_service" class="form-control @error('terms_of_service') is-invalid @enderror"  onchange="showContractExpiry()"  required>
                             <option value="">Select terms</option>
-                            <option value="Permanent" {{ $teacher->terms_of_service == 'Permanent' ? 'selected' : '' }}>Permanent</option>
+                            <option value="Permanent" {{ $teacher->terms_of_service == 'Permanent' ? 'selected' : '' }}>Permanent & Pensionable</option>
                             <option value="Contract" {{  $teacher->terms_of_service == 'Contract' ? 'selected' : '' }}>Contract</option>
                         </select>
                         @error('terms_of_service')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+                     <div class="col-md-4 mb-3" id="contract_expiry_div" style="display: none">
+                        <label for="contract_expiry">Contract Expiry</label>
+
+                        <input
+                            type="date"
+                            name="contract_expiry"
+                            id="contract_expiry"
+                            class="form-control"
+                            value="{{ old('contract_expiry') }}"
+                            placeholder="Enter contract expiry date"
+                            {{-- cannot be in the past --}}
+                            min="{{ date('Y-m-d') }}"
+                            
+                        >
+
+                        @error('contract_expiry')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+
+                    </div>
+
+                    <script type="text/javascript">
+                        function showContractExpiry()
+                        {
+                            if(document.getElementById('terms_of_service').value == 'Contract')
+                            {
+                                document.getElementById('contract_expiry_div').style.display = 'block';
+                            }
+                            else
+                            {
+                                document.getElementById('contract_expiry_div').style.display = 'none';
+                            }
+                        }
+                    </script>
 
                     <div class="col-md-4 mb-3">
 
@@ -363,17 +419,13 @@
                         <select
                             name="job_group_id"
                             id="job_group"
+                            required
                             class="form-control"
                         >
-                            <option value="">Select Job Group</option>
-                            <option value="K">K</option>
-                            <option value="L">L</option>
-                            <option value="M">M</option>
-                            <option value="N">N</option>
-                            <option value="O">O</option>
-                            <option value="P">P</option>
-                            <option value="Q">Q</option>
-                            <option value="R">R</option>
+                           <option value="">Select Job Group</option>
+                            @foreach($job_groups as $job_group)
+                                <option value="{{ $job_group->id }}" {{ old('job_group_id') == $job_group->id ? 'selected' : '' }}>{{ $job_group->name }}</option>
+                            @endforeach
                         </select>
                     </div>
  <!-- Location Fields (Cascading) -->
@@ -415,20 +467,35 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-4">
-                            <label class="form-label fw-semibold">School <span class="text-danger">*</span></label>
-                            <select name="school_id" id="schoolSelect" 
-                                    class="form-control @error('school_id') is-invalid @enderror"
-                                    >
-                                <option value="">Select school</option>
-                                @foreach($ecde_schools as $school)
-                                    <option value="{{ $school->id }}"  @if($teacher->school_id == $school->id) selected @endif>{{ $school->school_name }}</option>
-                                @endforeach
-                            </select>
-                            @error('school_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                    <h5 class="p-2 text-success">Deployment Information</h5>
+
+                        
+                             <div class="col-md-4 " >
+                                <div class="position-relative form-group">
+                                    <label for="school_id" class=""> School </label>
+                                    <select name="school_id" id="school_id" class="form-control">
+                                        <option value="">Select School</option>
+                                        @foreach ($schools as $value)
+                                            <option value="{{ $value->id ?? null }}" @if($teacher->school_id == $value->id) selected @endif>{{ $value->school_name ?? null }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                     <div class="col-md-4">
+                            <div class="position-relative form-group">
+                                <label for="start_date" class="">Start Date</label>
+                                <input name="start_date" id="start_date" value="{{ old('start_date') }}" placeholder="start date" type="date" class="form-control">
+                            </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <div class="position-relative form-group">
+                                <label for="file_attachment" class="">File Attachment (optional)</label>
+                                <input name="file_attachment" id="file_attachment" value="{{ old('file_attachment') }}" type="file" class="form-control" accept=".pdf">
+                            </div>
+                            {{-- <small class="text-muted">File attachment is optional</small> --}}
+                        </div>
+
 
                         @error('job_group')
                             <small class="text-danger">{{ $message }}</small>

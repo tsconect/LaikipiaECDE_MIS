@@ -20,6 +20,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\SubLocationController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\TeacherDeploymentHistoryController;
 use App\Http\Controllers\UnionController;
 use App\Http\Controllers\UserDocumentController;
 use App\Http\Controllers\UsersController;
@@ -95,6 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('education-histories', EducationHistoryController::class);
             Route::resource('user-unions', UserUnionController::class);
             Route::resource('user-documents', UserDocumentController::class);
+            Route::resource('deployment-histories', TeacherDeploymentHistoryController::class);
             Route::resource('job-groups', JobGroupController::class);
             Route::get('my-account', [UsersController::class, 'myAccount'])->name('my-account');
 

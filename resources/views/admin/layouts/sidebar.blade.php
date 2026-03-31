@@ -78,6 +78,7 @@
                 <a class="sub-link" href="{{ route('admin.education-histories.index') }}">Academic Qualifications</a>
                 <a class="sub-link" href="{{ route('admin.user-unions.index') }}">My Unions</a>
                 <a class="sub-link" href="{{ route('admin.user-documents.index') }}">My Documents</a>
+                <a class="sub-link" href="{{ route('admin.deployment-histories.index') }}">My Deployment History</a>
             </div>
         </div>
 

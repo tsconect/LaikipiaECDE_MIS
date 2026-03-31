@@ -11,12 +11,12 @@
         <div class="table-banner">
             <div class="table-banner-title"><span>ECDE</span> TEACHERS</div>
             <div class="banner-actions">
-                <a href="{{ route('admin.generate_staff_returns') }}">
+                {{-- <a href="{{ route('admin.generate_staff_returns') }}">
                     <button class="btn-generate">
                         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
                         Generate {{ date('F, Y') }} Staff Returns
                     </button>
-                </a>
+                </a> --}}
                 <a href="{{ route('admin.teachers.create') }}">
                     <button class="btn-new">
                         <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
@@ -26,55 +26,20 @@
             </div>
         </div>
 
-        <!-- Toolbar -->
-        <div class="table-toolbar">
-            <div class="toolbar-left">
-                <div class="records-wrap">
-                    <select class="records-select" id="perPage">
-                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
-                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                        <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
-                    </select>
-                    <span>records per page</span>
-                </div>
-                <button class="toolbar-btn" onclick="copyTable()">
-                    <svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 000 2h4a1 1 0 000-2H8zM3 7a1 1 0 011-1h12a1 1 0 011 1v1a1 1 0 01-.293.707L13 12.414V17a1 1 0 01-.553.894l-4-2A1 1 0 018 15v-2.586L3.293 8.707A1 1 0 013 8V7z"/></svg>
-                    Copy
-                </button>
-                <button class="toolbar-btn" onclick="exportCSV()">
-                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-                    CSV
-                </button>
-                <button class="toolbar-btn" onclick="printTable()">
-                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd"/></svg>
-                    Print
-                </button>
-                <button class="toolbar-btn">
-                    <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
-                    Column visibility ▾
-                </button>
-            </div>
-            <div class="toolbar-right">
-                <div class="search-wrap">
-                    <svg class="search-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
-                    <input class="search-input" type="text" placeholder="Search..." id="searchInput" value="{{ request('search') }}">
-                </div>
-            </div>
-        </div>
-
-        <!-- Table -->
-        <table class="data-table">
+       
+<div class="table-responsive p-2">
+        <!-- Table --> 
+        <table class="data-table p-3">
             <thead>
                 <tr>
-                    <th>ID <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>NAME <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>EMAIL <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>PHONE <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>ID NUMBER <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>AGE <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>RETIREMENT DATE <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
-                    <th>GENDER <span class="sort-arrows"><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 0l2 3H2L4 0z"/></svg><svg viewBox="0 0 8 8" fill="currentColor"><path d="M4 8L2 5h4L4 8z"/></svg></span></th>
+                    <th>ID  </th>
+                    <th>NAME  </th>
+                    <th>EMAIL  </th>
+                    <th>PHONE  </th>
+                    <th>ID NUMBER  </th>
+                    <th>AGE  </th>
+                    <th>RETIREMENT DATE  </th>
+                    <th>GENDER  </th>
                     <th>ACTION</th>
                 </tr>
             </thead>
@@ -115,7 +80,7 @@
                 @endforeach
             </tbody>
         </table>
-
+</div>
         <!-- Footer / Pagination -->
         <div class="table-footer">
             <div class="showing-text">Showing page {{ $data->currentPage() }} of {{ $data->lastPage() }}</div>

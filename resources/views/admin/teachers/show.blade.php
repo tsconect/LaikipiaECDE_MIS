@@ -65,6 +65,11 @@
                     <i class="bi bi-folder-fill"></i> Documents
                 </button>
             </li>
+             <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deployment">
+                    <i class="bi bi-diagram-3-fill"></i> Deployment History
+                </button>
+            </li>
         </ul>
 
         {{-- Tab Content --}}
@@ -170,7 +175,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($next_of_kins as $item)
+                            @foreach($next_of_kins as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
@@ -179,9 +184,8 @@
                                     <td>{{ $item->id_number ?? '—' }}</td>
                                     <td>{{ $item->phone_number ?? '—' }}</td>
                                 </tr>
-                            @empty
-                                <tr><td colspan="6" class="text-center text-muted py-4">No next of kin records found.</td></tr>
-                            @endforelse
+                        
+                            @endforeach
                         </tbody>
                     </table>
         </div>
@@ -205,7 +209,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($beneficiaries as $item)
+                            @foreach ($beneficiaries as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
@@ -214,9 +218,7 @@
                                     <td>{{ $item->id_number ?? '—' }}</td>
                                     <td>{{ $item->phone_number ?? '—' }}</td>
                                 </tr>
-                            @empty
-                                <tr><td colspan="6" class="text-center text-muted py-4">No beneficiary records found.</td></tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
         </div>
@@ -238,16 +240,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($unions as $item)
+                            @foreach ($unions as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at->format('d M Y') }}</td>
                                     <td>{{ $item->union->name ?? '—' }}</td>
                                     <td>{{ $item->membership_number ?? '—' }}</td>
                                 </tr>
-                            @empty
-                                <tr><td colspan="4" class="text-center text-muted py-4">No union memberships found.</td></tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
         </div>
@@ -273,7 +273,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($academic_histories as $item)
+                            @foreach ($academic_histories as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at->format('d M Y') }}</td>
@@ -284,9 +284,7 @@
                                     <td>{{ $item->end_date ?? '—' }}</td>
                                     <td>{{ $item->certificate_no ?? '—' }}</td>
                                 </tr>
-                            @empty
-                                <tr><td colspan="8" class="text-center text-muted py-4">No academic records found.</td></tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
         </div>
@@ -298,7 +296,7 @@
                 <p class="section-title">Uploaded Documents</p>
                 <div class="table-responsive">
                     <div class="table-card">
-            <table class="data-table">
+                    <table class="data-table">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -308,7 +306,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($documents as $item)
+                            @foreach($documents as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->created_at->format('d M Y') }}</td>
@@ -323,14 +321,63 @@
                                         @endif
                                     </td>
                                 </tr>
-                            @empty
-                                <tr><td colspan="4" class="text-center text-muted py-4">No documents uploaded.</td></tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
-        </div>
+                    </div>
                 </div>
             </div>
+
+            {{-- DEPLOYMENT HISTORY --}}
+
+                <div class="tab-pane fade" id="deployment">
+                    <p class="section-title">Deployment History</p>
+               
+                        <div class="table-card p-3">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>School Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Period</th>
+                                    
+                                    <th>File Attachment</th>
+ 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($deployments as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->school->school_name }}</td>
+                                        <td>{{ $item->start_date }}</td>
+                                        <td>{{ $item->end_date ?? 'Present' }}</td>
+                                        <td>
+                                            @php
+                                                $start = \Carbon\Carbon::parse($item->start_date);
+                                                $end = $item->end_date ? \Carbon\Carbon::parse($item->end_date) : \Carbon\Carbon::now();
+                                                $period = $start->diffForHumans($end, true);
+                                            @endphp
+                                            {{ $period }}
+                                        </td>
+                                        <td>
+                                            @if ($item->file_attachment)
+                                                <a href="{{ asset('storage/' . $item->file_attachment) }}" target="_blank">
+                                                    View Attachment
+                                                </a>
+                                            @else
+                                                No Attachment
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        </div>
+                  
+                </div>
 
         </div>{{-- /tab-content --}}
     </div>
