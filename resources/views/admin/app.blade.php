@@ -377,6 +377,28 @@ Swal.fire({
                 });
             });
         });
+
+       new DataTable('.data-table', {
+            paging: true,
+            info: false, // hide "Showing page..."
+            lengthMenu: [5, 10, 25, 50, 100],
+            pageLength: 10,
+            order: [],
+
+            // ONLY show: length menu (l) + search (f) + table (t) + pagination (p)
+            dom: 'lftp',
+
+            language: {
+                lengthMenu: "_MENU_",
+                search: "",
+                searchPlaceholder: "Search...",
+                zeroRecords: "No records available",
+                paginate: {
+                    previous: '<i class="fas fa-angle-left"></i>',
+                    next: '<i class="fas fa-angle-right"></i>'
+                }
+            }
+        });
 </script>
 <script>
     (function () {
@@ -452,6 +474,19 @@ Swal.fire({
     }
 </script>
 
-
+<style>
+    input:disabled {
+        background-color: #f5f5f5 !important;
+  color: #9e9e9e !important;
+  border-color: #ddd !important;
+  cursor: not-allowed !important;
+    }
+    select:disabled {
+         background-color: #f5f5f5 !important;
+  color: #9e9e9e !important;
+  border-color: #ddd !important;
+  cursor: not-allowed !important;
+    }
+</style>
 
 </html>

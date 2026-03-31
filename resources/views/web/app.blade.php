@@ -292,8 +292,7 @@
 <!-- NAV -->
 <nav>
   <a href="{{ url('/') }}" class="nav-brand">
-    <img src="{{ !empty($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Coat_of_arms_of_Kenya.svg/800px-Coat_of_arms_of_Kenya.svg.png' }}" alt="Logo" onerror="this.style.display='none'">
-    <span>{{ $settings['site_name'] ?? 'Laikipia ECDE' }}</span>
+    <img src="{{asset('assets/images/laikipia.png')}}" alt="Logo"> Laikipia ECDE
   </a>
   <div class="nav-links">
     <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>

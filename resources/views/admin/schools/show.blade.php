@@ -98,8 +98,8 @@
             $abs = $attendances->where('date', $today)->where('status', 'absent')->count();
             $a_pct = $total_t > 0 ? round(($abs / $total_t) * 100) : 0;
           @endphp
-          <div class="sc-value">{{ $a_pct }}%</div>
-          <div class="sc-sub">{{ $abs }} absent today</div>
+          <div class="sc-value"> {{ $abs }} </div>
+          <div class="sc-sub">{{ $a_pct }}%  absent today</div>
         </div>
         <div class="sc-card violet">
           <div class="sc-icon"><i class="bi bi-circle"></i></div>
@@ -172,7 +172,7 @@
           </div>
       @if($learners->count() > 0)
        
-        <table class="data-table dt-admin">
+        <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -202,7 +202,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+        
       @else
         <div class="empty-tab">
           <i class="bi bi-circle"></i>
@@ -221,7 +221,7 @@
           </div>
       @if($teachers->count() > 0)
      
-        <table class="data-table dt-admin">
+        <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -251,7 +251,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+       
       @else
         <div class="empty-tab">
           <i class="bi bi-circle"></i>
@@ -263,9 +263,15 @@
 
     <!-- ══ ATTENDANCE SHEET TAB ══ -->
     <div class="tab-panel" id="tab-attendance">
+      <div class="table-actions p-3 text-right">
+             <a  style="font-size: 12px;" href="{{ route('admin.learner-attendances.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
+                <i class="fa fa-plus"></i> Mark Attendance
+            </a>
+          </div>
       @if($attendances->count() > 0)
-        <div class="table-card">
-            <table class="data-table dt-admin">
+     
+        
+            <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -293,7 +299,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+       
       @else
         <div class="empty-tab">
           <i class="bi bi-circle"></i>
@@ -306,8 +312,8 @@
     <!-- ══ ABSENTEEISM SHEET TAB ══ -->
     <div class="tab-panel" id="tab-absenteeism">
       @if($absents->count() > 0)
-        <div class="table-card">
-            <table class="data-table dt-admin">
+      
+            <table class="data-table p-2">
           <thead>
             <tr>
               <th>ID</th>
@@ -329,7 +335,7 @@
             @endforeach
           </tbody>
         </table>
-        </div>
+      
       @else
         <div class="empty-tab">
           <i class="bi bi-circle"></i>
@@ -347,7 +353,7 @@
             </a>
           </div>
       @if($classrooms->count() > 0)
-        <table class="data-table dt-admin">
+        <table class="data-table p-2">
          
           <thead>
             <tr>
@@ -355,6 +361,7 @@
               <th>Name</th>
               <th>Capacity</th>
               <th>Status</th>
+              <th>Added On</th>
             </tr>
           </thead>
           <tbody>
@@ -364,6 +371,7 @@
               <td style="font-weight:600;">{{ $item->name }}</td>
               <td>{{ $item->number_of_students ?? '-' }}</td>
               <td>{{ ucfirst(str_replace('_', ' ', $item->status)) }}</td>
+              <td>{{ $item->created_at ? \Carbon\Carbon::parse($item->created_at)->format('d M Y') : '-' }}</td>
             </tr>
             @endforeach
           </tbody>

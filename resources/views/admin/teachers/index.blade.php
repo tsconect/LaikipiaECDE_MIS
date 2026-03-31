@@ -27,7 +27,7 @@
         </div>
 
         <!-- Table -->
-        <table class="data-table dt-admin" id="teachersTable">
+        <table class="data-table">
             <thead>
                 <tr>
                     <th>ID <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EcdeSchools;
 use App\Models\Learner;
 use App\Models\LearnerAttendance;
 use App\Models\Teacher;
@@ -17,7 +18,7 @@ class LearnerAttendanceController extends Controller
     public function index()
     {
 
-     $user = auth()->user();
+        $user = auth()->user();
 
         
         if($user->role == 'Teacher'){
@@ -37,9 +38,10 @@ class LearnerAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( Request $request)
     {
         $user = auth()->user();
+        $schools = EcdeSchools::latest()->get();
 
         
         if($user->role == 'Teacher'){
@@ -50,11 +52,22 @@ class LearnerAttendanceController extends Controller
             }
             $learners = Learner::where('school_id', $teacher->school_id)->latest()->get();
         } else{
-            $learners = Learner::latest()->get();
+           
+            $school_id = $request->input('school_id');
+            
+            if (!$school_id) {
+                $school_id == null;
+                $learners = Learner::latest()->get();
+            } else {
+                $learners = Learner::where('school_id', $school_id)->latest()->get();
+            }
+
+            
+
         }
 
 
-        return view('admin.learner-attendances.create', compact('learners'));
+        return view('admin.learner-attendances.create', compact('learners', 'school_id', 'schools'));
     }
 
     /**
@@ -89,6 +102,10 @@ class LearnerAttendanceController extends Controller
                 'reason' => $status === 'absent' ? ($data['reason'] ?? null) : null
                 ]
             );
+        }
+
+        if($request->input('school_id')){
+            return redirect()->route('admin.ecde-schools.show', $request->input('school_id'))->with('success', 'Attendance saved successfully');
         }
         return redirect()->route('admin.learner-attendances.index')->with('success', 'Attendance saved successfully');
 

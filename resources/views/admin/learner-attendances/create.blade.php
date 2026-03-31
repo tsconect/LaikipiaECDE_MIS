@@ -26,8 +26,30 @@
         @else
             <form class="modern-form-shell" action="{{ route('admin.learner-attendances.store') }}" method="POST">
                 @csrf
+                <div class="row">
+                    
+                 @if($school_id)
 
-                <div class="mb-3">
+                            
+                    <input type="hidden" name="school_id" value="{{ $school_id }}">
+                    <div class="col-md-6 ">
+                    <div class="position-relative form-group">
+                            <label for="school_id" class=""> School </label>
+                            <select name="school_id" id="school_id" class="form-control" disabled>
+                                {{-- <option value="">Select School</option> --}}
+                                @foreach ($schools as $value)
+                                    <option value="{{ $value->id ?? null }}" @if($school_id == $value->id) selected @endif>{{ $value->school_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        
+                    </div>
+                @else
+                   
+                @endif
+
+                  <div class="col-md-6 ">
                     <label class="form-label">Select Date</label>
                     <input
                         type="date"
@@ -40,6 +62,9 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
+
+                </div>
+
 
                 <div class="section-body-flush">
                     <table class="data-table dt-admin" id="markAttendanceTable">
