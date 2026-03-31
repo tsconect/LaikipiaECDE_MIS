@@ -18,9 +18,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
- @vite(['resources/css/admin.css'])
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ @vite(['resources/css/admin.css', 'resources/js/app.js'])
 </head>
 
 
@@ -182,21 +181,12 @@ function goBack() {
         <div class="delete-confirm-header">
             <span class="delete-confirm-title" id="deleteConfirmTitle">Confirm Delete</span>
             <button type="button" class="delete-confirm-close" id="deleteConfirmClose" aria-label="Close">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
+                <i class="bi bi-circle"></i>
             </button>
         </div>
         <div class="delete-confirm-body">
             <div class="delete-confirm-icon">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6l-1 14H6L5 6"></path>
-                    <path d="M10 11v6"></path>
-                    <path d="M14 11v6"></path>
-                    <path d="M9 6V4h6v2"></path>
-                </svg>
+                <i class="bi bi-circle"></i>
             </div>
             <p class="delete-confirm-message" id="deleteConfirmMessage">Are you sure you want to delete this record? This action cannot be undone.</p>
         </div>
@@ -208,18 +198,7 @@ function goBack() {
 </div>
 
 
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
 <script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
-   <!-- jQuery -->
-   
-    <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success') || session('error') || session('warning') || session('info'))
@@ -236,7 +215,13 @@ Swal.fire({
 </script>
 @endif
 <script>
-      new DataTable('#dt-basic2', {
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!window.jQuery || !$.fn.dataTable) {
+                return;
+            }
+
+            if ($('#dt-basic2').length) {
+                $('#dt-basic2').DataTable({
             info: true,
             paging: true,
             searchable: true,
@@ -244,7 +229,7 @@ Swal.fire({
             lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
             pageLength: 50,
             order: [],
-            dom: 'lBfrtip',
+        dom: "<'row'<'col-12 d-flex align-items-center flex-wrap gap-2'lBf>>rt<'row'<'col-12 d-flex justify-content-end align-items-center gap-2'ip>>",
             buttons: [
                 'copyHtml5',
                 'excelHtml5',
@@ -303,9 +288,11 @@ Swal.fire({
             columnDefs: [
                 { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
             ]
-        });
+                });
+            }
 
-        new DataTable('.dt-basic2', {
+            if ($('.dt-basic2').length) {
+                $('.dt-basic2').DataTable({
             info: true,
             paging: true,
             searchable: true,
@@ -313,7 +300,7 @@ Swal.fire({
             lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
             pageLength: 50,
             order: [],
-            dom: 'lBfrtip',
+            dom: "<'row'<'col-12 d-flex align-items-center flex-wrap gap-2'lBf>>rt<'row'<'col-12 d-flex justify-content-end align-items-center gap-2'ip>>",
             buttons: [
                 'copyHtml5',
                 'excelHtml5',
@@ -345,6 +332,50 @@ Swal.fire({
             columnDefs: [
                 { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
             ]
+                });
+            }
+
+            document.querySelectorAll('.dt-admin').forEach(function (table) {
+                if ($.fn.dataTable.isDataTable(table)) {
+                    return;
+                }
+
+                $(table).DataTable({
+                    info: true,
+                    paging: true,
+                    searchable: true,
+                    fixedHeight: true,
+                    lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
+                    pageLength: 10,
+                    order: [],
+                    dom: "<'row'<'col-12 d-flex align-items-center flex-wrap gap-2'lBf>>rt<'row'<'col-12 d-flex justify-content-end align-items-center gap-2'ip>>",
+                    buttons: [
+                        'copyHtml5',
+                        'excelHtml5',
+                        'csvHtml5',
+                        'pdfHtml5',
+                        {
+                            extend: 'print'
+                        },
+                        'colvis'
+                    ],
+                    language: {
+                        lengthMenu: " _MENU_ records per page",
+                        zeroRecords: "No records available",
+                        info: "Showing page _PAGE_ of _PAGES_",
+                        infoEmpty: "No records available",
+                        search: "",
+                        searchPlaceholder: "Search... ",
+                        infoFiltered: "(filtered from _MAX_ total records)",
+                        paginate: {
+                            first: '<i class="fas fa-angle-double-left"></i>',
+                            last: '<i class="fas fa-angle-double-right"></i>',
+                            previous: '<i class="fas fa-angle-left"></i>',
+                            next: '<i class="fas fa-angle-right"></i>'
+                        }
+                    }
+                });
+            });
         });
 </script>
 <script>

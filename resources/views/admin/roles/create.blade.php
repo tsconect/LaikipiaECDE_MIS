@@ -41,7 +41,7 @@
             </div>
 
             <label for="permissions" class="form-label">Assign Permissions</label>
-            <table class="data-table" id="rolePermissionsTable">
+            <table class="data-table dt-admin" id="rolePermissionsTable">
                 <thead>
                     <tr>
                         <th width="1%"><input type="checkbox" name="all_permission"></th>

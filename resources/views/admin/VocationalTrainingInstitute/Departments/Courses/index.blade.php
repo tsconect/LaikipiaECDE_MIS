@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <table id="example" class="data-table">
+    <table id="example" class="data-table dt-admin">
         <thead>
             <tr>
                 <th>ID</th>
@@ -50,8 +50,5 @@
         </tbody>
     </table>
 
-    <div class="table-footer">
-        <div class="showing-text">Showing {{ count($data) }} record(s)</div>
-    </div>
 </div>
 @endsection

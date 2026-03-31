@@ -158,7 +158,7 @@
                 <p class="section-title">Next of Kin Records</p>
                 <div class="table-responsive">
                     <div class="table-card">
-            <table class="data-table">
+            <table class="data-table dt-admin">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -184,156 +184,8 @@
                             @endforelse
                         </tbody>
                     </table>
-        </div>
-                </div>
-            </div>
 
-            {{-- ── BENEFICIARIES ── --}}
-            <div class="tab-pane fade" id="beneficiaries">
-                <p class="section-title">Beneficiary Records</p>
-                <div class="table-responsive">
-                    <div class="table-card">
-            <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Relationship</th>
-                                <th>Gender</th>
-                                <th>ID Number</th>
-                                <th>Phone</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($beneficiaries as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
-                                    <td>{{ ucfirst($item->relationship) }}</td>
-                                    <td>{{ ucfirst($item->gender) }}</td>
-                                    <td>{{ $item->id_number ?? '—' }}</td>
-                                    <td>{{ $item->phone_number ?? '—' }}</td>
-                                </tr>
-                            @empty
-                                <tr><td colspan="6" class="text-center text-muted py-4">No beneficiary records found.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-        </div>
-                </div>
-            </div>
-
-            {{-- ── UNIONS ── --}}
-            <div class="tab-pane fade" id="unions">
-                <p class="section-title">Union Memberships</p>
-                <div class="table-responsive">
-                    <div class="table-card">
-            <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Date Joined</th>
-                                <th>Union Name</th>
-                                <th>Membership No.</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($unions as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->created_at->format('d M Y') }}</td>
-                                    <td>{{ $item->union->name ?? '—' }}</td>
-                                    <td>{{ $item->membership_number ?? '—' }}</td>
-                                </tr>
-                            @empty
-                                <tr><td colspan="4" class="text-center text-muted py-4">No union memberships found.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-        </div>
-                </div>
-            </div>
-
-            {{-- ── ACADEMICS ── --}}
-            <div class="tab-pane fade" id="academic">
-                <p class="section-title">Academic Qualifications</p>
-                <div class="table-responsive">
-                    <div class="table-card">
-            <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Date Added</th>
-                                <th>Institution</th>
-                                <th>Award</th>
-                                <th>Grade</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Cert No.</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($academic_histories as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->created_at->format('d M Y') }}</td>
-                                    <td>{{ $item->institution_name ?? '—' }}</td>
-                                    <td>{{ strtoupper($item->award ?? '—') }}</td>
-                                    <td>{{ $item->grade ?? '—' }}</td>
-                                    <td>{{ $item->start_date ?? '—' }}</td>
-                                    <td>{{ $item->end_date ?? '—' }}</td>
-                                    <td>{{ $item->certificate_no ?? '—' }}</td>
-                                </tr>
-                            @empty
-                                <tr><td colspan="8" class="text-center text-muted py-4">No academic records found.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-        </div>
-                </div>
-            </div>
-
-            {{-- ── DOCUMENTS ── --}}
-            <div class="tab-pane fade" id="documents">
-                <p class="section-title">Uploaded Documents</p>
-                <div class="table-responsive">
-                    <div class="table-card">
-            <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Date</th>
-                                <th>Document Name</th>
-                                <th>File</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($documents as $item)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->created_at->format('d M Y') }}</td>
-                                    <td>{{ $item->document->name ?? '—' }}</td>
-                                    <td>
-                                        @if($item->file)
-                                            <a href="{{ asset('storage/'.$item->file) }}" target="_blank" class="btn btn-sm btn-success">
-                                                <i class="bi bi-download"></i> View
-                                            </a>
                                         @else
-                                            <span class="text-muted">—</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr><td colspan="4" class="text-center text-muted py-4">No documents uploaded.</td></tr>
-                            @endforelse
-                        </tbody>
-                    </table>
-        </div>
-                </div>
-            </div>
-
-        </div>{{-- /tab-content --}}
-    </div>
 </div>
 
 @endsection
