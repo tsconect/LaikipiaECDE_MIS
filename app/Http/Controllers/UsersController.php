@@ -48,15 +48,15 @@ class UsersController extends Controller
 
     public function edit(User $user){
         $roles = Role::all();
-log_user_activity(
+        log_user_activity(
 
-                $user->id,
-                'users',
-                'edit',
-                'User accessed edit user page for user name ' . $user->first_name . ' ' . $user->last_name,
-                'admin/users/' . $user->id . '/edit',
-                json_encode($user)
-                );
+            $user->id,
+            'users',
+            'edit',
+            'User accessed edit user page for user name ' . $user->first_name . ' ' . $user->last_name,
+            'admin/users/' . $user->id . '/edit',
+            json_encode($user)
+        );
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
