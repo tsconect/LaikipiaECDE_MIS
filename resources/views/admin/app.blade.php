@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" media="all">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" media="all">
     
     <head>
 
@@ -14,6 +15,7 @@
     <meta name="description" content="Laikipia Cdf management SYstem.">
     <meta name="msapplication-tap-highlight" content="no">
     <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -251,7 +253,34 @@ Swal.fire({
                 {
                     extend: 'print',
                     customize: function (win) {
-                        // You can customize the print window if needed
+                        // Inject custom CSS and icon fonts for print view
+                        var head = win.document.head || win.document.getElementsByTagName('head')[0];
+                        var links = [
+                            // Bootstrap
+                            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" type="text/css" />',
+                            // DataTables
+                            '<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" type="text/css" />',
+                            '<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" type="text/css" />',
+                            '<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" type="text/css" />',
+                            // Icon fonts
+                            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" type="text/css" />',
+                            '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css" />',
+                            // Google Fonts
+                            '<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">',
+                            // Inline critical print CSS for table and icon layout
+                            '<style>' +
+                            '@media print {body,table,th,td{font-family:\'Manrope\',sans-serif!important;color:#222!important;background:#fff!important;box-shadow:none!important;}' +
+                            'table{border:1px solid #e2e8f0!important;width:100%!important;border-collapse:collapse!important;font-size:13px!important;}' +
+                            'th,td{border:1px solid #e2e8f0!important;padding:8px 12px!important;background:#fff!important;color:#222!important;}' +
+                            'th{background:#f8fafc!important;color:#222!important;font-weight:700!important;text-transform:uppercase!important;}' +
+                            '.fa,.fas,.far,.fal,.fab,.bi{color:#222!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;filter:none!important;opacity:1!important;}' +
+                            '*{box-shadow:none!important;background-image:none!important;}' +
+                            '}' +
+                            '</style>'
+                        ];
+                        for (var i = 0; i < links.length; i++) {
+                            win.document.head.insertAdjacentHTML('beforeend', links[i]);
+                        }
                     }
                 },
                 'colvis' // Add column visibility button
@@ -318,44 +347,26 @@ Swal.fire({
             ]
         });
 
-        new DataTable('.data-table', {
-            info: true,
+       new DataTable('.data-table', {
             paging: true,
-            searchable: true,
-            fixedHeight: true,
-            lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
-            pageLength: 50,
+            info: false, // hide "Showing page..."
+            lengthMenu: [5, 10, 25, 50, 100],
+            pageLength: 10,
             order: [],
-            dom: 'lBfrtip',
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5',
-                {
-                    extend: 'print',
-                    customize: function (win) {
-                        // You can customize the print window if needed
-                    }
-                },
-                'colvis' // Add column visibility button
-            ],
+
+            // ONLY show: length menu (l) + search (f) + table (t) + pagination (p)
+            dom: 'lftp',
+
             language: {
-                lengthMenu: " _MENU_ records per page",
-                zeroRecords: "No records available",
-                info: "Showing page _PAGE_ of _PAGES_",
-                infoEmpty: "No records available",
+                lengthMenu: "_MENU_",
                 search: "",
-                searchPlaceholder: "Search... ",
-                infoFiltered: "(filtered from _MAX_ total records)",
+                searchPlaceholder: "Search...",
+                zeroRecords: "No records available",
                 paginate: {
-                    first: '<i class="fas fa-angle-double-left"></i>',
-                    last: '<i class="fas fa-angle-double-right"></i>',
                     previous: '<i class="fas fa-angle-left"></i>',
                     next: '<i class="fas fa-angle-right"></i>'
-                },
-            },
-            
+                }
+            }
         });
 </script>
 <script>

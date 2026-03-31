@@ -27,12 +27,12 @@
     <!-- Learner-Teacher Ratio -->
     <div class="stat-card c-indigo">
       <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/></svg></div>
-      <div class="stat-label">Learner–Teacher Ratio</div>
+      <div class="stat-label">Teacher-Learner Ratio</div>
       <div class="ratio-display">
-        @php
-            $ratio = ($teachersCount > 0) ? round($studentsCount / $teachersCount) : 0;
-        @endphp
-        <span class="ratio-main">{{ $ratio }}:1</span>
+       @php
+    $ratio = ($teachersCount > 0) ? number_format($studentsCount / $teachersCount, 1) : '0.0';
+@endphp
+<span class="ratio-main">1:{{ $ratio }}</span>
         <span class="ratio-sub">per teacher</span>
       </div>
       <div class="ratio-bar"><div class="ratio-fill js-width" data-width="{{ min(100, $ratio * 2) }}"></div></div>
@@ -216,40 +216,59 @@
   <!-- ── Distribution Tables ── -->
   <div class="stats-grid-2">
     <!-- Teacher Age Distribution -->
-    <div class="section-card table-card">
-      <div class="section-header">
-        <div class="section-title">Teacher Age Distribution</div>
-      </div>
-      <div class="section-body section-body-flush">
-        <table class="data-table">
-          <thead><tr><th>Age Group</th><th>Count</th></tr></thead>
-          <tbody>
-            @foreach(['18–20','21–24','25–29','30–34','35–39','40–44','45–49','50–54','55–59','60 and above'] as $group)
-            <tr><td>{{ $group }}</td><td>0</td></tr>
-            @endforeach
-          </tbody>
-        </table>
-      </div>
-    </div>
-
+   <div class="section-card table-card">
+  <div class="section-header">
+    <div class="section-title">Teacher Age Distribution</div>
+  </div>
+  <div class="section-body section-body-flush p-3">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Age Group</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach(['18–20','21–24','25–29','30–34','35–39','40–44','45–49','50–54','55–59','60 and above'] as $group)
+        <tr>
+          <td>{{ $group }}</td>
+          <td>{{ $teacherAgeCounts[$group] ?? 0 }}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
     <!-- Ethnic Distribution -->
-    <div class="section-card table-card">
-      <div class="section-header">
-        <div class="section-title">Teachers Ethnic Distribution</div>
-      </div>
-      <div class="section-body section-body-flush">
-        <table class="data-table">
-          <thead><tr><th>Ethnicity</th><th>Count</th></tr></thead>
-          <tbody>
-            @forelse($ethnicities as $group)
-            <tr><td>{{ $group->name }}</td><td>0</td></tr>
-            @empty
-            <tr><td colspan="2"><div class="empty-state">No ethnicity data available</div></td></tr>
-            @endforelse
-          </tbody>
-        </table>
-      </div>
-    </div>
+   <div class="section-card table-card">
+  <div class="section-header">
+    <div class="section-title">Teachers Ethnic Distribution</div>
+  </div>
+  <div class="section-body section-body-flush p-3">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Ethnicity</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        @forelse($ethnicities as $group)
+        <tr>
+          <td>{{ $group->name }}</td>
+          <td>{{ $teacherEthnicityCounts[$group->id] ?? 0 }}</td>
+        </tr>
+        @empty
+        <tr>
+          <td colspan="2">
+            <div class="empty-state">No ethnicity data available</div>
+          </td>
+        </tr>
+        @endforelse
+      </tbody>
+    </table>
+  </div>
+</div>
   </div>
 
 </div>
@@ -266,62 +285,105 @@
 
     setTimeout(function () {
       // Registration Progress Chart
-      const regCtx = document.getElementById('registrationChart');
-      if (regCtx) {
-        new Chart(regCtx, {
-          type: 'line',
-          data: {
-            labels: ['Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7','Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14'],
-            datasets: [
-              {
-                label: 'Teachers Registered',
-                data: [3,9,11,10,14,15,19,20,23,25,28,30,33,40],
-                borderColor: '#60a5fa',
-                backgroundColor: 'rgba(96,165,250,0.08)',
-                borderWidth: 2, fill: true, tension: 0.4,
-              },
-              {
-                label: 'Learners Registered',
-                data: [10,13,19,20,25,27,30,40,45,50,54,60,65,70],
-                borderColor: '#f472b6',
-                backgroundColor: 'rgba(244,114,182,0.08)',
-                borderWidth: 2, fill: true, tension: 0.4,
-              }
-            ]
-          },
-          options: {
-            responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { display: false } },
-            scales: {
-              x: { grid: { color: '#f1f5f9' }, ticks: { color: '#94a3b8', font: { size: 11 } } },
-              y: { grid: { color: '#f1f5f9' }, ticks: { color: '#94a3b8', font: { size: 11 } }, beginAtZero: true }
-            }
-          }
-        });
-      }
+     const regCtx = document.getElementById('registrationChart');
+  const maleData = @json($maleData);
+  const femaleData = @json($femaleData);
+    if (regCtx) {
+        const teachersData = @json($teachers);
+        const learnersData = @json($learners);
 
-      // Age Distribution Chart
-      const ageCtx = document.getElementById('ageDistChart');
-      if (ageCtx) {
-        new Chart(ageCtx, {
-          type: 'bar',
-          data: {
+        new Chart(regCtx, {
+            type: 'line',
+            data: {
+                labels: [
+                    'Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7',
+                    'Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14'
+                ],
+                datasets: [
+                    {
+                        label: 'Teachers Registered',
+                        data: teachersData,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96,165,250,0.08)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                    },
+                    {
+                        label: 'Learners Registered',
+                        data: learnersData,
+                        borderColor: '#f472b6',
+                        backgroundColor: 'rgba(244,114,182,0.08)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: {
+                        grid: { color: '#f1f5f9' },
+                        ticks: { color: '#94a3b8', font: { size: 11 } }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9' },
+                        ticks: { color: '#94a3b8', font: { size: 11 } },
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    const ageCtx = document.getElementById('ageDistChart');
+
+if (ageCtx) {
+    new Chart(ageCtx, {
+        type: 'bar',
+        data: {
             labels: ['Under 3','4 Years','5 Years','6 Years','7 Years','8 Years','9 Years','10 Years','10+'],
             datasets: [
-              { label: 'Male', data: [5,10,14,20,17,13,11,8,4], backgroundColor: 'rgba(96,165,250,0.75)', borderRadius: 4 },
-              { label: 'Female', data: [6,11,17,21,19,15,12,9,4], backgroundColor: 'rgba(244,114,182,0.75)', borderRadius: 4 }
+                {
+                    label: 'Male',
+                    data: maleData,
+                    backgroundColor: 'rgba(96,165,250,0.75)',
+                    borderRadius: 4
+                },
+                {
+                    label: 'Female',
+                    data: femaleData,
+                    backgroundColor: 'rgba(244,114,182,0.75)',
+                    borderRadius: 4
+                }
             ]
-          },
-          options: {
-            responsive: true, maintainAspectRatio: false,
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
             plugins: { legend: { display: false } },
             scales: {
-              x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 11 } } },
-              y: { grid: { color: '#f1f5f9' }, ticks: { color: '#94a3b8', font: { size: 11 } }, beginAtZero: true }
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8', font: { size: 11 } }
+                },
+                y: {
+                    grid: { color: '#f1f5f9' },
+                    ticks: { color: '#94a3b8', font: { size: 11 } },
+                    beginAtZero: true
+                }
             }
-          }
-        });
-      }
+        }
+    });
+}
+
+
+
+     
+
+
     }, 150);
   });
 </script>
@@ -332,22 +394,22 @@
 
 <div class="quick-cards">
   <a href="#" class="quick-card">
-    <div class="quick-card-icon account"><i class="bi bi-person icon-account"></i></div>
+    <div class="quick-card-icon account"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a8 8 0 0116 0v2"/></svg></div>
     <h6 class="quick-card-title">My Account</h6>
     <p class="quick-card-desc">Manage your info.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon password"><i class="bi bi-lock icon-password"></i></div>
+    <div class="quick-card-icon password"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 016 0v3"/></svg></div>
     <h6 class="quick-card-title">Password</h6>
     <p class="quick-card-desc">Change password.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon details"><i class="bi bi-file-earmark-text icon-details"></i></div>
+    <div class="quick-card-icon details"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h8"/></svg></div>
     <h6 class="quick-card-title">My Details</h6>
     <p class="quick-card-desc">Personal profile.</p>
   </a>
   <a href="#" class="quick-card">
-    <div class="quick-card-icon logout"><i class="bi bi-box-arrow-right icon-logout"></i></div>
+    <div class="quick-card-icon logout"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M16 17l5-5-5-5M21 12H9"/><rect x="3" y="5" width="6" height="14" rx="2"/></svg></div>
     <h6 class="quick-card-title">Logout</h6>
     <p class="quick-card-desc">Sign out.</p>
   </a>

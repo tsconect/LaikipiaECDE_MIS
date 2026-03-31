@@ -6,7 +6,7 @@
   <title>{{ $settings['site_name'] ?? 'Laikipia ECDE Management System' }}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8lN2R7+P7q6T2A2R4cV2N4s46HoPazg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -32,7 +32,7 @@
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Manrope', sans-serif;
       color: var(--text);
       background: var(--cream);
       overflow-x: hidden;
@@ -51,7 +51,7 @@
     .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .nav-brand img { height: 38px; }
     .nav-brand span {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Manrope', sans-serif;
       font-weight: 600; font-size: 15px;
       color: #fff; letter-spacing: 0.01em;
     }
@@ -292,13 +292,12 @@
 <!-- NAV -->
 <nav>
   <a href="{{ url('/') }}" class="nav-brand">
-    <img src="{{ !empty($settings['site_logo']) ? asset('storage/' . $settings['site_logo']) : 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Coat_of_arms_of_Kenya.svg/800px-Coat_of_arms_of_Kenya.svg.png' }}" alt="Logo" onerror="this.style.display='none'">
-    <span>{{ $settings['site_name'] ?? 'Laikipia ECDE' }}</span>
+    <img src="{{asset('assets/images/laikipia.png')}}" alt="Logo"> Laikipia ECDE
   </a>
   <div class="nav-links">
     <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
     <a href="{{ route('cms.posts') }}" class="{{ request()->routeIs('cms.posts', 'cms.post') ? 'active' : '' }}">Blog</a>
-    <a href="{{ route('cms.schools') }}" class="{{ request()->routeIs('cms.schools') ? 'active' : '' }}">ECDE Schools</a>
+    <a href="{{ route('cms.schools') }}" class="{{ request()->routeIs('cms.schools', 'cms.schools.show') ? 'active' : '' }}">ECDE Schools</a>
     <a href="{{ route('cms.announcements') }}" class="{{ request()->routeIs('cms.announcements', 'cms.announcement.show') ? 'active' : '' }}">Announcements</a>
     <a href="{{ route('cms.galleries') }}" class="{{ request()->routeIs('cms.galleries', 'cms.gallery') ? 'active' : '' }}">Galleries</a>
     <a href="{{ route('cms.faqs') }}" class="{{ request()->routeIs('cms.faqs') ? 'active' : '' }}">FAQs</a>

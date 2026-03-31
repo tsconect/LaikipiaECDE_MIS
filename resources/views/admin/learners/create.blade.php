@@ -471,7 +471,11 @@
     </form>
 
 </div>
-          
+<style>
+    .col-md-4 {
+        margin-top: 0 !important;
+    }
+</style>
                           
 <input type="hidden" id="counties-data" value='{{ json_encode($counties) }}'>
 <input type="hidden" id="constituencies-data" value='{{ json_encode($sub_counties) }}'>

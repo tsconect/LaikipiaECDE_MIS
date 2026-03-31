@@ -166,10 +166,19 @@ class WebController extends Controller
 
     public function schools()
     {
-        $schools = EcdeSchools::latest()->get();
+        $schools = EcdeSchools::with(['county', 'subCounty', 'ward', 'subLocation'])
+            ->latest()
+            ->get();
 
         
         return view('web.schools.index', compact('schools'));
+    }
+
+    public function showSchool(EcdeSchools $school)
+    {
+        $school->load(['county', 'subCounty', 'ward', 'subLocation', 'teacher.user']);
+
+        return view('web.schools.show', compact('school'));
     }
 
     // Contact Form
