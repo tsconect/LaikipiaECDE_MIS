@@ -158,7 +158,7 @@
                                     <option value="both">Both Parents Alive</option>
                                     <option value="father_only">Single Father</option>
                                     <option value="mother_only">Single Mother</option>
-                                    <option value="guardian">Guardian</option>
+                                    <option value="guardian">Orphan</option>
                                 </select>
                             </div>
 

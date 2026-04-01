@@ -188,6 +188,9 @@
                             @endforeach
                         </tbody>
                     </table>
+        </div>
+                </div>
+            </div>
 
             {{-- ── BENEFICIARIES ── --}}
             <div class="tab-pane fade" id="beneficiaries">
