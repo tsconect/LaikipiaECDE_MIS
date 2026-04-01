@@ -108,9 +108,13 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">
-                            <div class="empty-state">No attendance records found.</div>
-                        </td>
+                        <td>—</td>
+                        <td class="text-muted">No attendance records found.</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -10,7 +10,7 @@
         <div class="prof-header-title">{{ $page->title }}</div>
         <div class="prof-header-meta">
             <span><i class="bi bi-link-45deg"></i> /{{ $page->slug }}</span>
-            <span><i class="bi bi-circle-fill"></i> {{ ucfirst($page->status) }}</span>
+            <span><i class="bi bi-patch-check-fill"></i> {{ ucfirst($page->status) }}</span>
         </div>
     </div>
     <div class="d-flex gap-2">

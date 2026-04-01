@@ -163,12 +163,11 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center py-5">
-                                    <div style="opacity:0.4;">
-                                        <i class="bi bi-inbox" style="font-size:2.5rem; display:block; margin-bottom:8px;"></i>
-                                        <p class="mb-0 fw-semibold">No top-up history found</p>
-                                    </div>
-                                </td>
+                                <td>—</td>
+                                <td class="text-muted">No top-up history found</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
                             </tr>
                         @endforelse
                     </tbody>

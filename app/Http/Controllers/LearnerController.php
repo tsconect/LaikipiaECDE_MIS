@@ -356,6 +356,7 @@ class LearnerController extends Controller
                 $parent->learner_id = $learner->id;
             }
             $parent->first_name = $request->parent_first_name;
+            $parent->middle_name = $request->parent_middle_name;
             $parent->last_name = $request->parent_last_name;
             $parent->relationship = $request->parent_relationship;
             $parent->id_number = $request->parent_id_number;
@@ -386,5 +387,27 @@ class LearnerController extends Controller
     {
         $learner->delete();
        return redirect()->route('admin.learners.index')->with('success', 'learners deleted successfully');
+    }
+
+    public function showParent(Learner $learner)
+    {
+        $parent = LearnerParent::where('learner_id', $learner->id)->first();
+
+        if (!$parent) {
+            return redirect()
+                ->route('admin.learners.show', $learner->id)
+                ->with('error', 'No parent/guardian record found for this learner.');
+        }
+
+        return view('admin.learners.parent-show', compact('learner', 'parent'));
+    }
+
+    public function destroyParent(Learner $learner)
+    {
+        LearnerParent::where('learner_id', $learner->id)->delete();
+
+        return redirect()
+            ->route('admin.learners.show', $learner->id)
+            ->with('success', 'Parent/Guardian removed successfully');
     }
 }

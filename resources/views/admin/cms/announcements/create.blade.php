@@ -20,7 +20,7 @@
 
             <div class="card">
                 <div class="card-header btn-success">
-                    <i class="fas fa-bullhorn"></i> Announcement Details
+                    <i class="bi bi-megaphone"></i> Announcement Details
                 </div>
                 <div class="card-body">
                     <form class="modern-form-shell" action="{{ route('admin.cms.announcements.store') }}" method="POST" enctype="multipart/form-data">

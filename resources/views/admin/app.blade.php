@@ -181,12 +181,12 @@ function goBack() {
         <div class="delete-confirm-header">
             <span class="delete-confirm-title" id="deleteConfirmTitle">Confirm Delete</span>
             <button type="button" class="delete-confirm-close" id="deleteConfirmClose" aria-label="Close">
-                <i class="bi bi-circle"></i>
+                <i class="bi bi-x-lg"></i>
             </button>
         </div>
         <div class="delete-confirm-body">
             <div class="delete-confirm-icon">
-                <i class="bi bi-circle"></i>
+                <i class="bi bi-exclamation-triangle-fill"></i>
             </div>
             <p class="delete-confirm-message" id="deleteConfirmMessage">Are you sure you want to delete this record? This action cannot be undone.</p>
         </div>
@@ -378,27 +378,35 @@ Swal.fire({
             });
         });
 
-       new DataTable('.data-table', {
-            paging: true,
-            info: false, // hide "Showing page..."
-            lengthMenu: [5, 10, 25, 50, 100],
-            pageLength: 10,
-            order: [],
-
-            // ONLY show: length menu (l) + search (f) + table (t) + pagination (p)
-            dom: 'lftp',
-
-            language: {
-                lengthMenu: "_MENU_",
-                search: "",
-                searchPlaceholder: "Search...",
-                zeroRecords: "No records available",
-                paginate: {
-                    previous: '<i class="fas fa-angle-left"></i>',
-                    next: '<i class="fas fa-angle-right"></i>'
+       if (window.DataTable) {
+            document.querySelectorAll('.data-table').forEach(function (table) {
+                if (window.jQuery && $.fn.dataTable && $.fn.dataTable.isDataTable(table)) {
+                    return;
                 }
-            }
-        });
+
+                new DataTable(table, {
+                    paging: true,
+                    info: false, // hide "Showing page..."
+                    lengthMenu: [5, 10, 25, 50, 100],
+                    pageLength: 10,
+                    order: [],
+
+                    // ONLY show: length menu (l) + search (f) + table (t) + pagination (p)
+                    dom: 'lftp',
+
+                    language: {
+                        lengthMenu: "_MENU_",
+                        search: "",
+                        searchPlaceholder: "Search...",
+                        zeroRecords: "No records available",
+                        paginate: {
+                            previous: '<i class="fas fa-angle-left"></i>',
+                            next: '<i class="fas fa-angle-right"></i>'
+                        }
+                    }
+                });
+            });
+        }
 </script>
 <script>
     (function () {

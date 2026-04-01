@@ -23,7 +23,7 @@ class CoordinatorsController extends Controller
     //
    public function index()
    {
-       $coordinators = Coordinators::latest()->paginate(15);
+       $coordinators = Coordinators::with(['user', 'constituency'])->latest()->paginate(15);
        return view('admin.coordinators.index', compact('coordinators'));
    }
    function create(){

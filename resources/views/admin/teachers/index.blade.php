@@ -13,7 +13,7 @@
             <div class="banner-actions">
                 {{-- <a href="{{ route('admin.generate_staff_returns') }}">
                     <button class="btn-generate">
-                        <i class="bi bi-circle"></i>
+                        <i class="bi bi-file-earmark-arrow-down"></i>
                         Generate {{ date('F, Y') }} Staff Returns
                     </button>
                 </a> --}}

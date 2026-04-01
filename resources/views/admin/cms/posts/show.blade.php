@@ -12,7 +12,7 @@
         <div class="prof-header-meta">
             <span><i class="bi bi-person"></i> {{ $post->author->first_name ?? 'System' }}</span>
             <span><i class="bi bi-link-45deg"></i> /blog/{{ $post->slug }}</span>
-            <span><i class="bi bi-circle-fill"></i> {{ ucfirst($post->status) }}</span>
+            <span><i class="bi bi-patch-check-fill"></i> {{ ucfirst($post->status) }}</span>
         </div>
     </div>
     <div class="d-flex gap-2">

@@ -54,26 +54,26 @@
                         <form action="{{ route('admin.cms.contact-messages.mark-as-read', $message) }}" method="POST" class="mb-2">
                             @csrf
                             <button type="submit" class="btn btn-primary btn-block">
-                                <i class="fa fa-check"></i> Mark as Read
+                                <i class="bi bi-check2"></i> Mark as Read
                             </button>
                         </form>
                     @endif
 
                     @if(!$message->reply)
                         <button class="btn btn-success btn-block" data-toggle="modal" data-target="#replyModal">
-                            <i class="fa fa-reply"></i> Reply
+                            <i class="bi bi-reply"></i> Reply
                         </button>
                     @else
                         <button class="btn btn-warning btn-block" data-toggle="modal" data-target="#replyModal">
-                            <i class="fa fa-edit"></i> Edit Reply
+                            <i class="bi bi-pencil-square"></i> Edit Reply
                         </button>
                     @endif
 
-                    <form action="{{ route('admin.cms.contact-messages.destroy', $message) }}" method="POST" class="mt-2">
+                    <form action="{{ route('admin.cms.contact-messages.destroy', $message) }}" method="POST" class="inline-form mt-2" onsubmit="return confirm('Delete this message?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-block" onclick="return confirm('Are you sure?')">
-                            <i class="fa fa-trash"></i> Delete
+                        <button type="submit" class="btn btn-danger btn-block">
+                            <i class="bi bi-trash"></i> Delete
                         </button>
                     </form>
                 </div>

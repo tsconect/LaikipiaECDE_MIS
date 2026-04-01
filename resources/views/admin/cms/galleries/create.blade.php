@@ -6,7 +6,7 @@
 @section('cms-content')
 <div class="card">
     <div class="card-header btn-success">
-        <i class="fas fa-plus-circle"></i> Gallery Information
+        <i class="bi bi-plus-circle"></i> Gallery Information
     </div>
     <div class="card-body">
         <form class="modern-form-shell" action="{{ route('admin.cms.galleries.store') }}" method="POST">
@@ -45,7 +45,7 @@
 
                     <div class="d-flex justify-content-end gap-2 flex-wrap">
                         <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save"></i> Create Gallery
+                            <i class="bi bi-floppy"></i> Create Gallery
                         </button>
                         <a href="{{ route('admin.cms.galleries.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>

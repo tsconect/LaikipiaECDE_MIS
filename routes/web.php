@@ -140,6 +140,8 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::resource('ecde-students', StudentsController::class);
             Route::resource('learners', LearnerController::class);
+            Route::get('learners/{learner}/parent', [LearnerController::class, 'showParent'])->name('learners.parent.show');
+            Route::delete('learners/{learner}/parent', [LearnerController::class, 'destroyParent'])->name('learners.parent.destroy');
        
 
             Route::get('/create_students', [StudentsController::class, 'create'])->name('students.create');

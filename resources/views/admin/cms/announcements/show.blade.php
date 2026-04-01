@@ -9,7 +9,7 @@
     <div>
         <div class="prof-header-title">Announcement</div>
         <div class="prof-header-meta">
-            <span><i class="bi bi-circle-fill"></i> {{ ucfirst($announcement->status) }}</span>
+            <span><i class="bi bi-patch-check-fill"></i> {{ ucfirst($announcement->status) }}</span>
         </div>
     </div>
     <div class="d-flex gap-2">

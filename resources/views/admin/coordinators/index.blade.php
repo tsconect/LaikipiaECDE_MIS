@@ -28,18 +28,18 @@
                     <th>NAME <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>EMAIL <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>PHONE <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>CONSTITUENCY <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                    <th>SUB COUNTY <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>ACTION</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($coordinators as $item)
                     <tr>
-                        <td class="td-id">{{ $loop->iteration }}</td>
+                        <td class="td-id">{{ $item->id }}</td>
                         <td>{{ $item->user->first_name ?? '' }} {{ $item->user->middle_name ?? '' }} {{ $item->user->last_name ?? '' }}</td>
                         <td>{{ $item->user->email ?? '' }}</td>
                         <td>{{ $item->user->phone_number ?? '' }}</td>
-                        <td>{{ $item->constituency->name ?? '' }}</td>
+                        <td>{{ $item->constituency->name ?? '—' }}</td>
                         <td>
                             <div class="action-btns">
                                 <a class="act-btn view" title="View Coordinator" href="{{ route('admin.coordinators.show', $item->id) }}">

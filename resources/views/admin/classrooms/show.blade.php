@@ -26,6 +26,8 @@
 .school-meta-text { font-size: 12.5px; color: #94a3b8; }
 .school-status { margin-left: auto; display: flex; align-items: center; gap: 6px; }
 .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #f0fdf4; color: #16a34a; }
+.status-badge.present { background: #f0fdf4; color: #16a34a; }
+.status-badge.absent { background: #fef2f2; color: #ef4444; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
 
 /* ══ TABS CARD ══ */
@@ -120,7 +122,7 @@
   <!-- School Header Card -->
   <div class="school-header-card">
     <div class="school-avatar">
-      <i class="bi bi-circle"></i>
+      <i class="bi bi-building"></i>
     </div>
     <div>
       <div class="school-name">{{ $school->school_name }}</div>
@@ -144,27 +146,27 @@
     <!-- Tab Navigation -->
     <div class="tab-nav">
       <button class="tab-btn active" onclick="switchTab('profile', this)">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-person-vcard"></i>
         Profile
       </button>
       <button class="tab-btn" onclick="switchTab('learners', this)">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-people"></i>
         Learners
       </button>
       <button class="tab-btn" onclick="switchTab('teachers', this)">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-person-badge"></i>
         Teachers
       </button>
       <button class="tab-btn" onclick="switchTab('attendance', this)">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-clipboard-check"></i>
         Attendance Sheet
       </button>
       <button class="tab-btn" onclick="switchTab('absenteeism', this)">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-person-x"></i>
         Absenteeism Sheet
       </button>
       <button class="tab-btn" onclick="switchTab('classrooms', this)">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-door-open"></i>
         Classrooms
       </button>
     </div>
@@ -175,13 +177,13 @@
       <!-- School Specific Stat Cards -->
       <div class="school-stats-grid">
         <div class="sc-card blue">
-          <div class="sc-icon"><i class="bi bi-circle"></i></div>
+          <div class="sc-icon"><i class="bi bi-people-fill"></i></div>
           <div class="sc-label">Total Learners</div>
           <div class="sc-value">{{ number_format($learners->count()) }}</div>
           <div class="sc-sub">Enrolled</div>
         </div>
         <div class="sc-card green">
-          <div class="sc-icon"><i class="bi bi-circle"></i></div>
+          <div class="sc-icon"><i class="bi bi-person-badge-fill"></i></div>
           <div class="sc-label">Total Teachers</div>
           <div class="sc-value">{{ number_format($teachers->count()) }}</div>
           <div class="sc-sub">
@@ -193,7 +195,7 @@
           </div>
         </div>
         <div class="sc-card amber">
-          <div class="sc-icon"><i class="bi bi-circle"></i></div>
+          <div class="sc-icon"><i class="bi bi-clipboard-check"></i></div>
           <div class="sc-label">Attendance Today</div>
           @php
             $today = date('Y-m-d');
@@ -205,7 +207,7 @@
           <div class="sc-sub">{{ $pct }}% present</div>
         </div>
         <div class="sc-card red">
-          <div class="sc-icon"><i class="bi bi-circle"></i></div>
+          <div class="sc-icon"><i class="bi bi-person-x-fill"></i></div>
           <div class="sc-label">Absenteeism</div>
           @php
             $abs = $attendances->where('date', $today)->where('status', 'absent')->count();
@@ -215,7 +217,7 @@
           <div class="sc-sub">{{ $abs }} absent today</div>
         </div>
         <div class="sc-card violet">
-          <div class="sc-icon"><i class="bi bi-circle"></i></div>
+          <div class="sc-icon"><i class="bi bi-door-open-fill"></i></div>
           <div class="sc-label">Classrooms</div>
           <div class="sc-value">{{ $school->number_of_classes ?? 0 }}</div>
           <div class="sc-sub">{{ ucfirst($school->class_rooms_status) ?? '-' }}</div>
@@ -311,7 +313,7 @@
         </table>
       @else
         <div class="empty-tab">
-          <i class="bi bi-circle"></i>
+          <i class="bi bi-inbox"></i>
           <div class="empty-tab-title">No learners enrolled yet</div>
           <div class="empty-tab-sub">Learners enrolled in this school will appear here.</div>
         </div>
@@ -353,7 +355,7 @@
         </table>
       @else
         <div class="empty-tab">
-          <i class="bi bi-circle"></i>
+          <i class="bi bi-inbox"></i>
           <div class="empty-tab-title">No teachers assigned yet</div>
           <div class="empty-tab-sub">Teachers assigned to this school will appear here.</div>
         </div>
@@ -382,7 +384,7 @@
               <td>{{ $item->date }}</td>
               <td>{{ $item->teacher->first_name ?? '-' }} {{ $item->teacher->last_name ?? '' }}</td>
               <td>
-                <span class="status-badge" style="background: {{ $item->status == 'present' ? '#f0fdf4' : '#fef2f2' }}; color: {{ $item->status == 'present' ? '#16a34a' : '#ef4444' }};">
+                <span class="status-badge {{ $item->status == 'present' ? 'present' : 'absent' }}">
                     {{ ucfirst($item->status) }}
                 </span>
               </td>
@@ -393,7 +395,7 @@
         </table>
       @else
         <div class="empty-tab">
-          <i class="bi bi-circle"></i>
+          <i class="bi bi-inbox"></i>
           <div class="empty-tab-title">No attendance records</div>
           <div class="empty-tab-sub">Attendance records for this school will appear here once data is logged.</div>
         </div>
@@ -427,7 +429,7 @@
         </table>
       @else
         <div class="empty-tab">
-          <i class="bi bi-circle"></i>
+          <i class="bi bi-inbox"></i>
           <div class="empty-tab-title">No absenteeism records</div>
           <div class="empty-tab-sub">All students are present or no attendance has been marked today.</div>
         </div>
@@ -437,7 +439,7 @@
     <!-- ══ CLASSROOMS TAB ══ -->
     <div class="tab-panel" id="tab-classrooms">
       <div class="empty-tab">
-        <i class="bi bi-circle"></i>
+        <i class="bi bi-house-door"></i>
         <div class="empty-tab-title">Classroom Infrastructure</div>
         <div class="empty-tab-sub">Status: {{ ucfirst(str_replace('_', ' ', $school->class_rooms_status)) }} · Total: {{ $school->number_of_classes ?? 0 }} rooms</div>
       </div>

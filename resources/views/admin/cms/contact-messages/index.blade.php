@@ -53,7 +53,12 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No messages found</td>
+                        <td>—</td>
+                        <td class="text-center text-muted">No messages found</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
                     </tr>
                 @endforelse
             </tbody>

@@ -220,7 +220,7 @@
 
                         <div class="form-group d-flex justify-content-end">
                             <button type="submit" class="btn btn-success">
-                                <i class="fa fa-save"></i> Save Settings
+                                <i class="bi bi-floppy"></i> Save Settings
                             </button>
                         </div>
                     </form>

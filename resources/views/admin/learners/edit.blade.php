@@ -24,7 +24,7 @@
                     <h5 class="mb-0">Edit Learner: {{ $learner->first_name }} {{ $learner->last_name }}</h5>
                 </div>
                 <div class="card-body">
-                    <div class="row g-4">
+                    <div class="row g-2">
                         <h5 class="p-2 text-success">Personal Information</h5>
                         <div class="col-md-4">
                             <div class="position-relative form-group">
@@ -76,7 +76,7 @@
                         </div>
                         
                         <!-- Conditional PWD Fields -->
-                        <div id="pwd_fields" class="col-md-12 row g-4" style="{{ $learner->pwd_status == 'Yes' ? '' : 'display: none;' }}">
+                        <div id="pwd_fields" class="col-md-12 row g-2 {{ $learner->pwd_status == 'Yes' ? '' : 'd-none' }}">
                             <div class="col-md-4">
                                 <label class="form-label fw-semibold">PWD Number</label>
                                 <input name="pwd_number" id="pwd_number" value="{{ $learner->pwd_number }}" placeholder="Enter PWD Number" type="text" class="form-control @error('pwd_number') is-invalid @enderror">
@@ -249,7 +249,7 @@
                             </select>
                         </div>
                   
-                        <hr>
+                        <hr id="parent-guardian">
                         @php $parent = $learner->parent; @endphp
                         <h5 class="p-2 text-success">Parent / Guardian Information</h5>
 
@@ -378,18 +378,27 @@
             </div>
         </form>
     </div>
+
+    <div
+        id="learner-location-data"
+        data-counties='@json($counties)'
+        data-constituencies='@json($sub_counties)'
+        data-wards='@json($wards)'
+        class="d-none"
+    ></div>
           
     <script>
+        const locationDataEl = document.getElementById('learner-location-data');
         const data = {
-            counties: @json($counties),
-            constituencies: @json($sub_counties),
-            wards: @json($wards),
+            counties: JSON.parse(locationDataEl?.dataset.counties || '[]'),
+            constituencies: JSON.parse(locationDataEl?.dataset.constituencies || '[]'),
+            wards: JSON.parse(locationDataEl?.dataset.wards || '[]'),
         };
 
         function togglePWDFields() {
             const status = document.getElementById('pwd_status').value;
             const fields = document.getElementById('pwd_fields');
-            fields.style.display = (status === 'Yes') ? 'flex' : 'none';
+            fields.classList.toggle('d-none', status !== 'Yes');
         }
 
         document.addEventListener('DOMContentLoaded', function () {
