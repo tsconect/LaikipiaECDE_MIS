@@ -40,7 +40,7 @@
                         <td>
                             @if ($item->file)
                                 <a href="{{ asset('storage/' . $item->file) }}" target="_blank">
-                                    <i class="bi bi-circle"></i>
+                                    <i class="bi bi-file-earmark-arrow-down"></i>
                                 </a>
                             @else
                                 N/A

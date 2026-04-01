@@ -22,7 +22,7 @@
 <div class="container-fluid">
     @if ($errors->any())
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <h4 class="alert-heading"><i class="fas fa-exclamation-circle"></i> Validation Errors</h4>
+            <h4 class="alert-heading"><i class="bi bi-exclamation-circle"></i> Validation Errors</h4>
             <ul class="mb-0">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -34,7 +34,7 @@
 
     @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="fas fa-check-circle"></i> {{ session('success') }}
+            <i class="bi bi-check-circle"></i> {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif

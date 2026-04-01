@@ -1,106 +1,109 @@
 @extends('admin.app')
 
-
 @section('nav-bar')
-
 @include('admin.layouts.sidebar')
-
 @endsection
 
 @section('content')
-    @include('flash-message')
+@include('flash-message')
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
+@php
+    $fullName = trim(($data->user->first_name ?? '') . ' ' . ($data->user->middle_name ?? '') . ' ' . ($data->user->last_name ?? ''));
+@endphp
 
-    <div class="app-main__inner">
-        {{-- <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
-            <li class="nav-item">
-                <a role="tab" class="nav-link active" id="tab-0" data-toggle="tab" href="#tab-content-0"
-                    aria-selected="true">
-                    <span>Card Tabs</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-1" data-toggle="tab" href="#tab-content-1"
-                    aria-selected="false">
-                    <span>Animated Lines</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" href="#tab-content-2"
-                    aria-selected="false">
-                    <span>Basic</span>
-                </a>
-            </li>
-        </ul> --}}
-        <div class="tab-content">
-            <div class="tab-pane tabs-animation fade active show" id="tab-content-0" role="tabpanel">
-                <div class="row">
-                    <div class="col-md-6">
+<div class="tp-header">
+    <div class="d-flex align-items-center gap-3">
+        <img class="tp-avatar" src="https://cdn-icons-png.flaticon.com/512/65/65581.png" alt="Coordinator">
+        <div>
+            <div class="tp-name">{{ $fullName ?: 'Coordinator' }}</div>
+            <div class="tp-meta">
+                <span><i class="bi bi-envelope-fill"></i> {{ $data->user->email ?? '—' }}</span>
+                <span><i class="bi bi-telephone-fill"></i> {{ $data->user->phone_number ?? '—' }}</span>
+            </div>
+        </div>
+    </div>
 
-                        {{-- {{ $data }} --}}
+    <a href="{{ route('admin.coordinators.edit', $data->id) }}" class="btn btn-success btn-sm">
+        <i class="bi bi-pencil-fill"></i> Edit Coordinator
+    </a>
+</div>
 
-                        <div class="">
-                            <div class="card-hover-shadow profile-responsive card-border border-success mb-3 card">
-                                <div class="dropdown-menu-header">
-                                    <div class="dropdown-menu-header-inner bg-success">
-                                        <div class="menu-header-content">
-                                            <div class="avatar-icon-wrapper btn-hover-shine mb-2 avatar-icon-xl">
-                                                <div class="avatar-icon rounded">
-                                                    <img src="
-                                                    https://cdn-icons-png.flaticon.com/512/65/65581.png
-                                                    "
-                                                        alt="Avatar 6">
-                                                </div>
-                                            </div>
-                                            {{-- <div>
-                                                <h5 class="menu-header-title">{{ $data->user->name }}</h5>
-                                                <h5 class="menu-header-title">{{ $data->user->role }}</h5>
-                                                <h6 class="menu-header-subtitle">{{ $data->user->email }}</h6>
-                                            </div> --}}
+<div class="tp-card">
+    <div class="tp-card-body">
+        <p class="section-title">Coordinator Profile</p>
+        <div class="detail-grid">
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-person-vcard"></i> Full Names</div>
+                <div class="detail-value">{{ $fullName ?: '—' }}</div>
+            </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="p-0 card-body">
-                                    <div class="tab-content">
-                                        <div class="tab-pane active show" id="tab-2-eg1">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">
-                                                    <div class="widget-content p-0">
-                                                        <div class="widget-content-wrapper">
-                                                            <div class="widget-content-left mr-3">
-                                                                {{-- <div class="widget-content-left">
-                                                                    <img class="rounded-circle"
-                                                                        src="
-                                                                    https://cdn-icons-png.flaticon.com/512/65/65581.png
-                                                                    "
-                                                                        alt="" width="52">
-                                                                </div> --}}
-                                                            </div>
-                                                            <div class="widget-content-left flex2">
-                                                                <div class="widget-heading">
-                                                                    <div class="table-card">
-            <table class="data-table dt-admin">
-                                                                        <tbody>
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-envelope"></i> Email</div>
+                <div class="detail-value">{{ $data->user->email ?? '—' }}</div>
+            </div>
 
-                                                                            <tr>
-                                                                                {{-- <td><b>Usname:</b> </td> --}}
-                                                                                <td  > Full Names: <b class="text-success">{{ $data->user->name }} </b> </td>
-                                                                                <td  >  Email: &nbsp;&nbsp; <b class="text-success">{{ $data->user->email }} </b> </td>
-                                                                            </tr>
-                                                                        </tbody>
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-telephone"></i> Phone</div>
+                <div class="detail-value">{{ $data->user->phone_number ?? '—' }}</div>
+            </div>
 
-                                                                        <tbody>
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-credit-card"></i> ID Number</div>
+                <div class="detail-value">{{ $data->id_number ?? '—' }}</div>
+            </div>
 
-                                                                            <tr>
-                                                                                {{-- <td><b>Usname:</b> </td> --}}
-                                                                                <td  > Phone: &nbsp;&nbsp; <b class="text-success">{{ $data->phone }} </b> </td>
-                                                                                {{-- <td  >  Email: &nbsp;&nbsp; <b class="text-success">{{ $data->user->email }} </b> </td> --}}
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-file-earmark-text"></i> KRA PIN</div>
+                <div class="detail-value">{{ $data->kra_pin ?? '—' }}</div>
+            </div>
 
-                                            @else
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-gender-ambiguous"></i> Gender</div>
+                <div class="detail-value">{{ ucfirst($data->gender ?? '—') }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-cake"></i> Date of Birth</div>
+                <div class="detail-value">{{ $data->dob ?? '—' }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-shield-check"></i> PWD Status</div>
+                <div class="detail-value">{{ $data->pwd_status ?? '—' }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-person-raised-hand"></i> Disability Type</div>
+                <div class="detail-value">{{ $data->disability_type ?? '—' }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-upc-scan"></i> PWD Number</div>
+                <div class="detail-value">{{ $data->pwd_number ?? '—' }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-geo-alt"></i> County</div>
+                <div class="detail-value">{{ $data->county_id ?? '—' }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-map"></i> Sub County</div>
+                <div class="detail-value">{{ $data->constituency->name ?? ($data->subcounty_id ?? '—') }}</div>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-label"><i class="bi bi-pin-map"></i> Ward</div>
+                <div class="detail-value">{{ optional(optional($data->resident)->ward)->name ?? ($data->ward_id ?? '—') }}</div>
+            </div>
+
+            <div class="detail-item full">
+                <div class="detail-label"><i class="bi bi-card-text"></i> Impairment Details</div>
+                <div class="detail-value">{{ $data->impairment_details ?? '—' }}</div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

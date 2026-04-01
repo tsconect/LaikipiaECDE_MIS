@@ -19,7 +19,7 @@
 
             <div class="card">
                 <div class="card-header btn-success">
-                    <i class="fas fa-comment-dots"></i> Testimonial Details
+                    <i class="bi bi-chat-dots"></i> Testimonial Details
                 </div>
                 <div class="card-body">
                     <form class="modern-form-shell" action="{{ route('admin.cms.testimonials.store') }}" method="POST" enctype="multipart/form-data">

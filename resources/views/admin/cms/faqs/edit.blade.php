@@ -20,7 +20,7 @@
 
             <div class="card">
                 <div class="card-header btn-success">
-                    <i class="fas fa-question-circle"></i> FAQ Details
+                    <i class="bi bi-question-circle"></i> FAQ Details
                 </div>
                 <div class="card-body">
                     <form class="modern-form-shell" action="{{ route('admin.cms.faqs.update', $faq) }}" method="POST">

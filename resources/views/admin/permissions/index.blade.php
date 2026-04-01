@@ -52,9 +52,10 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="4">
-                        <div class="empty-state">No permissions found.</div>
-                    </td>
+                    <td>—</td>
+                    <td class="text-muted">No permissions found.</td>
+                    <td>—</td>
+                    <td>—</td>
                 </tr>
             @endforelse
         </tbody>

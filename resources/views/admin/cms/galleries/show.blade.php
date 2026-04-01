@@ -10,7 +10,7 @@
         <div class="prof-header-title">{{ $gallery->title }}</div>
         <div class="prof-header-meta">
             <span><i class="bi bi-images"></i> {{ $gallery->images()->count() }} images</span>
-            <span><i class="bi bi-circle-fill"></i> {{ ucfirst($gallery->status) }}</span>
+            <span><i class="bi bi-patch-check-fill"></i> {{ ucfirst($gallery->status) }}</span>
         </div>
     </div>
     <div class="d-flex gap-2">

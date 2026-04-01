@@ -48,10 +48,10 @@
                             <a href="{{ route('admin.cms.announcements.edit', $announcement) }}" class="act-btn edit" title="Edit Announcement">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
-                            <form action="{{ route('admin.cms.announcements.destroy', $announcement) }}" method="POST" class="inline-form">
+                            <form action="{{ route('admin.cms.announcements.destroy', $announcement) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this announcement?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="act-btn delete" title="Delete" onclick="return confirm('Are you sure?')">
+                                <button type="submit" class="act-btn delete" title="Delete">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>
@@ -60,7 +60,12 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center">No announcements found</td>
+                    <td>—</td>
+                    <td class="text-center text-muted">No announcements found</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
+                    <td>—</td>
                 </tr>
                 @endforelse
             </tbody>

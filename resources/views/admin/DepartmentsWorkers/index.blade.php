@@ -14,7 +14,7 @@
             <div class="banner-actions">
                 <a href="{{ route('admin.generate_dpt_staff_returns') }}">
                     <button class="btn-generate">
-                        <i class="bi bi-circle"></i>
+                        <i class="bi bi-file-earmark-arrow-down"></i>
                         Generate <?php $month = date('F ,Y'); echo $month; ?> Staff Returns
                     </button>
                 </a>
@@ -56,7 +56,7 @@
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                                 <a class="act-btn delete" title="Delete Constituency" href="{{ route('admin.delete-constituency', $item->id) }}">
-                                    <i class="bi bi-circle"></i>
+                                    <i class="bi bi-trash"></i>
                                 </a>
                             </div>
                         </td>

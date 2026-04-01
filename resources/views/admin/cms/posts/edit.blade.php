@@ -12,7 +12,7 @@
 
             <div class="card mb-4">
                 <div class="card-header btn-success">
-                    <i class="fas fa-pencil-alt"></i> Post Details
+                    <i class="bi bi-pencil-square"></i> Post Details
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -37,7 +37,7 @@
 
             <div class="card mb-4">
                 <div class="card-header btn-success">
-                    <i class="fas fa-image"></i> Featured Image
+                    <i class="bi bi-image"></i> Featured Image
                 </div>
                 <div class="card-body">
                     @if($post->featured_image)
@@ -61,7 +61,7 @@
 
             <div class="card mb-4">
                 <div class="card-header btn-success">
-                    <i class="fas fa-cog"></i> Settings
+                    <i class="bi bi-gear"></i> Settings
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -87,7 +87,7 @@
 
             <div class="mb-4 d-flex justify-content-end gap-2 flex-wrap">
                 <button type="submit" class="btn btn-success btn-lg">
-                    <i class="fas fa-save"></i> Update Post
+                    <i class="bi bi-floppy"></i> Update Post
                 </button>
                 <a href="{{ route('admin.cms.posts.index') }}" class="btn btn-secondary btn-lg">Cancel</a>
             </div>
@@ -97,7 +97,7 @@
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header btn-success">
-                <i class="fas fa-info-circle"></i> Post Info
+                <i class="bi bi-info-circle"></i> Post Info
             </div>
             <div class="card-body small">
                 <p><strong>Author:</strong> {{ $post->author->first_name ?? 'System' }}</p>

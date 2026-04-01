@@ -54,37 +54,18 @@
                             <td>
                                 <div class="table-actions">
                                     <a href="{{ route('admin.cms.pages.edit', $page) }}" class="btn btn-sm btn-warning" title="Edit">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $page->id }}" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
+                                    <form action="{{ route('admin.cms.pages.destroy', $page) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this page?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Delete Confirmation Modal -->
-                        <div class="modal fade" id="deleteModal{{ $page->id }}" tabindex="-1">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-danger text-white">
-                                        <h5 class="modal-title">Delete Page</h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure you want to delete this page? This action cannot be undone.
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <form action="{{ route('admin.cms.pages.destroy', $page) }}" method="POST" class="inline-form">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         @endforeach
                     </tbody>
                 </table>

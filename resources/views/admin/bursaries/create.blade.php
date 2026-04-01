@@ -28,7 +28,7 @@
             <button type="button"
                 class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                 <span class="btn-icon-wrapper">
-                    <i class="bi bi-circle"></i>
+                    <i class="bi bi-list"></i>
                 </span>
             </button>
         </span>

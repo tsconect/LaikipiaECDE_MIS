@@ -48,7 +48,7 @@
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                             <a class="act-btn delete" title="Delete" href="{{ route('admin.delete-constituency', $item->id) }}">
-                                <i class="bi bi-circle"></i>
+                                <i class="bi bi-trash"></i>
                             </a>
                         </div>
                     </td>

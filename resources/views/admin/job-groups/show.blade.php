@@ -11,7 +11,7 @@
         <div class="prof-header-title">Job Group</div>
     </div>
     <a href="{{ route('admin.job-groups.edit', $jobGroup->id) }}" class="btn btn-success btn-sm">
-        <i class="bi bi-circle"></i> Edit
+        <i class="bi bi-pencil-square"></i> Edit
     </a>
 </div>
 
@@ -22,7 +22,6 @@
         <div class="detail-grid">
                     <div class="detail-item">
                         <div class="detail-label"><i class="bi bi-layers"></i> Name</div>
-                                                <div class="detail-label"><i class="bi bi-circle"></i> Name</div>
                         <div class="detail-value">{{$jobGroup->name ?? '—'}}</div>
                     </div>
         </div>

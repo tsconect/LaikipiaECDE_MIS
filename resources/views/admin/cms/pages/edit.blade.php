@@ -13,7 +13,7 @@
             <!-- Basic Information -->
             <div class="card mb-4">
                 <div class="card-header btn-success">
-                    <i class="fas fa-info-circle"></i> Page Information
+                    <i class="bi bi-info-circle"></i> Page Information
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -49,7 +49,7 @@
             <!-- Featured Image -->
             <div class="card mb-4">
                 <div class="card-header btn-success">
-                    <i class="fas fa-image"></i> Featured Image
+                    <i class="bi bi-image"></i> Featured Image
                 </div>
                 <div class="card-body">
                     @if($page->featured_image)
@@ -75,7 +75,7 @@
             <!-- Settings -->
             <div class="card mb-4">
                 <div class="card-header btn-success">
-                    <i class="fas fa-cog"></i> Settings
+                    <i class="bi bi-gear"></i> Settings
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -103,10 +103,10 @@
             <!-- Actions -->
             <div class="mb-4 d-flex justify-content-end gap-2 flex-wrap">
                 <button type="submit" class="btn btn-success btn-lg">
-                    <i class="fas fa-save"></i> Update Page
+                    <i class="bi bi-floppy"></i> Update Page
                 </button>
                 <a href="{{ route('admin.cms.pages.index') }}" class="btn btn-secondary btn-lg">
-                    <i class="fas fa-times"></i> Cancel
+                    <i class="bi bi-x-lg"></i> Cancel
                 </a>
             </div>
         </form>
@@ -115,7 +115,7 @@
     <div class="col-lg-4">
         <div class="card">
             <div class="card-header btn-success">
-                <i class="fas fa-lightbulb"></i> Tips
+                <i class="bi bi-lightbulb"></i> Tips
             </div>
             <div class="card-body">
                 <h6>Page URL</h6>

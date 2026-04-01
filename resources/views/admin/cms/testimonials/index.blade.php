@@ -40,7 +40,7 @@
                         <td>{{ $testimonial->organization ?? '-' }}</td>
                         <td>
                             @for($i = 0; $i < $testimonial->rating; $i++)
-                                <i class="bi bi-circle text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
                             @endfor
                         </td>
                         <td>
@@ -68,7 +68,12 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center">No testimonials found</td>
+                        <td>—</td>
+                        <td class="text-center text-muted">No testimonials found</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
                     </tr>
                 @endforelse
             </tbody>

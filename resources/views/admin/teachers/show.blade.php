@@ -180,12 +180,17 @@
                                     <td>{{ $item->phone_number ?? '—' }}</td>
                                 </tr>
                             @empty
-                                <tr><td colspan="6" class="text-center text-muted py-4">No next of kin records found.</td></tr>
+                                <tr>
+                                    <td>—</td>
+                                    <td class="text-muted">No next of kin records found.</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>
-
-                                        @else
 </div>
 
 @endsection

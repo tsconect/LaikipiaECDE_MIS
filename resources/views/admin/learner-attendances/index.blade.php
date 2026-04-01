@@ -20,29 +20,6 @@
             </div>
         </div>
 
-        <div class="table-toolbar">
-            <div class="toolbar-left">
-                <button class="toolbar-btn" onclick="copyTable()" type="button">
-                    <i class="bi bi-clipboard"></i>
-                    Copy
-                </button>
-                <button class="toolbar-btn" onclick="exportCSV()" type="button">
-                    <i class="bi bi-filetype-csv"></i>
-                    CSV
-                </button>
-                <button class="toolbar-btn" onclick="printTable()" type="button">
-                    <i class="bi bi-printer"></i>
-                    Print
-                </button>
-            </div>
-            <div class="toolbar-right">
-                <div class="search-wrap">
-                    <i class="bi bi-search search-icon"></i>
-                    <input class="search-input" type="text" placeholder="Search..." id="searchInput">
-                </div>
-            </div>
-        </div>
-
         <table class="data-table dt-admin" id="learnerAttendanceTable">
             <thead>
                 <tr>
@@ -77,9 +54,13 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">
-                            <div class="empty-state">No attendance records found.</div>
-                        </td>
+                        <td>—</td>
+                        <td class="text-muted">No attendance records found.</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
                     </tr>
                 @endforelse
             </tbody>

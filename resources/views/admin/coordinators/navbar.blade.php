@@ -26,7 +26,7 @@
             <button type="button"
                 class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
                 <span class="btn-icon-wrapper">
-                    <i class="bi bi-circle"></i>
+                    <i class="bi bi-list"></i>
                 </span>
             </button>
         </span>
@@ -213,7 +213,7 @@
                     <ul>
                         <li>
                             <a href="{{route('admin.bursary.application.all')}}">
-                                <i class="bi bi-circle"></i>Compose New Message
+                                <i class="bi bi-chat-dots"></i>Compose New Message
                             </a>
                         </li>
                         <li>

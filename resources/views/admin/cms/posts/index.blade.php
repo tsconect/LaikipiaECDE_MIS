@@ -43,7 +43,7 @@
                                 </span>
                             </td>
                             <td>
-                                <i class="fas fa-eye"></i> {{ $post->views_count }}
+                                <i class="bi bi-eye"></i> {{ $post->views_count }}
                             </td>
                             <td>
                                 <small class="text-muted">{{ $post->published_at?->format('M d, Y') ?? '-' }}</small>
@@ -51,13 +51,13 @@
                             <td>
                                 <div class="table-actions">
                                     <a href="{{ route('admin.cms.posts.edit', $post) }}" class="btn btn-sm btn-warning" title="Edit Post">
-                                        <i class="fas fa-edit"></i>
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
                                     <form action="{{ route('admin.cms.posts.destroy', $post) }}" method="POST" class="inline-form" onsubmit="return confirm('Are you sure you want to delete this post?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
                                 </div>

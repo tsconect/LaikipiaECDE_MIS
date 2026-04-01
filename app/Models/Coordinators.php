@@ -16,7 +16,7 @@ class Coordinators extends Model
     }
     
     function constituency(){
-        return $this->belongsTo(Constituency::class);
+        return $this->belongsTo(Constituency::class, 'subcounty_id', 'constituency_id');
     }
     
     function education(){

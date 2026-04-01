@@ -813,6 +813,11 @@ body {
     transition: background 0.15s, color 0.15s, transform 0.15s;
 }
 
+.delete-confirm-close i {
+    font-size: 14px;
+    line-height: 1;
+}
+
 .delete-confirm-close:hover {
     background: #fee2e2;
     color: #e03c3c;
@@ -836,6 +841,11 @@ body {
     justify-content: center;
     flex-shrink: 0;
     color: #e03c3c;
+}
+
+.delete-confirm-icon i {
+    font-size: 18px;
+    line-height: 1;
 }
 
 .delete-confirm-message {
@@ -971,7 +981,22 @@ body {
 
 .app-main__inner .modern-form-shell .row,
 .app-main__inner .modern-form-shell .form-row {
-    row-gap: 4px;
+    row-gap: 0;
+    --bs-gutter-y: 0.25rem !important;
+}
+
+.app-main__inner .modern-form-shell .row.g-4,
+.app-main__inner .modern-form-shell .form-row.g-4,
+.app-main__inner .modern-form-shell .row.gy-4,
+.app-main__inner .modern-form-shell .form-row.gy-4 {
+    --bs-gutter-y: 0.25rem !important;
+}
+
+.app-main__inner .modern-form-shell .row.g-3,
+.app-main__inner .modern-form-shell .form-row.g-3,
+.app-main__inner .modern-form-shell .row.gy-3,
+.app-main__inner .modern-form-shell .form-row.gy-3 {
+    --bs-gutter-y: 0.2rem !important;
 }
 
 .app-main__inner .modern-form-shell .card > .form-row,
@@ -998,7 +1023,23 @@ body {
 
 .app-main__inner .modern-form-shell .form-group,
 .app-main__inner .modern-form-shell [class*="col-"] {
-    margin-bottom: 14px;
+    margin-bottom: 3px !important;
+}
+
+.app-main__inner .modern-form-shell .position-relative.form-group {
+    margin-bottom: 3px !important;
+}
+
+.app-main__inner .modern-form-shell .row > [class*="col-"] {
+    padding-top: 4px;
+}
+
+.app-main__inner .modern-form-shell h5.text-success,
+.app-main__inner .modern-form-shell h6.text-success {
+    margin-top: 2px;
+    margin-bottom: 6px;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 .app-main__inner .modern-form-shell label,
