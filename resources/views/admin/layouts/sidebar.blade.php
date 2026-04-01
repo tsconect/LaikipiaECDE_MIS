@@ -132,6 +132,7 @@
                     <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
                     <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
                     <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
+                     <a class="sub-link" href="{{ route('admin.deployment-histories.index') }}">My Deployment History</a>
                 </div>
             </div>
         @endcan

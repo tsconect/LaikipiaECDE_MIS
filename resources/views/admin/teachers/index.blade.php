@@ -11,12 +11,12 @@
         <div class="table-banner">
             <div class="table-banner-title"><span>ECDE</span> TEACHERS</div>
             <div class="banner-actions">
-                <a href="{{ route('admin.generate_staff_returns') }}">
+                {{-- <a href="{{ route('admin.generate_staff_returns') }}">
                     <button class="btn-generate">
                         <i class="bi bi-file-earmark-arrow-down"></i>
                         Generate {{ date('F, Y') }} Staff Returns
                     </button>
-                </a>
+                </a> --}}
                 <a href="{{ route('admin.teachers.create') }}">
                     <button class="btn-new">
                         <i class="bi bi-plus-lg"></i>
@@ -26,18 +26,20 @@
             </div>
         </div>
 
-        <!-- Table -->
-        <table class="data-table dt-admin" id="teachersTable">
+       
+<div class="table-responsive p-2">
+        <!-- Table --> 
+        <table class="data-table p-3">
             <thead>
                 <tr>
-                    <th>ID <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>NAME <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>EMAIL <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>PHONE <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>ID NUMBER <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>AGE <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>RETIREMENT DATE <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>GENDER <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                    <th>ID  </th>
+                    <th>NAME  </th>
+                    <th>EMAIL  </th>
+                    <th>PHONE  </th>
+                    <th>ID NUMBER  </th>
+                    <th>AGE  </th>
+                    <th>RETIREMENT DATE  </th>
+                    <th>GENDER  </th>
                     <th>ACTION</th>
                 </tr>
             </thead>
@@ -77,5 +79,7 @@
                 @endforeach
             </tbody>
         </table>
+</div>
+    
     </div>
 @endsection

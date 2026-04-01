@@ -151,6 +151,17 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Parent Details</label>
+                                <select id="family_setup" name="family_setup" class="form-control" onchange="toggleFamilyFields()" required>
+                                    <option value="">Select option</option>
+                                    <option value="both">Both Parents Alive</option>
+                                    <option value="father_only">Single Father</option>
+                                    <option value="mother_only">Single Mother</option>
+                                    <option value="guardian">Guardian</option>
+                                </select>
+                            </div>
+
 
                            <div class="col-md-4">
                                 <div class="position-relative form-group">
@@ -302,161 +313,175 @@
                             </div>
                       
         
-                    <hr>
-    
-        <h5 class="p-2 text-success">Parent / Guardian Information</h5>
+                    <hr> 
+                      <h5 class="p-2 text-success parent-title" style="display: none">
+Family Information (Parents/Guardian)</h5>
 
+   
 
+                   <div id="father_section" class="row g-3 family-section mt-2" style="display:none;">
+                    <h6 class="text-primary">Father Information</h6>
 
-            <!-- First Name -->
-            <div class="col-md-4">
-                <label class="form-label">First Name</label>
-                <input type="text" name="parent_first_name" 
-                       class="form-control @error('parent_first_name') is-invalid @enderror"
-                       placeholder="Enter first name"
-                       value="{{ old('parent_first_name') }}">
-                @error('parent_first_name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="col-md-4">
+                        <input type="text" name="father_first_name" class="form-control" placeholder="Father First Name">
+                    </div>
 
-            <!-- Middle Name -->
-            <div class="col-md-4">
-                <label class="form-label">Middle Name</label>
-                <input type="text" name="parent_middle_name" 
-                       class="form-control @error('parent_middle_name') is-invalid @enderror"
-                       placeholder="Enter middle name"
-                       value="{{ old('parent_middle_name') }}">
-                @error('parent_middle_name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="col-md-4">
+                        <input type="text" name="father_middle_name" class="form-control" placeholder="Father Middle Name">
+                    </div>
 
-            <!-- Last Name -->
-            <div class="col-md-4">
-                <label class="form-label">Last Name</label>
-                <input type="text" name="parent_last_name" 
-                       class="form-control @error('parent_last_name') is-invalid @enderror"
-                       placeholder="Enter last name"
-                       value="{{ old('parent_last_name') }}">
-                @error('parent_last_name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="col-md-4">
+                        <input type="text" name="father_last_name" class="form-control" placeholder="Father Last Name">
+                    </div>
 
-            <!-- Relationship -->
-            <div class="col-md-4">
-                <label class="form-label">Relationship</label>
-                <select name="parent_relationship" 
-                        class="form-control @error('parent_relationship') is-invalid @enderror">
-                    <option value="">Select</option>
-                    <option value="mother" {{ old('parent_relationship') == 'mother' ? 'selected' : '' }}>Mother</option>
-                    <option value="father" {{ old('parent_relationship') == 'father' ? 'selected' : '' }}>Father</option>
-                    <option value="guardian" {{ old('parent_relationship') == 'guardian' ? 'selected' : '' }}>Guardian</option>
-                    <option value="other" {{ old('parent_relationship') == 'other' ? 'selected' : '' }}>Other</option>
-                </select>
-                @error('parent_relationship')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="col-md-4">
+                        <input type="text" name="father_id_number" class="form-control" placeholder="Father ID Number">
+                    </div>
 
-            <!-- ID Number -->
-            <div class="col-md-4">
-                <label class="form-label">ID Number</label>
-                <input type="text" name="parent_id_number" 
-                       class="form-control @error('parent_id_number') is-invalid @enderror"
-                       placeholder="Enter ID number"
-                       value="{{ old('id_number') }}">
-                @error('parent_id_number')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="col-md-4">
+                        <input type="text" name="father_phone" class="form-control" placeholder="Father Phone Number">
+                    </div>
 
-            <!-- Phone Number -->
-            <div class="col-md-4">
-                <label class="form-label">Phone Number</label>
-                <input type="text" name="parent_phone_number" 
-                       class="form-control @error('parent_phone_number') is-invalid @enderror"
-                       placeholder="Enter primary phone"
-                       value="{{ old('parent_phone_number') }}">
-                @error('parent_phone_number')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
+                    <div class="col-md-4">
+                        <input type="email" name="father_email" class="form-control" placeholder="Father Email Address">
+                    </div>
 
-            <!-- Alternative Phone -->
-            <div class="col-md-4">
-                <label class="form-label">Alternative Phone</label>
-                <input type="text" name="parent_alernative_phone_number" 
-                       class="form-control @error('parent_alernative_phone_number') is-invalid @enderror"
-                       placeholder="Enter alternative phone"
-                       value="{{ old('parent_alernative_phone_number') }}">
-                @error('parent_alernative_phone_number')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <!-- Email -->
-            <div class="col-md-4">
-                <label class="form-label">Email</label>
-                <input type="email" name="parent_email" 
-                       class="form-control @error('parent_email') is-invalid @enderror"
-                       placeholder="Enter email"
-                       value="{{ old('parent_email') }}">
-                @error('parent_email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
-                    <select name="parent_county_id" id="countySelect2" 
-                            class="form-control @error('parent_county_id') is-invalid @enderror"
-                            required>
-                        <option value="">Select county</option>
+                    <!-- Location -->
+                    <div class="col-md-4">
+                        <select name="father_county_id" class="form-control county-select">
+                            <option value="">Select  County</option>
                             @foreach($counties as $county)
                                 <option value="{{ $county->county_id }}">{{ $county->name }}</option>
                             @endforeach
-                    </select>
-                    @error('parent_county_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select name="father_subcounty_id" class="form-control subcounty-select">
+                            <option value="">Select  Sub-County</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select name="father_ward_id" class="form-control ward-select">
+                            <option value="">Select  Ward</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input type="text" name="father_village" class="form-control" placeholder="Father Village">
+                    </div>
+                </div>
+
+                    <!-- ================= MOTHER ================= -->
+                <div id="mother_section" class="row g-3 family-section mt-2" style="display:none;">
+                <h6 class="text-primary">Mother Information</h6>
+
+                <div class="col-md-4">
+                    <input type="text" name="mother_first_name" class="form-control" placeholder="Mother First Name">
                 </div>
 
                 <div class="col-md-4">
-                    <label class="form-label fw-semibold">Sub-County</label>
-                    <select name="parent_subcounty_id" id="constituencySelect2" 
-                            class="form-control @error('parent_subcounty_id') is-invalid @enderror"
-                            >
-                        <option value="">Select sub-county</option>
-                    </select>
-                    @error('parent_subcounty_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                    <input type="text" name="mother_middle_name" class="form-control" placeholder="Mother Middle Name">
                 </div>
-          
-            <!-- Ward -->
-            <div class="col-md-4">
-                <label class="form-label fw-semibold">Ward</label>
-                <select name="parent_ward_id" id="wardSelect2" 
-                        class="form-control @error('parent_ward_id') is-invalid @enderror">
-                    <option value="">Select ward</option>
-                </select>
-                @error('parent_ward_id')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
-            </div>
-  <!-- Village -->
-            <div class="col-md-4">
-                <label class="form-label">Village</label>
-                <input type="text" name="parent_village" 
-                       class="form-control @error('parent_village') is-invalid @enderror"
-                       placeholder="Enter village"
-                       value="{{ old('parent_village') }}">
-                @error('parent_village')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @enderror
+
+                <div class="col-md-4">
+                    <input type="text" name="mother_last_name" class="form-control" placeholder="Mother Last Name">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="mother_id_number" class="form-control" placeholder="Mother ID Number">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="mother_phone" class="form-control" placeholder="Mother Phone Number">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="email" name="mother_email" class="form-control" placeholder="Mother Email Address">
+                </div>
+
+                <!-- Location -->
+                <div class="col-md-4">
+                    <select name="mother_county_id" class="form-control county-select">
+                        <option value="">Select  County</option>
+                        @foreach($counties as $county)
+                            <option value="{{ $county->county_id }}">{{ $county->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <select name="mother_subcounty_id" class="form-control subcounty-select">
+                        <option value="">Select  Sub-County</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <select name="mother_ward_id" class="form-control ward-select">
+                        <option value="">Select  Ward</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="mother_village" class="form-control" placeholder="Mother Village">
+                </div>
             </div>
 
+                    <!-- ================= GUARDIAN ================= -->
+            <div id="guardian_section" class="row g-3 family-section mt-2" style="display:none;">
+                <h6 class="text-primary">Guardian Information</h6>
+
+                <div class="col-md-4">
+                    <input type="text" name="guardian_first_name" class="form-control" placeholder="Guardian First Name">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="guardian_middle_name" class="form-control" placeholder="Guardian Middle Name">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="guardian_last_name" class="form-control" placeholder="Guardian Last Name">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="guardian_id_number" class="form-control" placeholder="Guardian ID Number">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="guardian_phone" class="form-control" placeholder="Guardian Phone Number">
+                </div>
+
+                <div class="col-md-4">
+                    <input type="email" name="guardian_email" class="form-control" placeholder="Guardian Email Address">
+                </div>
+
+                <!-- Location -->
+                <div class="col-md-4">
+                    <select name="guardian_county_id" class="form-control county-select">
+                        <option value="">Select  County</option>
+                        @foreach($counties as $county)
+                            <option value="{{ $county->county_id }}">{{ $county->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <select name="guardian_subcounty_id" class="form-control subcounty-select">
+                        <option value="">Select  Sub-County</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <select name="guardian_ward_id" class="form-control ward-select">
+                        <option value="">Select  Ward</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="text" name="guardian_village" class="form-control" placeholder=" Village">
+                </div>
+            </div>
         
                 <div class="text-right p-2">
                     <button class="btn btn-success" type="submit">
@@ -489,6 +514,59 @@
 
     };
 </script>
+
+<script>
+function toggleFamilyFields() {
+    let value = document.getElementById('family_setup').value;
+
+    let father = document.getElementById('father_section');
+    let mother = document.getElementById('mother_section');
+    let guardian = document.getElementById('guardian_section');
+    let parent_title = document.querySelector('.parent-title');
+
+    // Hide all first
+    father.style.display = 'none';
+    mother.style.display = 'none';
+    guardian.style.display = 'none';
+    parent_title.style.display = 'block';
+
+    // Remove required first
+    document.querySelectorAll('#father_section input, #mother_section input, #guardian_section input')
+        .forEach(el => el.required = false);
+
+    if (value === 'both') {
+        father.style.display = 'flex';
+        mother.style.display = 'flex';
+
+        // make important fields required
+        document.querySelector('[name="father_first_name"]').required = true;
+        document.querySelector('[name="father_phone"]').required = true;
+
+        document.querySelector('[name="mother_first_name"]').required = true;
+        document.querySelector('[name="mother_phone"]').required = true;
+    } 
+    else if (value === 'father_only') {
+        father.style.display = 'flex';
+
+        document.querySelector('[name="father_first_name"]').required = true;
+        document.querySelector('[name="father_phone"]').required = true;
+    } 
+    else if (value === 'mother_only') {
+        mother.style.display = 'flex';
+
+        document.querySelector('[name="mother_first_name"]').required = true;
+        document.querySelector('[name="mother_phone"]').required = true;
+    } 
+    else if (value === 'guardian') {
+        guardian.style.display = 'flex';
+
+        document.querySelector('[name="guardian_first_name"]').required = true;
+        document.querySelector('[name="guardian_phone"]').required = true;
+    }
+}
+</script>
+
+
 <script>
     // Toggle PWD fields
     function togglePWDFields() {
@@ -555,50 +633,55 @@
                             </script>  
                             
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        const countySelect = document.getElementById('countySelect2');
-        const constituencySelect = document.getElementById('constituencySelect2');
-        const wardSelect = document.getElementById('wardSelect2');
-       
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.querySelectorAll('.county-select').forEach((countySelect) => {
+
         countySelect.addEventListener('change', function () {
-            const countyId = this.value;
-            constituencySelect.innerHTML = '<option value="">Select Sub County</option>';
+
+            let parent = this.closest('.family-section');
+
+            let subcountySelect = parent.querySelector('.subcounty-select');
+            let wardSelect = parent.querySelector('.ward-select');
+
+            subcountySelect.innerHTML = '<option value="">Select Sub County</option>';
             wardSelect.innerHTML = '<option value="">Select Ward</option>';
-           
+
+            const countyId = this.value;
+
             if (countyId) {
                 const constituencies = data.constituencies.filter(c => c.county_code == countyId);
 
-
-                constituencies.forEach(constituency => {
-                    const option = document.createElement('option');
-                    option.value = constituency.constituency_id;
-                    option.textContent = constituency.name;
-                    constituencySelect.appendChild(option);
+                constituencies.forEach(c => {
+                    let option = document.createElement('option');
+                    option.value = c.constituency_id;
+                    option.textContent = c.name;
+                    subcountySelect.appendChild(option);
                 });
             }
+
+            subcountySelect.addEventListener('change', function () {
+                const constituencyId = this.value;
+                wardSelect.innerHTML = '<option value="">Select Ward</option>';
+
+                if (constituencyId) {
+                    const wards = data.wards.filter(w => w.constituency_code == constituencyId);
+
+                    wards.forEach(w => {
+                        let option = document.createElement('option');
+                        option.value = w.id;
+                        option.textContent = w.name;
+                        wardSelect.appendChild(option);
+                    });
+                }
+            });
+
         });
 
+    });
 
-        constituencySelect.addEventListener('change', function () {
-            const constituencyId = this.value;
-            wardSelect.innerHTML = '<option value="">Select Ward</option>';
-
-            if (constituencyId) {
-                const wards = data.wards.filter(w => w.constituency_code == constituencyId);
-                wards.forEach(ward => {
-                    const option = document.createElement('option');
-                    option.value = ward.id;
-                    option.textContent = ward.name;
-                                            wardSelect.appendChild(option);
-                                        });
-                                    }
-                                });
-
-                              
-                            });
-
-                            </script>   
-
+});
+</script>
 
 
 @endsection

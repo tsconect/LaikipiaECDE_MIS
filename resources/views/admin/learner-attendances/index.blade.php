@@ -20,7 +20,61 @@
             </div>
         </div>
 
-        <table class="data-table dt-admin" id="learnerAttendanceTable">
+        <form method="GET" class="row g-2 mb-3 p-4">
+    
+            <div class="col-md-3">
+                <input type="date" name="start_date" value="{{ $startDate }}" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <input type="date" name="end_date" value="{{ $endDate }}" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-success">Filter</button>
+                <a href="{{ route('admin.learner-attendances.index') }}" class="btn btn-secondary">Reset</a>
+            </div>
+
+        </form>
+
+      <div class="p-3">
+
+        <div class="card mb-3">
+            <div class="card-header bg-light">
+                <strong>Attendance Summary ({{ $startDate }} → {{ $endDate }})</strong>
+            </div>
+
+            <div class="card-body p-2">
+                  <table class="data-table dt-admin" id="learnerAttendanceTable">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Student</th>
+                            <th>School</th>
+                            <th>Days Present</th>
+                            <th>Days Absent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($summary as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item['name'] }}</td>
+                                <td>{{ $item['school'] }}</td>
+                                <td class="text-success fw-bold">{{ $item['present'] }}</td>
+                                <td class="text-danger fw-bold">{{ $item['absent'] }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="3">No data available</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{-- <table class="data-table dt-admin" id="learnerAttendanceTable">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -64,7 +118,7 @@
                     </tr>
                 @endforelse
             </tbody>
-        </table>
+        </table> --}}
 
 </div>
 

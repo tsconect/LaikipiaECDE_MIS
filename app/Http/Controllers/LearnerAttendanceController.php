@@ -6,6 +6,7 @@ use App\Models\EcdeSchools;
 use App\Models\Learner;
 use App\Models\LearnerAttendance;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class LearnerAttendanceController extends Controller
@@ -15,22 +16,47 @@ class LearnerAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
 
+
+    public function index(Request $request)
+    {
         $user = auth()->user();
 
-        
-        if($user->role == 'Teacher'){
-          
-               $attendances = LearnerAttendance::where('user_id', $user->id)->latest()->get();
+        // Default dates (last 7 days → today)
+        $startDate = $request->start_date ?? Carbon::now()->subDays(7)->toDateString();
+        $endDate = $request->end_date ?? Carbon::now()->toDateString();
 
-        } else{
-               $attendances = LearnerAttendance::latest()->get();
+        $query = LearnerAttendance::with(['learner', 'teacher'])
+            ->whereBetween('date', [$startDate, $endDate]);
+
+        // Restrict for teacher
+        if ($user->role == 'Teacher') {
+            $query->where('user_id', $user->id);
         }
-     
 
-        return view('admin.learner-attendances.index', compact('attendances'));
+        $attendances = $query->latest()->get();
+
+    
+    
+        $summary = $query->get()
+            ->groupBy('learner_id')
+            ->map(function ($records) {
+                return [
+                    'name' => optional($records->first()->learner)->first_name . ' ' .
+                            optional($records->first()->learner)->last_name,
+                    'school' =>optional($records->first()->learner)->school->school_name ?? 'N/A',
+
+                    'present' => $records->where('status', 'present')->count(),
+                    'absent' => $records->where('status', 'absent')->count(),
+                ];
+            });
+
+        return view('admin.learner-attendances.index', compact(
+            'attendances',
+            'startDate',
+            'endDate',
+            'summary'
+        ));
     }
 
     /**

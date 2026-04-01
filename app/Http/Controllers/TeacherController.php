@@ -13,6 +13,7 @@ use App\Models\EthnicGroup;
 use App\Models\JobGroup;
 use App\Models\NextOfKin;
 use App\Models\Teacher;
+use App\Models\TeacherDeploymentHistory;
 use App\Models\TeacherEducation;
 use App\Models\TeacherResidential;
 use App\Models\TeacherSchoolContact;
@@ -118,9 +119,11 @@ class TeacherController extends Controller
             $obj->last_name = $request->last_name;
             $obj->email=$request->email;
             $obj->phone_number= PhoneHelper::normalizePhoneNumber($request->phone_number);
-            $obj->role='teacher';
+            $obj->role='Teacher';
             $obj->password=Hash::make('teacher');
             $obj->save();
+
+                $obj->syncRoles('Teacher');
 
             $user_id=$obj->id;
             $teacher=new \App\Models\Teacher();
@@ -148,6 +151,26 @@ class TeacherController extends Controller
             $teacher->school_id = $request->school_id;
             $teacher->retirement_date = $retirement_date;
             $teacher->save();
+
+            $history = new TeacherDeploymentHistory();
+            $history->user_id = $teacher->user_id;
+            $history->school_id = $request->school_id;
+            // $history->deployment_date = $request->deployment_date;
+            $history->start_date = $request->start_date;
+            $history->end_date = $request->end_date;
+            $history->reason = $request->reason;
+
+            if ($request->hasFile('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/deployment_histories', $filename);
+                $history->file_attachment = 'deployment_histories/' . $filename;
+            }
+
+            $history->save();
+
+            
+          
 
             DB::commit();
 
@@ -180,11 +203,11 @@ class TeacherController extends Controller
     $teacher = Teacher::find($id);
     $sub_counties =Constituency::get();
         $wards=Ward::get();
-        $ecde_schools = EcdeSchools::get();
+        $schools = EcdeSchools::get();
         $counties = County::get();
         $job_groups = JobGroup::all();
         $ethnicities = EthnicGroup::all();
-        return view('admin.teachers.edit',compact('wards','sub_counties','ecde_schools','counties', 'teacher', 'job_groups', 'ethnicities'));
+        return view('admin.teachers.edit',compact('wards','sub_counties','schools','counties', 'teacher', 'job_groups', 'ethnicities'));
 
    
 
@@ -227,6 +250,7 @@ class TeacherController extends Controller
             $teacher->date_of_first_appointment=$request->date_of_first_appointment;
             $teacher->terms_of_engagement=$request->terms_of_engagement;
             $teacher->job_group_id =$request->job_group_id;
+             $teacher->contract_expiry =$request->contract_expiry;
 
             $teacher->ethnicity_id =$request->ethnicity_id;
             $teacher->school_id=$request->school_id;
@@ -240,6 +264,29 @@ class TeacherController extends Controller
             $teacher->school_id = $request->school_id;
             $teacher->retirement_date = $retirement_date;
             $teacher->save();
+
+            $history = TeacherDeploymentHistory::where('user_id', $teacher->user_id)->latest()->first();
+
+            if (!$history) {
+                $history = new TeacherDeploymentHistory();
+            }
+            $history->user_id = $teacher->user_id;
+            $history->school_id = $request->school_id;
+            // $history->deployment_date = $request->deployment_date;
+            $history->start_date = $request->start_date;
+            $history->end_date = $request->end_date;
+            $history->reason = $request->reason;
+
+            if ($request->hasFile('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/deployment_histories', $filename);
+                $history->file_attachment = 'deployment_histories/' . $filename;
+            }
+
+            $history->save();
+
+          
 
             DB::commit();
 
@@ -311,7 +358,8 @@ class TeacherController extends Controller
        $unions = UserUnion::where('user_id', $teacher->user_id)->latest()->get();
        $documents = UserDocument::where('user_id', $teacher->user_id)->latest()->get();
        $academic_histories = EducationHistory::where('user_id', $teacher->user_id)->latest()->get();
-       return view('admin.teachers.show', compact('teacher', 'next_of_kins', 'beneficiaries', 'unions', 'documents', 'academic_histories'));
+       $deployments = TeacherDeploymentHistory::where('user_id', $teacher->user_id)->latest()->get();
+       return view('admin.teachers.show', compact('teacher', 'next_of_kins', 'beneficiaries', 'unions', 'documents', 'academic_histories', 'deployments'));
    }
 
    function generateStaffReturns()

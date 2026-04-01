@@ -16,7 +16,7 @@
                 </ul>
             </div>
         @endif
-    <form method="POST" action="{{ route('admin.teachers.store') }}" class="modern-form-shell">
+    <form method="POST" action="{{ route('admin.teachers.store') }}" class="modern-form-shell" enctype="multipart/form-data">
         @csrf
 
 
@@ -463,6 +463,8 @@ max="{{ date('Y-m-d', strtotime('-18 years')) }}"
                             @enderror
                         </div>
 
+                        <h5 class="p-2 text-success">Deployment Information</h5>
+
                          @if($school_id)
 
                             
@@ -495,6 +497,21 @@ max="{{ date('Y-m-d', strtotime('-18 years')) }}"
                                   
                             </div>
                             @endif
+
+                        <div class="col-md-4">
+                            <div class="position-relative form-group">
+                                <label for="start_date" class="">Start Date</label>
+                                <input name="start_date" id="start_date" value="{{ old('start_date') }}" placeholder="start date" type="date" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="position-relative form-group">
+                                <label for="file_attachment" class="">File Attachment (optional)</label>
+                                <input name="file_attachment" id="file_attachment" value="{{ old('file_attachment') }}" type="file" class="form-control" accept=".pdf">
+                            </div>
+                            {{-- <small class="text-muted">File attachment is optional</small> --}}
+                        </div>
 
                         @error('job_group')
                             <small class="text-danger">{{ $message }}</small>

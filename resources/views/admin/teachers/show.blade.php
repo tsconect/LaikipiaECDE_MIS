@@ -65,6 +65,11 @@
                     <i class="bi bi-folder-fill"></i> Documents
                 </button>
             </li>
+             <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deployment">
+                    <i class="bi bi-diagram-3-fill"></i> Deployment History
+                </button>
+            </li>
         </ul>
 
         {{-- Tab Content --}}
@@ -170,7 +175,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($next_of_kins as $item)
+                            @foreach($next_of_kins as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
@@ -179,18 +184,200 @@
                                     <td>{{ $item->id_number ?? '—' }}</td>
                                     <td>{{ $item->phone_number ?? '—' }}</td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td>—</td>
-                                    <td class="text-muted">No next of kin records found.</td>
-                                    <td>—</td>
-                                    <td>—</td>
-                                    <td>—</td>
-                                    <td>—</td>
-                                </tr>
-                            @endforelse
+                        
+                            @endforeach
                         </tbody>
                     </table>
+
+            {{-- ── BENEFICIARIES ── --}}
+            <div class="tab-pane fade" id="beneficiaries">
+                <p class="section-title">Beneficiary Records</p>
+                <div class="table-responsive">
+                    <div class="table-card">
+            <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Relationship</th>
+                                <th>Gender</th>
+                                <th>ID Number</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($beneficiaries as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
+                                    <td>{{ ucfirst($item->relationship) }}</td>
+                                    <td>{{ ucfirst($item->gender) }}</td>
+                                    <td>{{ $item->id_number ?? '—' }}</td>
+                                    <td>{{ $item->phone_number ?? '—' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+        </div>
+                </div>
+            </div>
+
+            {{-- ── UNIONS ── --}}
+            <div class="tab-pane fade" id="unions">
+                <p class="section-title">Union Memberships</p>
+                <div class="table-responsive">
+                    <div class="table-card">
+            <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date Joined</th>
+                                <th>Union Name</th>
+                                <th>Membership No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($unions as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->created_at->format('d M Y') }}</td>
+                                    <td>{{ $item->union->name ?? '—' }}</td>
+                                    <td>{{ $item->membership_number ?? '—' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+        </div>
+                </div>
+            </div>
+
+            {{-- ── ACADEMICS ── --}}
+            <div class="tab-pane fade" id="academic">
+                <p class="section-title">Academic Qualifications</p>
+                <div class="table-responsive">
+                    <div class="table-card">
+            <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date Added</th>
+                                <th>Institution</th>
+                                <th>Award</th>
+                                <th>Grade</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Cert No.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($academic_histories as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->created_at->format('d M Y') }}</td>
+                                    <td>{{ $item->institution_name ?? '—' }}</td>
+                                    <td>{{ strtoupper($item->award ?? '—') }}</td>
+                                    <td>{{ $item->grade ?? '—' }}</td>
+                                    <td>{{ $item->start_date ?? '—' }}</td>
+                                    <td>{{ $item->end_date ?? '—' }}</td>
+                                    <td>{{ $item->certificate_no ?? '—' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+        </div>
+                </div>
+            </div>
+
+            {{-- ── DOCUMENTS ── --}}
+            <div class="tab-pane fade" id="documents">
+                <p class="section-title">Uploaded Documents</p>
+                <div class="table-responsive">
+                    <div class="table-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Document Name</th>
+                                <th>File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($documents as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->created_at->format('d M Y') }}</td>
+                                    <td>{{ $item->document->name ?? '—' }}</td>
+                                    <td>
+                                        @if($item->file)
+                                            <a href="{{ asset('storage/'.$item->file) }}" target="_blank" class="btn btn-sm btn-success">
+                                                <i class="bi bi-download"></i> View
+                                            </a>
+                                        @else
+                                            <span class="text-muted">—</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+
+            {{-- DEPLOYMENT HISTORY --}}
+
+                <div class="tab-pane fade" id="deployment">
+                    <p class="section-title">Deployment History</p>
+               
+                        <div class="table-card p-3">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>School Name</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Period</th>
+                                    
+                                    <th>File Attachment</th>
+ 
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($deployments as $item)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->school->school_name }}</td>
+                                        <td>{{ $item->start_date }}</td>
+                                        <td>{{ $item->end_date ?? 'Present' }}</td>
+                                        <td>
+                                            @php
+                                                $start = \Carbon\Carbon::parse($item->start_date);
+                                                $end = $item->end_date ? \Carbon\Carbon::parse($item->end_date) : \Carbon\Carbon::now();
+                                                $period = $start->diffForHumans($end, true);
+                                            @endphp
+                                            {{ $period }}
+                                        </td>
+                                        <td>
+                                            @if ($item->file_attachment)
+                                                <a href="{{ asset('storage/' . $item->file_attachment) }}" target="_blank">
+                                                    View Attachment
+                                                </a>
+                                            @else
+                                                No Attachment
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        </div>
+                  
+                </div>
+
+        </div>{{-- /tab-content --}}
+    </div>
 </div>
 
 @endsection

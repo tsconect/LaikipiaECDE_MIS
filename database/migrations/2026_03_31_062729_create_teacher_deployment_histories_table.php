@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('teacher_deployment_histories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('teacher_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('school_id')->nullable();
             $table->date('deployment_date')->nullable();
             $table->date('start_date')->nullable();

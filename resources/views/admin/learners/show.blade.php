@@ -49,68 +49,70 @@
         </div>
     </div>
     <div class="tab-pane fade" id="parent">
-        <div id="parentGuardianToolbarActions" class="d-none">
-            <a href="{{ route('admin.learners.edit', $learner->id) }}#parent-guardian" class="btn btn-success btn-sm" style="font-size:12px;">
-                <i class="bi bi-plus-lg"></i> Add New Parent/Guardian
+         <div class="table-actions p-3 text-right">
+             <a  style="font-size: 12px;" href="{{ route('admin.learner-parents.create', ['learner_id' => $learner->id]) }}" class="btn btn-success" >
+                <i class="fa fa-plus"></i> Add Parent/Guardian
             </a>
-        </div>
-
-        @if($learner->parent)
-            <table class="data-table dt-admin" id="learnerParentGuardianTable">
-                <thead>
+          </div>
+      @if($learner->parents->count() > 0)
+       <table class="data-table p-2">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Full Names</th>
+              <th>Relationship</th>
+                <th>ID Number</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Ward</th>
+                <th>Village</th>
+                <th>Action</th>
+            </tr>
+          </thead>
+            <tbody>
+                @foreach($learner->parents as $item)
                     <tr>
-                        <th>ID</th>
-                        <th>FULL NAMES</th>
-                        <th>RELATIONSHIP</th>
-                        <th>ID NUMBER</th>
-                        <th>PHONE NUMBER</th>
-                        <th>EMAIL</th>
-                        <th>WARD</th>
-                        <th>VILLAGE</th>
-                        <th>ACTION</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{ $learner->parent->id }}</td>
-                        <td>
-                            {{ $learner->parent->first_name }}
-                            {{ $learner->parent->middle_name ?? '' }}
-                            {{ $learner->parent->last_name }}
-                        </td>
-                        <td>{{ ucfirst($learner->parent->relationship ?? '-') }}</td>
-                        <td>{{ $learner->parent->id_number ?? '-' }}</td>
-                        <td>{{ $learner->parent->phone_number ?? '-' }}</td>
-                        <td>{{ $learner->parent->email ?? '-' }}</td>
-                        <td>{{ $learner->parent->ward->name ?? '-' }}</td>
-                        <td>{{ $learner->parent->village ?? '-' }}</td>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->first_name }} {{ $item->middle_name }} {{ $item->last_name }}</td>
+                        <td>{{ ucfirst($item->relationship) }}</td>
+                        <td>{{ $item->id_number ?? '-' }}</td>
+                        <td>{{ $item->phone_number ?? '-' }}</td>
+                        <td>{{ $item->email ?? '-' }}</td>
+                        <td>{{ $item->ward->name ?? '-' }}</td>
+                        <td>{{ $item->village ?? '-' }}</td>
                         <td>
                             <div class="action-btns">
-                                <a class="act-btn view" title="View Parent/Guardian" href="{{ route('admin.learners.parent.show', $learner->id) }}">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a class="act-btn edit" title="Edit Parent/Guardian" href="{{ route('admin.learners.edit', $learner->id) }}#parent-guardian">
+                           
+                                <a class="act-btn edit" title="Edit Learner" href="{{ route('admin.learners.edit', $item->id) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <form action="{{ route('admin.learners.parent.destroy', $learner->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this parent/guardian record?');">
+                                <form action="{{ route('admin.learners.destroy', $item->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this learner?');">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="act-btn delete" title="Delete Parent/Guardian">
+                                    <button type="submit" class="act-btn delete" title="Delete Learner">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
                             </div>
                         </td>
                     </tr>
-                </tbody>
-            </table>
-        @else
-            <div class="empty-tab">
-                <i class="bi bi-person-exclamation"></i>
+                @endforeach
+            </tbody>
+        </table>
+      @else
+      <div class="empty-tab">
+                <i class="bi bi-circle"></i>
                 <div class="empty-tab-title">No parent/guardian information</div>
                 <div class="empty-tab-sub">Use the Add Parent/Guardian button to register guardian details.</div>
             </div>
         @endif
+      
+
+      
+        
+
+
+            
     </div>
 </x-admin.tabbed-card>
 
