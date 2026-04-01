@@ -8,7 +8,11 @@
   data-teachers-count="{{ $teachersCount ?? 0 }}"
   data-students-count="{{ $studentsCount ?? 0 }}"
   data-learner-male="{{ $learner_male ?? 0 }}"
-  data-learner-female="{{ $learner_female ?? 0 }}">
+  data-learner-female="{{ $learner_female ?? 0 }}"
+  data-male-series='@json($maleData)'
+  data-female-series='@json($femaleData)'
+  data-teachers-series='@json($teachers)'
+  data-learners-series='@json($learners)'>
 
   <!-- ══ ROW 1: Core counts (4 cards) ══ -->
   <div class="stats-grid-4">
@@ -290,11 +294,12 @@
     setTimeout(function () {
       // Registration Progress Chart
      const regCtx = document.getElementById('registrationChart');
-  const maleData = @json($maleData);
-  const femaleData = @json($femaleData);
+  const dashData = document.querySelector('.dash-content');
+  const maleData = JSON.parse((dashData && dashData.dataset.maleSeries) || '[]');
+  const femaleData = JSON.parse((dashData && dashData.dataset.femaleSeries) || '[]');
     if (regCtx) {
-        const teachersData = @json($teachers);
-        const learnersData = @json($learners);
+        const teachersData = JSON.parse((dashData && dashData.dataset.teachersSeries) || '[]');
+        const learnersData = JSON.parse((dashData && dashData.dataset.learnersSeries) || '[]');
 
         new Chart(regCtx, {
             type: 'line',

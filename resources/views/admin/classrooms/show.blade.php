@@ -26,6 +26,8 @@
 .school-meta-text { font-size: 12.5px; color: #94a3b8; }
 .school-status { margin-left: auto; display: flex; align-items: center; gap: 6px; }
 .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; background: #f0fdf4; color: #16a34a; }
+.status-badge.present { background: #f0fdf4; color: #16a34a; }
+.status-badge.absent { background: #fef2f2; color: #ef4444; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
 
 /* ══ TABS CARD ══ */
@@ -382,7 +384,7 @@
               <td>{{ $item->date }}</td>
               <td>{{ $item->teacher->first_name ?? '-' }} {{ $item->teacher->last_name ?? '' }}</td>
               <td>
-                <span class="status-badge" style="background: {{ $item->status == 'present' ? '#f0fdf4' : '#fef2f2' }}; color: {{ $item->status == 'present' ? '#16a34a' : '#ef4444' }};">
+                <span class="status-badge {{ $item->status == 'present' ? 'present' : 'absent' }}">
                     {{ ucfirst($item->status) }}
                 </span>
               </td>
