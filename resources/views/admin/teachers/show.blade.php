@@ -163,7 +163,7 @@
                 <p class="section-title">Next of Kin Records</p>
                 <div class="table-responsive">
                     <div class="table-card">
-            <table class="data-table">
+            <table class="data-table dt-admin">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -188,9 +188,6 @@
                             @endforeach
                         </tbody>
                     </table>
-        </div>
-                </div>
-            </div>
 
             {{-- ── BENEFICIARIES ── --}}
             <div class="tab-pane fade" id="beneficiaries">

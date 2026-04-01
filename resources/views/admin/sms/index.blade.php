@@ -108,12 +108,11 @@
     <div class="table-card">
         <div class="table-banner">
             <div class="table-banner-title"><span>TOP-UP</span> HISTORY</div>
-            <div class="showing-text text-white-50">{{ count($history) }} records</div>
         </div>
 
         <div class="section-body section-body-flush">
             <div class="table-responsive">
-                <table class="data-table" id="sms-history-table">
+                <table class="data-table dt-admin" id="sms-history-table">
                     <thead>
                         <tr>
                             <th class="px-4 py-3"
@@ -174,58 +173,7 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
 
-    {{-- Send SMS Modal --}}
-    <div class="modal fade" id="sendSMSModal" tabindex="-1" aria-labelledby="sendSMSModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="border-radius:16px; border:none;">
-                <div class="modal-header" style="border-bottom:1px solid #f3f4f6; padding:20px 24px;">
-                    <div class="d-flex align-items-center gap-2">
-                        <div
-                            style="background:linear-gradient(135deg,#059669,#047857); width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:white; font-size:16px;">
-                            <i class="bi bi-send-fill"></i>
-                        </div>
-                        <h5 class="modal-title fw-bold mb-0" id="sendSMSModalLabel">Send SMS</h5>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form action="{{ route('admin.sms.send') }}" method="post">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Recipient Name <span
-                                    class="text-muted fw-normal">(optional)</span></label>
-                            <input type="text" class="form-control" name="name" id="name"
-                                placeholder="Enter recipient's name...">
-                        </div>
-                        <div class="mb-3">
-                            <label for="phone_number" class="form-label">Phone Number <span
-                                    class="text-danger">*</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                <input type="text" class="form-control" name="phone_number" id="phone_number" required
-                                    placeholder="07XXXXXXXX">
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
-                            <textarea class="form-control" name="message" id="message" rows="4" required
-                                placeholder="Type your message here..."></textarea>
-                        </div>
-                        <div class="d-flex gap-2 justify-content-end">
-                            <button type="button" class="btn btn-secondary btn-sm px-4"
-                                data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-success btn-sm px-4">
-                                <i class="bi bi-send me-1"></i>Send Message
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
 @endsection

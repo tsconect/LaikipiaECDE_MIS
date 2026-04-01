@@ -67,7 +67,7 @@
 
 
                 <div class="section-body-flush">
-                    <table class="data-table" id="markAttendanceTable">
+                    <table class="data-table dt-admin" id="markAttendanceTable">
                         <thead>
                             <tr>
                                 <th>S/N</th>

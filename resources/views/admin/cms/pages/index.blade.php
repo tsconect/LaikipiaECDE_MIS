@@ -11,7 +11,7 @@
         <div class="banner-actions">
             <a href="{{ route('admin.cms.pages.create') }}">
                 <button class="btn-new">
-                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                    <i class="bi bi-plus-lg"></i>
                     Create New Page
                 </button>
             </a>
@@ -20,7 +20,7 @@
     <div class="section-body">
         @if($pages->count() > 0)
             <div class="table-responsive">
-                <table class="data-table">
+                <table class="data-table dt-admin">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -89,19 +89,9 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- Pagination -->
-            <div class="table-footer mt-3">
-                <div class="showing-text">
-                    Showing {{ $pages->firstItem() }} to {{ $pages->lastItem() }} of {{ $pages->total() }} pages
-                </div>
-                {{ $pages->links() }}
-            </div>
         @else
-            <div class="alert alert-info text-center py-5">
-                <i class="fas fa-info-circle fa-2x mb-3"></i>
-                <h5>No pages found</h5>
-                <p class="mb-0">Start by <a href="{{ route('admin.cms.pages.create') }}">creating a new page</a></p>
+            <div class="empty-state">
+                <p class="mb-0 text-muted">No pages found.</p>
             </div>
         @endif
     </div>

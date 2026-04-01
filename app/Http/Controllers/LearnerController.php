@@ -108,6 +108,7 @@ class LearnerController extends Controller
         'school_id' => 'required',
         'nationality_id' => 'required',
         'birth_certificate_number' => 'required|unique:learners,birth_certificate_number',
+        'family_setup' => 'required',
     ]);
 
 
@@ -143,21 +144,106 @@ class LearnerController extends Controller
             $student->class = $request->class;
             $student->mode_of_admission = $request->mode_of_admission;
             $student->birth_certificate_number = $request->birth_certificate_number;    
+            $student->family_setup = $request->family_setup;
 
             $student->save();
 
-            $parent = new LearnerParent();
-            $parent->learner_id = $student->id;
-            $parent->first_name = $request->parent_first_name;
-            $parent->last_name = $request->parent_last_name;
-            $parent->relationship = $request->parent_relationship;
-            $parent->id_number = $request->parent_id_number;
-            $parent->phone_number = $request->parent_phone_number;
-            $parent->alernative_phone_number = $request->parent_alernative_phone_number;
-            $parent->email = $request->parent_email;
-            $parent->ward_id = $request->parent_ward_id;
-            $parent->village = $request->parent_village;
-            $parent->save();
+            $familySetup = $request->family_setup;
+
+            
+            if ($familySetup === 'both') {
+
+                // Father
+                $father = new LearnerParent();
+                $father->learner_id = $student->id;
+                $father->first_name = $request->father_first_name;
+                $father->middle_name = $request->father_middle_name;
+                $father->last_name = $request->father_last_name;
+                $father->relationship = 'father';
+                $father->id_number = $request->father_id_number;
+                $father->phone_number = $request->father_phone;
+                $father->email = $request->father_email;
+                $father->county_id = $request->father_county_id;
+                $father->sub_county_id = $request->father_subcounty_id;
+                $father->ward_id = $request->father_ward_id;
+                $father->village = $request->father_village;
+                $father->save();
+
+                // Mother
+                $mother = new LearnerParent();
+                $mother->learner_id = $student->id;
+                $mother->first_name = $request->mother_first_name;
+                $mother->middle_name = $request->mother_middle_name;
+                $mother->last_name = $request->mother_last_name;
+                $mother->relationship = 'mother';
+                $mother->id_number = $request->mother_id_number;
+                $mother->phone_number = $request->mother_phone;
+                $mother->email = $request->mother_email;
+                $mother->county_id = $request->mother_county_id;
+                $mother->sub_county_id = $request->mother_subcounty_id;
+                $mother->ward_id = $request->mother_ward_id;
+                $mother->village = $request->mother_village;
+                $mother->save();
+            }
+
+        
+            elseif ($familySetup === 'father_only') {
+
+                $father = new LearnerParent();
+                $father->learner_id = $student->id;
+                $father->first_name = $request->father_first_name;
+                $father->middle_name = $request->father_middle_name;
+                $father->last_name = $request->father_last_name;
+                $father->relationship = 'father';
+                $father->id_number = $request->father_id_number;
+                $father->phone_number = $request->father_phone;
+                $father->email = $request->father_email;
+                $father->county_id = $request->father_county_id;
+                $father->sub_county_id = $request->father_subcounty_id;
+                $father->ward_id = $request->father_ward_id;
+                $father->village = $request->father_village;
+                $father->save();
+            }
+
+           
+            elseif ($familySetup === 'mother_only') {
+
+                $mother = new LearnerParent();
+                $mother->learner_id = $student->id;
+                $mother->first_name = $request->mother_first_name;
+                $mother->middle_name = $request->mother_middle_name;
+                $mother->last_name = $request->mother_last_name;
+                $mother->relationship = 'mother';
+                $mother->id_number = $request->mother_id_number;
+                $mother->phone_number = $request->mother_phone;
+                $mother->email = $request->mother_email;
+                $mother->county_id = $request->mother_county_id;
+                $mother->sub_county_id = $request->mother_subcounty_id;
+                $mother->ward_id = $request->mother_ward_id;
+                $mother->village = $request->mother_village;
+                $mother->save();
+            }
+
+          
+            else {
+
+                $guardian = new LearnerParent();
+                $guardian->learner_id = $student->id;
+                $guardian->first_name = $request->guardian_first_name;
+                $guardian->middle_name = $request->guardian_middle_name;
+                $guardian->last_name = $request->guardian_last_name;
+                $guardian->relationship = 'guardian';
+                $guardian->id_number = $request->guardian_id_number;
+                $guardian->phone_number = $request->guardian_phone;
+                $guardian->email = $request->guardian_email;
+                $guardian->county_id = $request->guardian_county_id;
+                $guardian->sub_county_id = $request->guardian_subcounty_id;
+                $guardian->ward_id = $request->guardian_ward_id;
+                $guardian->village = $request->guardian_village;
+                $guardian->save();
+            }
+
+            
 
             DB::commit();   
 

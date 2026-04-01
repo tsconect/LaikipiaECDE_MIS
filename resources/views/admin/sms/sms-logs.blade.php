@@ -113,7 +113,7 @@
 
         <div class="section-body section-body-flush">
             <div class="table-responsive">
-                <table id="example" class="data-table">
+                <table id="example" class="data-table dt-admin">
                     <thead>
                         <tr>
                             <th width="50">S/N</th>
@@ -160,42 +160,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 
-<!-- Send SMS Modal -->
-<div class="modal fade" id="sendSmsModal" tabindex="-1" aria-labelledby="sendSmsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sendSmsModalLabel">Send Single SMS</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('admin.sms.send') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Recipient Name (Optional)</label>
-                        <input type="text" name="name" class="form-control" placeholder="e.g. John Doe">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Phone Number</label>
-                        <input type="text" name="phone_number" class="form-control" required placeholder="e.g. 07XXXXXXXX">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Message</label>
-                        <textarea name="message" class="form-control" rows="4" required placeholder="Type your message here..."></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Send Message</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
 @endsection

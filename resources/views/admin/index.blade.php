@@ -4,13 +4,17 @@
 
 @if(Auth::user()->role == 'Admin')
 
-<div class="dash-content">
+<div class="dash-content"
+  data-teachers-count="{{ $teachersCount ?? 0 }}"
+  data-students-count="{{ $studentsCount ?? 0 }}"
+  data-learner-male="{{ $learner_male ?? 0 }}"
+  data-learner-female="{{ $learner_female ?? 0 }}">
 
   <!-- ══ ROW 1: Core counts (4 cards) ══ -->
   <div class="stats-grid-4">
     <!-- Total ECDE Centres -->
     <div class="stat-card c-blue">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Total ECDE Centres Registered</div>
       <div class="stat-value">{{ number_format($schoolsCount ?? 0) }}</div>
       <span class="stat-badge up centres">— centres</span>
@@ -18,7 +22,7 @@
 
     <!-- Total Learners Enrolled -->
     <div class="stat-card c-green">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Total ECDE Learners Enrolled</div>
       <div class="stat-value">{{ number_format($studentsCount ?? 0) }}</div>
       <span class="stat-badge up enrolled">— enrolled</span>
@@ -40,7 +44,7 @@
 
     <!-- Absenteeism % -->
     <div class="stat-card c-red">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M13.477 14.89A6 6 0 015.11 6.524l8.367 8.368zm1.414-1.414L6.524 5.11a6 6 0 018.367 8.367zM18 10a8 8 0 11-16 0 8 8 0 0116 0z" clip-rule="evenodd"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Absenteeism Rate</div>
       <div class="attend-row">
         @php
@@ -58,7 +62,7 @@
   <div class="stats-grid-3">
     <!-- Gender Distribution — Learners -->
     <div class="stat-card c-pink">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.97 5.97 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.97 5.97 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Gender Distribution — Learners</div>
       <div class="split-stat">
         <div class="split-half">
@@ -74,7 +78,7 @@
 
     <!-- Total Teachers F/M -->
     <div class="stat-card c-sky">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.97 5.97 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.97 5.97 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Total Teachers — F / M</div>
       <div class="split-stat">
         <div class="split-half">
@@ -90,7 +94,7 @@
 
     <!-- PWD Teachers & Learners -->
     <div class="stat-card c-violet">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">PWD — Teachers / Learners</div>
       <div class="split-stat">
         <div class="split-half">
@@ -109,7 +113,7 @@
   <div class="stats-grid-2">
     <!-- Total Learners Present Today -->
     <div class="stat-card c-green">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Total Learners Present — Today</div>
       <div class="attend-row">
         <span class="attend-big">{{ number_format($present_today ?? 0) }}</span>
@@ -123,7 +127,7 @@
 
     <!-- Infrastructure Distribution -->
     <div class="stat-card c-amber">
-      <div class="stat-icon"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4v-4h2v4h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg></div>
+      <div class="stat-icon"><i class="bi bi-circle"></i></div>
       <div class="stat-label">Infrastructure Distribution</div>
       <div class="infra-list">
         <div class="infra-row"><div class="infra-dot permanent"></div><span class="infra-name">Permanent</span><span class="infra-count">{{ number_format($infra_permanent ?? 0) }}</span></div>
@@ -134,34 +138,36 @@
     </div>
   </div>
 
-  <!-- ── Registration Progress Chart ── -->
-  <div class="section-card table-card">
-    <div class="section-header">
-      <div class="section-title">Learner-Teacher Registration Progress</div>
-    </div>
-    <div class="section-body">
-      <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot teachers"></div>Teachers Registered</div>
-        <div class="legend-item"><div class="legend-dot learners"></div>Learners Registered</div>
+  <div class="chart-grid-2">
+    <!-- ── Registration Progress Chart ── -->
+    <div class="section-card table-card">
+      <div class="section-header">
+        <div class="section-title">Learner-Teacher Registration Progress</div>
       </div>
-      <div class="chart-wrap chart-wrap-240">
-        <canvas id="registrationChart"></canvas>
+      <div class="section-body">
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot teachers"></div>Teachers Registered</div>
+          <div class="legend-item"><div class="legend-dot learners"></div>Learners Registered</div>
+        </div>
+        <div class="chart-wrap chart-wrap-240">
+          <canvas id="registrationChart"></canvas>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- ── Learner Age Distribution Chart ── -->
-  <div class="section-card table-card">
-    <div class="section-header">
-      <div class="section-title">Learner Age Distribution</div>
-    </div>
-    <div class="section-body">
-      <div class="chart-legend">
-        <div class="legend-item"><div class="legend-dot male"></div>Male</div>
-        <div class="legend-item"><div class="legend-dot female"></div>Female</div>
+    <!-- ── Learner Age Distribution Chart ── -->
+    <div class="section-card table-card">
+      <div class="section-header">
+        <div class="section-title">Learner Age Distribution</div>
       </div>
-      <div class="chart-wrap chart-wrap-240">
-        <canvas id="ageDistChart"></canvas>
+      <div class="section-body">
+        <div class="chart-legend">
+          <div class="legend-item"><div class="legend-dot male"></div>Male</div>
+          <div class="legend-item"><div class="legend-dot female"></div>Female</div>
+        </div>
+        <div class="chart-wrap chart-wrap-240">
+          <canvas id="ageDistChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -176,7 +182,7 @@
       <span class="panel-badge retiring">In 5 Years</span>
     </div>
     <div class="section-body-flush">
-      <table class="data-table">
+      <table class="data-table dt-admin">
         <thead>
           <tr>
             <th>Name</th>
@@ -198,9 +204,7 @@
             <td colspan="4">
               <div class="empty-state">
                 <div class="empty-state-icon">
-                  <svg class="retiring-empty-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
-                  </svg>
+                  <i class="bi bi-inbox retiring-empty-icon"></i>
                 </div>
                 No retiring teachers at this time
                 <p>Teachers nearing retirement age will appear here.</p>
@@ -416,5 +420,78 @@ if (ageCtx) {
 </div>
 
 @endif
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.Chart) {
+    return;
+  }
+
+  var dashRoot = document.querySelector('.dash-content');
+  if (!dashRoot) {
+    return;
+  }
+
+  var teachersCount = Number(dashRoot.dataset.teachersCount || 0);
+  var studentsCount = Number(dashRoot.dataset.studentsCount || 0);
+  var learnerMale = Number(dashRoot.dataset.learnerMale || 0);
+  var learnerFemale = Number(dashRoot.dataset.learnerFemale || 0);
+
+  var registrationCanvas = document.getElementById('registrationChart');
+  if (registrationCanvas) {
+    new Chart(registrationCanvas.getContext('2d'), {
+      type: 'bar',
+      data: {
+        labels: ['Teachers', 'Learners'],
+        datasets: [
+          {
+            label: 'Registered',
+            data: [teachersCount, studentsCount],
+            backgroundColor: ['#1d4ed8', '#22c55e'],
+            borderRadius: 6,
+            maxBarThickness: 46
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          xAxes: [{ gridLines: { display: false } }],
+          yAxes: [{ ticks: { beginAtZero: true, precision: 0 } }]
+        }
+      }
+    });
+  }
+
+  var ageCanvas = document.getElementById('ageDistChart');
+  if (ageCanvas) {
+    new Chart(ageCanvas.getContext('2d'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Male', 'Female'],
+        datasets: [
+          {
+            data: [learnerMale, learnerFemale],
+            backgroundColor: ['#0ea5e9', '#ec4899'],
+            borderWidth: 0
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        cutoutPercentage: 70
+      }
+    });
+  }
+});
+</script>
 
 @endsection

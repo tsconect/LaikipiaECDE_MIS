@@ -10,190 +10,248 @@
     </div>
 
     <nav class="sidebar-nav">
+        @php
+            $dashboardActive = request()->routeIs('dashboard');
+        @endphp
         <!-- Dashboard -->
-        <div class="nav-item">
-            <a class="nav-link" href="{{ route('dashboard') }}">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4a1 1 0 001-1v-3h2v3a1 1 0 001 1h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-                <span>Dashboard</span>
-            </a>
-        </div>
+        <a class="lw-link {{ $dashboardActive ? 'lw-link-active' : '' }}" href="{{ route('dashboard') }}">
+            <span class="lw-icon">
+                <i class="bi bi-house-door"></i>
+            </span>
+            <span class="lw-text">Dashboard</span>
+        </a>
 
         @can('admin.ecde-schools.index')
-        <div class="nav-divider"></div>
-        <!-- ECDE Teachers -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg>
-                <span>ECDE Teachers</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            <div class="nav-divider"></div>
+            @php
+                $teachersOpen = request()->routeIs('admin.teachers.*');
+            @endphp
+            <div class="lw-dropdown {{ $teachersOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $teachersOpen ? 'lw-link-active' : '' }}" data-label="ECDE Teachers" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-people"></i>
+                    </span>
+                    <span class="lw-text">ECDE Teachers</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.teachers.index')}}" class="lw-sub {{ request()->routeIs('admin.teachers.index') ? 'lw-sub-active' : '' }}">All Teachers</a>
+                    <a href="{{route('admin.teachers.create')}}" class="lw-sub {{ request()->routeIs('admin.teachers.create') ? 'lw-sub-active' : '' }}">New Teacher</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.teachers.index')}}">All Teachers</a>
-                <a class="sub-link" href="{{route('admin.teachers.create')}}">New Teacher</a>
+
+            @php
+                $schoolsOpen = request()->routeIs('admin.ecde-schools.*', 'admin.feeder-schools.*');
+            @endphp
+            <div class="lw-dropdown {{ $schoolsOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $schoolsOpen ? 'lw-link-active' : '' }}" data-label="Schools" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-building"></i>
+                    </span>
+                    <span class="lw-text">Schools</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.ecde-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.ecde-schools.*') ? 'lw-sub-active' : '' }}">All Schools</a>
+                    <a href="{{route('admin.feeder-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.feeder-schools.*') ? 'lw-sub-active' : '' }}">Feeder Schools</a>
+                </div>
             </div>
-        </div>
         @endcan
 
-        @can('admin.ecde-schools.index')
-        <!-- Schools -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg>
-                <span>Schools</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+        @if (Route::has('zones.index') && Route::has('routes.index') && Route::has('zones.analytics'))
+            @php
+                $netOpen = request()->routeIs('zones.*', 'routes.*');
+            @endphp
+            <div class="lw-dropdown {{ $netOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $netOpen ? 'lw-link-active' : '' }}" data-label="Network Management" type="button">
+                    <span class="lw-icon"><i class="bi bi-diagram-3"></i></span>
+                    <span class="lw-text">Network Management</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{ route('zones.index') }}" class="lw-sub {{ request()->routeIs('zones.index', 'zones.create', 'zones.edit', 'zones.show') ? 'lw-sub-active' : '' }}">Zones</a>
+                    <a href="{{ route('routes.index') }}" class="lw-sub {{ request()->routeIs('routes.*') ? 'lw-sub-active' : '' }}">Routes</a>
+                    <a href="{{ route('zones.analytics') }}" class="lw-sub {{ request()->routeIs('zones.analytics') ? 'lw-sub-active' : '' }}">Analytics</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.ecde-schools.index')}}">All Schools</a>
-                <a class="sub-link" href="{{route('admin.feeder-schools.index')}}">Feeder Schools</a>
-            </div>
-        </div>
-        @endcan
+        @endif
 
         @can('admin.coordinators.index')
-        <!-- ECDE Coordinators -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
-                <span>ECDE Coordinators</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            @php
+                $coordinatorsOpen = request()->routeIs('admin.coordinators.*');
+            @endphp
+            <div class="lw-dropdown {{ $coordinatorsOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $coordinatorsOpen ? 'lw-link-active' : '' }}" data-label="ECDE Coordinators" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-person-badge"></i>
+                    </span>
+                    <span class="lw-text">ECDE Coordinators</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.coordinators.index')}}" class="lw-sub {{ request()->routeIs('admin.coordinators.*') ? 'lw-sub-active' : '' }}">All Coordinators</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.coordinators.index')}}">All Coordinators</a>
-            </div>
-        </div>
         @endcan
 
         <div class="nav-divider"></div>
 
-        <!-- My Profile -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
-                <span>My Profile</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-            </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{ route('admin.next-of-kins.index') }}">Next of Kin</a>
-                <a class="sub-link" href="{{ route('admin.beneficiaries.index') }}">Beneficiaries</a>
-                <a class="sub-link" href="{{ route('admin.education-histories.index') }}">Academic Qualifications</a>
-                <a class="sub-link" href="{{ route('admin.user-unions.index') }}">My Unions</a>
-                <a class="sub-link" href="{{ route('admin.user-documents.index') }}">My Documents</a>
-                <a class="sub-link" href="{{ route('admin.deployment-histories.index') }}">My Deployment History</a>
+        @php
+            $profileOpen = request()->routeIs('admin.next-of-kins.*', 'admin.beneficiaries.*', 'admin.education-histories.*', 'admin.user-unions.*', 'admin.user-documents.*');
+        @endphp
+        <div class="lw-dropdown {{ $profileOpen ? 'lw-open' : '' }}">
+            <button class="lw-link lw-drop-btn {{ $profileOpen ? 'lw-link-active' : '' }}" data-label="My Profile" type="button">
+                <span class="lw-icon">
+                    <i class="bi bi-person-lines-fill"></i>
+                </span>
+                <span class="lw-text">My Profile</span>
+                <i class="bi bi-chevron-down lw-chevron"></i>
+            </button>
+            <div class="lw-submenu">
+                <a href="{{ route('admin.next-of-kins.index') }}" class="lw-sub {{ request()->routeIs('admin.next-of-kins.*') ? 'lw-sub-active' : '' }}">Next of Kin</a>
+                <a href="{{ route('admin.beneficiaries.index') }}" class="lw-sub {{ request()->routeIs('admin.beneficiaries.*') ? 'lw-sub-active' : '' }}">Beneficiaries</a>
+                <a href="{{ route('admin.education-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.education-histories.*') ? 'lw-sub-active' : '' }}">Academic Qualifications</a>
+                <a href="{{ route('admin.user-unions.index') }}" class="lw-sub {{ request()->routeIs('admin.user-unions.*') ? 'lw-sub-active' : '' }}">My Unions</a>
+                <a href="{{ route('admin.user-documents.index') }}" class="lw-sub {{ request()->routeIs('admin.user-documents.*') ? 'lw-sub-active' : '' }}">My Documents</a>
             </div>
         </div>
 
         @can('admin.ecde-students.index')
-        <!-- Students -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/></svg>
-                <span>Learners</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-            </div>
-                <div class="sub-menu">
-                    <a class="sub-link" href="{{ route('admin.learners.index') }}">All Learners</a>
-                      <a class="sub-link" href="{{ route('admin.learner-attendances.index') }}">Attendances</a>
-                       <a class="sub-link" href="{{ route('admin.learner-attendances.create') }}">Mark Register</a>
+            @php
+                $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*');
+            @endphp
+            <div class="lw-dropdown {{ $learnersOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $learnersOpen ? 'lw-link-active' : '' }}" data-label="Learners" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-mortarboard"></i>
+                    </span>
+                    <span class="lw-text">Learners</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
+                    <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
+                    <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
+                     <a class="sub-link" href="{{ route('admin.deployment-histories.index') }}">My Deployment History</a>
                 </div>
-               
-        </div>
+            </div>
         @endcan
 
         @can('admin.counties.index')
-        <!-- Locations -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
-                <span>Locations</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            @php
+                $locationsOpen = request()->routeIs('admin.counties.*', 'admin.sub-counties.*', 'admin.wards.*', 'admin.sub-locations.*');
+            @endphp
+            <div class="lw-dropdown {{ $locationsOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $locationsOpen ? 'lw-link-active' : '' }}" data-label="Locations" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </span>
+                    <span class="lw-text">Locations</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.counties.index')}}" class="lw-sub {{ request()->routeIs('admin.counties.*') ? 'lw-sub-active' : '' }}">Counties</a>
+                    <a href="{{route('admin.sub-counties.index')}}" class="lw-sub {{ request()->routeIs('admin.sub-counties.*') ? 'lw-sub-active' : '' }}">Sub Counties</a>
+                    <a href="{{route('admin.wards.index')}}" class="lw-sub {{ request()->routeIs('admin.wards.*') ? 'lw-sub-active' : '' }}">Wards</a>
+                    <a href="{{route('admin.sub-locations.index')}}" class="lw-sub {{ request()->routeIs('admin.sub-locations.*') ? 'lw-sub-active' : '' }}">Sub Locations</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.counties.index')}}">Counties</a>
-                <a class="sub-link" href="{{route('admin.sub-counties.index')}}">Sub Counties</a>
-                <a class="sub-link" href="{{route('admin.wards.index')}}">Wards</a>
-                <a class="sub-link" href="{{route('admin.sub-locations.index')}}">Sub Locations</a>
-            </div>
-        </div>
         @endcan
 
         @can('admin.sms-logs.index')
-        <!-- Communication -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z"/><path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z"/></svg>
-                <span>Communication</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            @php
+                $smsOpen = request()->routeIs('admin.sms-logs.*', 'admin.sms-dashboard');
+            @endphp
+            <div class="lw-dropdown {{ $smsOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $smsOpen ? 'lw-link-active' : '' }}" data-label="Communication" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-chat-dots"></i>
+                    </span>
+                    <span class="lw-text">Communication</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.sms-logs.index')}}" class="lw-sub {{ request()->routeIs('admin.sms-logs.*') ? 'lw-sub-active' : '' }}">SMS Logs</a>
+                    <a href="{{route('admin.sms-dashboard')}}" class="lw-sub {{ request()->routeIs('admin.sms-dashboard') ? 'lw-sub-active' : '' }}">SMS Dashboard</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.sms-logs.index')}}">SMS Logs</a>
-                <a class="sub-link" href="{{route('admin.sms-dashboard')}}">SMS Dashboard</a>
-            </div>
-        </div>
         @endcan
 
         <div class="nav-divider"></div>
 
         @can('admin.unions.all')
-        <!-- System Setup -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
-                <span>System Setup</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            @php
+                $setupOpen = request()->routeIs('admin.unions.*', 'admin.documents.*', 'admin.ethnic-groups.*', 'admin.job-groups.*');
+            @endphp
+            <div class="lw-dropdown {{ $setupOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $setupOpen ? 'lw-link-active' : '' }}" data-label="System Setup" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-gear"></i>
+                    </span>
+                    <span class="lw-text">System Setup</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.unions.index')}}" class="lw-sub {{ request()->routeIs('admin.unions.*') ? 'lw-sub-active' : '' }}">Unions</a>
+                    <a href="{{route('admin.documents.index')}}" class="lw-sub {{ request()->routeIs('admin.documents.*') ? 'lw-sub-active' : '' }}">Documents</a>
+                    <a href="{{route('admin.ethnic-groups.index')}}" class="lw-sub {{ request()->routeIs('admin.ethnic-groups.*') ? 'lw-sub-active' : '' }}">Ethnic Groups</a>
+                    <a href="{{route('admin.job-groups.index')}}" class="lw-sub {{ request()->routeIs('admin.job-groups.*') ? 'lw-sub-active' : '' }}">Job Groups</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.unions.index')}}">Unions</a>
-                <a class="sub-link" href="{{route('admin.documents.index')}}">Documents</a>
-                <a class="sub-link" href="{{route('admin.ethnic-groups.index')}}">Ethnic Groups</a>
-                <a class="sub-link" href="{{route('admin.job-groups.index')}}">Job Groups</a>
-            </div>
-        </div>
         @endcan
 
         @can('admin.users.index')
-        <!-- User Management -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg>
-                <span>User Management</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            @php
+                $usersOpen = request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.system.logs', 'admin.system_logs_details');
+            @endphp
+            <div class="lw-dropdown {{ $usersOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $usersOpen ? 'lw-link-active' : '' }}" data-label="User Management" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-people"></i>
+                    </span>
+                    <span class="lw-text">User Management</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{route('admin.users.index')}}" class="lw-sub {{ request()->routeIs('admin.users.*') ? 'lw-sub-active' : '' }}">Users</a>
+                    <a href="{{route('admin.roles.index')}}" class="lw-sub {{ request()->routeIs('admin.roles.*') ? 'lw-sub-active' : '' }}">Roles</a>
+                    <a href="{{route('admin.system.logs')}}" class="lw-sub {{ request()->routeIs('admin.system.logs', 'admin.system_logs_details') ? 'lw-sub-active' : '' }}">System Logs</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{route('admin.users.index')}}">Users</a>
-                <a class="sub-link" href="{{route('admin.roles.index')}}">Roles</a>
-                <a class="sub-link" href="{{route('admin.system.logs')}}">System Logs</a>
-            </div>
-        </div>
         @endcan
 
         @can('admin.cms.settings.index')
-        <!-- Settings -->
-        <div class="nav-item">
-            <div class="nav-link" onclick="toggleMenu(this)">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
-                <span>Settings</span>
-                <svg class="nav-chevron" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
+            @php
+                $settingsOpen = request()->routeIs('admin.cms.settings.*', 'admin.cms.pages.*', 'admin.cms.posts.*', 'admin.cms.galleries.*', 'admin.cms.announcements.*', 'admin.cms.faqs.*', 'admin.cms.testimonials.*', 'admin.cms.contact-messages.*');
+            @endphp
+            <div class="lw-dropdown {{ $settingsOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $settingsOpen ? 'lw-link-active' : '' }}" data-label="Settings" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-sliders"></i>
+                    </span>
+                    <span class="lw-text">Settings</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    <a href="{{ route('admin.cms.settings.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.settings.*') ? 'lw-sub-active' : '' }}">Site Settings</a>
+                    <a href="{{ route('admin.cms.pages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.pages.*') ? 'lw-sub-active' : '' }}">Pages</a>
+                    <a href="{{ route('admin.cms.posts.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.posts.*') ? 'lw-sub-active' : '' }}">Blog Posts</a>
+                    <a href="{{ route('admin.cms.galleries.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.galleries.*') ? 'lw-sub-active' : '' }}">Galleries</a>
+                    <a href="{{ route('admin.cms.announcements.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.announcements.*') ? 'lw-sub-active' : '' }}">Announcements</a>
+                    <a href="{{ route('admin.cms.faqs.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.faqs.*') ? 'lw-sub-active' : '' }}">FAQs</a>
+                    <a href="{{ route('admin.cms.testimonials.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.testimonials.*') ? 'lw-sub-active' : '' }}">Testimonials</a>
+                    <a href="{{ route('admin.cms.contact-messages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.contact-messages.*') ? 'lw-sub-active' : '' }}">Contact Messages</a>
+                </div>
             </div>
-            <div class="sub-menu">
-                <a class="sub-link" href="{{ route('admin.cms.settings.index') }}">Site Settings</a>
-                <a class="sub-link" href="{{ route('admin.cms.pages.index') }}">Pages</a>
-                <a class="sub-link" href="{{ route('admin.cms.posts.index') }}">Blog Posts</a>
-                <a class="sub-link" href="{{ route('admin.cms.galleries.index') }}">Galleries</a>
-                <a class="sub-link" href="{{ route('admin.cms.announcements.index') }}">Announcements</a>
-                <a class="sub-link" href="{{ route('admin.cms.faqs.index') }}">FAQs</a>
-                <a class="sub-link" href="{{ route('admin.cms.testimonials.index') }}">Testimonials</a>
-                <a class="sub-link" href="{{ route('admin.cms.contact-messages.index') }}">Contact Messages</a>
-            </div>
-        </div>
         @endcan
 
         <!-- My Account -->
-        <div class="nav-item">
-            <a class="nav-link" href="{{ route('admin.my-account') }}">
-                <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
-                <span>My Account</span>
-            </a>
-        </div>
+        <a class="lw-link {{ request()->routeIs('admin.my-account') ? 'lw-link-active' : '' }}" href="{{ route('admin.my-account') }}">
+            <span class="lw-icon">
+                <i class="bi bi-person-circle"></i>
+            </span>
+            <span class="lw-text">My Account</span>
+        </a>
     </nav>
 
     <!-- Footer user strip -->
@@ -208,18 +266,10 @@
 </div>
 
 <script>
-function toggleMenu(el) {
-    const sub = el.nextElementSibling;
-    const isOpen = sub.classList.contains('open');
-    sub.classList.toggle('open', !isOpen);
-    el.classList.toggle('open', !isOpen);
-}
-
 document.addEventListener('DOMContentLoaded', function () {
-    // Handle sidebar collapse/expand button
     const closeBtn = document.querySelector('.close-sidebar-btn');
     const appSidebar = document.querySelector('.app-sidebar');
-    
+
     if (closeBtn && appSidebar) {
         closeBtn.addEventListener('click', function (e) {
             e.preventDefault();
@@ -227,24 +277,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Handle active nav links
-    const currentPath = window.location.pathname + window.location.search;
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    navLinks.forEach(function (link) {
-        const href = link.getAttribute('href');
-        if (!href || href === '#') return;
-        if (currentPath === href || currentPath.startsWith(href + '?')) {
-            link.classList.add('active');
-            const parent = link.closest('.nav-item');
-            if (parent) {
-                const subMenu = parent.querySelector('.sub-menu');
-                if (subMenu) {
-                    subMenu.classList.add('open');
-                    link.classList.add('open');
-                }
-            }
-        }
+    const dropdownButtons = document.querySelectorAll('.lw-drop-btn');
+    dropdownButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            const dropdown = btn.closest('.lw-dropdown');
+            if (!dropdown) return;
+            dropdown.classList.toggle('lw-open');
+        });
     });
 });
 </script>

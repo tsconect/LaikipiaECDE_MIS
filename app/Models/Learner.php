@@ -14,8 +14,8 @@ class Learner extends Model
         return $this->hasOne(EcdeSchools::class,'id','school_id');
     }
 
-    function parent(){
-        return $this->hasOne(LearnerParent::class,'learner_id','id');
+    function parents(){
+        return $this->hasMany(LearnerParent::class,'learner_id','id');
     }
 
     public function nationality(){

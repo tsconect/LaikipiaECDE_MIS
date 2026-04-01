@@ -11,7 +11,7 @@
         <div class="banner-actions">
             <a href="{{ route('admin.cms.posts.create') }}">
                 <button class="btn-new">
-                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>
+                    <i class="bi bi-plus-lg"></i>
                     Create New Post
                 </button>
             </a>
@@ -21,7 +21,7 @@
     <div class="section-body">
         @if($posts->count() > 0)
             <div class="table-responsive">
-                <table class="data-table" id="postsTable">
+                <table class="data-table dt-admin" id="postsTable">
                     <thead>
                         <tr>
                             <th>Title</th>
@@ -67,19 +67,9 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="table-footer mt-3">
-                <div class="showing-text">
-                    Showing {{ $posts->firstItem() }} to {{ $posts->lastItem() }} of {{ $posts->total() }} posts
-                </div>
-                {{ $posts->links() }}
-            </div>
         @else
             <div class="empty-state">
-                <div class="empty-state-icon">
-                    <i class="fas fa-newspaper"></i>
-                </div>
-                <p>No posts found. <a href="{{ route('admin.cms.posts.create') }}">Create your first post</a>.</p>
+                <p class="mb-0 text-muted">No posts found.</p>
             </div>
         @endif
     </div>

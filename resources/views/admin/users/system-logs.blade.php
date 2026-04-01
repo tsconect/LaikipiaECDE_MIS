@@ -12,7 +12,7 @@
 
     <div class="section-body section-body-flush">
         <div class="table-responsive">
-            <table class="data-table" id="dt-basic10">
+            <table class="data-table dt-admin" id="dt-basic10">
                 <thead>
                     <tr>
                         <th>S/NO</th>

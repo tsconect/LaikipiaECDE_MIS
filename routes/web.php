@@ -14,6 +14,7 @@ use App\Http\Controllers\EthnicGroupController;
 use App\Http\Controllers\JobGroupController;
 use App\Http\Controllers\LearnerAttendanceController;
 use App\Http\Controllers\LearnerController;
+use App\Http\Controllers\LearnerParentController;
 use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
@@ -105,7 +106,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('update-password/{id}', [UsersController::class, 'updatePassword'])->name('users.update-password');
 
 
-            
+            Route::resource('learner-parents', LearnerParentController::class);
 
             //school
             Route::resource('ecde-schools', ESchoolController::class);

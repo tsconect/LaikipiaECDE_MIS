@@ -163,7 +163,7 @@
         <!-- NEXT OF KIN -->
         <div class="tab-pane fade" id="nextofkin">
             <div class="table-card">
-                <table class="data-table">
+                <table class="data-table dt-admin">
                     <thead>
                         <tr>
                             <th>S/N</th>
@@ -185,12 +185,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
 
-       
-      
-
-    </div>
 </div> 
 @endsection
