@@ -37,6 +37,7 @@
         <div class="col-md-6 mb-3">
             <label>Type</label>
             <select name="type" id="typeSelect" class="form-control" required>
+                <option value="">Select</option>
                 <option value="holiday">Holiday</option>
                 <option value="weekend">Weekend</option>
                 <option value="closure">Closure</option>
