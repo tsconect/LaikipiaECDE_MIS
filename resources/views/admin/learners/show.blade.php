@@ -14,6 +14,7 @@
     $tabs = [
         ['id' => 'profile', 'label' => 'Profile', 'icon' => 'bi bi-person-fill'],
         ['id' => 'parent', 'label' => 'Parent / Guardian', 'icon' => 'bi bi-people-fill'],
+        ['id' => 'attendance', 'label' => 'Attendance', 'icon' => 'bi bi-calendar-check'],
     ];
 @endphp
 
@@ -114,7 +115,141 @@
 
             
     </div>
-</x-admin.tabbed-card>
+    <div class="tab-pane fade" id="attendance">
+    <div class="profile-section-title">Attendance Overview</div>
+
+    {{-- Controls Row --}}
+    <div class="att-controls-row mb-4">
+        <form method="GET" class="d-flex align-items-center gap-2 flex-wrap">
+            <select name="att_month" class="form-select form-select-sm" style="width:auto;">
+                @foreach(range(1,12) as $m)
+                    <option value="{{ $m }}" {{ (request('att_month', date('n')) == $m) ? 'selected' : '' }}>
+                        {{ date('F', mktime(0,0,0,$m,1)) }}
+                    </option>
+                @endforeach
+            </select>
+            <select name="att_year" class="form-select form-select-sm" style="width:auto;">
+                @foreach(range(date('Y')-2, date('Y')) as $y)
+                    <option value="{{ $y }}" {{ (request('att_year', date('Y')) == $y) ? 'selected' : '' }}>{{ $y }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-sm btn-primary px-3">Submit</button>
+        </form>
+    </div>
+
+    <div class="att-content-grid">
+
+        {{-- Calendar Card --}}
+        <div class="att-card">
+            @php
+                $attMonth = request('att_month', date('n'));
+                $attYear  = request('att_year',  date('Y'));
+                $monthLabel = date('F Y', mktime(0,0,0,$attMonth,1,$attYear));
+                $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $attMonth, $attYear);
+                $firstDow = date('w', mktime(0,0,0,$attMonth,1,$attYear)); // 0=Sun
+
+                // Build a lookup: day -> status
+                $attLookup = [];
+                foreach($attendanceRecords as $rec) {
+                    $d = (int) date('j', strtotime($rec->date));
+                    $attLookup[$d] = $rec->status; // 'present' | 'absent'
+                }
+            @endphp
+
+            <div class="att-calendar-title">{{ $monthLabel }}</div>
+
+            <div class="att-cal-grid">
+                @foreach(['SUN','MON','TUE','WED','THU','FRI','SAT'] as $dh)
+                    <div class="att-cal-header">{{ $dh }}</div>
+                @endforeach
+
+                {{-- Empty leading cells --}}
+                @for($i = 0; $i < $firstDow; $i++)
+                    <div class="att-cal-day"></div>
+                @endfor
+
+                {{-- Day cells --}}
+                @for($d = 1; $d <= $daysInMonth; $d++)
+                    @php
+                        $dow = ($firstDow + $d - 1) % 7;
+                        $isWeekend = ($dow === 0 || $dow === 6);
+                        if ($isWeekend) {
+                            $dotClass = 'att-dot-nr';
+                        } elseif (isset($attLookup[$d])) {
+                            $dotClass = $attLookup[$d] === 'present' ? 'att-dot-present' : 'att-dot-absent';
+                        } else {
+                            $dotClass = 'att-dot-nr';
+                        }
+                    @endphp
+                    <div class="att-cal-day">
+                        <div class="att-dot {{ $dotClass }}"></div>
+                        <div class="att-day-num">{{ $d }}</div>
+                    </div>
+                @endfor
+            </div>
+
+            <div class="att-legend">
+                <div class="att-legend-item"><div class="att-legend-dot att-dot-present"></div> Present</div>
+                <div class="att-legend-item"><div class="att-legend-dot att-dot-absent"></div> Absent</div>
+                <div class="att-legend-item"><div class="att-legend-dot att-dot-nr"></div> Not Recorded</div>
+            </div>
+        </div>
+
+        {{-- Right Column --}}
+        <div class="att-right-col">
+
+            {{-- Stats Card --}}
+            <div class="att-card">
+                <div class="att-stats-label">Attendance in Days</div>
+                <div class="att-stats-row">
+                    <div>
+                        <div class="att-stat-year">{{ $attYear }}</div>
+                        <div class="att-stat-month">{{ date('F', mktime(0,0,0,$attMonth,1)) }}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="att-stat-num att-present">{{ $attendanceSummary['present'] }}</div>
+                        <div class="att-stat-sublabel">Present</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="att-stat-num att-absent">{{ $attendanceSummary['absent'] }}</div>
+                        <div class="att-stat-sublabel">Absent</div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Progress Card --}}
+            <div class="att-card">
+                <div class="att-progress-label">Attendance Percent for Days Recorded</div>
+                @php
+                    $pct = $attendanceSummary['total'] > 0
+                        ? round(($attendanceSummary['present'] / $attendanceSummary['total']) * 100)
+                        : 0;
+                @endphp
+                <div class="att-progress-bg">
+                    <div class="att-progress-fill" data-width="{{ $pct }}">{{ $pct }}%</div>
+                </div>
+            </div>
+
+            {{-- Result Card --}}
+            <div class="att-card">
+                <div class="att-result-title">Attendance Result</div>
+                <div class="att-result-period">{{ date('F Y', mktime(0,0,0,$attMonth,1,$attYear)) }}</div>
+                <div class="att-result-row">
+                    <span class="att-result-label">Days Recorded</span>
+                    <span class="att-result-val">{{ $attendanceSummary['total'] }}</span>
+                </div>
+                <div class="att-result-row">
+                    <span class="att-result-label">Days Not Recorded</span>
+                    <span class="att-result-val">{{ $daysInMonth - $attendanceSummary['total'] }}</span>
+                </div>
+                <div class="att-result-row">
+                    <span class="att-result-label">Last Marked Date</span>
+                    <span class="att-result-val">{{ $attendanceSummary['last_marked'] ?? '-' }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+        </x-admin.tabbed-card>
 
 <script>
   function switchTab(name, btn) {
@@ -125,6 +260,15 @@
   }
 
     document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.att-progress-fill[data-width]').forEach(function (el) {
+            var w = Number(el.getAttribute('data-width'));
+            if (!Number.isFinite(w)) {
+                w = 0;
+            }
+            w = Math.max(0, Math.min(100, w));
+            el.style.width = w + '%';
+        });
+
         const actions = document.getElementById('parentGuardianToolbarActions');
         if (!actions) {
             return;

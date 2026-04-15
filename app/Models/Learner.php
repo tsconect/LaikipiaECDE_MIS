@@ -30,5 +30,9 @@ class Learner extends Model
         return $this->hasOne(SubLocation::class,'id','sub_location_id');
     }
 
+    public function attendances(){
+        return $this->hasMany(LearnerAttendance::class,'learner_id','id');
+    }
+
 
 }

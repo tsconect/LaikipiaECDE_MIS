@@ -269,7 +269,22 @@ class LearnerController extends Controller
      */
     public function show(Learner $learner)
     {
-         return view('admin.learners.show', compact('learner'));
+        $learner->load(['parents.ward', 'nationality', 'ward', 'subLocation']);
+
+        $attendanceRecords = $learner->attendances()
+            ->with('teacher')
+            ->orderByDesc('date')
+            ->orderByDesc('id')
+            ->get();
+
+        $attendanceSummary = [
+            'total' => $attendanceRecords->count(),
+            'present' => $attendanceRecords->where('status', 'present')->count(),
+            'absent' => $attendanceRecords->where('status', 'absent')->count(),
+            'last_marked' => optional($attendanceRecords->first())->date,
+        ];
+
+        return view('admin.learners.show', compact('learner', 'attendanceRecords', 'attendanceSummary'));
     }
 
     /**

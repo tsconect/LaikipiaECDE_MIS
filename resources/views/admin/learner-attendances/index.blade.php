@@ -66,7 +66,11 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3">No data available</td>
+                                <td>—</td>
+                                <td class="text-muted">No data available</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
                             </tr>
                         @endforelse
                     </tbody>

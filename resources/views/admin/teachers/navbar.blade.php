@@ -193,7 +193,7 @@
                     <ul>
                         <li>
                             <a href="{{route('admin.bursary.application.all')}}">
-                                <i class="fa fa-email"></i>Compose New Message
+                                <i class="fa fa-envelope"></i>Compose New Message
                             </a>
                         </li>
                         <li>

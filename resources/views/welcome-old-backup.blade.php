@@ -708,7 +708,7 @@ else{
         </form>
 
         <div class="divider"></div>
-        <div style="align-self: ao; !important" class="clearfix">
+        <div style="align-self: auto !important;" class="clearfix">
             <button type="button" id="reset-btn" class="btn-shadow float-left btn btn-link">Reset</button>
             <button type="button" id="next-btn"
                 class="btn-shadow btn-wide float-right btn-pill btn-hover-shine btn btn-primary">Next</button>

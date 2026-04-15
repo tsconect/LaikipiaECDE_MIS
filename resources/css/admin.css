@@ -2160,6 +2160,219 @@ body {
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
+/* ============================================================
+   LEARNER ATTENDANCE TAB
+   ============================================================ */
+
+.app-main__inner .att-controls-row {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.app-main__inner .att-content-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 16px;
+}
+
+.app-main__inner .att-right-col {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+}
+
+.app-main__inner .att-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    padding: 16px;
+}
+
+.app-main__inner .att-calendar-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 12px;
+}
+
+.app-main__inner .att-cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.app-main__inner .att-cal-header {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.04em;
+    padding: 2px 0;
+}
+
+.app-main__inner .att-cal-day {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    min-height: 42px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: #f8fafc;
+}
+
+.app-main__inner .att-day-num {
+    font-size: 12px;
+    font-weight: 700;
+    color: #334155;
+    line-height: 1;
+}
+
+.app-main__inner .att-dot,
+.app-main__inner .att-legend-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.app-main__inner .att-dot-present {
+    background: #22c55e;
+}
+
+.app-main__inner .att-dot-absent {
+    background: #ef4444;
+}
+
+.app-main__inner .att-dot-nr {
+    background: #cbd5e1;
+}
+
+.app-main__inner .att-legend {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.app-main__inner .att-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.app-main__inner .att-stats-label,
+.app-main__inner .att-progress-label,
+.app-main__inner .att-result-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+}
+
+.app-main__inner .att-stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    align-items: end;
+}
+
+.app-main__inner .att-stat-year {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.app-main__inner .att-stat-month {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.app-main__inner .att-stat-num {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.app-main__inner .att-stat-sublabel {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.app-main__inner .att-present {
+    color: #22c55e;
+}
+
+.app-main__inner .att-absent {
+    color: #ef4444;
+}
+
+.app-main__inner .att-progress-bg {
+    width: 100%;
+    height: 18px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.app-main__inner .att-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    transition: width 0.25s ease;
+}
+
+.app-main__inner .att-result-period {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+
+.app-main__inner .att-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px dashed #e2e8f0;
+    padding: 8px 0;
+}
+
+.app-main__inner .att-result-label {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.app-main__inner .att-result-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+@media (max-width: 1100px) {
+    .app-main__inner .att-content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .app-main__inner .att-stats-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
+
 .app-main__inner .data-table .sort-arrows {
     display: none !important;
 }
