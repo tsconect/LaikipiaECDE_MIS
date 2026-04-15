@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('non_attendance_days', function (Blueprint $table) {
+             $table->id();
             $table->string('type')->default('holiday');
             // specific date (nullable for recurring rules like weekends)
             $table->date('date')->nullable();

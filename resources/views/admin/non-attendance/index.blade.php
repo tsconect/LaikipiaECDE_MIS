@@ -54,16 +54,16 @@
                         <td>
                             <div class="action-btns">
                                 
-                                {{-- <a class="act-btn edit" title="Edit Next of Kin" href="{{ route('admin.non-attendance-days.edit', $day->id) }}">
+                                <a class="act-btn edit" title="Edit Next of Kin" href="{{ route('admin.non-attendance-days.edit', $day->id) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <form action="{{ route('admin.non-attendance-days.destroy', $day->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this next of kin?');">
+                                <form action="{{ route('admin.non-attendance-days.destroy', $day->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this next of record?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="act-btn delete" title="Delete">
                                         <i class="bi bi-trash"></i>
                                     </button>
-                                </form> --}}
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -30,7 +30,7 @@
         {{-- TITLE --}}
         <div class="col-md-12 mb-3">
             <label>Title</label>
-            <input type="text" name="title" class="form-control" required>
+            <input type="text" name="title" class="form-control" required placeholder="Enter Title">
         </div>
 
         {{-- TYPE --}}
@@ -77,13 +77,13 @@
         </div>
 
         {{-- RECURRENCE --}}
-        <div class="col-md-6 mb-3">
+        {{-- <div class="col-md-6 mb-3">
             <label>Recurring</label>
             <select name="is_recurring" class="form-control">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </select>
-        </div>
+        </div> --}}
 
     </div>
 
@@ -128,6 +128,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (val === 'holiday' || val === 'other') {
             singleDateBox.classList.remove('d-none');
             document.querySelector('[name="date"]').required = true;
+            weekdayBox.classList.add('d-none');
         }
 
         // =========================
@@ -149,6 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('[name="end_date"]').required = true;
 
             singleDateBox.classList.add('d-none');
+             weekdayBox.classList.add('d-none');
+
         }
     }
 
