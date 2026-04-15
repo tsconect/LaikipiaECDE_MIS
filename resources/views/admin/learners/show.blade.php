@@ -119,137 +119,193 @@
     <div class="profile-section-title">Attendance Overview</div>
 
     {{-- Controls Row --}}
-    <div class="att-controls-row mb-4">
-        <form method="GET" class="d-flex align-items-center gap-2 flex-wrap">
-            <select name="att_month" class="form-select form-select-sm" style="width:auto;">
-                @foreach(range(1,12) as $m)
-                    <option value="{{ $m }}" {{ (request('att_month', date('n')) == $m) ? 'selected' : '' }}>
-                        {{ date('F', mktime(0,0,0,$m,1)) }}
-                    </option>
-                @endforeach
-            </select>
-            <select name="att_year" class="form-select form-select-sm" style="width:auto;">
-                @foreach(range(date('Y')-2, date('Y')) as $y)
-                    <option value="{{ $y }}" {{ (request('att_year', date('Y')) == $y) ? 'selected' : '' }}>{{ $y }}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-sm btn-primary px-3">Submit</button>
-        </form>
+   <div class="att-controls-row mb-4 d-flex gap-2">
+        <select id="att_month" class="form-select form-select-sm" style="width:auto;">
+            @foreach(range(1,12) as $m)
+                <option value="{{ $m }}" {{ (request('att_month', date('n')) == $m) ? 'selected' : '' }}>
+                    {{ date('F', mktime(0,0,0,$m,1)) }}
+                </option>
+            @endforeach
+        </select>
+
+        <select id="att_year" class="form-select form-select-sm" style="width:auto;">
+            @foreach(range(date('Y')-2, date('Y')) as $y)
+                <option value="{{ $y }}" {{ (request('att_year', date('Y')) == $y) ? 'selected' : '' }}>
+                    {{ $y }}
+                </option>
+            @endforeach
+        </select>
     </div>
+    <div id="attendanceWrapper">
 
-    <div class="att-content-grid">
+    @include('admin.learners.partials.attendance')
 
-        {{-- Calendar Card --}}
-        <div class="att-card">
-            @php
-                $attMonth = request('att_month', date('n'));
-                $attYear  = request('att_year',  date('Y'));
-                $monthLabel = date('F Y', mktime(0,0,0,$attMonth,1,$attYear));
-                $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $attMonth, $attYear);
-                $firstDow = date('w', mktime(0,0,0,$attMonth,1,$attYear)); // 0=Sun
+</div>
 
-                // Build a lookup: day -> status
-                $attLookup = [];
-                foreach($attendanceRecords as $rec) {
-                    $d = (int) date('j', strtotime($rec->date));
-                    $attLookup[$d] = $rec->status; // 'present' | 'absent'
-                }
-            @endphp
-
-            <div class="att-calendar-title">{{ $monthLabel }}</div>
-
-            <div class="att-cal-grid">
-                @foreach(['SUN','MON','TUE','WED','THU','FRI','SAT'] as $dh)
-                    <div class="att-cal-header">{{ $dh }}</div>
-                @endforeach
-
-                {{-- Empty leading cells --}}
-                @for($i = 0; $i < $firstDow; $i++)
-                    <div class="att-cal-day"></div>
-                @endfor
-
-                {{-- Day cells --}}
-                @for($d = 1; $d <= $daysInMonth; $d++)
-                    @php
-                        $dow = ($firstDow + $d - 1) % 7;
-                        $isWeekend = ($dow === 0 || $dow === 6);
-                        if ($isWeekend) {
-                            $dotClass = 'att-dot-nr';
-                        } elseif (isset($attLookup[$d])) {
-                            $dotClass = $attLookup[$d] === 'present' ? 'att-dot-present' : 'att-dot-absent';
-                        } else {
-                            $dotClass = 'att-dot-nr';
-                        }
-                    @endphp
-                    <div class="att-cal-day">
-                        <div class="att-dot {{ $dotClass }}"></div>
-                        <div class="att-day-num">{{ $d }}</div>
-                    </div>
-                @endfor
-            </div>
-
-            <div class="att-legend">
-                <div class="att-legend-item"><div class="att-legend-dot att-dot-present"></div> Present</div>
-                <div class="att-legend-item"><div class="att-legend-dot att-dot-absent"></div> Absent</div>
-                <div class="att-legend-item"><div class="att-legend-dot att-dot-nr"></div> Not Recorded</div>
-            </div>
-        </div>
-
-        {{-- Right Column --}}
-        <div class="att-right-col">
-
-            {{-- Stats Card --}}
-            <div class="att-card">
-                <div class="att-stats-label">Attendance in Days</div>
-                <div class="att-stats-row">
-                    <div>
-                        <div class="att-stat-year">{{ $attYear }}</div>
-                        <div class="att-stat-month">{{ date('F', mktime(0,0,0,$attMonth,1)) }}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="att-stat-num att-present">{{ $attendanceSummary['present'] }}</div>
-                        <div class="att-stat-sublabel">Present</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="att-stat-num att-absent">{{ $attendanceSummary['absent'] }}</div>
-                        <div class="att-stat-sublabel">Absent</div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Progress Card --}}
-            <div class="att-card">
-                <div class="att-progress-label">Attendance Percent for Days Recorded</div>
-                @php
-                    $pct = $attendanceSummary['total'] > 0
-                        ? round(($attendanceSummary['present'] / $attendanceSummary['total']) * 100)
-                        : 0;
-                @endphp
-                <div class="att-progress-bg">
-                    <div class="att-progress-fill" data-width="{{ $pct }}">{{ $pct }}%</div>
-                </div>
-            </div>
-
-            {{-- Result Card --}}
-            <div class="att-card">
-                <div class="att-result-title">Attendance Result</div>
-                <div class="att-result-period">{{ date('F Y', mktime(0,0,0,$attMonth,1,$attYear)) }}</div>
-                <div class="att-result-row">
-                    <span class="att-result-label">Days Recorded</span>
-                    <span class="att-result-val">{{ $attendanceSummary['total'] }}</span>
-                </div>
-                <div class="att-result-row">
-                    <span class="att-result-label">Days Not Recorded</span>
-                    <span class="att-result-val">{{ $daysInMonth - $attendanceSummary['total'] }}</span>
-                </div>
-                <div class="att-result-row">
-                    <span class="att-result-label">Last Marked Date</span>
-                    <span class="att-result-val">{{ $attendanceSummary['last_marked'] ?? '-' }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
         </x-admin.tabbed-card>
+<style>
+.loading {
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const monthSelect = document.getElementById('att_month');
+    const yearSelect = document.getElementById('att_year');
+    const wrapper = document.getElementById('attendanceWrapper');
+
+    // =========================
+    // FETCH ATTENDANCE
+    // =========================
+    function fetchAttendance() {
+
+        let month = monthSelect.value;
+        let year = yearSelect.value;
+
+        // 🔥 FLICKER / LOADING EFFECT
+        wrapper.style.opacity = "0.4";
+        wrapper.style.pointerEvents = "none";
+
+        fetch(`{{ route('admin.learners.show', $learner->id) }}?att_month=${month}&att_year=${year}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            updateUI(data);
+
+            // 🔥 REMOVE FLICKER
+            wrapper.style.opacity = "1";
+            wrapper.style.pointerEvents = "auto";
+        })
+        .catch(err => {
+
+            console.error(err);
+
+            wrapper.style.opacity = "1";
+            wrapper.style.pointerEvents = "auto";
+        });
+    }
+
+    // =========================
+    // UPDATE UI
+    // =========================
+    function updateUI(data) {
+
+        const records = data.attendanceRecords;
+        const summary = data.summary;
+
+        let monthNames = [
+            "January","February","March","April","May","June",
+            "July","August","September","October","November","December"
+        ];
+
+        let month = parseInt(monthSelect.value);
+        let year = parseInt(yearSelect.value);
+
+        let daysInMonth = new Date(year, month, 0).getDate();
+        let firstDow = new Date(year, month - 1, 1).getDay();
+
+        let monthLabel = monthNames[month - 1] + " " + year;
+
+        // =========================
+        // BUILD LOOKUP
+        // =========================
+        let lookup = {};
+        records.forEach(r => {
+            let d = new Date(r.date).getDate();
+            lookup[d] = r.status;
+        });
+
+        // =========================
+        // CALENDAR TITLE
+        // =========================
+        document.getElementById('attCalendarTitle').innerText = monthLabel;
+
+        // =========================
+        // CALENDAR GRID
+        // =========================
+        let grid = document.getElementById('attCalendarGrid');
+        grid.innerHTML = '';
+
+        let days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+
+        days.forEach(d => {
+            let el = document.createElement('div');
+            el.className = 'att-cal-header';
+            el.innerText = d;
+            grid.appendChild(el);
+        });
+
+        for (let i = 0; i < firstDow; i++) {
+            grid.appendChild(document.createElement('div'));
+        }
+
+        for (let d = 1; d <= daysInMonth; d++) {
+
+            let status = lookup[d] || 'none';
+
+            let dotClass = 'att-dot-nr';
+
+            if (status === 'present') {
+                dotClass = 'att-dot-present';
+            } 
+            else if (status === 'absent') {
+                dotClass = 'att-dot-absent';
+            }
+
+            let cell = document.createElement('div');
+            cell.className = 'att-cal-day';
+            cell.innerHTML = `
+                <div class="att-dot ${dotClass}"></div>
+                <div class="att-day-num">${d}</div>
+            `;
+
+            grid.appendChild(cell);
+        }
+
+      
+        document.getElementById('attYear').innerText = year;
+        document.getElementById('attMonthName').innerText = monthNames[month - 1];
+
+        document.getElementById('attPresent').innerText = summary.present;
+        document.getElementById('attAbsent').innerText = summary.absent;
+
+        document.getElementById('attTotal').innerText = summary.total;
+
+        let notRecorded = daysInMonth - summary.total;
+        document.getElementById('attNotRecorded').innerText = notRecorded;
+
+        document.getElementById('attLastMarked').innerText = summary.last_marked ?? '-';
+
+        let pct = summary.total > 0
+            ? Math.round((summary.present / summary.total) * 100)
+            : 0;
+
+        let progress = document.getElementById('attProgress');
+        progress.innerText = pct + "%";
+        progress.style.width = pct + "%";
+    }
+
+    // =========================
+    // EVENTS
+    // =========================
+    monthSelect.addEventListener('change', fetchAttendance);
+    yearSelect.addEventListener('change', fetchAttendance);
+
+    // =========================
+    // INITIAL LOAD (IMPORTANT)
+    // =========================
+    fetchAttendance();
+
+});
+</script>
 
 <script>
   function switchTab(name, btn) {

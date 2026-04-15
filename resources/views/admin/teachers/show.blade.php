@@ -23,7 +23,6 @@
             </div>
         </div>
     </div>
-
     <a href="{{ route('admin.teachers.edit', $teacher->id) }}" class="btn btn-success btn-sm">
         <i class="bi bi-pencil-fill"></i> Edit Teacher
     </a>

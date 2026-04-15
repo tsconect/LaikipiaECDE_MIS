@@ -118,7 +118,7 @@
 
         @can('admin.ecde-students.index')
             @php
-                $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*');
+                $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*, admin.non-attendance-days.*');
             @endphp
             <div class="lw-dropdown {{ $learnersOpen ? 'lw-open' : '' }}">
                 <button class="lw-link lw-drop-btn {{ $learnersOpen ? 'lw-link-active' : '' }}" data-label="Learners" type="button">
@@ -131,6 +131,7 @@
                 <div class="lw-submenu">
                     <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
                     <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
+                    <a href="{{ route('admin.non-attendance-days.index') }}" class="lw-sub {{ request()->routeIs('admin.non-attendance-days.index') ? 'lw-sub-active' : '' }}">Non-Attendance Days</a>
                     <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
                      <a class="sub-link" href="{{ route('admin.deployment-histories.index') }}">My Deployment History</a>
                 </div>

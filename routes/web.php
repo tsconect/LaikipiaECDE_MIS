@@ -16,6 +16,7 @@ use App\Http\Controllers\LearnerAttendanceController;
 use App\Http\Controllers\LearnerController;
 use App\Http\Controllers\LearnerParentController;
 use App\Http\Controllers\NextOfKinController;
+use App\Http\Controllers\NonAttendanceDayController;
 use App\Http\Controllers\PermissionsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\StudentsController;
@@ -132,6 +133,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('edit-teacher/{id}', [TeacherController::class, 'edit'])->name('teacher-edit-view');
             Route::get('view-teacher/{id}', [TeacherController::class, 'view'])->name('teacher-view');
             Route::resource('learner-attendances', LearnerAttendanceController::class);
+            // NonAttendanceDayController 
+            Route::resource('non-attendance-days', NonAttendanceDayController::class);
+            // admin.non-attendance-days.json
+            Route::get('non-attendance-days.json', [LearnerAttendanceController::class, 'blockedDates'])->name('non-attendance-days.json');
             Route::resource('classrooms', App\Http\Controllers\ClassRoomController::class);
            
             // {{ route('admin.edit-view', $item->id) }}

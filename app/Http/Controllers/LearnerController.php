@@ -267,14 +267,15 @@ class LearnerController extends Controller
      * @param  \App\Models\Learner  $learner
      * @return \Illuminate\Http\Response
      */
-    public function show(Learner $learner)
+    public function show(Request $request, Learner $learner)
     {
-        $learner->load(['parents.ward', 'nationality', 'ward', 'subLocation']);
+        $attMonth = $request->att_month ?? date('n');
+        $attYear  = $request->att_year ?? date('Y');
 
         $attendanceRecords = $learner->attendances()
-            ->with('teacher')
+            ->whereMonth('date', $attMonth)
+            ->whereYear('date', $attYear)
             ->orderByDesc('date')
-            ->orderByDesc('id')
             ->get();
 
         $attendanceSummary = [
@@ -284,9 +285,24 @@ class LearnerController extends Controller
             'last_marked' => optional($attendanceRecords->first())->date,
         ];
 
-        return view('admin.learners.show', compact('learner', 'attendanceRecords', 'attendanceSummary'));
-    }
+        if ($request->ajax()) {
 
+            return response()->json([
+                'month' => $attMonth,
+                'year' => $attYear,
+                'attendanceRecords' => $attendanceRecords,
+                'summary' => $attendanceSummary
+            ]);
+        }
+
+        return view('admin.learners.show', compact(
+            'learner',
+            'attendanceRecords',
+            'attendanceSummary',
+            'attMonth',
+            'attYear'
+        ));
+    }
     /**
      * Show the form for editing the specified resource.
      *
