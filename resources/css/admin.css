@@ -1296,6 +1296,10 @@ body {
         grid-template-columns: repeat(12, minmax(0, 1fr));
     }
 
+    .dash-content .md-grid-cols-12 > .bento-col-6 {
+        grid-column: span 6;
+    }
+
     .dash-content .bento-col-3 {
         grid-column: span 3;
     }
