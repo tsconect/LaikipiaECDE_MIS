@@ -7,8 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8lN2R7+P7q6T2A2R4cV2N4s46HoPazg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/v4-shims.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/v4-shims.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="{{asset('main.d810cf0ae7f39f28f336.css')}}" rel="stylesheet">
  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -683,9 +683,15 @@
       <div class="footer-brand-name">{{ $settings['site_name'] ?? 'Laikipia ECDE Management System' }}</div>
       <div class="footer-tagline">{{ $settings['site_description'] ?? 'Empowering communities through education and development.' }}</div>
       <div class="footer-social">
-        <a href="{{ $settings['facebook_url'] ?? '#' }}" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="{{ $settings['twitter_url'] ?? '#' }}" class="social-btn" title="X / Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="{{ $settings['youtube_url'] ?? '#' }}" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="{{ $settings['facebook_url'] ?? '#' }}" class="social-btn" title="Facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <i class="fab fa-facebook-f" aria-hidden="true"></i>
+        </a>
+        <a href="{{ $settings['twitter_url'] ?? '#' }}" class="social-btn" title="X / Twitter" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+          <i class="fab fa-x-twitter fa-twitter" aria-hidden="true"></i>
+        </a>
+        <a href="{{ $settings['youtube_url'] ?? '#' }}" class="social-btn" title="YouTube" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+          <i class="fab fa-youtube" aria-hidden="true"></i>
+        </a>
       </div>
     </div>
     <div class="footer-col">
