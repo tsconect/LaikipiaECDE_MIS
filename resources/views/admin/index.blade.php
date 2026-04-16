@@ -145,7 +145,7 @@
     </div>
   </div>
 
-  <div class="chart-grid-2 bento-row grid-cols-1 md-grid-cols-12 gap-6">
+  <div class="bento-row grid-cols-1 md-grid-cols-12 gap-6">
     <!-- ── Registration Progress Chart ── -->
     <div class="section-card table-card bento-col-6">
       <div class="section-header">
