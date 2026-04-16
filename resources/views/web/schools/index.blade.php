@@ -66,8 +66,10 @@
       backdrop-filter: blur(8px);
     }
     .schools-hero-stat::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(96deg, rgba(241,253,243,0.97) 0%, rgba(241,253,243,0.90) 48%, rgba(241,253,243,0.40) 100%);
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(96deg, rgba(241,253,243,0.55) 0%, rgba(241,253,243,0.32) 48%, rgba(241,253,243,0.08) 100%);
       opacity: 1;
       transition: opacity 0.35s;
       pointer-events: none;
@@ -75,13 +77,13 @@
     .schools-hero-stat::after {
       content: '';
       position: absolute;
-      inset: 28% -14% -14% 34%;
+      inset: 18% -8% -8% 18%;
       border-radius: 14px;
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      opacity: 0.28;
-      filter: saturate(0.9) contrast(0.98);
+      opacity: 0.55;
+      filter: saturate(1.08) contrast(1.04);
       pointer-events: none;
     }
     .schools-hero-stat.stat-total::after {
@@ -93,71 +95,66 @@
     .schools-hero-stat.stat-wards::after {
       background-image: url("{{ asset('assets/images/_ (12).jpeg') }}");
     }
-    .schools-hero-stat:hover {
-      transform: translateY(-5px);
-      border-color: rgba(26,124,62,0.3);
-      box-shadow: 0 14px 30px rgba(13,34,53,0.14);
-    }
-    .schools-hero-stat:hover::before { opacity: 0.92; }
-    .schools-hero-stat .stat-icon {
-      width: 42px; height: 42px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--green); font-size: 16px;
-      margin-bottom: 10px;
-      position: relative; z-index: 1;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
-    }
-    .schools-hero-stat.stat-total .stat-icon { background: linear-gradient(135deg, #d9fbe8, #baf0d0); color: #0d8a46; }
-    .schools-hero-stat.stat-subcounty .stat-icon { background: linear-gradient(135deg, #e2edff, #c8dbff); color: #2563eb; }
-    .schools-hero-stat.stat-wards .stat-icon { background: linear-gradient(135deg, #fff3d6, #ffe3a3); color: #ca8a04; }
-    .schools-hero-stat .stat-value {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.05rem;
-      font-weight: 800;
-      color: var(--navy); line-height: 1;
-      position: relative; z-index: 1;
-      letter-spacing: -0.02em;
-    }
-    .schools-hero-stat .stat-label {
-      font-size: 11.5px;
-      color: #6c8296;
-      margin-top: 5px;
-      font-weight: 700;
-      text-transform: uppercase; letter-spacing: 0.06em;
-      position: relative; z-index: 1;
-    }
-
-    /* ─── MAIN CONTENT ────────────────────────────────── */
-    .schools-content {
-      padding: 48px 64px 80px;
-      background: var(--cream);
-    }
-    .schools-page-wrap {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-md);
-      padding: 0;
+    .scard {
+      border-radius: 14px;
       overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(13,34,53,0.08);
+      background: #222;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .scard img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+      display: block;
+      min-height: 100%;
+    }
+    .scard:hover img { transform: scale(1.04); }
+
+    .scard-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,.72) 0%,
+        rgba(0,0,0,.15) 55%,
+        transparent 100%
+      );
+      z-index: 1;
+    }
+    .scard-badge {
+      position: absolute; top: 8px; left: 10px;
+      background: rgba(255,255,255,.18);
+      backdrop-filter: blur(6px);
+      border: 0.5px solid rgba(255,255,255,.3);
+      border-radius: 16px;
+      padding: 2px 8px;
+      font-size: 9px; font-weight: 600;
+      color: #fff; letter-spacing: .3px;
+      z-index: 2;
+    }
+    .scard-body {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 8px 10px;
+      z-index: 2;
+    }
+    .scard-num {
+      font-size: 28px; font-weight: 700;
+      color: #fff; line-height: 1;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .scard-label {
+      font-size: 9px; font-weight: 600;
+      letter-spacing: .7px; text-transform: uppercase;
+      color: rgba(255,255,255,.7); margin-top: 2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.13);
     }
 
-    /* ─── TOOLBAR ─────────────────────────────────────── */
-    .schools-toolbar {
-      padding: 28px 32px;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 20px; flex-wrap: wrap;
-      border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, #fafbfc 0%, #fff 100%);
-    }
-    .schools-toolbar-left {
-      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-    }
-    .schools-toolbar h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700; color: var(--navy);
-      font-size: 1.15rem; margin: 0;
-      display: flex; align-items: center; gap: 10px;
-    }
+    /* staggered heights for visual depth */
+    .card-schools  { height: 110px; }
+    .card-subcounty{ height: 150px; transform: translateY(-6px); }
+    .card-wards    { height: 125px; }
     .schools-toolbar h3 i { color: var(--green); font-size: 18px; }
     .schools-count-badge {
       display: inline-flex; align-items: center;
@@ -170,30 +167,45 @@
     .schools-search-wrap {
       position: relative;
       min-width: 280px;
+      width: 100%;
+      max-width: 340px;
+      margin-left: auto;
+      margin-right: 0;
+      background: #fff;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px rgba(13,34,53,0.06);
+      transition: box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      padding: 2px 8px 2px 0;
     }
     .schools-search-wrap input {
       width: 100%;
-      padding: 11px 18px 11px 44px;
-      border-radius: var(--radius-pill);
-      border: 1.5px solid rgba(13,34,53,0.10);
-      font-size: 14px; font-weight: 500;
-      color: var(--text);
-      background: #fff;
-      transition: all 0.3s;
+      padding: 12px 18px 12px 44px;
+      border-radius: 32px;
+      border: none;
+      font-size: 15px; font-weight: 500;
+      color: var(--navy);
+      background: transparent;
       outline: none;
+      box-shadow: none;
+      transition: background 0.2s;
     }
     .schools-search-wrap input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 4px rgba(26,124,62,0.08);
+      background: #f1fdf3;
     }
     .schools-search-wrap input::placeholder {
-      color: rgba(13,34,53,0.35);
+      color: #b0bfcf;
+      font-weight: 400;
+      letter-spacing: 0.02em;
     }
     .schools-search-wrap .search-icon {
-      position: absolute; left: 16px; top: 50%;
+      position: absolute; left: 18px; top: 50%;
       transform: translateY(-50%);
-      color: rgba(13,34,53,0.30); font-size: 14px;
+      color: #1a7c3e;
+      font-size: 18px;
       pointer-events: none;
+      opacity: 0.7;
     }
 
     /* ─── FILTER BAR ──────────────────────────────────── */
@@ -489,26 +501,39 @@
         $subLocationOptions = $schools->map(fn($s) => optional($s->subLocation)->name)->filter()->unique()->sort()->values();
     @endphp
 
-    <div class="schools-hero-stats" style="animation: fadeUp 0.7s ease 0.2s both;">
-        <div class="schools-hero-stat stat-total">
-            <div class="stat-icon"><i class="fas fa-school"></i></div>
-            <div class="stat-value">{{ $schools->count() }}</div>
-            <div class="stat-label">Total Schools</div>
+
+    <div class="schools-hero-stats" style="animation: fadeUp 0.7s ease 0.2s both; gap: 14px; margin-bottom: 18px;">
+      <div class="scard card-schools">
+        <img src="{{ asset('assets/images/Suburban neighborhood.jpeg') }}" alt="Schools" loading="lazy">
+        <div class="scard-overlay"></div>
+        <div class="scard-badge">Total</div>
+        <div class="scard-body">
+          <div class="scard-num">{{ $schools->count() }}</div>
+          <div class="scard-label">Schools</div>
         </div>
-        <div class="schools-hero-stat stat-subcounty">
-            <div class="stat-icon"><i class="fas fa-map-marked-alt"></i></div>
-            <div class="stat-value">{{ $subCountyOptions->count() }}</div>
-            <div class="stat-label">Sub Counties</div>
+      </div>
+      <div class="scard card-subcounty">
+        <img src="{{ asset('assets/images/Village VS Town VS City_ What is the difference_.jpeg') }}" alt="Sub Counties" loading="lazy">
+        <div class="scard-overlay"></div>
+        <div class="scard-badge">Regions</div>
+        <div class="scard-body">
+          <div class="scard-num">{{ $subCountyOptions->count() }}</div>
+          <div class="scard-label">Sub Counties</div>
         </div>
-        <div class="schools-hero-stat stat-wards">
-            <div class="stat-icon"><i class="fas fa-map-pin"></i></div>
-            <div class="stat-value">{{ $wardOptions->count() }}</div>
-            <div class="stat-label">Wards</div>
+      </div>
+      <div class="scard card-wards">
+        <img src="{{ asset('assets/images/_ (12).jpeg') }}" alt="Wards" loading="lazy">
+        <div class="scard-overlay"></div>
+        <div class="scard-badge">Zones</div>
+        <div class="scard-body">
+          <div class="scard-num">{{ $wardOptions->count() }}</div>
+          <div class="scard-label">Wards</div>
         </div>
+      </div>
     </div>
 
-    <img src="{{ asset('assets/images/Two_african_american_children_wearing_school_uniforms_stand_side_by_side_against_a_bright_yellow_background_both_students_appear_to_be_looking_ahead_possibly_posing_for_a___Premium_AI-generated_image-.png') }}"
-         alt="" class="floating-asset" loading="lazy">
+        <img src="{{ asset('assets/images/Two_african_american_children_wearing_school_uniforms_stand_side_by_side_against_a_bright_yellow_background_both_students_appear_to_be_looking_ahead_possibly_posing_for_a___Premium_AI-generated_image-.png') }}"
+          alt="" class="floating-asset" loading="lazy">
 </div>
 
 <div class="schools-content">

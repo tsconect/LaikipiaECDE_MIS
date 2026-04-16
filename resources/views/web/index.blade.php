@@ -951,11 +951,7 @@
 </section>
 
 @if($showHomeGovernor)
-<!-- Wave divider: white → white (subtle) -->
-<div class="section-wave" style="background: #fff;">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,40 C360,10 720,50 1080,20 C1260,5 1380,25 1440,15 L1440,60 L0,60 Z" fill="#fff"></path></svg>
-</div>
-<section class="governor-section">
+<section class="governor-section" style="background: #f8faf9;">
   <div class="governor-inner {{ $governorImageUrl ? '' : 'no-image' }}">
     @if($governorImageUrl)
     <div class="governor-photo-wrap reveal">
@@ -1001,12 +997,7 @@
 </section>
 @endif
 
-<!-- Wave divider: white → light green -->
-<div class="section-wave" style="background: #fff;">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,20 C240,60 480,0 720,30 C960,60 1200,10 1440,40 L1440,60 L0,60 Z" fill="#f4f7f5"></path></svg>
-</div>
-
-<section class="schools-section">
+<section class="schools-section" style="background: #f4f7f5;">
   <div class="schools-header reveal">
     <div>
       <div class="section-label">Our Schools</div>
@@ -1051,11 +1042,7 @@
 
 
 @if($showHomeTestimonials)
-<!-- Wave divider: light green → mint green -->
-<div class="section-wave" style="background: linear-gradient(180deg, #eef3ef, #f0f7f3);">
-  <svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C180,55 360,10 540,35 C720,60 900,15 1080,40 C1260,65 1380,20 1440,30 L1440,60 L0,60 Z" fill="#f0f7f3"></path></svg>
-</div>
-<section class="testimonials-section">
+<section class="testimonials-section" style="background: #f8faf9;">
   <div class="reveal">
     <div class="section-label">Testimonials</div>
     <div class="section-title">What People Say</div>

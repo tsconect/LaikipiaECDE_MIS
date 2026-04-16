@@ -23,23 +23,20 @@
       --green-light: #25a857;
       --green-pale: #e8f5ee;
       --green-glow: #34d399;
-      --gold: #f59e0b;
-      --gold-light: #fbbf24;
+      --gold: #1a7c3e;
+      --gold-light: #25a857;
       --cream: #faf9f6;
       --cream-warm: #f5f0e8;
       --white: #ffffff;
       --text: #1a2530;
       --text-muted: #6b7c8d;
       --border: rgba(13,34,53,0.08);
-      nav {
-        position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 0 40px;
-        height: 68px;
-        background: rgba(13,34,53,0.92);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.07);
-      }
+      --radius-pill: 10px;
+      --radius-xl: 10px;
+      --radius-lg: 10px;
+      --radius-md: 10px;
+      --radius-sm: 10px;
+      --radius-xs: 10px;
       .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
       .nav-brand img { height: 38px; }
       .nav-brand span {
@@ -51,7 +48,7 @@
       .nav-links a {
         color: rgba(255,255,255,0.75);
         text-decoration: none; font-size: 14px; font-weight: 500;
-        padding: 7px 14px; border-radius: 8px;
+        padding: 7px 14px; border-radius: 10px;
         transition: all .2s;
       }
       .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
@@ -61,7 +58,7 @@
         background: rgba(255,255,255,0.10);
         border: 1px solid rgba(255,255,255,0.15);
         color: #fff; font-size: 14px; font-weight: 500;
-        padding: 8px 16px; border-radius: 30px; cursor: pointer;
+        padding: 8px 16px; border-radius: 10px; cursor: pointer;
         transition: background .2s;
         text-decoration: none;
       }
@@ -289,7 +286,7 @@
     .bento-card {
       background: var(--white);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: 10px;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       position: relative;
@@ -319,7 +316,7 @@
     .content-card {
       background: var(--white);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: 10px;
       box-shadow: var(--shadow-sm);
       overflow: hidden;
       transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -333,7 +330,7 @@
     .page-content-card {
       background: var(--white);
       border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+      border-radius: 10px;
       box-shadow: var(--shadow-md);
       overflow: hidden;
     }
@@ -348,7 +345,7 @@
     .stat-card-mini {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
-      border-radius: var(--radius-md);
+      border-radius: 10px;
       padding: 20px;
       backdrop-filter: blur(12px);
       transition: all 0.3s;
@@ -393,7 +390,7 @@
     /* Home cards */
     .home-section-card {
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      border-radius: 10px;
       box-shadow: var(--shadow-md);
       background: #fff;
       overflow: hidden;
@@ -423,7 +420,7 @@
     }
     .empty-state {
       border: 2px dashed rgba(13,34,53,0.12);
-      border-radius: var(--radius-lg);
+      border-radius: 10px;
       padding: 3rem 2rem;
       text-align: center;
       color: var(--text-muted);
@@ -479,7 +476,7 @@
     .footer-tagline { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.45); }
     .footer-social { display: flex; gap: 10px; margin-top: 24px; }
     .social-btn {
-      width: 40px; height: 40px; border-radius: var(--radius-sm);
+      width: 40px; height: 40px; border-radius: 10px;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.10);
       display: flex; align-items: center; justify-content: center;

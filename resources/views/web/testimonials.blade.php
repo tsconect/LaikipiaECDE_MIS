@@ -10,7 +10,7 @@
 
     .testimonial-card {
         border: 1px solid var(--border);
-        border-radius: 18px;
+        border-radius: 10px;
         background: #fff;
         box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
         padding: 1.2rem;

@@ -260,6 +260,26 @@
                 </div>
                 <button type="submit" class="pill-btn pill-btn-primary" style="width:100%; justify-content:center;">
                     <i class="fas fa-paper-plane"></i> Send Message
+                  </button>
+                  <style>
+                  /* Reinforce button style for Send Message */
+                  .pill-btn.pill-btn-primary {
+                    background: var(--gold) !important;
+                    color: var(--navy) !important;
+                    border: none !important;
+                    border-radius: 10px !important;
+                    font-weight: 700;
+                    font-size: 15px;
+                    box-shadow: 0 8px 28px rgba(245,158,11,0.35);
+                    transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                  }
+                  .pill-btn.pill-btn-primary:hover {
+                    background: var(--gold-light) !important;
+                    color: var(--navy) !important;
+                    transform: translateY(-3px) scale(1.02);
+                    box-shadow: 0 14px 40px rgba(245,158,11,0.45);
+                  }
+                  </style>
                 </button>
             </form>
         </div>
