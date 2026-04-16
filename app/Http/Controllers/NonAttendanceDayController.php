@@ -19,6 +19,11 @@ class NonAttendanceDayController extends Controller
         return view('admin.non-attendance.create');
     }
 
+    public function edit($id){
+        $item = NonAttendanceDay::findOrFail($id);
+        return view('admin.non-attendance.edit', compact('item'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -103,13 +108,35 @@ class NonAttendanceDayController extends Controller
     
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'type' => 'required|string|in:holiday,weekend,closure,other',
+            'date' => 'nullable|date',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'weekday' => 'nullable|integer|min:0|max:6',
+            'is_recurring' => 'nullable|boolean',
+        ]);
+
+        $record = NonAttendanceDay::findOrFail($id);
+        $record->title = $request->title;
+        $record->type = $request->type;
+        $record->date = $request->date;
+        $record->weekday = $request->weekday;
+        $record->is_recurring = $request->is_recurring;
+        $record->save();
+
+        return redirect()->route('admin.non-attendance-days.index')->with('success', 'Non-attendance day updated successfully');
+
+    }
+
     public function destroy($id)
     {
         $record = NonAttendanceDay::findOrFail($id);
         $record->delete();
 
-        return response()->json([
-            'success' => true
-        ]);
+       return redirect()->route('admin.non-attendance-days.index')->with('success', 'Non-attendance day deleted successfully');
     }
 }
