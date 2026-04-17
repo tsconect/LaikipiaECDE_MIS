@@ -218,7 +218,7 @@
     <i class="fas fa-question-circle hero-icon"></i>
     <h1 class="page-title" style="animation: fadeUp 0.7s ease both;">Frequently Asked Questions</h1>
     <p class="page-subtitle" style="animation: fadeUp 0.7s ease 0.1s both;">Find answers to common questions about our ECDE services and programmes.</p>
-    <img src="{{ asset('assets/images/A_cheerful_young_girl__approximately_7-9_years_old__standing_confidently_against_a_vibrant__solid_or-removebg-preview.png') }}"
+    <img src="{{ asset('assets/images/cheerful-girl-removebg.png') }}"
          alt="" class="floating-asset" loading="lazy">
 </div>
 

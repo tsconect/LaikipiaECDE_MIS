@@ -46,13 +46,22 @@
       pointer-events: none;
     }
 
-    /* Stats bento in hero */
+    /* Stats cards */
     .schools-hero-stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
       max-width: 640px;
       position: relative; z-index: 1;
+    }
+    .schools-body-stats {
+      padding: 20px 32px 12px;
+      border-bottom: 1px solid var(--border);
+      background: #fff;
+    }
+    .schools-body-stats .schools-hero-stats {
+      max-width: 100%;
+      margin-bottom: 6px;
     }
     .schools-hero-stat {
       background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(245,255,248,0.94));
@@ -79,88 +88,167 @@
       position: absolute;
       inset: 18% -8% -8% 18%;
       border-radius: 14px;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      opacity: 0.55;
-      filter: saturate(1.08) contrast(1.04);
+      background: radial-gradient(circle at 72% 24%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.14) 42%, rgba(255,255,255,0) 70%);
+      opacity: 0.65;
       pointer-events: none;
-    }
-    .schools-hero-stat.stat-total::after {
-      background-image: url("{{ asset('assets/images/Suburban neighborhood.jpeg') }}");
-    }
-    .schools-hero-stat.stat-subcounty::after {
-      background-image: url("{{ asset('assets/images/Village VS Town VS City_ What is the difference_.jpeg') }}");
-    }
-    .schools-hero-stat.stat-wards::after {
-      background-image: url("{{ asset('assets/images/_ (12).jpeg') }}");
     }
     .scard {
       border-radius: 14px;
       overflow: hidden;
       position: relative;
-      cursor: pointer;
-      box-shadow: 0 6px 16px rgba(13,34,53,0.08);
-      background: #222;
+      border: 1px solid rgba(13,34,53,0.08);
+      box-shadow: 0 10px 24px rgba(13,34,53,0.08);
       transition: box-shadow .3s, transform .3s;
+      isolation: isolate;
     }
-    .scard img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform .3s;
-      display: block;
-      min-height: 100%;
+    .scard::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(132deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.34) 58%, rgba(255,255,255,0.18) 100%);
+      z-index: 0;
+      pointer-events: none;
     }
-    .scard:hover img { transform: scale(1.04); }
+    .scard::after {
+      content: '';
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      top: -48px;
+      right: -46px;
+      border-radius: 50%;
+      background: rgba(13,34,53,0.04);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .scard:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 30px rgba(13,34,53,0.12);
+    }
 
     .scard-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0,0,0,.72) 0%,
-        rgba(0,0,0,.15) 55%,
-        transparent 100%
+        rgba(255,255,255,.12) 0%,
+        rgba(255,255,255,.42) 52%,
+        rgba(255,255,255,.70) 100%
       );
       z-index: 1;
     }
     .scard-badge {
       position: absolute; top: 8px; left: 10px;
-      background: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.88);
       backdrop-filter: blur(6px);
-      border: 0.5px solid rgba(255,255,255,.3);
+      border: 0.5px solid rgba(13,34,53,.12);
       border-radius: 16px;
       padding: 2px 8px;
       font-size: 9px; font-weight: 600;
-      color: #fff; letter-spacing: .3px;
-      z-index: 2;
+      color: rgba(13,34,53,.78); letter-spacing: .3px;
+      z-index: 3;
     }
     .scard-body {
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 8px 10px;
-      z-index: 2;
+      z-index: 3;
     }
     .scard-num {
       font-size: 28px; font-weight: 700;
-      color: #fff; line-height: 1;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+      color: var(--navy); line-height: 1;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.35);
     }
     .scard-label {
       font-size: 9px; font-weight: 600;
       letter-spacing: .7px; text-transform: uppercase;
-      color: rgba(255,255,255,.7); margin-top: 2px;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.13);
+      color: rgba(13,34,53,.56); margin-top: 2px;
+      text-shadow: none;
+    }
+    .scard-icon {
+      position: absolute;
+      right: 12px;
+      bottom: 10px;
+      font-size: 30px;
+      color: rgba(13,34,53,0.20);
+      z-index: 2;
+      pointer-events: none;
     }
 
-    /* staggered heights for visual depth */
-    .card-schools  { height: 110px; }
-    .card-subcounty{ height: 150px; transform: translateY(-6px); }
-    .card-wards    { height: 125px; }
-    .schools-toolbar h3 i { color: var(--green); font-size: 18px; }
+    /* uniform card heights */
+    .card-schools  {
+      height: 132px;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(26,124,62,0.10) 0%, rgba(26,124,62,0) 42%),
+        linear-gradient(135deg, #ffffff 0%, #f3faf5 100%);
+    }
+    .card-subcounty{
+      height: 132px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(29,95,143,0.10) 0%, rgba(29,95,143,0) 42%),
+        linear-gradient(135deg, #ffffff 0%, #f2f7fc 100%);
+    }
+    .card-wards    {
+      height: 132px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(123,97,24,0.10) 0%, rgba(123,97,24,0) 42%),
+        linear-gradient(135deg, #ffffff 0%, #fbf8ef 100%);
+    }
+    .schools-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .schools-toolbar-title {
+      margin: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+    }
+    .schools-toolbar-title i {
+      color: #fff;
+      font-size: 14px;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a7c3e 0%, #0f5231 100%);
+      box-shadow: 0 8px 18px rgba(26,124,62,0.24);
+    }
     .schools-count-badge {
-      display: inline-flex; align-items: center;
-      padding: 4px 14px; border-radius: var(--radius-pill);
-      background: rgba(26,124,62,0.08);
-      color: var(--green); font-size: 13px; font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(13,34,53,0.12);
+      background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 14px rgba(13,34,53,0.08);
+    }
+    .schools-count-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: rgba(26,124,62,0.12);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     /* Custom search */
@@ -469,6 +557,7 @@
       .schools-hero { padding: 62px 16px 28px; }
       .schools-hero .floating-asset { display: none; }
       .schools-hero-stats { grid-template-columns: 1fr; max-width: 100%; }
+      .schools-body-stats { padding: 16px 20px 10px; }
       .schools-content { padding: 32px 16px 60px; }
       .schools-toolbar { padding: 20px; flex-direction: column; align-items: stretch; }
       .schools-search-wrap { min-width: 100%; }
@@ -501,50 +590,51 @@
         $subLocationOptions = $schools->map(fn($s) => optional($s->subLocation)->name)->filter()->unique()->sort()->values();
     @endphp
 
-
-    <div class="schools-hero-stats" style="animation: fadeUp 0.7s ease 0.2s both; gap: 14px; margin-bottom: 18px;">
-      <div class="scard card-schools">
-        <img src="{{ asset('assets/images/Suburban neighborhood.jpeg') }}" alt="Schools" loading="lazy">
-        <div class="scard-overlay"></div>
-        <div class="scard-badge">Total</div>
-        <div class="scard-body">
-          <div class="scard-num">{{ $schools->count() }}</div>
-          <div class="scard-label">Schools</div>
-        </div>
-      </div>
-      <div class="scard card-subcounty">
-        <img src="{{ asset('assets/images/Village VS Town VS City_ What is the difference_.jpeg') }}" alt="Sub Counties" loading="lazy">
-        <div class="scard-overlay"></div>
-        <div class="scard-badge">Regions</div>
-        <div class="scard-body">
-          <div class="scard-num">{{ $subCountyOptions->count() }}</div>
-          <div class="scard-label">Sub Counties</div>
-        </div>
-      </div>
-      <div class="scard card-wards">
-        <img src="{{ asset('assets/images/_ (12).jpeg') }}" alt="Wards" loading="lazy">
-        <div class="scard-overlay"></div>
-        <div class="scard-badge">Zones</div>
-        <div class="scard-body">
-          <div class="scard-num">{{ $wardOptions->count() }}</div>
-          <div class="scard-label">Wards</div>
-        </div>
-      </div>
-    </div>
-
-        <img src="{{ asset('assets/images/Two_african_american_children_wearing_school_uniforms_stand_side_by_side_against_a_bright_yellow_background_both_students_appear_to_be_looking_ahead_possibly_posing_for_a___Premium_AI-generated_image-.png') }}"
+        <img src="{{ asset('assets/images/two-students-yellow-bg.png') }}"
           alt="" class="floating-asset" loading="lazy">
 </div>
 
 <div class="schools-content">
   <div class="schools-page-wrap">
+    <div class="schools-body-stats" style="animation: fadeUp 0.7s ease 0.2s both;">
+        <div class="schools-hero-stats">
+          <div class="scard card-schools">
+            <i class="fas fa-school scard-icon" aria-hidden="true"></i>
+            <div class="scard-overlay"></div>
+            <div class="scard-badge">Total</div>
+            <div class="scard-body">
+              <div class="scard-num">{{ $schools->count() }}</div>
+              <div class="scard-label">Schools</div>
+            </div>
+          </div>
+          <div class="scard card-subcounty">
+            <i class="fas fa-map-marked-alt scard-icon" aria-hidden="true"></i>
+            <div class="scard-overlay"></div>
+            <div class="scard-badge">Regions</div>
+            <div class="scard-body">
+              <div class="scard-num">{{ $subCountyOptions->count() }}</div>
+              <div class="scard-label">Sub Counties</div>
+            </div>
+          </div>
+          <div class="scard card-wards">
+            <i class="fas fa-map-pin scard-icon" aria-hidden="true"></i>
+            <div class="scard-overlay"></div>
+            <div class="scard-badge">Zones</div>
+            <div class="scard-body">
+              <div class="scard-num">{{ $wardOptions->count() }}</div>
+              <div class="scard-label">Wards</div>
+            </div>
+          </div>
+        </div>
+    </div>
+
     @if($schools->count() > 0)
 
         <!-- Toolbar -->
         <div class="schools-toolbar">
             <div class="schools-toolbar-left">
-                <h3><i class="fas fa-school"></i> School Directory</h3>
-                <span class="schools-count-badge">{{ $schools->count() }} schools</span>
+            <h3 class="schools-toolbar-title"><i class="fas fa-school"></i> School Directory</h3>
+            <span class="schools-count-badge"><span class="schools-count-number">{{ $schools->count() }}</span> schools</span>
             </div>
             <div class="schools-search-wrap">
                 <i class="fas fa-search search-icon"></i>
