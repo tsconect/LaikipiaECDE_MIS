@@ -1597,6 +1597,20 @@ body {
 .app-main__inner .table-scroll-compact {
     overflow: hidden;
 }
+
+/* Keep Teachers Ethnic Distribution table vertically scrollable */
+.app-main__inner .compact-ethnic-card .table-scroll-compact {
+    height: 210px;
+    max-height: 210px;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.app-main__inner .compact-ethnic-card .table-scroll-compact .data-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
 /* ══ SIDEBAR NAVIGATION ══ */
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
