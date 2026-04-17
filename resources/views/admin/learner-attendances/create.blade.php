@@ -174,13 +174,17 @@
 }
 
 .calendar-popup-overlay {
+    --calendar-overlay-offset: 96px;
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: var(--calendar-overlay-offset, 64px) 20px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
@@ -331,6 +335,7 @@
 
 @media (max-width: 768px) {
     .calendar-popup-overlay {
+        --calendar-overlay-offset: 72px;
         padding: 12px;
         align-items: center;
     }
