@@ -100,83 +100,30 @@ class LearnerAttendanceController extends Controller
 
         return view('admin.learner-attendances.create', compact('learners', 'school_id', 'schools','blockedDays'));
     }
-public function blockedDates()
+   public function blockedDates()
 {
     $days = NonAttendanceDay::all();
-
     $result = [];
 
- foreach ($days as $day) {
+    foreach ($days as $day) {
+        try {
+            if (!isset($day->type) || !$day->date) continue;
 
-    try {
+            // All types use a single date record — just map it directly
+            $result[$day->date->format('Y-m-d')] = [
+                'type'  => $day->type,
+                'title' => $day->title ?? ucfirst($day->type)
+            ];
 
-        // 🚫 skip if missing type
-        if (!isset($day->type)) {
+        } catch (\Exception $e) {
             continue;
         }
-
-        // ========================
-        // CLASURE (range of dates)
-        // ========================
-        if ($day->type === 'closure') {
-
-            if (!$day->start_date || !$day->end_date) {
-                continue; // skip invalid
-            }
-
-            $start = \Carbon\Carbon::parse($day->start_date);
-            $end   = \Carbon\Carbon::parse($day->end_date);
-
-            for ($d = $start->copy(); $d->lte($end); $d->addDay()) {
-
-                $result[$d->format('Y-m-d')] = [
-                    'type'  => 'closure',
-                    'title' => $day->title ?? 'Closure'
-                ];
-            }
-        }
-
-        // ========================
-        // HOLIDAY (single date)
-        // ========================
-        // elseif ($day->type === 'holiday') {
-
-        //     if (empty($day->date) || !strtotime($day->date)) {
-        //         continue;
-        //     }
-
-        //     $result[$day->date] = [
-        //         'type'  => 'holiday',
-        //         'title' => $day->title ?? 'Holiday'
-        //     ];
-
-            
-        // }
-
-        // ========================
-        // WEEKEND
-        // ========================
-        elseif ($day->type === 'weekend') {
-
-            if (!$day->date) {
-                continue;
-            }
-
-            $result[$day->date] = [
-                'type'  => 'weekend',
-                'title' => $day->title ?? 'Weekend'
-            ];
-        }
-
-    } catch (\Exception $e) {
-        // 🚫 silently skip broken record
-        continue;
     }
-}
-
 
     return response()->json($result);
 }
+
+    
     /**
      * Store a newly created resource in storage.
      *

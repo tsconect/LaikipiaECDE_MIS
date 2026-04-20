@@ -174,13 +174,17 @@
 }
 
 .calendar-popup-overlay {
+    --calendar-overlay-offset: 96px;
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: var(--calendar-overlay-offset, 64px) 20px;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.2s ease;
@@ -332,6 +336,7 @@
 
 @media (max-width: 768px) {
     .calendar-popup-overlay {
+        --calendar-overlay-offset: 72px;
         padding: 12px;
         align-items: center;
     }
@@ -488,10 +493,12 @@ document.addEventListener('DOMContentLoaded', function () {
             blank.className = 'calendar-blank';
             grid.appendChild(blank);
         }
-
         for (let day = 1; day <= daysInMonth; day++) {
             const fullDate = ymd(year, month, day);
             const blocked = blockedDateMap[fullDate];
+            const dayOfWeek = new Date(year, month, day).getDay(); // 0=Sun, 6=Sat
+            const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
             const box = document.createElement('button');
             box.type = 'button';
             box.className = 'day-box';
@@ -505,14 +512,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 box.classList.add('disabled', 'future');
                 box.disabled = true;
                 box.title = 'Future dates are not allowed';
+
+            } else if (isWeekend) {
+                // Block all weekends by default — no DB entry needed
+                box.classList.add('disabled', 'weekend');
+                box.disabled = true;
+                box.title = blocked?.title || 'Weekend';  // Use DB title if exists, else default
+
             } else if (blocked) {
                 box.classList.add('disabled');
                 box.disabled = true;
-                box.title = blocked.title || 'Attendance not allowed';
+                box.title = blocked.title || 'Attendance not allowed'; // ← hover shows event title
 
                 if (blocked.type === 'holiday') box.classList.add('holiday');
-                if (blocked.type === 'weekend') box.classList.add('weekend');
                 if (blocked.type === 'closure') box.classList.add('closure');
+
             } else {
                 box.classList.add('presentable');
                 box.addEventListener('click', function () {
@@ -520,7 +534,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     setSelectedDateLabel(fullDate);
                     clearWarning();
                     renderCalendar(activeMonth);
-
                     closeCalendarPopup();
                 });
             }

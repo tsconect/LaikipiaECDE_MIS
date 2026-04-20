@@ -193,9 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // =========================
-    // UPDATE UI
-    // =========================
+   
     function updateUI(data) {
 
         const records = data.attendanceRecords;
@@ -214,23 +212,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let monthLabel = monthNames[month - 1] + " " + year;
 
-        // =========================
-        // BUILD LOOKUP
-        // =========================
+       
         let lookup = {};
         records.forEach(r => {
             let d = new Date(r.date).getDate();
             lookup[d] = r.status;
         });
 
-        // =========================
-        // CALENDAR TITLE
-        // =========================
+      
         document.getElementById('attCalendarTitle').innerText = monthLabel;
 
-        // =========================
-        // CALENDAR GRID
-        // =========================
+   
         let grid = document.getElementById('attCalendarGrid');
         grid.innerHTML = '';
 
