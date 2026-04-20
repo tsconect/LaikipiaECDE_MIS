@@ -104,8 +104,8 @@
     </div>
 </div>
 
-<div class="calendar-popup-overlay" id="attendanceDateOverlay" aria-hidden="true">
-    <div class="calendar-popup-modal" role="dialog" aria-modal="true" aria-labelledby="attendanceDateModalLabel">
+<div class="calendar-popup-overlay" id="attendanceDateOverlay" aria-hidden="true" >
+    <div class="calendar-popup-modal" role="dialog" aria-modal="true" aria-labelledby="attendanceDateModalLabel" style="z-index: 9999">
         <div class="calendar-modal-header">
             <h5 class="modal-title" id="attendanceDateModalLabel">Pick Attendance Date</h5>
             <button type="button" class="calendar-popup-close" id="closeCalendarBtn" aria-label="Close">
@@ -202,6 +202,7 @@
     max-height: min(78vh, 720px);
     display: flex;
     flex-direction: column;
+    z-index: 999999;
 }
 
 .calendar-modal-body {
