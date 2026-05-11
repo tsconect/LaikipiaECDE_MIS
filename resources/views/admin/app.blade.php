@@ -47,6 +47,16 @@
             </button>
         </div>
 
+        <div class="app-header__menu">
+            <span>
+                <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                    <span class="btn-icon-wrapper">
+                        <i class="fa fa-ellipsis-v fa-w-6"></i>
+                    </span>
+                </button>
+            </span>
+        </div>
+
         <div class="app-header__content">
             <button onclick="goBack()" class="btn-go-back">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>

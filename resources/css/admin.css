@@ -2753,10 +2753,172 @@ body {
   display: flex; flex-direction: column; align-items: center;
   padding: 48px 20px; text-align: center;
 }
-.empty-tab-title { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+.empty-tab-sub { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 4px; }
 .empty-tab-sub { font-size: 12.5px; color: #94a3b8; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══ MOBILE RESPONSIVENESS PATCHES ══ */
+
+@media (max-width: 991.98px) {
+    /* Header Adjustments */
+    .app-header .app-header__content {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 60px;
+        left: 5%;
+        width: 90%;
+        background: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        padding: 15px;
+        transition: all .2s;
+        display: flex !important;
+        flex-direction: column;
+        z-index: 100;
+        height: auto !important;
+    }
+
+    .app-header.header-mobile-open .app-header__content {
+        visibility: visible;
+        opacity: 1;
+        top: 70px;
+    }
+
+    .app-header__content .app-header-right {
+        margin-left: 0 !important;
+        width: 100%;
+        display: block !important;
+    }
+
+    .app-header__content .profile-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 10px !important;
+    }
+
+    .app-header__content .user-pill {
+        width: 100%;
+    }
+
+    /* Sidebar Fixes */
+    .app-sidebar {
+        z-index: 1001; /* Above header content */
+    }
+
+    /* Table Banner Stack */
+    .app-main__inner .table-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .app-main__inner .table-banner .banner-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .app-main__inner .table-banner .banner-actions .btn-new,
+    .app-main__inner .table-banner .banner-actions .btn-generate {
+        flex: 1;
+        min-width: 140px;
+        justify-content: center;
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    /* Stats Grids */
+    .stats-grid-4, .stats-grid-3, .stats-grid-2, .school-stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .bento-row {
+        flex-direction: column !important;
+        display: flex !important;
+    }
+
+    .bento-col-3, .bento-col-4, .bento-col-6, .bento-col-8, .bento-col-9 {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+
+    /* DataTables Mobile Optimization */
+    .dataTables_wrapper .row {
+        margin: 0;
+    }
+
+    .dataTables_wrapper .col-12 {
+        padding: 5px 0;
+        justify-content: center !important;
+        flex-direction: column;
+        align-items: center !important;
+        display: flex !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter {
+        text-align: center;
+        width: 100%;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_length {
+        margin-bottom: 10px;
+    }
+
+    .dt-buttons {
+        margin-bottom: 10px;
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .dt-button {
+        margin-right: 0 !important;
+    }
+
+    /* Forms on Mobile */
+    .modern-form-shell {
+        padding: 15px !important;
+    }
+
+    .form-grid-2, .form-grid-3, .form-grid-4 {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Action Buttons in Tables */
+    .action-btns {
+        flex-wrap: nowrap;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .app-main__inner {
+        padding: 15px 10px !important;
+    }
+
+    .table-banner-title {
+        font-size: 14px !important;
+    }
+
+    .card-body {
+        padding: 15px !important;
+    }
+
+    /* Hide less important columns on very small screens */
+    .td-email, .td-id, .td-dash {
+        display: none !important;
+    }
+}
 
 /* =============
    ADMIN TABLES
@@ -2971,7 +3133,169 @@ body {
   display: flex; flex-direction: column; align-items: center;
   padding: 48px 20px; text-align: center;
 }
-.empty-tab-title { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 4px; }
+.empty-tab-sub { font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 4px; }
 .empty-tab-sub { font-size: 12.5px; color: #94a3b8; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══ MOBILE RESPONSIVENESS PATCHES ══ */
+
+@media (max-width: 991.98px) {
+    /* Header Adjustments */
+    .app-header .app-header__content {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 60px;
+        left: 5%;
+        width: 90%;
+        background: #fff;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        padding: 15px;
+        transition: all .2s;
+        display: flex !important;
+        flex-direction: column;
+        z-index: 100;
+        height: auto !important;
+    }
+
+    .app-header.header-mobile-open .app-header__content {
+        visibility: visible;
+        opacity: 1;
+        top: 70px;
+    }
+
+    .app-header__content .app-header-right {
+        margin-left: 0 !important;
+        width: 100%;
+        display: block !important;
+    }
+
+    .app-header__content .profile-btn {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 10px !important;
+    }
+
+    .app-header__content .user-pill {
+        width: 100%;
+    }
+
+    /* Sidebar Fixes */
+    .app-sidebar {
+        z-index: 1001; /* Above header content */
+    }
+
+    /* Table Banner Stack */
+    .app-main__inner .table-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .app-main__inner .table-banner .banner-actions {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .app-main__inner .table-banner .banner-actions .btn-new,
+    .app-main__inner .table-banner .banner-actions .btn-generate {
+        flex: 1;
+        min-width: 140px;
+        justify-content: center;
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    /* Stats Grids */
+    .stats-grid-4, .stats-grid-3, .stats-grid-2, .school-stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .bento-row {
+        flex-direction: column !important;
+        display: flex !important;
+    }
+
+    .bento-col-3, .bento-col-4, .bento-col-6, .bento-col-8, .bento-col-9 {
+        width: 100% !important;
+        margin-bottom: 15px;
+    }
+
+    /* DataTables Mobile Optimization */
+    .dataTables_wrapper .row {
+        margin: 0;
+    }
+
+    .dataTables_wrapper .col-12 {
+        padding: 5px 0;
+        justify-content: center !important;
+        flex-direction: column;
+        align-items: center !important;
+        display: flex !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter {
+        text-align: center;
+        width: 100%;
+    }
+
+    div.dataTables_wrapper div.dataTables_filter input {
+        width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    div.dataTables_wrapper div.dataTables_length {
+        margin-bottom: 10px;
+    }
+
+    .dt-buttons {
+        margin-bottom: 10px;
+        display: flex !important;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .dt-button {
+        margin-right: 0 !important;
+    }
+
+    /* Forms on Mobile */
+    .modern-form-shell {
+        padding: 15px !important;
+    }
+
+    .form-grid-2, .form-grid-3, .form-grid-4 {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    /* Action Buttons in Tables */
+    .action-btns {
+        flex-wrap: nowrap;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .app-main__inner {
+        padding: 15px 10px !important;
+    }
+
+    .table-banner-title {
+        font-size: 14px !important;
+    }
+
+    .card-body {
+        padding: 15px !important;
+    }
+
+    /* Hide less important columns on very small screens */
+    .td-email, .td-id, .td-dash {
+        display: none !important;
+    }
+}

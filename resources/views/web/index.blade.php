@@ -98,9 +98,38 @@
     .hero-subtitle {
       font-size: 17px; line-height: 1.75;
       color: rgba(255,255,255,0.70);
+      max-width: 620px;
       margin: 0 auto 36px;
-      max-width: 580px;
       animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        padding: 120px 24px 80px;
+        min-height: 60vh;
+      }
+      .hero-badge {
+        padding: 8px 16px;
+        font-size: 11px;
+        margin-bottom: 20px;
+      }
+      .hero h1 {
+        font-size: 2.2rem !important;
+        margin-bottom: 15px;
+      }
+      .hero-subtitle {
+        font-size: 15px;
+        margin-bottom: 30px;
+      }
+      .hero-actions {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      .hero-actions .pill-btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     .hero-actions {

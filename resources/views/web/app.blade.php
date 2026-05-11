@@ -37,34 +37,6 @@
       --radius-md: 10px;
       --radius-sm: 10px;
       --radius-xs: 10px;
-      .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-      .nav-brand img { height: 38px; }
-      .nav-brand span {
-        font-family: 'Manrope', sans-serif;
-        font-weight: 600; font-size: 15px;
-        color: #fff; letter-spacing: 0.01em;
-      }
-      .nav-links { display: flex; gap: 6px; }
-      .nav-links a {
-        color: rgba(255,255,255,0.75);
-        text-decoration: none; font-size: 14px; font-weight: 500;
-        padding: 7px 14px; border-radius: 10px;
-        transition: all .2s;
-      }
-      .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
-      .nav-links a.active { color: #fff; background: rgba(255,255,255,0.12); }
-      .nav-user {
-        display: flex; align-items: center; gap: 8px;
-        background: rgba(255,255,255,0.10);
-        border: 1px solid rgba(255,255,255,0.15);
-        color: #fff; font-size: 14px; font-weight: 500;
-        padding: 8px 16px; border-radius: 10px; cursor: pointer;
-        transition: background .2s;
-        text-decoration: none;
-      }
-      .nav-user:hover { background: rgba(255,255,255,0.18); }
-      .nav-user svg { width: 16px; height: 16px; }
-      transform: translateY(-3px);
     }
 
     .pill-btn-dark {
@@ -103,6 +75,20 @@
       font-size: 12px; font-weight: 700;
       letter-spacing: 0.08em; text-transform: uppercase;
     }
+
+    /* Mobile Menu Toggle */
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* hidden on desktop; shown inside mobile dropdown via media query */
+    .nav-links .nav-user-mobile { display: none !important; }
+
     .tag-pill-green {
       background: rgba(26,124,62,0.12); color: var(--green);
     }
@@ -117,6 +103,7 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: nowrap;
       padding: 0 48px;
       height: 72px;
       background: rgba(13,34,53,0.85);
@@ -131,6 +118,7 @@
       height: 64px;
     }
     .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-user-container { display: flex; align-items: center; gap: 12px; }
     .nav-brand img { height: 40px; transition: transform 0.3s; }
     .nav-brand:hover img { transform: rotate(-5deg) scale(1.05); }
     .nav-brand span {
@@ -177,12 +165,6 @@
     }
     .nav-user svg { width: 16px; height: 16px; }
 
-    /* Mobile menu toggle */
-    .nav-mobile-toggle {
-      display: none;
-      background: none; border: none; color: #fff;
-      font-size: 24px; cursor: pointer; padding: 8px;
-    }
 
     /* ─── SECTION SHARED ──────────────────────────────── */
     section { padding: 100px 64px; }
@@ -604,8 +586,30 @@
     @media (max-width: 900px) {
       section { padding: 72px 24px; }
       nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .nav-mobile-toggle { display: block; }
+      .mobile-nav-toggle { display: block; }
+      .nav-brand { flex: 1; }
+      .nav-user-container { display: none !important; }
+      .nav-links {
+        display: none !important;
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        background: var(--navy);
+        flex-direction: column;
+        padding: 20px;
+        gap: 10px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      }
+      .nav-links.active { display: flex !important; }
+      .nav-links .nav-user-mobile {
+        display: flex !important;
+        margin-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 15px;
+      }
       .footer-grid { grid-template-columns: 1fr; gap: 36px; }
       footer { padding: 56px 24px 28px; }
       .bento-grid-3, .bento-grid-4, .bento-grid-featured {
@@ -643,7 +647,8 @@
   <a href="{{ url('/') }}" class="nav-brand">
     <img src="{{asset('assets/images/laikipia.png')}}" alt="Logo"> Laikipia ECDE
   </a>
-  <div class="nav-links">
+
+  <div class="nav-links" id="navLinks">
     <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'active' : '' }}">Home</a>
     <a href="{{ route('cms.posts') }}" class="{{ request()->routeIs('cms.posts', 'cms.post') ? 'active' : '' }}">Blog</a>
     <a href="{{ route('cms.schools') }}" class="{{ request()->routeIs('cms.schools', 'cms.schools.show') ? 'active' : '' }}">ECDE Schools</a>
@@ -651,22 +656,59 @@
     <a href="{{ route('cms.galleries') }}" class="{{ request()->routeIs('cms.galleries', 'cms.gallery') ? 'active' : '' }}">Galleries</a>
     <a href="{{ route('cms.faqs') }}" class="{{ request()->routeIs('cms.faqs') ? 'active' : '' }}">FAQs</a>
     <a href="{{ route('cms.contact') }}" class="{{ request()->routeIs('cms.contact') ? 'active' : '' }}">Contact</a>
+
+    @guest
+      <a href="{{ route('login') }}" class="nav-user nav-user-mobile">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Login
+      </a>
+    @else
+      <a href="{{ route('dashboard') }}" class="nav-user nav-user-mobile">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        {{ auth()->user()->first_name ?? 'Dashboard' }}
+      </a>
+    @endguest
   </div>
 
-  <div style="display:flex;align-items:center;gap:12px;">
+  <div class="nav-user-container">
     @guest
       <a href="{{ route('login') }}" class="nav-user">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         Login
       </a>
     @else
-      <a href="{{ route('home') }}" class="nav-user">
+      <a href="{{ route('dashboard') }}" class="nav-user">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         {{ auth()->user()->first_name ?? 'Dashboard' }}
       </a>
     @endguest
   </div>
+
+  <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
+    <i class="fa fa-bars"></i>
+  </button>
 </nav>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('mobileNavToggle');
+  const navLinks = document.getElementById('navLinks');
+  
+  if (toggle && navLinks) {
+    toggle.addEventListener('click', function() {
+      navLinks.classList.toggle('active');
+      const icon = this.querySelector('i');
+      if (icon.classList.contains('fa-bars')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+  }
+});
+</script>
 
 <main class="@hasSection('flush_topbar') main-flush-top @endif">
     @yield('content')

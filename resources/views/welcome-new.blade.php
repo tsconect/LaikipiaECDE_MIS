@@ -149,6 +149,30 @@
             color: #666;
             font-size: 1rem;
         }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 15px;
+            }
+            .hero-section h1 {
+                font-size: 2.2rem;
+            }
+            .hero-section p {
+                font-size: 1.1rem;
+            }
+            .btn-hero {
+                display: block;
+                margin: 10px auto;
+                width: 80%;
+            }
+            .section-title {
+                font-size: 1.5rem;
+                margin: 40px 0 20px;
+            }
+            .cta-section h2 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 
     <!-- Hero Section -->
