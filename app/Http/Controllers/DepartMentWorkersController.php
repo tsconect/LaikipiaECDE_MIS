@@ -14,6 +14,7 @@ class DepartMentWorkersController extends Controller
    public function index()
    {
        $data = DepartMentWorkers::get();
+       log_user_activity(0, 'department_workers', 'index', 'User accessed the department workers index page', 'admin/department-workers');
        return view('backoffice.DepartmentsWorkers.index', compact('data'));
    }
 
@@ -79,6 +80,8 @@ class DepartMentWorkersController extends Controller
        $_obj['next_of_kin_full_names'] = request()->input('next_kin_first_name') . ' ' . request()->input('next_kin_middle_name') . ' ' . request()->input('next_kin_last_name');
 
        $__obj = DepartMentWorkers::create($_obj);
+
+       log_user_activity($__obj->id, 'department_workers', 'store', 'User created a new department worker: ' . $__obj->full_names, url()->current(), json_encode($__obj));
 
        return back()->with('success', $__obj->department_name . 'Department staff was created successfully!');
    }

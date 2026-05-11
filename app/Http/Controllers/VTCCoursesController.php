@@ -14,6 +14,7 @@ class VTCCoursesController extends Controller
     public function index()
     {
         $data = VTCCourses::get();
+        log_user_activity(0, 'vtc_courses', 'index', 'User accessed the VTC courses index page', 'admin/vtc-courses');
         return view('backoffice.VocationalTrainingInstitute.Departments.Courses.index', compact('data'));
     }
     function create(){
@@ -48,6 +49,7 @@ class VTCCoursesController extends Controller
 
         $_obj =  VTCCourses::create($_data);
 
+        log_user_activity($_obj->id, 'vtc_courses', 'store', 'User created a new VTC course: ' . $_obj->course_name, url()->current(), json_encode($_obj));
 
         return   back()->with('success', $_obj->department_name . ' vocational course was created successfully!');
     }

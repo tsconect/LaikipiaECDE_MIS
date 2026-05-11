@@ -35,6 +35,7 @@ class StudentsController extends Controller
         }
 
         
+        log_user_activity(0, 'students', 'index', 'User accessed the students index page', 'admin/students');
         return view('admin.students.index', compact('students'));
 
    }
@@ -103,9 +104,8 @@ class StudentsController extends Controller
 
     $student->save();
 
+    log_user_activity($student->id, 'students', 'store', 'User created a new student: ' . $student->first_name . ' ' . $student->last_name, url()->current(), json_encode($student));
 
-   
-   
     return redirect()->route('admin.ecde-students.index')->with('success', 'Student '. $student->name .   ' Added Successfully');
 
     return back()->with('success', 'Student '. $obj->name .   ' Added Successfully');
@@ -114,6 +114,7 @@ class StudentsController extends Controller
 
    public function show(Students $ecde_student)
    {
+       log_user_activity($ecde_student->id, 'students', 'show', 'User viewed student with id ' . $ecde_student->id, url()->current(), json_encode($ecde_student));
        return view('admin.students.show', compact('ecde_student'));
    }
 
@@ -124,11 +125,14 @@ class StudentsController extends Controller
        $counties = County::get();
        $ecde_schools = EcdeSchools::get();
 
+       log_user_activity($ecde_student->id, 'students', 'edit', 'User accessed edit page for student: ' . $ecde_student->first_name . ' ' . $ecde_student->last_name, 'admin/students/' . $ecde_student->id . '/edit', json_encode($ecde_student));
+
        return view('admin.students.edit', compact('ecde_student', 'wards', 'sub_counties', 'counties', 'ecde_schools'));
    }
 
    public function update(Request $request, Students $ecde_student)
    {
+       $current_object = json_encode($ecde_student);
        $request->validate([
           'first_name' => 'required',
           'middle_name' => 'nullable',
@@ -162,12 +166,17 @@ class StudentsController extends Controller
        $ecde_student->school_id = $request->school_id;
        $ecde_student->save();
 
+       log_user_activity($ecde_student->id, 'students', 'update', 'User updated student with id ' . $ecde_student->id, url()->current(), json_encode($ecde_student), $current_object);
+
        return redirect()->route('admin.ecde-students.index')->with('success', 'Student updated successfully');
    }
 
    public function destroy(Students $ecde_student)
    {
+       $oldStudent = json_encode($ecde_student);
+       $studentId = $ecde_student->id;
        $ecde_student->delete();
+       log_user_activity($studentId, 'students', 'destroy', 'User deleted student with id ' . $studentId, url()->current(), null, $oldStudent);
        return redirect()->route('admin.ecde-students.index')->with('success', 'Student deleted successfully');
    }
 

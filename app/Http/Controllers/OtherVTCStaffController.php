@@ -14,6 +14,7 @@ class OtherVTCStaffController extends Controller
     public function index()
     {
         $data = OtherVTCStaff::get();
+        log_user_activity(0, 'other_vtc_staff', 'index', 'User accessed the other VTC staff index page', 'admin/other-vtc-staff');
         return view('backoffice.VocationalTrainingInstitute.other_staff.index', compact('data'));
     }
 
@@ -78,6 +79,8 @@ class OtherVTCStaffController extends Controller
         $_obj['next_of_kin_full_names'] = request()->input('next_kin_first_name') . ' ' . request()->input('next_kin_middle_name') . ' ' . request()->input('next_kin_last_name');
 
         $__obj = OtherVTCStaff::create($_obj);
+
+        log_user_activity($__obj->id, 'other_vtc_staff', 'store', 'User created a new VTC staff member: ' . $__obj->full_names, url()->current(), json_encode($__obj));
 
         return back()->with('success', $__obj->department_name . ' vtc staff was created successfully!');
     }

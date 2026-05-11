@@ -39,6 +39,7 @@ class LearnerController extends Controller
         }
 
         
+        log_user_activity(0, 'learners', 'index', 'User accessed the learners index page', 'admin/learners');
         return view('admin.learners.index', compact('learners'));
     }
 
@@ -245,7 +246,7 @@ class LearnerController extends Controller
 
             
 
-            DB::commit();   
+            DB::commit();
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -253,6 +254,7 @@ class LearnerController extends Controller
             return back()->with('error', 'Error: ' . $e->getMessage());
         }
 
+        log_user_activity($student->id, 'learners', 'store', 'User created a new learner: ' . $student->first_name . ' ' . $student->last_name, url()->current(), json_encode($student));
 
      return redirect()->route('admin.ecde-schools.show', $student->school_id)->with('success', 'leaners '. $student->name .   ' Added Successfully');
    
@@ -295,6 +297,8 @@ class LearnerController extends Controller
             ]);
         }
 
+        log_user_activity($learner->id, 'learners', 'show', 'User viewed learner with id ' . $learner->id, url()->current(), json_encode($learner));
+
         return view('admin.learners.show', compact(
             'learner',
             'attendanceRecords',
@@ -311,6 +315,7 @@ class LearnerController extends Controller
      */
     public function edit(Learner $learner)
     {
+       log_user_activity($learner->id, 'learners', 'edit', 'User accessed edit page for learner: ' . $learner->first_name . ' ' . $learner->last_name, 'admin/learners/' . $learner->id . '/edit', json_encode($learner));
        $sub_counties = Constituency::get();
        $wards = Ward::get();
        $counties = County::get();
@@ -330,6 +335,7 @@ class LearnerController extends Controller
      */
     public function update(Request $request, Learner $learner)
     {
+         $current_object = json_encode($learner);
          $request->validate([
           'first_name' => 'required',
           'middle_name' => 'nullable',
@@ -400,6 +406,8 @@ class LearnerController extends Controller
 
             DB::commit();
 
+            log_user_activity($learner->id, 'learners', 'update', 'User updated learner with id ' . $learner->id, url()->current(), json_encode($learner), $current_object);
+
             return redirect()->route('admin.learners.index')->with('success', 'Learner updated successfully');
 
         } catch (\Exception $e) {
@@ -416,7 +424,10 @@ class LearnerController extends Controller
      */
     public function destroy(Learner $learner)
     {
+        $oldLearner = json_encode($learner);
+        $learnerId = $learner->id;
         $learner->delete();
+        log_user_activity($learnerId, 'learners', 'destroy', 'User deleted learner with id ' . $learnerId, url()->current(), null, $oldLearner);
        return redirect()->route('admin.learners.index')->with('success', 'learners deleted successfully');
     }
 

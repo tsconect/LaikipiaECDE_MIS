@@ -14,6 +14,7 @@ class VTCTeacherController extends Controller
     public function index()
     {
         $data = VTCTeacher::get();
+        log_user_activity(0, 'vtc_teachers', 'index', 'User accessed the VTC teachers index page', 'admin/vtc-teachers');
         return view('backoffice.VocationalTrainingInstitute.Teachers.index', compact('data'));
     }
 
@@ -84,6 +85,8 @@ class VTCTeacherController extends Controller
         $_obj['next_of_kin_full_names'] = request()->input('next_kin_first_name') . ' ' . request()->input('next_kin_middle_name') . ' ' . request()->input('next_kin_last_name');
 
         $__obj = VTCTeacher::create($_obj);
+
+        log_user_activity($__obj->id, 'vtc_teachers', 'store', 'User created a new VTC teacher: ' . $__obj->full_names, url()->current(), json_encode($__obj));
 
         return back()->with('success', $__obj->department_name . ' vtc teacher was created successfully!');
     }

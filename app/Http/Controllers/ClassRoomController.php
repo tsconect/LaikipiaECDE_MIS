@@ -15,6 +15,7 @@ class ClassRoomController extends Controller
     public function index()
     {
         $classrooms = ClassRoom::latest()->get();
+        log_user_activity(0, 'classrooms', 'index', 'User accessed the classrooms index page', 'admin/classrooms');
         return view('admin.classrooms.index', compact('classrooms'));
     }
 
@@ -58,6 +59,8 @@ class ClassRoomController extends Controller
         $classRoom->description = $request->input('description');
         $classRoom->school_id = $request->input('school_id');
         $classRoom->save();
+
+        log_user_activity($classRoom->id, 'classrooms', 'store', 'User created a new classroom: ' . $classRoom->name, url()->current(), json_encode($classRoom));
 
         return redirect()->route('admin.ecde-schools.show', $classRoom->school_id)->with('success', 'Class Room created successfully.');
     }

@@ -95,6 +95,8 @@ class CommunicationController extends Controller
         $message =  $request->message;
         $statusCode = $sendSms->sendSms($phoneNumber, $message);
 
+        log_user_activity(0, 'communications', 'store', 'User sent an SMS to ' . $phoneNumber, url()->current());
+
         return redirect()->back()->with('success', 'Message sent successfully');
         return $statusCode;
     }

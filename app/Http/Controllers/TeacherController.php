@@ -55,6 +55,7 @@ class TeacherController extends Controller
        }
 
        $data = $query->latest()->paginate($perPage);
+       log_user_activity(0, 'teachers', 'index', 'User accessed the teachers index page', 'admin/teachers');
        return view('admin.teachers.index', compact('data'));
    }
 
@@ -186,6 +187,8 @@ class TeacherController extends Controller
 
         }
 
+          log_user_activity($teacher->id, 'teachers', 'store', 'User created a new teacher: ' . $obj->first_name . ' ' . $obj->last_name, url()->current(), json_encode($teacher));
+
           return redirect()->route('admin.ecde-schools.show', $teacher->school_id)->with('success', 'Teacher '. $obj->first_name .   ' Added Successfully');
 
     
@@ -201,6 +204,7 @@ class TeacherController extends Controller
    function edit($id)
    {
     $teacher = Teacher::find($id);
+    log_user_activity($teacher->id, 'teachers', 'edit', 'User accessed edit page for teacher with id ' . $teacher->id, 'admin/teachers/' . $teacher->id . '/edit', json_encode($teacher));
     $sub_counties =Constituency::get();
         $wards=Ward::get();
         $schools = EcdeSchools::get();
@@ -221,6 +225,7 @@ class TeacherController extends Controller
             $newPassword = Str::random(6, $characters);
 
             $teacher = Teacher::find($id);
+            $current_object = json_encode($teacher);
             
             $obj = User::find($teacher->user_id);
             $obj->first_name = $request->first_name;
@@ -297,6 +302,8 @@ class TeacherController extends Controller
 
         }
 
+        log_user_activity($teacher->id, 'teachers', 'update', 'User updated teacher with id ' . $teacher->id, url()->current(), json_encode($teacher), $current_object);
+
         return redirect()->route('admin.teachers.index')->with('success', 'Teacher '. $obj->name .   ' updated Successfully');
 
 
@@ -337,6 +344,9 @@ class TeacherController extends Controller
 
        public function destroy(Teacher $teacher)
        {
+            $oldTeacher = json_encode($teacher);
+            $teacherId = $teacher->id;
+
             TeacherEducation::where('teacher_id', $teacher->id)->delete();
             TeacherSchoolContact::where('teacher_id', $teacher->id)->delete();
             TeacherResidential::where('teacher_id', $teacher->id)->delete();
@@ -347,12 +357,15 @@ class TeacherController extends Controller
 
             $teacher->delete();
 
+            log_user_activity($teacherId, 'teachers', 'destroy', 'User deleted teacher with id ' . $teacherId, url()->current(), null, $oldTeacher);
+
             return redirect()->route('admin.teachers.index')->with('success', 'Teacher deleted successfully');
        }
 
    public function show($id)
    {
        $teacher = Teacher::find($id);
+       log_user_activity($teacher->id, 'teachers', 'show', 'User viewed teacher with id ' . $teacher->id, url()->current(), json_encode($teacher));
        $next_of_kins = NextOfKin::where('user_id', $teacher->user_id)->latest()->get();
        $beneficiaries = Beneficiary::where('user_id', $teacher->user_id)->latest()->get();
        $unions = UserUnion::where('user_id', $teacher->user_id)->latest()->get();

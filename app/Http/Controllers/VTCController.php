@@ -11,10 +11,12 @@ class VTCController extends Controller
     public function index()
     {
         $data = VTC::get();
+        log_user_activity(0, 'vtcs', 'index', 'User accessed the VTCs index page', 'admin/vtcs');
         return view('backoffice.VocationalTrainingInstitute.index', compact('data'));
     }
     function create()
     {
+        log_user_activity(0, 'vtcs', 'create', 'User accessed the VTC create page', 'admin/vtcs/create');
         return view('backoffice.VocationalTrainingInstitute.create');
     }
 
@@ -26,30 +28,39 @@ class VTCController extends Controller
 
         $_obj = VTC::create($_pay_load);
 
+        log_user_activity($_obj->id, 'vtcs', 'store', 'User created a new VTC: ' . $_obj->name, url()->current(), json_encode($_obj));
+
         return back()->with('success', $_obj->name . ' vocational training center was created successfully!');
     }
 
     function delete(VTC $id)
     {
+        $oldVtc = json_encode($id);
+        $vtcId = $id->id;
         $id->delete();
+
+        log_user_activity($vtcId, 'vtcs', 'destroy', 'User deleted VTC with id ' . $vtcId, url()->current(), null, $oldVtc);
 
         return back()->with('warning', $id->name . ' Constituency was created successfully!');
     }
 
     function edit(VTC $id)
     {
-        # code...
-
         $data = $id;
+
+        log_user_activity($id->id, 'vtcs', 'edit', 'User accessed edit page for VTC: ' . $id->name, 'admin/vtcs/' . $id->id . '/edit', json_encode($id));
 
         return view('backoffice.VocationalTrainingInstitute.edit', compact('data'));
     }
 
     function update(Request $request, VTC $id)
     {
+        $current_object = json_encode($id);
         $data = $request->only(['name']);
 
         $id->update(['name' => $data['name']]);
+
+        log_user_activity($id->id, 'vtcs', 'update', 'User updated VTC with id ' . $id->id, url()->current(), json_encode($id), $current_object);
 
         return back()->with('success', $id['name'] . ' Constituency was updated successfully!');
     }

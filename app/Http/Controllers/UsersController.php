@@ -36,7 +36,7 @@ class UsersController extends Controller
             'users',
             'create',
             'User accessed the users create page',
-            'users'
+            'users/create'
 
         );
 

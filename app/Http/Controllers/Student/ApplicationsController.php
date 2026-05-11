@@ -60,6 +60,8 @@ class ApplicationsController extends Controller
         $object->save();
 
 
+        log_user_activity($application->id, 'student_applications', 'store', 'User submitted a new student application for: ' . $user->name, url()->current(), json_encode($application));
+
         return back()->with('success','Application Submitted Successfully');
     }
 

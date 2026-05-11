@@ -17,6 +17,8 @@ class TeacherDeploymentHistoryController extends Controller
     {
           $deployments = TeacherDeploymentHistory::where('user_id', auth()->user()->id)->latest()->get();
 
+        log_user_activity(0, 'teacher_deployment_histories', 'index', 'User accessed the deployment histories index page', 'admin/deployment-histories');
+
         return view('admin.deployment-histories.index', compact('deployments'));
     }
 
@@ -28,8 +30,9 @@ class TeacherDeploymentHistoryController extends Controller
     public function create()
     {
         $schools = EcdeSchools::all();
+        log_user_activity(0, 'teacher_deployment_histories', 'create', 'User accessed the deployment history create page', 'admin/deployment-histories/create');
         return view('admin.deployment-histories.create', compact('schools'));
-      
+
     }
 
     /**
@@ -65,6 +68,8 @@ class TeacherDeploymentHistoryController extends Controller
         }
 
         $history->save();
+
+        log_user_activity($history->id, 'teacher_deployment_histories', 'store', 'User created a new deployment history record', url()->current(), json_encode($history));
 
         return redirect()->route('admin.deployment-histories.index')->with([
             'success' => 'Deployment history added successfully'

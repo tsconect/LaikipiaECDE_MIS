@@ -16,6 +16,8 @@ class EthnicGroupController extends Controller
     {
         $ethinic_groups = EthnicGroup::latest()->get();
 
+        log_user_activity(0, 'ethnic_groups', 'index', 'User accessed the ethnic groups index page', 'admin/ethnic-groups');
+
         return view('admin.ethnic-groups.index', compact('ethinic_groups'));
     }
 
@@ -26,6 +28,7 @@ class EthnicGroupController extends Controller
      */
     public function create()
     {
+        log_user_activity(0, 'ethnic_groups', 'create', 'User accessed the ethnic groups create page', 'admin/ethnic-groups/create');
         return view('admin.ethnic-groups.create');
     }
     /**
@@ -44,6 +47,8 @@ class EthnicGroupController extends Controller
         $ethnicGroup->name = $request->name;
         $ethnicGroup->save();
 
+        log_user_activity($ethnicGroup->id, 'ethnic_groups', 'store', 'User created a new ethnic group: ' . $ethnicGroup->name, url()->current(), json_encode($ethnicGroup));
+
         return redirect()->route('admin.ethnic-groups.index')->with('success', 'Ethnic group created successfully.');
     }
 
@@ -55,6 +60,7 @@ class EthnicGroupController extends Controller
      */
     public function show(EthnicGroup $ethnicGroup)
     {
+        log_user_activity($ethnicGroup->id, 'ethnic_groups', 'show', 'User viewed ethnic group with id ' . $ethnicGroup->id, url()->current(), json_encode($ethnicGroup));
         return view('admin.ethnic-groups.show', compact('ethnicGroup'));
     }
     /**
@@ -65,6 +71,7 @@ class EthnicGroupController extends Controller
      */
     public function edit(EthnicGroup $ethnicGroup)
     {
+        log_user_activity($ethnicGroup->id, 'ethnic_groups', 'edit', 'User accessed edit page for ethnic group: ' . $ethnicGroup->name, 'admin/ethnic-groups/' . $ethnicGroup->id . '/edit', json_encode($ethnicGroup));
         return view('admin.ethnic-groups.edit', compact('ethnicGroup'));
     }
     /**
@@ -80,8 +87,12 @@ class EthnicGroupController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
+        $current_object = json_encode($ethnicGroup);
+
         $ethnicGroup->name = $request->name;
         $ethnicGroup->save();
+
+        log_user_activity($ethnicGroup->id, 'ethnic_groups', 'update', 'User updated ethnic group with id ' . $ethnicGroup->id, url()->current(), json_encode($ethnicGroup), $current_object);
 
         return redirect()->route('admin.ethnic-groups.index')->with('success', 'Ethnic group updated successfully.');
     }
@@ -94,7 +105,11 @@ class EthnicGroupController extends Controller
      */
     public function destroy(EthnicGroup $ethnicGroup)
     {
+        $oldGroup = json_encode($ethnicGroup);
+        $groupId = $ethnicGroup->id;
         $ethnicGroup->delete();
+
+        log_user_activity($groupId, 'ethnic_groups', 'destroy', 'User deleted ethnic group with id ' . $groupId, url()->current(), null, $oldGroup);
 
         return redirect()->route('admin.ethnic-groups.index')->with('success', 'Ethnic group deleted successfully.');
     }

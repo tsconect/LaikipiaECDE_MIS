@@ -12,6 +12,7 @@ class VTCDepartmentsController extends Controller
    public function index()
    {
        $data = VTCDepartments::get();
+       log_user_activity(0, 'vtc_departments', 'index', 'User accessed the VTC departments index page', 'admin/vtc-departments');
        return view('backoffice.VocationalTrainingInstitute.Departments.index', compact('data'));
    }
    function create(){
@@ -32,6 +33,8 @@ class VTCDepartmentsController extends Controller
         'additional_description'
      ]));
 
+    log_user_activity($_obj->id, 'vtc_departments', 'store', 'User created a new VTC department: ' . $_obj->department_name, url()->current(), json_encode($_obj));
+
     return   back()->with('success', $_obj->department_name . ' vocational department was created successfully!');
    }
 
@@ -45,9 +48,9 @@ class VTCDepartmentsController extends Controller
 
    function edit(VTCDepartments $id)
    {
-       # code...
-
        $data = $id;
+
+       log_user_activity($id->id, 'vtc_departments', 'edit', 'User accessed edit page for VTC department: ' . $id->department_name, 'admin/vtc-departments/' . $id->id . '/edit', json_encode($id));
 
        return view('backoffice.VocationalTrainingInstitute.edit', compact('data'));
 
@@ -55,9 +58,12 @@ class VTCDepartmentsController extends Controller
 
    function update(Request $request, VTCDepartments $id)
    {
+       $current_object = json_encode($id);
        $data = $request->only(['name']);
 
        $id->update(['name'=> $data['name']]);
+
+       log_user_activity($id->id, 'vtc_departments', 'update', 'User updated VTC department with id ' . $id->id, url()->current(), json_encode($id), $current_object);
 
        return back()->with('success',   $id['name'] . ' Constituency was updated successfully!');
    }

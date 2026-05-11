@@ -24,6 +24,7 @@ class CoordinatorsController extends Controller
    public function index()
    {
        $coordinators = Coordinators::with(['user', 'constituency'])->latest()->paginate(15);
+       log_user_activity(0, 'coordinators', 'index', 'User accessed the coordinators index page', 'admin/coordinators');
        return view('admin.coordinators.index', compact('coordinators'));
    }
    function create(){
@@ -109,6 +110,8 @@ class CoordinatorsController extends Controller
 
         }
 
+        log_user_activity($teacher->id, 'coordinators', 'store', 'User created a new coordinator: ' . $obj->first_name . ' ' . $obj->last_name, url()->current(), json_encode($teacher));
+
         return redirect()->route('admin.coordinators.index')->with('success', 'Coordinator '. $obj->name .   ' Added Successfully');
 
 
@@ -126,6 +129,8 @@ class CoordinatorsController extends Controller
     $ecde_schools = EcdeSchools::get();
     $counties = County::get();
 
+    log_user_activity($coordinator->id, 'coordinators', 'edit', 'User accessed edit page for coordinator with id ' . $coordinator->id, 'admin/coordinators/' . $coordinator->id . '/edit', json_encode($coordinator));
+
     return view('admin.coordinators.edit', compact('coordinator', 'wards', 'sub_counties', 'ecde_schools', 'counties'));
 
    }
@@ -133,6 +138,7 @@ class CoordinatorsController extends Controller
    public function show(Coordinators $coordinator)
    {
     $coordinator->load('education', 'user', 'resident.const', 'resident.ward', 'school_contact');
+    log_user_activity($coordinator->id, 'coordinators', 'show', 'User viewed coordinator with id ' . $coordinator->id, url()->current(), json_encode($coordinator));
     return view('admin.coordinators.teacher_view_profile', ['data' => $coordinator]);
    }
 
@@ -192,6 +198,8 @@ class CoordinatorsController extends Controller
             return back()->with('error', $th->getMessage());
         }
 
+        log_user_activity($coordinator->id, 'coordinators', 'update', 'User updated coordinator with id ' . $coordinator->id, url()->current(), json_encode($coordinator));
+
         return redirect()->route('admin.coordinators.index')->with('success', 'Coordinator updated successfully');
    }
 
@@ -225,10 +233,15 @@ class CoordinatorsController extends Controller
 
    public function destroy(Coordinators $coordinator)
    {
+        $oldCoordinator = json_encode($coordinator);
+        $coordinatorId = $coordinator->id;
+
         if ($coordinator->user) {
             $coordinator->user->delete();
         }
         $coordinator->delete();
+
+        log_user_activity($coordinatorId, 'coordinators', 'destroy', 'User deleted coordinator with id ' . $coordinatorId, url()->current(), null, $oldCoordinator);
 
         return redirect()->route('admin.coordinators.index')->with('success', 'Coordinator deleted successfully');
    }

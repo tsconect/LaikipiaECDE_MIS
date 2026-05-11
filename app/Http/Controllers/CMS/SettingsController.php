@@ -17,6 +17,7 @@ class SettingsController extends Controller
     public function index()
     {
         $settings = Settings::all()->pluck('value', 'key')->toArray();
+        log_user_activity(0, 'settings', 'index', 'User accessed the CMS settings page', 'admin/cms/settings');
         return view('admin.cms.settings.index', compact('settings'));
     }
 
@@ -155,6 +156,8 @@ class SettingsController extends Controller
                 ['value' => $governorImage, 'type' => 'string']
             );
         }
+
+        log_user_activity(0, 'settings', 'update', 'User updated the CMS settings', url()->current());
 
         return redirect()->route('admin.cms.settings.index')->with('success', 'Settings updated successfully');
     }

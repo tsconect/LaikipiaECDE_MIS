@@ -27,11 +27,13 @@ class FAQController extends Controller
     public function index()
     {
         $faqs = FAQ::paginate(15);
+        log_user_activity(0, 'faqs', 'index', 'User accessed the FAQs index page', 'admin/cms/faqs');
         return view('admin.cms.faqs.index', compact('faqs'));
     }
 
     public function create()
     {
+        log_user_activity(0, 'faqs', 'create', 'User accessed the FAQs create page', 'admin/cms/faqs/create');
         return view('admin.cms.faqs.create');
     }
 
@@ -48,18 +50,22 @@ class FAQController extends Controller
         $data['status'] = $request->input('status', 'published');
         $data['order'] = $request->filled('order') ? (int) $request->input('order') : ((FAQ::max('order') ?? 0) + 1);
 
-        FAQ::create($data);
+        $faq = FAQ::create($data);
+
+        log_user_activity($faq->id, 'faqs', 'store', 'User created a new FAQ: ' . $faq->question, url()->current(), json_encode($faq));
 
         return redirect()->route('admin.cms.faqs.index')->with('success', 'FAQ created successfully');
     }
 
     public function edit(FAQ $faq)
     {
+        log_user_activity($faq->id, 'faqs', 'edit', 'User accessed edit page for FAQ: ' . $faq->question, 'admin/cms/faqs/' . $faq->id . '/edit', json_encode($faq));
         return view('admin.cms.faqs.edit', compact('faq'));
     }
 
     public function show(FAQ $faq)
     {
+        log_user_activity($faq->id, 'faqs', 'show', 'User viewed FAQ with id ' . $faq->id, url()->current(), json_encode($faq));
         return view('admin.cms.faqs.show', compact('faq'));
     }
 
@@ -72,17 +78,24 @@ class FAQController extends Controller
             'order' => 'nullable|integer|min:0'
         ]);
 
+        $current_object = json_encode($faq);
+
         $data = $request->only(['question', 'answer', 'status', 'order']);
         $data['order'] = $request->filled('order') ? (int) $request->input('order') : $faq->order;
 
         $faq->update($data);
+
+        log_user_activity($faq->id, 'faqs', 'update', 'User updated FAQ with id ' . $faq->id, url()->current(), json_encode($faq), $current_object);
 
         return redirect()->route('admin.cms.faqs.index')->with('success', 'FAQ updated successfully');
     }
 
     public function destroy(FAQ $faq)
     {
+        $oldFaq = json_encode($faq);
+        $faqId = $faq->id;
         $faq->delete();
+        log_user_activity($faqId, 'faqs', 'destroy', 'User deleted FAQ with id ' . $faqId, url()->current(), null, $oldFaq);
         return redirect()->route('admin.cms.faqs.index')->with('success', 'FAQ deleted successfully');
     }
 }

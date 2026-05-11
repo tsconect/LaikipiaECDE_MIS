@@ -19,8 +19,9 @@ class ESchoolController extends Controller
 {
        public function index()
        {
-            
+
            $schools = EcdeSchools::latest()->get();
+           log_user_activity(0, 'ecde_schools', 'index', 'User accessed the ECDE schools index page', 'admin/ecde-schools');
            return view('admin.schools.index', compact('schools'));
        }
        function create(){
@@ -43,6 +44,7 @@ class ESchoolController extends Controller
 
        public function show(EcdeSchools $ecde_school)
        {
+           log_user_activity($ecde_school->id, 'ecde_schools', 'show', 'User viewed ECDE school with id ' . $ecde_school->id, url()->current(), json_encode($ecde_school));
            $school = $ecde_school;
            $learners = Learner::where('school_id', $ecde_school->id)->get();
            $teachers = Teacher::where('school_id', $ecde_school->id)->get();
@@ -87,6 +89,9 @@ class ESchoolController extends Controller
            $school->center_code = $request->center_code;
 
            $school->save();
+
+           log_user_activity($school->id, 'ecde_schools', 'store', 'User created a new ECDE school: ' . $school->school_name, url()->current(), json_encode($school));
+
            return redirect()->route('admin.ecde-schools.index')->with('success','School Added Successfully');
 
 
@@ -105,11 +110,13 @@ class ESchoolController extends Controller
            $feeder_schools = FeederSchools::all();
            $teachers = Teacher::all();
            $school = $ecde_school;
+           log_user_activity($ecde_school->id, 'ecde_schools', 'edit', 'User accessed edit page for ECDE school: ' . $ecde_school->school_name, 'admin/ecde-schools/' . $ecde_school->id . '/edit', json_encode($ecde_school));
            return view('admin.schools.edit', compact('school', 'sub_counties', 'wards', 'counties', 'feeder_schools', 'teachers'));
        }
 
        public function update(Request $request, EcdeSchools $ecde_school)
        {
+            $current_object = json_encode($ecde_school);
             $request->validate([
                 'school_name' => 'required',
                 // 'number_of_classes' => 'required',
@@ -147,12 +154,17 @@ class ESchoolController extends Controller
                 'center_code'
             ]));
 
+            log_user_activity($ecde_school->id, 'ecde_schools', 'update', 'User updated ECDE school with id ' . $ecde_school->id, url()->current(), json_encode($ecde_school), $current_object);
+
             return redirect()->route('admin.ecde-schools.index')->with('success', 'School updated successfully');
        }
 
        public function destroy(EcdeSchools $ecde_school)
        {
+            $oldSchool = json_encode($ecde_school);
+            $schoolId = $ecde_school->id;
             $ecde_school->delete();
+            log_user_activity($schoolId, 'ecde_schools', 'destroy', 'User deleted ECDE school with id ' . $schoolId, url()->current(), null, $oldSchool);
             return redirect()->route('admin.ecde-schools.index')->with('success', 'School deleted successfully');
        }
 

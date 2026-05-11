@@ -90,6 +90,8 @@ class VTCStudentController extends Controller
         "vtc_id" => $request->school_id
     ]);
 
+     log_user_activity($student->id, 'vtc_students', 'store', 'User created a new VTC student: ' . $obj->first_name . ' ' . $obj->last_name, url()->current(), json_encode($student));
+
      return back()->with('success', 'Student '. $obj->name .   ' Added Successfully');
 
     }

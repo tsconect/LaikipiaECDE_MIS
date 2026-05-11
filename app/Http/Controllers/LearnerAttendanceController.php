@@ -158,6 +158,8 @@ class LearnerAttendanceController extends Controller
             );
         }
 
+        log_user_activity(0, 'learner_attendances', 'store', 'User saved learner attendance for date ' . $date, url()->current());
+
         if($request->input('school_id')){
             return redirect()->route('admin.ecde-schools.show', $request->input('school_id'))->with('success', 'Attendance saved successfully');
         }

@@ -16,6 +16,8 @@ class EducationHistoryController extends Controller
     {
         $histories = EducationHistory::where('user_id', auth()->user()->id)->latest()->get();
 
+        log_user_activity(0, 'education_histories', 'index', 'User accessed the education history index page', 'admin/education-histories');
+
         return view('admin.education-history.index', compact('histories'));
     }
 
@@ -26,6 +28,7 @@ class EducationHistoryController extends Controller
      */
     public function create()
     {
+        log_user_activity(0, 'education_histories', 'create', 'User accessed the education history create page', 'admin/education-histories/create');
         return view('admin.education-history.create');
     }
 
@@ -55,6 +58,7 @@ class EducationHistoryController extends Controller
         $educationHistory->certificate_no = $request->certificate_no;
         $educationHistory->save();
 
+        log_user_activity($educationHistory->id, 'education_histories', 'store', 'User created a new education history: ' . $educationHistory->institution_name, url()->current(), json_encode($educationHistory));
 
         return redirect()->route('admin.education-histories.index')->with([
             'success' => 'Education history added successfully'
@@ -69,6 +73,7 @@ class EducationHistoryController extends Controller
      */
     public function show(EducationHistory $educationHistory)
     {
+        log_user_activity($educationHistory->id, 'education_histories', 'show', 'User viewed education history with id ' . $educationHistory->id, url()->current(), json_encode($educationHistory));
         return view('admin.education-history.show', compact('educationHistory'));
     }
 
@@ -80,6 +85,7 @@ class EducationHistoryController extends Controller
      */
     public function edit(EducationHistory $educationHistory)
     {
+        log_user_activity($educationHistory->id, 'education_histories', 'edit', 'User accessed edit page for education history: ' . $educationHistory->institution_name, 'admin/education-histories/' . $educationHistory->id . '/edit', json_encode($educationHistory));
         return view('admin.education-history.edit', compact('educationHistory'));
     }
 
@@ -100,6 +106,8 @@ class EducationHistoryController extends Controller
             'certificate_no' => 'required|unique:education_histories,certificate_no,' . $educationHistory->id,
         ]);
 
+        $current_object = json_encode($educationHistory);
+
         $educationHistory->institution_name = $request->institution_name;
         $educationHistory->award = $request->award;
         $educationHistory->start_date = $request->start_date;
@@ -107,6 +115,8 @@ class EducationHistoryController extends Controller
         $educationHistory->grade = $request->grade;
         $educationHistory->certificate_no = $request->certificate_no;
         $educationHistory->save();
+
+        log_user_activity($educationHistory->id, 'education_histories', 'update', 'User updated education history with id ' . $educationHistory->id, url()->current(), json_encode($educationHistory), $current_object);
 
         return redirect()->route('admin.education-histories.index')->with('success', 'Education history updated successfully');
     }
@@ -119,7 +129,11 @@ class EducationHistoryController extends Controller
      */
     public function destroy(EducationHistory $educationHistory)
     {
+        $oldHistory = json_encode($educationHistory);
+        $historyId = $educationHistory->id;
         $educationHistory->delete();
+
+        log_user_activity($historyId, 'education_histories', 'destroy', 'User deleted education history with id ' . $historyId, url()->current(), null, $oldHistory);
 
         return redirect()->route('admin.education-histories.index')->with('success', 'Education history deleted successfully');
     }

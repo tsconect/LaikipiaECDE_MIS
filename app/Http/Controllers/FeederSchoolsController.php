@@ -16,6 +16,7 @@ class FeederSchoolsController extends Controller
     public function index()
        {
            $data = FeederSchools::latest()->get();
+           log_user_activity(0, 'feeder_schools', 'index', 'User accessed the feeder schools index page', 'admin/feeder-schools');
            return view('admin.feeder-schools.index', compact('data'));
        }
        function create(){
@@ -35,6 +36,7 @@ class FeederSchoolsController extends Controller
 
       public function show(FeederSchools $feeder_school)
       {
+          log_user_activity($feeder_school->id, 'feeder_schools', 'show', 'User viewed feeder school with id ' . $feeder_school->id, url()->current(), json_encode($feeder_school));
           $school = $feeder_school;
           // Assuming learners/teachers might be linked via school_id even for feeders, 
           // or we might need a separate way to link them. 
@@ -78,7 +80,9 @@ class FeederSchoolsController extends Controller
            $school->ward_id = $request->ward_id;
            $school->remarks = $request->remarks;    
            $school->save();
-       
+
+           log_user_activity($school->id, 'feeder_schools', 'store', 'User created a new feeder school: ' . $school->school_name, url()->current(), json_encode($school));
+
         return redirect()->route('admin.feeder-schools.index')->with('success','School Added Successfully');
 
         return back()->with('success','School Added Successfully');
@@ -93,11 +97,13 @@ class FeederSchoolsController extends Controller
             $counties = County::get();
             $teachers = Teacher::all();
             $school = $feeder_school;
+            log_user_activity($feeder_school->id, 'feeder_schools', 'edit', 'User accessed edit page for feeder school: ' . $feeder_school->school_name, 'admin/feeder-schools/' . $feeder_school->id . '/edit', json_encode($feeder_school));
             return view('admin.feeder-schools.edit', compact('school', 'sub_counties', 'wards', 'counties', 'teachers'));
        }
 
        public function update(Request $request, FeederSchools $feeder_school)
        {
+            $current_object = json_encode($feeder_school);
             $request->validate([
                 'school_name' => 'required',
                 'number_of_classes' => 'required',
@@ -131,12 +137,17 @@ class FeederSchoolsController extends Controller
                 'school_contact_gender',
             ]));
 
+            log_user_activity($feeder_school->id, 'feeder_schools', 'update', 'User updated feeder school with id ' . $feeder_school->id, url()->current(), json_encode($feeder_school), $current_object);
+
             return redirect()->route('admin.feeder-schools.index')->with('success', 'Feeder school updated successfully');
        }
 
        public function destroy(FeederSchools $feeder_school)
        {
+            $oldSchool = json_encode($feeder_school);
+            $schoolId = $feeder_school->id;
             $feeder_school->delete();
+            log_user_activity($schoolId, 'feeder_schools', 'destroy', 'User deleted feeder school with id ' . $schoolId, url()->current(), null, $oldSchool);
             return redirect()->route('admin.feeder-schools.index')->with('success', 'Feeder school deleted successfully');
        }
 }

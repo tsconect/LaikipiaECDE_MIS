@@ -16,6 +16,8 @@ class DocumentController extends Controller
     {
         $documents = Document::latest()->get();
 
+        log_user_activity(0, 'documents', 'index', 'User accessed the documents index page', 'admin/documents');
+
         return view('admin.documents.index', compact('documents'));
 
     }
@@ -27,6 +29,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
+        log_user_activity(0, 'documents', 'create', 'User accessed the documents create page', 'admin/documents/create');
         return view('admin.documents.create');
     }
 
@@ -49,6 +52,8 @@ class DocumentController extends Controller
 
         $document->save();
 
+        log_user_activity($document->id, 'documents', 'store', 'User created a new document: ' . $document->name, url()->current(), json_encode($document));
+
         return redirect()->route('admin.documents.index')->with('success', 'Document created successfully.');
     }
 
@@ -60,6 +65,7 @@ class DocumentController extends Controller
      */
     public function show(Document $document)
     {
+        log_user_activity($document->id, 'documents', 'show', 'User viewed document with id ' . $document->id, url()->current(), json_encode($document));
         return view('admin.documents.show', compact('document'));
     }
 
@@ -71,6 +77,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
+        log_user_activity($document->id, 'documents', 'edit', 'User accessed edit page for document: ' . $document->name, 'admin/documents/' . $document->id . '/edit', json_encode($document));
         return view('admin.documents.edit', compact('document'));
     }
 
@@ -88,9 +95,13 @@ class DocumentController extends Controller
             'is_required' => 'required',
         ]);
 
+        $current_object = json_encode($document);
+
         $document->name = $request->name;
         $document->is_required = $request->is_required;
         $document->save();
+
+        log_user_activity($document->id, 'documents', 'update', 'User updated document with id ' . $document->id, url()->current(), json_encode($document), $current_object);
 
         return redirect()->route('admin.documents.index')->with('success', 'Document updated successfully.');
     }
@@ -103,7 +114,11 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
+        $oldDocument = json_encode($document);
+        $documentId = $document->id;
         $document->delete();
+
+        log_user_activity($documentId, 'documents', 'destroy', 'User deleted document with id ' . $documentId, url()->current(), null, $oldDocument);
 
         return redirect()->route('admin.documents.index')->with('success', 'Document deleted successfully.');
     }

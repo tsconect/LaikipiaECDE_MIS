@@ -29,11 +29,13 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Gallery::with('creator')->paginate(15);
+        log_user_activity(0, 'galleries', 'index', 'User accessed the galleries index page', 'admin/cms/galleries');
         return view('admin.cms.galleries.index', compact('galleries'));
     }
 
     public function create()
     {
+        log_user_activity(0, 'galleries', 'create', 'User accessed the galleries create page', 'admin/cms/galleries/create');
         return view('admin.cms.galleries.create');
     }
 
@@ -46,8 +48,8 @@ class GalleryController extends Controller
         ]);
 
         $slug = Str::slug($request->title);
-        
-        Gallery::create([
+
+        $gallery = Gallery::create([
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
@@ -55,16 +57,20 @@ class GalleryController extends Controller
             'status' => $request->status
         ]);
 
+        log_user_activity($gallery->id, 'galleries', 'store', 'User created a new gallery: ' . $gallery->title, url()->current(), json_encode($gallery));
+
         return redirect()->route('admin.cms.galleries.index')->with('success', 'Gallery created successfully');
     }
 
     public function edit(Gallery $gallery)
     {
+        log_user_activity($gallery->id, 'galleries', 'edit', 'User accessed edit page for gallery: ' . $gallery->title, 'admin/cms/galleries/' . $gallery->id . '/edit', json_encode($gallery));
         return view('admin.cms.galleries.edit', compact('gallery'));
     }
 
     public function show(Gallery $gallery)
     {
+        log_user_activity($gallery->id, 'galleries', 'show', 'User viewed gallery with id ' . $gallery->id, url()->current(), json_encode($gallery));
         return view('admin.cms.galleries.show', compact('gallery'));
     }
 
@@ -76,6 +82,8 @@ class GalleryController extends Controller
             'status' => 'required|in:draft,published'
         ]);
 
+        $current_object = json_encode($gallery);
+
         $gallery->update([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -83,13 +91,18 @@ class GalleryController extends Controller
             'status' => $request->status
         ]);
 
+        log_user_activity($gallery->id, 'galleries', 'update', 'User updated gallery with id ' . $gallery->id, url()->current(), json_encode($gallery), $current_object);
+
         return redirect()->route('admin.cms.galleries.index')->with('success', 'Gallery updated successfully');
     }
 
     public function destroy(Gallery $gallery)
     {
+        $oldGallery = json_encode($gallery);
+        $galleryId = $gallery->id;
         $gallery->images()->delete();
         $gallery->delete();
+        log_user_activity($galleryId, 'galleries', 'destroy', 'User deleted gallery with id ' . $galleryId, url()->current(), null, $oldGallery);
         return redirect()->route('admin.cms.galleries.index')->with('success', 'Gallery deleted successfully');
     }
 

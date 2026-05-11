@@ -122,6 +122,8 @@ class LearnerParentController extends Controller
             
 
 
+        log_user_activity($student->id, 'learner_parents', 'store', 'User added a parent/guardian for learner with id ' . $student->id, url()->current());
+
         return redirect()->route('admin.learners.show', $student->id)->with('success', 'Parent/Guardian added successfully.');
     }
 }
