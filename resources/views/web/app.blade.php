@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ $settings['site_name'] ?? 'Laikipia ECDE Management System' }}</title>
+  {{-- icon --}}
+  <link rel="icon" href="{{asset('assets/images/laikipia.png')}}" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -644,7 +646,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="{{ url('/') }}" class="nav-brand">
+  <a href="{{ url('/') }}" class="nav-brand" style ="font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px;">
     <img src="{{asset('assets/images/laikipia.png')}}" alt="Logo"> Laikipia ECDE
   </a>
 
