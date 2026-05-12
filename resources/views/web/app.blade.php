@@ -681,17 +681,7 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         {{ auth()->user()->first_name ?? 'Dashboard' }}
       </a>
-<<<<<<< HEAD
-      <a href="#" class="nav-logout-mobile" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
-        <i class="fa fa-sign-out"></i> Logout
-      </a>
-      <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form>
-    @endguest
-=======
     @endguest --}}
->>>>>>> 36b7a2a8e10e4f664d6302e685dc346a4e49eff9
   </div>
 
   <div class="nav-user-container">
