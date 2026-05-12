@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('ecde_schools', function (Blueprint $table) {
             //
-            $table->string('remarks');
+            // $table->string('remarks');
         });
     }
 

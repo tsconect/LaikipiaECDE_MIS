@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>{{ $settings['site_name'] ?? 'Laikipia ECDE Management System' }}</title>
+  {{-- icon --}}
+  <link rel="icon" href="{{asset('assets/images/laikipia.png')}}" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -656,7 +658,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="{{ url('/') }}" class="nav-brand">
+  <a href="{{ url('/') }}" class="nav-brand" style ="font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px;">
     <img src="{{asset('assets/images/laikipia.png')}}" alt="Logo"> Laikipia ECDE
   </a>
 
@@ -669,7 +671,7 @@
     <a href="{{ route('cms.faqs') }}" class="{{ request()->routeIs('cms.faqs') ? 'active' : '' }}">FAQs</a>
     <a href="{{ route('cms.contact') }}" class="{{ request()->routeIs('cms.contact') ? 'active' : '' }}">Contact</a>
 
-    @guest
+    {{-- @guest
       <a href="{{ route('login') }}" class="nav-user nav-user-mobile">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         Login
@@ -679,6 +681,7 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         {{ auth()->user()->first_name ?? 'Dashboard' }}
       </a>
+<<<<<<< HEAD
       <a href="#" class="nav-logout-mobile" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
         <i class="fa fa-sign-out"></i> Logout
       </a>
@@ -686,10 +689,13 @@
         @csrf
       </form>
     @endguest
+=======
+    @endguest --}}
+>>>>>>> 36b7a2a8e10e4f664d6302e685dc346a4e49eff9
   </div>
 
   <div class="nav-user-container">
-    @guest
+    {{-- @guest
       <a href="{{ route('login') }}" class="nav-user">
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         Login
@@ -699,7 +705,7 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         {{ auth()->user()->first_name ?? 'Dashboard' }}
       </a>
-    @endguest
+    @endguest --}}
   </div>
 
   <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle navigation">
