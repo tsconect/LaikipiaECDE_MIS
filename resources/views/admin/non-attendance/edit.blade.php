@@ -26,6 +26,8 @@
         <h5 class="mb-0">Edit Non-Attendance Days</h5>
     </div>
 
+
+    
     <div class="row p-3">
 
         {{-- TITLE --}}
