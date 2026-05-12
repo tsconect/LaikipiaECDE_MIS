@@ -137,6 +137,7 @@
       justify-content: center;
       flex-wrap: wrap;
       animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
+      margin-bottom: 2rem;
     }
 
     /* Gold primary CTA to match reference */
@@ -865,7 +866,7 @@
     </div>
     <h1>{!! $heroHeadlineInline !!}</h1>
     <p class="hero-subtitle">{{ $heroSubtext }}</p>
-    <div class="hero-actions">
+    <div class="hero-actions ">
       <a href="{{ $heroPrimaryLink }}" class="pill-btn-hero-primary">
         {{ $heroPrimaryText }}
         <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
