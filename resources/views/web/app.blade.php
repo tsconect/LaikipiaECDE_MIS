@@ -598,17 +598,29 @@
         z-index: 99;
         background: var(--navy);
         flex-direction: column;
-        padding: 20px;
-        gap: 10px;
+        padding: 10px 0;
+        gap: 0;
         border-top: 1px solid rgba(255,255,255,0.1);
         box-shadow: 0 8px 24px rgba(0,0,0,0.2);
       }
       .nav-links.active { display: flex !important; }
+      .nav-links a {
+        padding: 12px 25px !important;
+        width: 100%;
+        border-radius: 0;
+      }
       .nav-links .nav-user-mobile {
         display: flex !important;
         margin-top: 10px;
         border-top: 1px solid rgba(255,255,255,0.1);
         padding-top: 15px;
+        color: var(--gold-light) !important;
+      }
+      .nav-links .nav-logout-mobile {
+        display: flex !important;
+        padding: 8px 25px !important;
+        font-size: 13px;
+        color: rgba(255,255,255,0.5) !important;
       }
       .footer-grid { grid-template-columns: 1fr; gap: 36px; }
       footer { padding: 56px 24px 28px; }
@@ -667,6 +679,12 @@
         <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         {{ auth()->user()->first_name ?? 'Dashboard' }}
       </a>
+      <a href="#" class="nav-logout-mobile" onclick="event.preventDefault(); document.getElementById('logout-form-mobile').submit();">
+        <i class="fa fa-sign-out"></i> Logout
+      </a>
+      <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
     @endguest
   </div>
 

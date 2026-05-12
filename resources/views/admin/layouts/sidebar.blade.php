@@ -283,7 +283,13 @@ document.addEventListener('DOMContentLoaded', function () {
         btn.addEventListener('click', function () {
             const dropdown = btn.closest('.lw-dropdown');
             if (!dropdown) return;
-            dropdown.classList.toggle('lw-open');
+            const isOpen = dropdown.classList.contains('lw-open');
+            document.querySelectorAll('.lw-dropdown').forEach(function (d) {
+                d.classList.remove('lw-open');
+            });
+            if (!isOpen) {
+                dropdown.classList.add('lw-open');
+            }
         });
     });
 });
