@@ -658,7 +658,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="{{ url('/') }}" class="nav-brand" style ="font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px;">
+  <a href="{{ url('/') }}" class="nav-brand" style ="font-family: 'Playfair Display', serif; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 10px;tyext-decoration: none;">
     <img src="{{asset('assets/images/laikipia.png')}}" alt="Logo"> Laikipia ECDE
   </a>
 
