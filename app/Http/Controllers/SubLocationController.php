@@ -37,7 +37,7 @@ class SubLocationController extends Controller
         // existing name check 
         $existingSubLocation = SubLocation::where('name', $request->name)->first();
         if ($existingSubLocation) {
-            return redirect()->back()->with('error', 'A sub-location with the name "' . $request->name . '" already exists. Please choose a different name.');
+            return redirect()->back()->with('error', '"' . $request->name . '" already exists. Please choose a different name.');
         }
         $subLocation =  New SubLocation();
         $subLocation->name = $request->name;
