@@ -600,17 +600,29 @@
         z-index: 99;
         background: var(--navy);
         flex-direction: column;
-        padding: 20px;
-        gap: 10px;
+        padding: 10px 0;
+        gap: 0;
         border-top: 1px solid rgba(255,255,255,0.1);
         box-shadow: 0 8px 24px rgba(0,0,0,0.2);
       }
       .nav-links.active { display: flex !important; }
+      .nav-links a {
+        padding: 12px 25px !important;
+        width: 100%;
+        border-radius: 0;
+      }
       .nav-links .nav-user-mobile {
         display: flex !important;
         margin-top: 10px;
         border-top: 1px solid rgba(255,255,255,0.1);
         padding-top: 15px;
+        color: var(--gold-light) !important;
+      }
+      .nav-links .nav-logout-mobile {
+        display: flex !important;
+        padding: 8px 25px !important;
+        font-size: 13px;
+        color: rgba(255,255,255,0.5) !important;
       }
       .footer-grid { grid-template-columns: 1fr; gap: 36px; }
       footer { padding: 56px 24px 28px; }
