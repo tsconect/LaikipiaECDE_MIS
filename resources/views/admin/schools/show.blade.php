@@ -377,15 +377,12 @@
           </tbody>
         </table>
       @else
+       
+
         <div class="empty-tab">
-          <i class="bi bi-house-door"></i>
-          <div class="empty-tab-title">No classrooms added yet <a  style="font-size: 12px;" href="{{ route('admin.classrooms.create', ['school_id' => $school->id]) }}" class="btn btn-success" >
-                <i class="fa fa-plus"></i> Add Classroom
-            </a>
-          </div>
-          <div class="empty-tab-sub">
-            <
-          </div>
+          <i class="bi bi-inbox"></i>
+          <div class="empty-tab-title">No classrooms added yet </div>
+          <div class="empty-tab-sub"> Classrooms added to this school will appear here .</div>
         </div>
       @endif
      
