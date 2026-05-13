@@ -51,6 +51,9 @@
                                             class="form-control @error('subcounty_id') is-invalid @enderror"
                                             >
                                         <option value="">Select sub-county</option>
+                                        @foreach($sub_counties as $sub_county)
+                                            <option value="{{ $sub_county->constituency_id }}">{{ $sub_county->name }}</option>
+                                        @endforeach
                                     </select>
                                     @error('subcounty_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
@@ -129,28 +132,11 @@
 </script>
   <script>
         document.addEventListener('DOMContentLoaded', function () {
-        const countySelect = document.getElementById('countySelect');
+      
         const constituencySelect = document.getElementById('constituencySelect');
         const wardSelect = document.getElementById('wardSelect');
        
-        countySelect.addEventListener('change', function () {
-            const countyId = this.value;
-            constituencySelect.innerHTML = '<option value="">Select Sub County</option>';
-            wardSelect.innerHTML = '<option value="">Select Ward</option>';
-           
-            if (countyId) {
-                const constituencies = data.constituencies.filter(c => c.county_code == countyId);
-
-
-                constituencies.forEach(constituency => {
-                    const option = document.createElement('option');
-                    option.value = constituency.constituency_id;
-                    option.textContent = constituency.name;
-                    constituencySelect.appendChild(option);
-                });
-            }
-        });
-
+       
 
         constituencySelect.addEventListener('change', function () {
             const constituencyId = this.value;

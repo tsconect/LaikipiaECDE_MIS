@@ -22,7 +22,7 @@ class SubLocationController extends Controller
 
     function create()
     {
-        $sub_counties =Constituency::get();
+        $sub_counties =Constituency::where('county_id','xuFdFy6t9AH')->get();
         $wards=Ward::get();
         $counties = County::get();
         return view('admin.sublocations.create',compact('wards', 'sub_counties', 'counties'));
