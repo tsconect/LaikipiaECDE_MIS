@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-@extends('admin.app')
+
 
 
 @section('content')
