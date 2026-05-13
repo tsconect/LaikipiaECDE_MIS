@@ -29,7 +29,7 @@
 
                <div class="row g-4">
   
-                            
+{{--                             
                                   <div class="col-md-6">
                                     <label class="form-label fw-semibold">County <span class="text-danger">*</span></label>
                                     <select name="county_id" id="countySelect" 
@@ -43,7 +43,7 @@
                                     @error('county_id')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label class="form-label fw-semibold">Sub-County</label>
