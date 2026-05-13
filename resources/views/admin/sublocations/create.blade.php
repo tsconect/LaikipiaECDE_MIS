@@ -76,7 +76,7 @@
 
                                 <div class="col-md-6">
                                     <div class="position-relative form-group">
-                                        <label for="name" class="">Sub Loaction </label>
+                                        <label for="name" class="">Sub Locations </label>
                                         <input name="name" id="name" placeholder="name" required type="text"
                                             class="form-control">
                                     </div>
