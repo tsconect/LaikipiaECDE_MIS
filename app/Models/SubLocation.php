@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Ward;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +15,7 @@ class SubLocation extends Model
     function ward()
     {
         # code...
-        return $this->hasOne(Wards::class, 'id', 'ward_id');
+        return $this->hasOne(Ward::class, 'id', 'ward_id');
     }
 
 

@@ -30,6 +30,7 @@
                 <tr>
                     <th>ID <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>NAME <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                         <th>Ward <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>ACTION</th>
                 </tr>
             </thead>
@@ -38,6 +39,7 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->name }}</td>
+                        <td>{{ $item->ward ? $item->ward->name : 'N/A' }}</td>
                         <td>
                             <div class="action-btns">
                                 <a class="act-btn view" title="View Sublocation" href="{{ route('admin.sub-locations.show', $item->id) }}">
