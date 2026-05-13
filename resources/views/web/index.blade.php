@@ -946,81 +946,122 @@
 
 
 <div id="home-content-start">
-
-<!-- FEATURES BENTO -->
 <section class="features-section">
+
   <div class="reveal">
     <div class="section-label">What We Do</div>
-    <div class="section-title">Building Futures Through<br>Early Education</div>
-    <div class="section-sub">Laikipia ECDE programme provides quality early childhood education across all sub-counties.</div>
+
+    <div class="section-title">
+      Building Futures Through<br>
+      Early Education
+    </div>
+
+    <div class="section-sub">
+      Laikipia ECDE programme provides quality early childhood education across all sub-counties.
+    </div>
   </div>
 
   <div class="features-bento">
-    {{-- Card 1: Quality Early Education (wide, image left) --}}
-    <div class="feature-card span-2 reveal">
-      <div class="feature-card-img">
-        <img src="{{ asset('assets/images/_ (11).jpeg') }}" alt="Children learning through play" loading="lazy">
-        <div class="feature-card-img-overlay"></div>
-      </div>
-      <div class="feature-card-text">
-        <div class="feature-icon feature-icon-green"><i class="fas fa-graduation-cap"></i></div>
-        <h3>Quality Early Education</h3>
-        <p>Comprehensive ECDE programmes designed to nurture cognitive, social, and emotional development in children aged 3-6 years across Laikipia County.</p>
-      </div>
-    </div>
 
-    {{-- Card 2: Showcase — Books/Education (tall, full-image with overlay) --}}
-    <div class="feature-card feature-card-showcase reveal">
-      <div class="feature-card-img">
-        <img src="{{ asset('assets/images/_ (13).jpeg') }}" alt="Education and growth" loading="lazy">
-        <div class="showcase-overlay">
-          <div class="feature-icon"><i class="fas fa-book-open"></i></div>
-          <h3>Holistic Growth</h3>
-          <p>Nurturing the whole child — mind, body, and character — through structured ECDE curricula.</p>
+    @foreach($features as $feature)
+
+      {{-- SHOWCASE --}}
+      @if($feature->layout == 'showcase')
+
+        <div class="feature-card feature-card-showcase reveal">
+
+          <div class="feature-card-img">
+
+            <img src="{{ asset('storage/' . $feature->image) }}"
+                 alt="{{ $feature->title }}"
+                 loading="lazy">
+
+            <div class="showcase-overlay">
+
+              <div class="feature-icon {{ $feature->icon_color }}">
+                <i class="{{ $feature->icon }}"></i>
+              </div>
+
+              <h3>
+                {{ $feature->overlay_title ?? $feature->title }}
+              </h3>
+
+              <p>
+                {{ $feature->overlay_description ?? $feature->description }}
+              </p>
+
+            </div>
+
+          </div>
+
         </div>
-      </div>
-    </div>
 
-    {{-- Card 3: Modern Facilities (image top) --}}
-    <div class="feature-card reveal">
-      <div class="feature-card-img">
-        <img src="{{ asset('assets/images/To The Girls In High School Who _.jpeg') }}" alt="Modern school facility" loading="lazy">
-        <div class="feature-card-img-overlay"></div>
-      </div>
-      <div class="feature-card-text">
-        <div class="feature-icon feature-icon-gold"><i class="fas fa-school"></i></div>
-        <h3>Modern Facilities</h3>
-        <p>Well-equipped ECDE centres built with safe learning environments and age-appropriate resources.</p>
-      </div>
-    </div>
+      {{-- WIDE --}}
+      @elseif($feature->layout == 'wide')
 
-    {{-- Card 4: Trained Teachers (image top) --}}
-    <div class="feature-card reveal">
-      <div class="feature-card-img">
-        <img src="{{ asset('assets/images/_ (10).jpeg') }}" alt="Child with teacher" loading="lazy">
-        <div class="feature-card-img-overlay"></div>
-      </div>
-      <div class="feature-card-text">
-        <div class="feature-icon feature-icon-navy"><i class="fas fa-chalkboard-teacher"></i></div>
-        <h3>Trained Teachers</h3>
-        <p>Dedicated and trained ECDE teachers providing expert guidance and child-centered learning.</p>
-      </div>
-    </div>
+        <div class="feature-card span-2 reveal">
 
-    {{-- Card 5: Community Engagement (wide, image left) --}}
-    <div class="feature-card span-2 reveal">
-      <div class="feature-card-img">
-        <img src="{{ asset('assets/images/Ways To Drive Community Engagement For Your Business.jpeg') }}" alt="Community engagement" loading="lazy">
-        <div class="feature-card-img-overlay"></div>
-      </div>
-      <div class="feature-card-text">
-        <div class="feature-icon feature-icon-blue"><i class="fas fa-users"></i></div>
-        <h3>Community Engagement</h3>
-        <p>Working closely with parents, communities, and stakeholders to ensure holistic child development and inclusive education for every child in Laikipia.</p>
-      </div>
-    </div>
+          <div class="feature-card-img">
+
+            <img src="{{ asset('storage/' . $feature->image) }}"
+                 alt="{{ $feature->title }}"
+                 loading="lazy">
+
+            <div class="feature-card-img-overlay"></div>
+
+          </div>
+
+          <div class="feature-card-text">
+
+            <div class="feature-icon {{ $feature->icon_color }}">
+              <i class="{{ $feature->icon }}"></i>
+            </div>
+
+            <h3>{{ $feature->title }}</h3>
+
+            <p>{{ $feature->description }}</p>
+
+          </div>
+
+        </div>
+
+      {{-- NORMAL --}}
+      @else
+
+        <div class="feature-card reveal">
+
+          <div class="feature-card-img">
+
+            <img src="{{ asset('storage/' . $feature->image) }}"
+                 alt="{{ $feature->title }}"
+                 loading="lazy">
+
+            <div class="feature-card-img-overlay"></div>
+
+          </div>
+
+          <div class="feature-card-text">
+
+            <div class="feature-icon {{ $feature->icon_color }}">
+              <i class="{{ $feature->icon }}"></i>
+            </div>
+
+            <h3>{{ $feature->title }}</h3>
+
+            <p>{{ $feature->description }}</p>
+
+          </div>
+
+        </div>
+
+      @endif
+
+    @endforeach
+
   </div>
+
 </section>
+
 
 @if($showHomeGovernor)
 <section class="governor-section" style="background: #f8faf9;">

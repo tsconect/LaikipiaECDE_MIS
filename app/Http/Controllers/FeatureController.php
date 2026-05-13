@@ -58,9 +58,8 @@ class FeatureController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()
-            ->back()
-            ->with('success', 'Feature created successfully');
+        return redirect()->route('admin.features.index')
+            ->with('success', 'Feature created successfully.');
     }
 
     /**
@@ -71,7 +70,7 @@ class FeatureController extends Controller
      */
     public function show(Feature $feature)
     {
-        //
+        return view('admin.features.show', compact('feature'));
     }
 
     /**
@@ -82,7 +81,7 @@ class FeatureController extends Controller
      */
     public function edit(Feature $feature)
     {
-        //
+        return view('admin.features.edit', compact('feature'));
     }
 
     /**
@@ -94,7 +93,40 @@ class FeatureController extends Controller
      */
     public function update(Request $request, Feature $feature)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'nullable',
+            'image' => 'nullable|image',
+            'icon' => 'nullable',
+            'icon_color' => 'nullable',
+            'layout' => 'required',
+            'overlay_title' => 'nullable',
+            'overlay_description' => 'nullable',
+            'position' => 'nullable|integer',
+        ]);
+        
+        $imagePath = $feature->image;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')
+                ->store('features', 'public');
+        }
+
+        $feature->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $imagePath,
+            'icon' => $request->icon,
+            'icon_color' => $request->icon_color,
+            'layout' => $request->layout,
+            'overlay_title' => $request->overlay_title,
+            'overlay_description' => $request->overlay_description,
+            'position' => $request->position ?? 0,
+            'is_active' => $request->has('is_active'),
+        ]);
+
+        return redirect()->route('admin.features.index')
+            ->with('success', 'Feature updated successfully.');
     }
 
     /**
@@ -105,6 +137,9 @@ class FeatureController extends Controller
      */
     public function destroy(Feature $feature)
     {
-        //
+        $feature->delete();
+
+        return redirect()->route('admin.features.index')
+            ->with('success', 'Feature deleted successfully.');
     }
 }

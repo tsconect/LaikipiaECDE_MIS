@@ -9,6 +9,7 @@ use App\Models\Constituency;
 use App\Models\ContactMessage;
 use App\Models\EcdeSchools;
 use App\Models\FAQ;
+use App\Models\Feature;
 use App\Models\Gallery;
 use App\Models\Page;
 use App\Models\Post;
@@ -26,6 +27,8 @@ class WebController extends Controller
         $constituencies = Constituency::all();
         $wards = Ward::all();
         $ecde_schools = EcdeSchools::all();
+
+      $features = Feature::orderBy('position')->get();
 
         $recentPosts = Post::where('status', 'published')
             ->orderBy('published_at', 'desc')
@@ -70,7 +73,8 @@ class WebController extends Controller
             'totalEcdeCentres',
             'totalLearners',
             'totalTeachers',
-            'totalSubCounties'
+            'totalSubCounties',
+            'features'
         ));
     }
 

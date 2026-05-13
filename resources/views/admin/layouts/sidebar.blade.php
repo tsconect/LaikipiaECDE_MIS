@@ -234,7 +234,7 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="" class="lw-sub {{ request()->routeIs('admin.features.*') ? 'lw-sub-active' : '' }}">Features</a>
+                    <a href="{{ route('admin.features.index') }}" class="lw-sub {{ request()->routeIs('admin.features.*') ? 'lw-sub-active' : '' }}">Features</a>
                     <a href="{{ route('admin.cms.settings.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.settings.*') ? 'lw-sub-active' : '' }}">Site Settings</a>
                     <a href="{{ route('admin.cms.pages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.pages.*') ? 'lw-sub-active' : '' }}">Pages</a>
                     <a href="{{ route('admin.cms.posts.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.posts.*') ? 'lw-sub-active' : '' }}">Blog Posts</a>
