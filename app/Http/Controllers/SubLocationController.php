@@ -33,12 +33,20 @@ class SubLocationController extends Controller
         $request->validate(['name' => 'required',
         'ward_id' => 'required'
         ]);
+
+        // existing name check 
+        $existingSubLocation = SubLocation::where('name', $request->name)->first();
+        if ($existingSubLocation) {
+            return redirect()->back()->with('error', 'A sub-location with the name "' . $request->name . '" already exists. Please choose a different name.');
+        }
         $subLocation =  New SubLocation();
         $subLocation->name = $request->name;
         $subLocation->ward_id = $request->ward_id;
         $subLocation->save();
 
         log_user_activity($subLocation->id, 'sub_locations', 'store', 'User created a new sub-location: ' . $subLocation->name, url()->current(), json_encode($subLocation));
+
+        return redirect()->back()->with('success', $subLocation->name .  ' Sublocation was created successfully');
 
        return redirect()->route('admin.sub-locations.index')->with('success', $subLocation->name .  ' Sublocation was created successfully');
     }
