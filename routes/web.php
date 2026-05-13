@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EducationHistoryController;
 use App\Http\Controllers\ESchoolController;
 use App\Http\Controllers\EthnicGroupController;
+use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\JobGroupController;
 use App\Http\Controllers\LearnerAttendanceController;
 use App\Http\Controllers\LearnerController;
@@ -167,6 +168,7 @@ Route::group(['middleware' => ['auth']], function () {
         // users
         Route::resource('users', UsersController::class);
         Route::get('system-logs', [UsersController::class, 'systemLogs'])->name('system.logs');
+        Route::resource('features', FeatureController::class);
      
 
         Route::get('/system-logs/{id}', [App\Http\Controllers\UsersController::class, 'system_logs_details'])->name('system_logs_details');

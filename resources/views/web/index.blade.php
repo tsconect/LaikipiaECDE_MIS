@@ -901,6 +901,48 @@
   </div>
 </section>
 @endif
+<section class="schools-section" style="background: #f4f7f5;">
+  <div class="schools-header reveal">
+    <div>
+      <div class="section-label">Our Schools</div>
+      <div class="section-title">ECDE Schools<br>Across Laikipia</div>
+      <div class="section-sub" style="margin-top:8px;">Explore early childhood centres operating across all sub-counties in Laikipia County.</div>
+    </div>
+    <a href="{{ route('cms.schools') }}" class="view-all-pill">
+      View all schools
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <div class="schools-bento reveal">
+    <div class="schools-overview-card">
+      <div class="schools-overview-icon"><i class="fas fa-school"></i></div>
+      <div class="schools-overview-value">{{ number_format($totalEcdeCentres ?? 0) }}</div>
+      <div class="schools-overview-title">Total ECDE Centres</div>
+      <div class="schools-overview-desc">Across all sub-counties in Laikipia</div>
+    </div>
+    <div class="schools-overview-card">
+      <div class="schools-overview-icon"><i class="fas fa-child"></i></div>
+      <div class="schools-overview-value">{{ number_format($totalLearners ?? 0) }}</div>
+      <div class="schools-overview-title">Total Learners</div>
+      <div class="schools-overview-desc">Enrolled in current academic term</div>
+    </div>
+    <div class="schools-overview-card">
+      <div class="schools-overview-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+      <div class="schools-overview-value">{{ number_format($totalTeachers ?? 0) }}</div>
+      <div class="schools-overview-title">Total Teachers</div>
+      <div class="schools-overview-desc">Trained and deployed county-wide</div>
+    </div>
+    <div class="schools-overview-card">
+      <div class="schools-overview-icon"><i class="fas fa-map-marker-alt"></i></div>
+      <div class="schools-overview-value">{{ number_format($totalSubCounties ?? 0) }}</div>
+      <div class="schools-overview-title">Sub-Counties</div>
+      <div class="schools-overview-desc">Covered by the ECDE programme</div>
+    </div>
+  </div>
+
+  </div>
+</section>
 
 
 <div id="home-content-start">
@@ -1027,48 +1069,6 @@
 </section>
 @endif
 
-<section class="schools-section" style="background: #f4f7f5;">
-  <div class="schools-header reveal">
-    <div>
-      <div class="section-label">Our Schools</div>
-      <div class="section-title">ECDE Schools<br>Across Laikipia</div>
-      <div class="section-sub" style="margin-top:8px;">Explore early childhood centres operating across all sub-counties in Laikipia County.</div>
-    </div>
-    <a href="{{ route('cms.schools') }}" class="view-all-pill">
-      View all schools
-      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-
-  <div class="schools-bento reveal">
-    <div class="schools-overview-card">
-      <div class="schools-overview-icon"><i class="fas fa-school"></i></div>
-      <div class="schools-overview-value">{{ number_format($totalEcdeCentres ?? 0) }}</div>
-      <div class="schools-overview-title">Total ECDE Centres</div>
-      <div class="schools-overview-desc">Across all sub-counties in Laikipia</div>
-    </div>
-    <div class="schools-overview-card">
-      <div class="schools-overview-icon"><i class="fas fa-child"></i></div>
-      <div class="schools-overview-value">{{ number_format($totalLearners ?? 0) }}</div>
-      <div class="schools-overview-title">Total Learners</div>
-      <div class="schools-overview-desc">Enrolled in current academic term</div>
-    </div>
-    <div class="schools-overview-card">
-      <div class="schools-overview-icon"><i class="fas fa-chalkboard-teacher"></i></div>
-      <div class="schools-overview-value">{{ number_format($totalTeachers ?? 0) }}</div>
-      <div class="schools-overview-title">Total Teachers</div>
-      <div class="schools-overview-desc">Trained and deployed county-wide</div>
-    </div>
-    <div class="schools-overview-card">
-      <div class="schools-overview-icon"><i class="fas fa-map-marker-alt"></i></div>
-      <div class="schools-overview-value">{{ number_format($totalSubCounties ?? 0) }}</div>
-      <div class="schools-overview-title">Sub-Counties</div>
-      <div class="schools-overview-desc">Covered by the ECDE programme</div>
-    </div>
-  </div>
-
-  </div>
-</section>
 
 
 @if($showHomeTestimonials)
