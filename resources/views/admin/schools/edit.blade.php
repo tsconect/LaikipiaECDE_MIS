@@ -48,7 +48,7 @@
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="center_code" class="">Center Code</label>
-                                    <input name="center_code" id="center_code" placeholder="Enter center code" required
+                                    <input name="center_code" id="center_code" placeholder="Enter center code" 
                                         value="{{ $school->center_code ?? old('center_code') }}" type="text"
                                         class="form-control">
                                 </div>
