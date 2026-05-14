@@ -12,6 +12,32 @@ class Teacher extends Model
     use HasFactory;
     use HasFactory;
 
+    protected $fillable = [
+
+    'user_id',
+    'id_number',
+    'kra_pin',
+    'gender',
+    'dob',
+    'tsc_number',
+    'image_path',
+    'school_id',
+    'ippd_number',
+    'date_of_first_appointment',
+    'terms_of_engagement',
+    'pwd_status',
+    'disability_type',
+    'impairment_details',
+    'pwd_number',
+    'ethnicity_id',
+    'job_group_id',
+    'county_id',
+    'subcounty_id',
+    'ward_id',
+    'contract_expiry',
+    'retirement_date',
+];
+
     protected $casts = [
         'retirement_date' => 'date:Y-m-d',
     ];
