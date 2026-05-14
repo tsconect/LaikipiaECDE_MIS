@@ -27,7 +27,11 @@
  @stack('css')
 </head>
 
-
+<style>
+    .buttons-pdf {
+        color: #dc2626 !important;
+    }
+</style>
 
 
 <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -214,7 +218,25 @@ function goBack() {
 
 
 <script type="text/javascript" src="{{asset('assets/scripts/main.d810cf0ae7f39f28f336.js')}}"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @if(session('success') || session('error') || session('warning') || session('info'))
 <script>
@@ -230,198 +252,76 @@ Swal.fire({
 </script>
 @endif
 <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            if (!window.jQuery || !$.fn.dataTable) {
-                return;
-            }
+$(function () {
 
-            if ($('#dt-basic2').length) {
-                $('#dt-basic2').DataTable({
-            info: true,
-            paging: true,
-            searchable: true,
-            fixedHeight: true,
-            lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
-            pageLength: 50,
-            order: [],
-        dom: "<'row'<'col-12 d-flex align-items-center flex-wrap gap-2'lBf>>rt<'row'<'col-12 d-flex justify-content-end align-items-center gap-2'ip>>",
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5',
-                {
-                    extend: 'print',
-                    customize: function (win) {
-                        // Inject custom CSS and icon fonts for print view
-                        var head = win.document.head || win.document.getElementsByTagName('head')[0];
-                        var links = [
-                            // Bootstrap
-                            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" type="text/css" />',
-                            // DataTables
-                            '<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" type="text/css" />',
-                            '<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" type="text/css" />',
-                            '<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" type="text/css" />',
-                            // Icon fonts
-                            '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" type="text/css" />',
-                            '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css" />',
-                            // Google Fonts
-                            '<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">',
-                            // Inline critical print CSS for table and icon layout
-                            '<style>' +
-                            '@media print {body,table,th,td{font-family:\'Manrope\',sans-serif!important;color:#222!important;background:#fff!important;box-shadow:none!important;}' +
-                            'table{border:1px solid #e2e8f0!important;width:100%!important;border-collapse:collapse!important;font-size:13px!important;}' +
-                            'th,td{border:1px solid #e2e8f0!important;padding:8px 12px!important;background:#fff!important;color:#222!important;}' +
-                            'th{background:#f8fafc!important;color:#222!important;font-weight:700!important;text-transform:uppercase!important;}' +
-                            '.fa,.fas,.far,.fal,.fab,.bi{color:#222!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;filter:none!important;opacity:1!important;}' +
-                            '*{box-shadow:none!important;background-image:none!important;}' +
-                            '}' +
-                            '</style>'
-                        ];
-                        for (var i = 0; i < links.length; i++) {
-                            win.document.head.insertAdjacentHTML('beforeend', links[i]);
-                        }
-                    }
-                },
-                'colvis' // Add column visibility button
-            ],
-            language: {
-                lengthMenu: " _MENU_ records per page",
-                zeroRecords: "No records available",
-                info: "Showing page _PAGE_ of _PAGES_",
-                infoEmpty: "No records available",
-                search: "",
-                searchPlaceholder: "Search... ",
-                infoFiltered: "(filtered from _MAX_ total records)",
-                paginate: {
-                    first: '<i class="fas fa-angle-double-left"></i>',
-                    last: '<i class="fas fa-angle-double-right"></i>',
-                    previous: '<i class="fas fa-angle-left"></i>',
-                    next: '<i class="fas fa-angle-right"></i>'
-                },
+    $('.data-table').DataTable({
+
+        pageLength: 25,
+
+        lengthMenu: [10, 25, 50, 100],
+
+        dom:
+            "<'row mb-3 align-items-center'<'col-md-3'l><'col-md-6 text-center'B><'col-md-3'f>>" +
+            "<'row'<'col-12'tr>>" +
+            "<'row mt-3'<'col-md-5'i><'col-md-7'p>>",
+
+        buttons: [
+
+            {
+                extend: 'copy',
+                // className: 'btn btn-sm btn-outline-secondary'
             },
-            columnDefs: [
-                { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
-            ]
-                });
-            }
 
-            if ($('.dt-basic2').length) {
-                $('.dt-basic2').DataTable({
-            info: true,
-            paging: true,
-            searchable: true,
-            fixedHeight: true,
-            lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
-            pageLength: 50,
-            order: [],
-            dom: "<'row'<'col-12 d-flex align-items-center flex-wrap gap-2'lBf>>rt<'row'<'col-12 d-flex justify-content-end align-items-center gap-2'ip>>",
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5',
-                {
-                    extend: 'print',
-                    customize: function (win) {
-                        // You can customize the print window if needed
-                    }
-                },
-                'colvis' // Add column visibility button
-            ],
-            language: {
-                lengthMenu: " _MENU_ records per page",
-                zeroRecords: "No records available",
-                info: "Showing page _PAGE_ of _PAGES_",
-                infoEmpty: "No records available",
-                search: "",
-                searchPlaceholder: "Search... ",
-                infoFiltered: "(filtered from _MAX_ total records)",
-                paginate: {
-                    first: '<i class="fas fa-angle-double-left"></i>',
-                    last: '<i class="fas fa-angle-double-right"></i>',
-                    previous: '<i class="fas fa-angle-left"></i>',
-                    next: '<i class="fas fa-angle-right"></i>'
-                },
+            {
+                extend: 'excel',
+                // className: 'btn btn-sm btn-outline-success'
             },
-            columnDefs: [
-                { targets: [0, 1, 2, 3, 4, -1], visible: true } // Make the first 5 and last columns visible by default
-            ]
-                });
+
+            {
+                extend: 'pdf',
+                // className: 'btn btn-sm btn-outline-danger'
+            },
+
+            {
+                extend: 'csv',
+                // className: 'btn btn-sm btn-outline-primary'
+            },
+
+            {
+                extend: 'colvis',
+                // className: 'btn btn-sm btn-outline-dark'
             }
 
-            document.querySelectorAll('.dt-admin').forEach(function (table) {
-                if ($.fn.dataTable.isDataTable(table)) {
-                    return;
-                }
+        ],
 
-                $(table).DataTable({
-                    info: true,
-                    paging: true,
-                    searchable: true,
-                    fixedHeight: true,
-                    lengthMenu: [5, 10, 25, 50, 100, 500, 1000, 10000],
-                    pageLength: 10,
-                    order: [],
-                    dom: "<'row'<'col-12 d-flex align-items-center flex-wrap gap-2'lBf>>rt<'row'<'col-12 d-flex justify-content-end align-items-center gap-2'ip>>",
-                    buttons: [
-                        'copyHtml5',
-                        'excelHtml5',
-                        'csvHtml5',
-                        'pdfHtml5',
-                        {
-                            extend: 'print'
-                        },
-                        'colvis'
-                    ],
-                    language: {
-                        lengthMenu: " _MENU_ records per page",
-                        zeroRecords: "No records available",
-                        info: "Showing page _PAGE_ of _PAGES_",
-                        infoEmpty: "No records available",
-                        search: "",
-                        searchPlaceholder: "Search... ",
-                        infoFiltered: "(filtered from _MAX_ total records)",
-                        paginate: {
-                            first: '<i class="fas fa-angle-double-left"></i>',
-                            last: '<i class="fas fa-angle-double-right"></i>',
-                            previous: '<i class="fas fa-angle-left"></i>',
-                            next: '<i class="fas fa-angle-right"></i>'
-                        }
-                    }
-                });
-            });
-        });
+        language: {
+            search: '',
+            searchPlaceholder: 'Search entries…',
 
-       if (window.DataTable) {
-            document.querySelectorAll('.data-table').forEach(function (table) {
-                if (window.jQuery && $.fn.dataTable && $.fn.dataTable.isDataTable(table)) {
-                    return;
-                }
+            lengthMenu: 'Show _MENU_ per page',
 
-                new DataTable(table, {
-                    paging: true,
-                    info: false, // hide "Showing page..."
-                    lengthMenu: [5, 10, 25, 50, 100],
-                    pageLength: 10,
-                    order: [],
+            info: 'Showing _START_–_END_ of _TOTAL_ entries',
 
-                    // ONLY show: length menu (l) + search (f) + table (t) + pagination (p)
-                    dom: 'lftp',
+            infoEmpty: 'No entries found',
 
-                    language: {
-                        lengthMenu: "_MENU_",
-                        search: "",
-                        searchPlaceholder: "Search...",
-                        zeroRecords: "No records available",
-                        paginate: {
-                            previous: '<i class="fas fa-angle-left"></i>',
-                            next: '<i class="fas fa-angle-right"></i>'
-                        }
-                    }
-                });
-            });
-        }
+            emptyTable: 'No about entries have been added yet.',
+
+            paginate: {
+                previous: '<i class="bi bi-chevron-left" style="font-size:.7rem"></i>',
+                next: '<i class="bi bi-chevron-right" style="font-size:.7rem"></i>',
+            }
+        },
+
+        columnDefs: [
+            { orderable: false, targets: [1, 3] },
+            { searchable: false, targets: [0, 1, 3] }
+        ],
+
+        order: [[0, 'asc']]
+
+    });
+
+});
 </script>
 <script>
     (function () {

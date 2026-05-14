@@ -12,6 +12,7 @@ class SubLocation extends Model
 
     protected $guarded = [];
 
+
     function ward()
     {
         # code...

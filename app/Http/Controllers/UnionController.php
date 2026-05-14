@@ -26,6 +26,7 @@ class UnionController extends Controller
         ]);
         $obj = new Unions();
         $obj->name = $request->name;
+        $obj->abbreviation = $request->abbreviation;    
 
         $obj->save();
 
@@ -48,7 +49,9 @@ class UnionController extends Controller
 
         $current_object = json_encode($union);
 
-        $union->update($request->only(['name']));
+        $union->abbreviation = $request->abbreviation;
+        $union->name = $request->name;
+        $union->save();
 
         log_user_activity($union->id, 'unions', 'update', 'User updated union with id ' . $union->id, url()->current(), json_encode($union), $current_object);
 

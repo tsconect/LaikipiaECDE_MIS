@@ -41,6 +41,16 @@
                     </span>
                     @enderror
                 </div>
+
+                <div class="col-md-6">
+                    <div class="position-relative form-group">
+                        <label for="abbreviation" class="">Abbreviation</label>
+                        <input name="abbreviation" id="abbreviation" placeholder="Enter abbreviation (optional)" type="text"
+                            class="form-control">
+                    </div>
+                </div>
+
+
             </div>
 
             <div class="text-right">

@@ -27,6 +27,7 @@
                     <th>S/N <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>CREATED ON <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>NAME <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                    <th> Abbreviation <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>MEMBERS <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>ACTION</th>
                 </tr>
@@ -37,6 +38,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->created_at }}</td>
                         <td>{{ $item->name }}</td>
+                        <td>{{ $item->abbreviation??'-' }}</td>
                         <td>0</td>
                         <td>
                             <div class="action-btns">

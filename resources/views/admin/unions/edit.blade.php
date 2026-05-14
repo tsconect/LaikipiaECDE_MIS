@@ -24,11 +24,21 @@
                         <input value="{{ $union->name }}" name="name" id="name" placeholder="Enter Constituency name" required type="text"
                             class="form-control">
                     </div>
+
+                    
+                </div>
+
+                <div class="col-md-6">
+                    <div class="position-relative form-group">
+                        <label for="abbreviation" class="">Abbreviation</label>
+                        <input value="{{ $union->abbreviation }}" name="abbreviation" id="abbreviation" placeholder="Enter abbreviation (optional)" type="text"
+                            class="form-control">
+                    </div>
                 </div>
             </div>
 
             <div class="text-end">
-                <button class="mt-2 btn btn-primary">Submit</button>
+                <button class="mt-2 btn btn-primary">Update</button>
             </div>
         </form>
     </div>

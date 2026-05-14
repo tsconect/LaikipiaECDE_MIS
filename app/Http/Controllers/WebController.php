@@ -144,20 +144,11 @@ class WebController extends Controller
     public function announcements()
     {
         $announcements = Announcement::where('status', 'published')
-            ->where(function ($query) {
-                $query->whereDate('start_date', '<=', now())
-                    ->whereDate('end_date', '>=', now());
-            })
-            ->orderBy('priority', 'desc')
-            ->orderBy('start_date', 'desc')
+            ->latest()
             ->paginate(10);
         
-        $totalAnnouncements = Announcement::where('status', 'published')
-            ->where(function ($query) {
-                $query->whereDate('start_date', '<=', now())
-                    ->whereDate('end_date', '>=', now());
-            })
-            ->count();
+        $totalAnnouncements = Announcement::where('status', 'published')->count();
+   
         
         return view('web.announcements', compact('announcements', 'totalAnnouncements'));
     }

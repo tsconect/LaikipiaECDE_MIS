@@ -234,7 +234,7 @@
                                 <button class="accordion-button collapsed d-flex align-items-center" type="button"
                                         data-bs-toggle="collapse" data-bs-target="#faq{{ $faq->id }}">
                                     <span class="faq-question-icon">Q</span>
-                                    <span>{{ $faq->question }}</span>
+                                    <span>{{ $faq->question }} </span>
                                 </button>
                             </h2>
                             <div id="faq{{ $faq->id }}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
@@ -253,7 +253,83 @@
                 </div>
             @endif
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+  /* ===================================
+   FAQ ACCORDION ICON FIX
+=================================== */
 
+/* remove default bootstrap arrow */
+.faq-accordion .accordion-button::after{
+    display:none !important;
+}
+
+/* accordion button */
+.faq-accordion .accordion-button{
+    position:relative;
+
+    padding-right:70px !important;
+
+    background:#fff !important;
+
+    box-shadow:none !important;
+}
+
+/* custom plus/minus icon */
+.faq-accordion .accordion-button::before{
+    content:'+';
+
+    position:absolute;
+
+    right:24px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:34px;
+    height:34px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#f3f4f6;
+
+    color:#111827;
+
+    font-size:22px;
+    font-weight:300;
+
+    transition:all .25s ease;
+}
+
+/* expanded state */
+.faq-accordion .accordion-button:not(.collapsed)::before{
+    content:'−';
+
+    background:#2563eb;
+
+    color:#fff;
+
+    transform:translateY(-50%) rotate(180deg);
+}
+
+/* hover */
+.faq-accordion .accordion-button:hover::before{
+    transform:translateY(-50%) scale(1.05);
+}
+
+/* remove ugly bootstrap active bg */
+.faq-accordion .accordion-button:not(.collapsed){
+    background:#fff !important;
+
+    color:#111827 !important;
+
+    box-shadow:none !important;
+}
+</style>
         <!-- Side Panel -->
         <div class="faq-side-panel">
             <div class="help-card reveal">
