@@ -25,6 +25,7 @@
             <thead>
                 <tr>
                     <th>S/N <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                    <th>ID</th>
                     <th>NAME <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                     <th>ACTION</th>
                 </tr>
@@ -33,6 +34,7 @@
                 @foreach ($wards as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
+                        <td>{{ $item->id }}</td>
                         <td>{{ $item->name }}</td>
                         <td>
                             <div class="action-btns">

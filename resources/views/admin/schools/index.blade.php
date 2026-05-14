@@ -28,10 +28,12 @@
                 <th>ID <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                 <th>School Name <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                 <th>Center Code <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                <th>County <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                <th>Sub County <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                
                 <th>Ward <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
                 <th>Sub Location <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                <th>Reg Number</th>
+                <th>Feeder School</th>
+                <th>Remarks</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -41,10 +43,11 @@
                 <td class="td-id">{{$item->id}}</td>
                 <td class="td-strong">{{$item->school_name}}</td>
                 <td>{{$item->center_code }}</td>
-                <td>{{$item->county->name ?? ($item->subCounty->county->name ?? '-') }}</td>
-                <td>{{$item->subCounty->name ?? ($item->ward->subCounty->name ?? '-') }}</td>
                 <td>{{$item->ward->name??'-'}}</td>
                 <td>{{$item->subLocation->name ?? '-'}}</td>
+                <td>{{$item->reg_number}}</td>
+                <td>{{$item->feeder_school}}</td>
+                <td>{{$item->remarks}}</td>
                 <td>
                     <div class="action-btns">
                         <a class="act-btn view" title="View School" href="{{ route('admin.ecde-schools.show', $item->id) }}">
