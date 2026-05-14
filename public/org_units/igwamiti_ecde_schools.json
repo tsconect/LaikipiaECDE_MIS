@@ -1,0 +1,308 @@
+[
+    {
+        "School\/Center Name":"91 MUNICIPALITY ECDE CENTRE",
+        "School\/Center Code":30556314,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NDUNYU",
+        "Registration Number(if registered)":"31S2000219",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"BETHEL ECDE CENTRE",
+        "School\/Center Code":30556333,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"LOSOGWA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"No",
+        "Remarks":"NEED  TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"DEB NYAHURURU ECDE CENTRE",
+        "School\/Center Code":30556303,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NYAHURURU",
+        "Registration Number(if registered)":"31S12000033",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"GATERO ECDE CENTRE",
+        "School\/Center Code":30556114,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"GATERO",
+        "Registration Number(if registered)":null,
+        "Feeder School":"No",
+        "Remarks":"NEED ONE CLASS"
+    },
+    {
+        "School\/Center Name":"GITUNDAGA",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MUTHENGERA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"NEED ONE CLASS"
+    },
+    {
+        "School\/Center Name":"HUHOINI ECDE CENTRE",
+        "School\/Center Code":30556311,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"SHAMANEI",
+        "Registration Number(if registered)":31120000549,
+        "Feeder School":"No",
+        "Remarks":"NEED TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"HURUMA ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MAINA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"IGWAMITI ECDE CENTRE",
+        "School\/Center Code":30556312,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"SHAMANEI",
+        "Registration Number(if registered)":31120000539,
+        "Feeder School":"No",
+        "Remarks":"NEED LATRINES AND ONE CLASS"
+    },
+    {
+        "School\/Center Name":"NAKAKWARES ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"KAICHAKUN",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"NEED LATRINES AND ONE CLASS"
+    },
+    {
+        "School\/Center Name":"KAICHAKUN ECDE CENTRE",
+        "School\/Center Code":30556119,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"UASO-NAROK",
+        "Registration Number(if registered)":"31S12000222",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"KARANGI ECDE CENTRE",
+        "School\/Center Code":30556316,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"KARANGI",
+        "Registration Number(if registered)":"31S12000003",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"KIGUMO ECDE CENTRE",
+        "School\/Center Code":30556315,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"LOSOGWA",
+        "Registration Number(if registered)":31120000548,
+        "Feeder School":"No",
+        "Remarks":"NEED  ONE CLASS"
+    },
+    {
+        "School\/Center Name":"KIHEO SCHOOL ",
+        "School\/Center Code":"YSHL",
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"LOSOGWA ",
+        "Registration Number(if registered)":31120000418,
+        "Feeder School":"No",
+        "Remarks":"NEED  TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"KUNDARILLA ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"KAITI",
+        "Registration Number(if registered)":null,
+        "Feeder School":"No",
+        "Remarks":"NEED ONE CLASS"
+    },
+    {
+        "School\/Center Name":"LAIKIPIA CAMPUS ECDE CENTRE",
+        "School\/Center Code":"87-20-06-017",
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NYAHURURU ",
+        "Registration Number(if registered)":31120000546,
+        "Feeder School":"No",
+        "Remarks":"NEED TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"LOSOGWA ECDE CENTRE",
+        "School\/Center Code":30556309,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"LOSOGWA",
+        "Registration Number(if registered)":3151200004,
+        "Feeder School":"No",
+        "Remarks":"NEED THREE CLASSES"
+    },
+    {
+        "School\/Center Name":"MAINA ECDE CENTRE",
+        "School\/Center Code":30556304,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MAINA ",
+        "Registration Number(if registered)":31120000547,
+        "Feeder School":"No",
+        "Remarks":"NEED ONE CLASS"
+    },
+    {
+        "School\/Center Name":"MANGUO ECDE CENTRE",
+        "School\/Center Code":30556322,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MANGUO",
+        "Registration Number(if registered)":"31S112000099",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"MARIAKANI ECDE CENTRE",
+        "School\/Center Code":30556334,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NDURURUMO",
+        "Registration Number(if registered)":null,
+        "Feeder School":"No",
+        "Remarks":"NEED TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"MARTI ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"UASONAROK",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"NEED  TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"MT. ANGELS ECDE CENTRE",
+        "School\/Center Code":30556324,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NDUNYU",
+        "Registration Number(if registered)":31120000536,
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"MUKURWEINI ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MUTHENGERA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"NEED  TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"MUNANDA ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MUNANDA",
+        "Registration Number(if registered)":31120000645,
+        "Feeder School":"No",
+        "Remarks":"GOOD"
+    },
+    {
+        "School\/Center Name":"MUNUNGAINI ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"KUNDARILLA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"NEED TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"MUTHENGERA ECDE CENTRE",
+        "School\/Center Code":30556105,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MUTHENGERA",
+        "Registration Number(if registered)":315120000,
+        "Feeder School":"No",
+        "Remarks":"NEED ONE CLASS"
+    },
+    {
+        "School\/Center Name":"NGARENARO ECDE CENTRE",
+        "School\/Center Code":30556303,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NYAHURURU",
+        "Registration Number(if registered)":31120000570,
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"RUGONGO ECDE CENTRE",
+        "School\/Center Code":30556319,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"SHAMANEI",
+        "Registration Number(if registered)":"31S1200002",
+        "Feeder School":"No",
+        "Remarks":"GOOD"
+    },
+    {
+        "School\/Center Name":"RWATHIA ECDE CENTRE",
+        "School\/Center Code":30556310,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"RWATHIA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"SHAMANEI ECDE CENTRE",
+        "School\/Center Code":30556308,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"SHAMANEI",
+        "Registration Number(if registered)":"GP\/E6788\/13",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"ST LOUIS ECDE CENTRE",
+        "School\/Center Code":30556337,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NGORU",
+        "Registration Number(if registered)":"31S12000029",
+        "Feeder School":"No",
+        "Remarks":"NEED TWO CLASSES"
+    },
+    {
+        "School\/Center Name":"STAREHE ECDE CENTRE",
+        "School\/Center Code":30556302,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"NYAHURURU",
+        "Registration Number(if registered)":"31F1200031",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"THAMA  ECDE CENTRE",
+        "School\/Center Code":null,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"MAINA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"UASO NAROK  ECDE CENTRE",
+        "School\/Center Code":30556330,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"UASO-NAROK",
+        "Registration Number(if registered)":"31s12000031",
+        "Feeder School":"No",
+        "Remarks":"NEED ONE CLASS"
+    },
+    {
+        "School\/Center Name":"Y MUNGU ECDE CENTRE",
+        "School\/Center Code":20220563,
+        "Ward":"Igwamiti Ward",
+        "Sub-Location":"Y MUNGU",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"NEED ONE CLASS"
+    }
+]

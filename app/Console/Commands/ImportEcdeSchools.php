@@ -29,58 +29,46 @@ class ImportEcdeSchools extends Command
 
     public function handle()
     {
-        \Log::info('Starting ECDE schools import...');
-        
-
-        
-      
-
-        $filePath = public_path('org_units/igwamiti_ecde_schools.xlsx');
-      
-
-      
-
-        if (!file_exists($filePath)) {
-            $this->error("Excel file not found at: {$filePath}");
-            return Command::FAILURE;
-        }
-
-        $this->info('Loading Excel file...');
-
         try {
 
             DB::disableQueryLog();
 
-            $spreadsheet = IOFactory::load($filePath);
-            $sheet = $spreadsheet->getActiveSheet();
-            $rows = $sheet->toArray();
+            $filePath = public_path('org_units/igwamiti_ecde_schools.json');
 
-            if (count($rows) <= 1) {
-                $this->error('No data found in Excel.');
+            if (!file_exists($filePath)) {
+                $this->error("JSON file not found at: {$filePath}");
+                return Command::FAILURE;
+            }
+
+            $json = file_get_contents($filePath);
+
+            $rows = json_decode($json, true);
+
+            if (!$rows || count($rows) == 0) {
+                $this->error('No data found in JSON file.');
                 return Command::FAILURE;
             }
 
             $imported = 0;
             $skipped = 0;
 
-            // Skip header row
-            unset($rows[0]);
-
             foreach ($rows as $index => $row) {
 
                 try {
 
-                    $schoolName = $this->cleanText($row[0] ?? null);
-                    $centerCode = $this->cleanText($row[1] ?? null);
-                    $wardName = $this->cleanText($row[2] ?? null);
-                    $subLocationName = $this->cleanText($row[3] ?? null);
-                    $regNumber = $this->cleanText($row[4] ?? null);
-                    $feederSchool = $this->cleanText($row[5] ?? null);
-                    $remarks = $this->cleanText($row[6] ?? null);
+                    $schoolName = $this->cleanText($row['School/Center Name'] ?? null);
+                    $centerCode = $this->cleanText($row['School/Center Code'] ?? null);
+                    $wardName = $this->cleanText($row['Ward'] ?? null);
+                    $subLocationName = $this->cleanText($row['Sub-Location'] ?? null);
+                    $regNumber = $this->cleanText($row['Registration Number(if registered)'] ?? null);
+                    $feederSchool = $this->cleanText($row['Feeder School'] ?? null);
+                    $remarks = $this->cleanText($row['Remarks'] ?? null);
 
                     // Skip empty rows
                     if (empty($schoolName)) {
-                        \Log::info("Skipping empty row at index {$index}");
+
+                        Log::info("Skipping empty row at index {$index}");
+
                         continue;
                     }
 
@@ -120,16 +108,13 @@ class ImportEcdeSchools extends Command
                         ->first();
 
                     if (!$subLocation) {
+
                         $subLocation_id = null;
 
-                        // $skipped++;
+                        Log::warning("Sub-location not found for '{$schoolName}' : {$subLocationName}");
 
-                        // Log::warning("Skipped school '{$schoolName}' - Sub-location not found: {$subLocationName}");
-
-                        // $this->warn("Sub-location not found for: {$schoolName}");
-
-                        // continue;
                     } else {
+
                         $subLocation_id = $subLocation->id;
                     }
 
@@ -139,11 +124,13 @@ class ImportEcdeSchools extends Command
 
                     if ($remarks) {
 
-                        if (Str::contains(strtolower($remarks), 'one class')) {
+                        $remarksLower = strtolower($remarks);
+
+                        if (Str::contains($remarksLower, 'one class')) {
                             $numberOfClasses = 1;
-                        } elseif (Str::contains(strtolower($remarks), 'two classes')) {
+                        } elseif (Str::contains($remarksLower, 'two classes')) {
                             $numberOfClasses = 2;
-                        } elseif (Str::contains(strtolower($remarks), 'three classes')) {
+                        } elseif (Str::contains($remarksLower, 'three classes')) {
                             $numberOfClasses = 3;
                         }
 
@@ -165,10 +152,8 @@ class ImportEcdeSchools extends Command
 
                     $imported++;
 
-                    $this->info("Imported {$imported} schools...");
-
                     if ($imported % 50 == 0) {
-                        
+                        $this->info("Imported {$imported} schools...");
                     }
 
                 } catch (\Exception $e) {
