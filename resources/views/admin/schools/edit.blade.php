@@ -59,7 +59,7 @@
                                 <div class="position-relative form-group">
                                     <label for="reg_number" class="">Registration Number</label>
                                     <input name="reg_number" id="reg_number" placeholder="Enter registration number"
-                                        required value="{{ $school->reg_number ?? old('reg_number') }}" type="text"
+                                         value="{{ $school->reg_number ?? old('reg_number') }}" type="text"
                                         class="form-control">
                                 </div>
                             </div>
