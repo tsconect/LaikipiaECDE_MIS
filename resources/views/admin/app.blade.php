@@ -322,6 +322,39 @@ $(function () {
     });
 
 });
+
+$(function () {
+
+    $('.data-table2').DataTable({
+
+        pageLength: 10,
+        lengthMenu: [10, 25],
+
+        language: {
+            search: '',
+            searchPlaceholder: 'Search…',
+            lengthMenu: 'Show _MENU_',
+            info: '_START_–_END_ of _TOTAL_',
+            infoEmpty: 'No records',
+            emptyTable: 'No data available',
+            paginate: {
+                previous: '<i class="bi bi-chevron-left" style="font-size:.7rem"></i>',
+                next: '<i class="bi bi-chevron-right" style="font-size:.7rem"></i>',
+            }
+        },
+
+        columnDefs: [
+            { orderable: false },
+            { searchable: false }
+        ],
+
+        order: [[0, 'asc']],
+        autoWidth: false,
+        responsive: true
+
+    });
+
+});
 </script>
 <script>
     (function () {

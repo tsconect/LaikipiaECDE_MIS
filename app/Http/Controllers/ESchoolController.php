@@ -104,14 +104,15 @@ class ESchoolController extends Controller
 
        public function edit(EcdeSchools $ecde_school)
        {
-           $sub_counties = Constituency::get();
+           $sub_counties =Constituency::where('county_id','xuFdFy6t9AH')->get();
            $wards = Ward::get();
-           $counties = County::get();
-           $feeder_schools = FeederSchools::all();
-           $teachers = Teacher::all();
+           $sub_locations = SubLocation::get();
+        //    $counties = County::get();
+        //    $feeder_schools = FeederSchools::all();
+        //    $teachers = Teacher::all();
            $school = $ecde_school;
            log_user_activity($ecde_school->id, 'ecde_schools', 'edit', 'User accessed edit page for ECDE school: ' . $ecde_school->school_name, 'admin/ecde-schools/' . $ecde_school->id . '/edit', json_encode($ecde_school));
-           return view('admin.schools.edit', compact('school', 'sub_counties', 'wards', 'counties', 'feeder_schools', 'teachers'));
+           return view('admin.schools.edit', compact('school', 'sub_counties', 'wards','sub_locations'));
        }
 
        public function update(Request $request, EcdeSchools $ecde_school)
@@ -151,7 +152,8 @@ class ESchoolController extends Controller
                 'school_contact_id_number',
                 'school_contact_phone_number',
                 'school_contact_gender',
-                'center_code'
+                'center_code',
+                'sub_location_id'
             ]));
 
             log_user_activity($ecde_school->id, 'ecde_schools', 'update', 'User updated ECDE school with id ' . $ecde_school->id, url()->current(), json_encode($ecde_school), $current_object);
