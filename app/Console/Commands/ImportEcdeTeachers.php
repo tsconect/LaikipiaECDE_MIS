@@ -75,7 +75,7 @@ class ImportEcdeTeachers extends Command
 
                     $firstName = $this->cleanText($row['First Name'] ?? null);
 
-                    $middleName = $this->cleanText($row['Middle Name'] ?? null);
+                    $middleName = $this->cleanText($row['Middle Name'] ?? 'N/A');
 
                     $lastName = $this->cleanText($row['Last Name'] ?? null);
 
@@ -135,6 +135,16 @@ class ImportEcdeTeachers extends Command
                     | Prevent Duplicate Teachers
                     |--------------------------------------------------------------------------
                     */
+                    $existingUser = User::where('email', $email)->first();
+
+                    if ($existingUser) {
+
+                        $skipped++;
+
+                        Log::warning("Duplicate email skipped: {$email} for teacher {$firstName} {$lastName}");
+
+                        continue;
+                    }
 
                     $existingTeacher = Teacher::where('id_number', $idNumber)
                         // ->orWhere('tsc_number', $tscNumber)
