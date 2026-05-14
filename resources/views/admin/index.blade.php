@@ -199,26 +199,15 @@
           </tr>
         </thead>
         <tbody>
-          @forelse($retiring_teachers as $teacher)
+          @foreach($retiring_teachers as $teacher)
           <tr>
             <td class="td-strong">{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->last_name ?? '' }}</td>
             <td>{{ $teacher->school->school_name ?? '-' }}</td>
             <td>{{ \Carbon\Carbon::parse($teacher->dob)->age }} yrs</td>
             <td class="ta-right">{{ $teacher->retirement_date->diffForHumans() }}</td>
           </tr>
-          @empty
-          <tr>
-            <td colspan="4">
-              <div class="empty-state">
-                <div class="empty-state-icon">
-                  <i class="bi bi-inbox retiring-empty-icon"></i>
-                </div>
-                No retiring teachers at this time
-                <p>Teachers nearing retirement age will appear here.</p>
-              </div>
-            </td>
-          </tr>
-          @endforelse
+          
+          @endforeach
         </tbody>
       </table>
     </div>
