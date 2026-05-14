@@ -74,7 +74,7 @@ class ImportEcdeSchools extends Command
 
                     // Prevent duplicates
                     $existingSchool = EcdeSchools::whereRaw('LOWER(school_name) = ?', [strtolower($schoolName)])
-                        ->orWhere('center_code', $centerCode)
+                        // ->orWhere('center_code', $centerCode)
                         ->first();
 
                     if ($existingSchool) {
