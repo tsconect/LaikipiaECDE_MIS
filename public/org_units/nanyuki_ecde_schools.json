@@ -1,0 +1,137 @@
+[
+    {
+        "School\/Center Name":"NANYUKI GARRISON ECDE CENTRE",
+        "School\/Center Code":30514101,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/1028\/14",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"LIKII ECDE CENTRE",
+        "School\/Center Code":30514108,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"LIKII",
+        "Registration Number(if registered)":"G\/PE\/1507\/11",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"LIKII ECDE CENTRE",
+        "School\/Center Code":30514108,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"LIKII",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"NKANDO ECDE CENTRE",
+        "School\/Center Code":30514115,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"NTURUKUMA",
+        "Registration Number(if registered)":"G\/PE8471\/13",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"POLICELINE ECDE CENTRE",
+        "School\/Center Code":30514108,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"NTURUKUMA",
+        "Registration Number(if registered)":"G\/PE\/1507\/11",
+        "Feeder School":"Yes",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"NANYUKI TPS ECDE CENTRE",
+        "School\/Center Code":30514108,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"NTURUKUMA",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"MUTHAIGA ECDE CENTRE ",
+        "School\/Center Code":30514109,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/9096\/14",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"KANYONI ECDE CENTRE",
+        "School\/Center Code":30514101,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":null,
+        "Feeder School":"Yes",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"NTURUKUMA ECDE CENTRE",
+        "School\/Center Code":305141110,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"NTURUKUMA",
+        "Registration Number(if registered)":"G\/PE9097\/14",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"NANYUKI MUSLIM ECDE CENTRE",
+        "School\/Center Code":30514118,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/13840\/14",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"Mt. KENYA ECDE CENTRE",
+        "School\/Center Code":30514121,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/9276\/14",
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"St. MOSES ECDE CENTRE",
+        "School\/Center Code":30514107,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":31120000839,
+        "Feeder School":"No",
+        "Remarks":"REGISTERED"
+    },
+    {
+        "School\/Center Name":"CEDC ECDE CENTRE",
+        "School\/Center Code":30514109,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/9096\/14",
+        "Feeder School":"Yes",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"NANYUKI PRIMARY ECDE CENTRE",
+        "School\/Center Code":30514103,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/10281\/14",
+        "Feeder School":"No",
+        "Remarks":null
+    },
+    {
+        "School\/Center Name":"1 KR ECDE CENTRE",
+        "School\/Center Code":30514101,
+        "Ward":"DpYpJ6E1vRc",
+        "Sub-Location":"MAJENGO",
+        "Registration Number(if registered)":"G\/PE\/1028\/14",
+        "Feeder School":"Yes",
+        "Remarks":null
+    }
+]

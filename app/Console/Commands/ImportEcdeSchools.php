@@ -33,7 +33,7 @@ class ImportEcdeSchools extends Command
 
             DB::disableQueryLog();
 
-            $filePath = public_path('org_units/igwamiti_ecde_schools.json');
+            $filePath = public_path('org_units/nanyuki_ecde_schools.json');
 
             if (!file_exists($filePath)) {
                 $this->error("JSON file not found at: {$filePath}");
@@ -58,7 +58,7 @@ class ImportEcdeSchools extends Command
 
                     $schoolName = $this->cleanText($row['School/Center Name'] ?? null);
                     $centerCode = $this->cleanText($row['School/Center Code'] ?? null);
-                    $wardName = $this->cleanText($row['Ward'] ?? null);
+                    $wardID = $this->cleanText($row['Ward'] ?? null);
                     $subLocationName = $this->cleanText($row['Sub-Location'] ?? null);
                     $regNumber = $this->cleanText($row['Registration Number(if registered)'] ?? null);
                     $feederSchool = $this->cleanText($row['Feeder School'] ?? null);
@@ -89,14 +89,13 @@ class ImportEcdeSchools extends Command
                     }
 
                     // Find ward
-                    $ward = Ward::whereRaw('LOWER(name) = ?', [strtolower($wardName)])
-                        ->first();
+                    $ward = Ward::where('id', $wardID)->first();
 
                     if (!$ward) {
 
                         $skipped++;
 
-                        Log::warning("Skipped school '{$schoolName}' - Ward not found: {$wardName}");
+                        Log::warning("Skipped school '{$schoolName}' - Ward  id not found: {$wardID}");
 
                         $this->warn("Ward not found for: {$schoolName}");
 
@@ -122,25 +121,11 @@ class ImportEcdeSchools extends Command
                     $numberOfClasses = null;
                     $classRoomStatus = null;
 
-                    if ($remarks) {
-
-                        $remarksLower = strtolower($remarks);
-
-                        if (Str::contains($remarksLower, 'one class')) {
-                            $numberOfClasses = 1;
-                        } elseif (Str::contains($remarksLower, 'two classes')) {
-                            $numberOfClasses = 2;
-                        } elseif (Str::contains($remarksLower, 'three classes')) {
-                            $numberOfClasses = 3;
-                        }
-
-                        $classRoomStatus = $remarks;
-                    }
 
                     EcdeSchools::create([
                         'school_name' => $schoolName,
                         'center_code' => $centerCode,
-                        'ward_id' => $ward->id,
+                        'ward_id' => $wardID,
                         'sub_location_id' => $subLocation_id,
                         'reg_number' => $regNumber,
                         'feeder_school' => strtolower($feederSchool) === 'yes' ? 'Yes' : 'No',

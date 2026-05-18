@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Helpers\PhoneHelper;
 use App\Models\EcdeSchools;
 use App\Models\Teacher;
-use App\Models\TeacherDeploymentHistory;
 use App\Models\User;
 use App\Models\Ward;
 use Carbon\Carbon;
@@ -141,20 +140,27 @@ class ImportEcdeTeachers extends Command
                     | Prevent Duplicate Teachers
                     |--------------------------------------------------------------------------
                     */
-                    $user = User::where('email', $email)->first();
+                    $existingUser = User::where('email', $email)->first();
 
-                    if (!$user) {
-                        Log::warning("user not found: {$email} for teacher {$firstName} {$lastName}");
+                    if ($existingUser) {
+
+                        $skipped++;
+
+                        Log::warning("Duplicate email skipped: {$email} for teacher {$firstName} {$lastName}");
 
                         continue;
                     }
 
-                    $teacher = Teacher::where('user_id', $user->id)->first();
-                    if (!$teacher) {
+                    $existingTeacher = Teacher::where('id_number', $idNumber)
+                        // ->orWhere('tsc_number', $tscNumber)
+                        // ->orWhere('ippd_number', $ippdNumber)
+                        ->first();
+
+                    if ($existingTeacher) {
 
                         $skipped++;
 
-                        Log::warning("No teacher skipped: {$firstName} {$lastName}");
+                        Log::warning("Duplicate teacher skipped: {$firstName} {$lastName}");
 
                         continue;
                     }
@@ -187,16 +193,33 @@ class ImportEcdeTeachers extends Command
                     |--------------------------------------------------------------------------
                     */
 
-                  
+                    $ward = null;
 
-                    
+                    if ($wardName) {
+
+                        $ward = Ward::whereRaw(
+                            'LOWER(name) = ?',
+                            [strtolower($wardName)]
+                        )->first();
+                    }
+
                     /*
                     |--------------------------------------------------------------------------
                     | Generate Email If Missing
                     |--------------------------------------------------------------------------
                     */
 
-                   
+                    if (empty($email)) {
+
+                        $email = strtolower(
+                            Str::slug(
+                                $firstName .
+                                $middleName .
+                                $lastName,
+                                ''
+                            )
+                        ) . '@ecde.com';
+                    }
 
                     /*
                     |--------------------------------------------------------------------------
@@ -204,7 +227,54 @@ class ImportEcdeTeachers extends Command
                     |--------------------------------------------------------------------------
                     */
 
+                    $existingUser = User::where('email', $email)->first();
 
+                    if ($existingUser) {
+
+                        $email = strtolower(
+                            Str::slug(
+                                $firstName .
+                                $middleName .
+                                $lastName .
+                                rand(100, 9999),
+                                ''
+                            )
+                        ) . '@ecde.com';
+                    }
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Format Dates
+                    |--------------------------------------------------------------------------
+                    */
+
+                    $formattedDob = null;
+                    $retirementDate = null;
+
+                    if (!empty($dob)) {
+
+                        try {
+
+                            $formattedDob = Carbon::parse($dob)
+                                ->format('Y-m-d');
+
+                            $retirementDate = Carbon::parse($dob)
+                                ->addYears(60)
+                                ->format('Y-m-d');
+
+                            if($pwdStatus == 'Yes'){
+                                $retirementDate = Carbon::parse($dob)
+                                    ->addYears(65)
+                                    ->format('Y-m-d');
+                                
+                            }
+
+                        } catch (\Exception $e) {
+
+                            $formattedDob = null;
+                            $retirementDate = null;
+                        }
+                    }
 
                     $formattedAppointmentDate = null;
 
@@ -227,32 +297,62 @@ class ImportEcdeTeachers extends Command
                     |--------------------------------------------------------------------------
                     */
 
-                    $user->username = $idNumber;
-                    $user->status = 'active';
-                    $user->phone_number = $phoneNumber;
-                    $user->save();
+                    $user = User::create([
 
-                    if($formattedAppointmentDate != null){
-                        $deployement = new TeacherDeploymentHistory();
-                        $deployement->user_id = $user->id;
-                        $deployement->school_id = $school->id;
-                        $deployement->deployment_date = $formattedAppointmentDate;
-                        $deployement->start_date = $formattedAppointmentDate;
-                        $deployement->end_date = null;
-                        $deployement->reason = null;
-                        $deployement->save();
-                        
-                    } else{
-                        \Log::warning("no deployment date found for teacher row at {$index}");
-                    }
+                        'first_name' => $firstName,
 
+                        'middle_name' => $middleName,
 
+                        'last_name' => $lastName,
 
-                    
-                    
-                   
-                   
-                  
+                        'email' => strtolower(trim($email)),
+
+                        'password' => Hash::make('123456'),
+
+                        'role' => 'teacher',
+
+                        'phone_number' => $phoneNumber,
+
+                        'id_number' => $idNumber,
+                    ]);
+
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Create Teacher
+                    |--------------------------------------------------------------------------
+                    */
+
+                    Teacher::create([
+
+                        'user_id' => $user->id,
+
+                        'id_number' => $idNumber,
+
+                        'kra_pin' => $kraPin,
+
+                        'gender' => $gender,
+
+                        'dob' => $formattedDob,
+
+                        'tsc_number' => $tscNumber,
+
+                        'school_id' => $school->id,
+
+                        'ippd_number' => $ippdNumber,
+
+                        'date_of_first_appointment' => $formattedAppointmentDate,
+
+                        'terms_of_engagement' => $terms,
+
+                        'pwd_status' => $pwdStatus,
+
+                        'disability_type' => $pwdType,
+
+                        'pwd_number' => $pwdNumber,
+
+                        'ward_id' => $ward ? $ward->id : null,
+                        'retirement_date' => $retirementDate,
+                    ]);
 
                     $imported++;
 

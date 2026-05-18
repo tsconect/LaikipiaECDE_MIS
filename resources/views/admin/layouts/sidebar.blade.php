@@ -113,6 +113,7 @@
                 <a href="{{ route('admin.education-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.education-histories.*') ? 'lw-sub-active' : '' }}">Academic Qualifications</a>
                 <a href="{{ route('admin.user-unions.index') }}" class="lw-sub {{ request()->routeIs('admin.user-unions.*') ? 'lw-sub-active' : '' }}">My Unions</a>
                 <a href="{{ route('admin.user-documents.index') }}" class="lw-sub {{ request()->routeIs('admin.user-documents.*') ? 'lw-sub-active' : '' }}">My Documents</a>
+                <a href="{{ route('admin.deployment-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.deployment-histories.*') ? 'lw-sub-active' : '' }}"> My Deployment History</a>
             </div>
         </div>
 
@@ -133,7 +134,7 @@
                     <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
                     <a href="{{ route('admin.non-attendance-days.index') }}" class="lw-sub {{ request()->routeIs('admin.non-attendance-days.index') ? 'lw-sub-active' : '' }}">Non-Attendance Days</a>
                     <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
-                     <a class="sub-link" href="{{ route('admin.deployment-histories.index') }}">My Deployment History</a>
+                  
                 </div>
             </div>
         @endcan
@@ -257,14 +258,14 @@
     </nav>
 
     <!-- Footer user strip -->
-    <div class="sidebar-footer">
+    {{-- <div class="sidebar-footer">
         <div class="footer-avatar">{{ substr(Auth::user()->first_name ?? 'U', 0, 1) }}{{ substr(Auth::user()->last_name ?? 'S', 0, 1) }}</div>
         <div>
             <div class="footer-name">{{ Auth::user()->first_name ?? 'User' }} {{ substr(Auth::user()->last_name ?? '', 0, 1) }}.</div>
             <div class="footer-role">{{ Auth::user()->role ?? 'User' }}</div>
         </div>
         <button class="footer-dots">⋯</button>
-    </div>
+    </div> --}}
 </div>
 
 <script>

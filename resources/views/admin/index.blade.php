@@ -189,7 +189,7 @@
       <span class="panel-badge retiring">In 5 Years</span>
     </div>
     <div class="section-body-flush p-4">
-      <table class="data-table2 p-2 ">
+      <table class="data-table2 p-2 table-bordered table-striped ">
         <thead>
           <tr>
             <th>Name</th>
@@ -233,7 +233,7 @@
   </div>
   <div class="section-body section-body-flush p-3">
     <div class="table-scroll-compact">
-    <table class="data-table2">
+    <table class="data-table2 table-bordered table-striped table-hover">
       <thead>
         <tr>
           <th>Ethnicity</th>
