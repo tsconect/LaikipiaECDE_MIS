@@ -44,7 +44,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($data as $item)
+                @foreach ($teachers as $item)
                     <tr>
                         <td class="td-id">{{ $item->id }}</td>
                         <td>

@@ -37,26 +37,9 @@ class TeacherController extends Controller
    //
    public function index(Request $request)
    {
-       $perPage = $request->get('per_page', 50);
-       $search = $request->get('search');
-
-       $query = Teacher::with('user');
-
-       if ($search) {
-           $query->whereHas('user', function($q) use ($search) {
-               $q->where('first_name', 'like', '%' . $search . '%')
-                 ->orWhere('middle_name', 'like', '%' . $search . '%')
-                 ->orWhere('last_name', 'like', '%' . $search . '%')
-                 ->orWhere('email', 'like', '%' . $search . '%')
-                 ->orWhere('phone_number', 'like', '%' . $search . '%');
-           })
-           ->orWhere('id_number', 'like', '%' . $search . '%')
-           ->orWhere('gender', 'like', '%' . $search . '%');
-       }
-
-       $data = $query->latest()->paginate($perPage);
+      $teachers = Teacher::latest()->get();
        log_user_activity(0, 'teachers', 'index', 'User accessed the teachers index page', 'admin/teachers');
-       return view('admin.teachers.index', compact('data'));
+       return view('admin.teachers.index', compact('teachers'));
    }
 
    function create( Request $request){
