@@ -88,6 +88,19 @@ class ImportEcdeLearners extends Command
 
                     $parentalStatus = $this->cleanText($row['Parent Details Cleaned'] ?? null);
 
+                     $school = EcdeSchools::whereRaw('LOWER(school_name) = ?', [
+                        strtolower($schoolName)
+                    ])->first();
+
+                    if (!$school) {
+
+                        $skipped++;
+
+                        Log::warning("School not found for learner {$index}: {$firstName} {$lastName}: {$schoolName}");
+
+                        continue;
+                    }
+
                     // Skip empty rows
                     if (!$firstName) {
 
@@ -102,42 +115,42 @@ class ImportEcdeLearners extends Command
                     |--------------------------------------------------------------------------
                     */
 
-                    $existingLearner = Learner::where(function ($query) use (
-                        $firstName,
-                        $middleName,
-                        $lastName,
-                        $birthCertificate,
-                        $admissionNumber
-                    ) {
+                    // $existingLearner = Learner::where(function ($query) use (
+                    //     $firstName,
+                    //     $middleName,
+                    //     $lastName,
+                    //     $birthCertificate,
+                    //     $admissionNumber
+                    // ) {
 
-                        $query->where(function ($q) use ($firstName, $middleName, $lastName) {
+                    //     $query->where(function ($q) use ($firstName, $middleName, $lastName) {
 
-                            $q->whereRaw('LOWER(first_name) = ?', [strtolower($firstName)])
-                                ->whereRaw('LOWER(last_name) = ?', [strtolower($lastName)]);
+                    //         $q->whereRaw('LOWER(first_name) = ?', [strtolower($firstName)])
+                    //             ->whereRaw('LOWER(last_name) = ?', [strtolower($lastName)]);
 
-                            if ($middleName) {
-                                $q->whereRaw('LOWER(middle_name) = ?', [strtolower($middleName)]);
-                            }
-                        });
+                    //         if ($middleName) {
+                    //             $q->whereRaw('LOWER(middle_name) = ?', [strtolower($middleName)]);
+                    //         }
+                    //     });
 
-                        if ($birthCertificate) {
-                            $query->orWhere('birth_certificate_number', $birthCertificate);
-                        }
+                    //     if ($birthCertificate) {
+                    //         $query->orWhere('birth_certificate_number', $birthCertificate);
+                    //     }
 
-                        if ($admissionNumber) {
-                            $query->orWhere('admission_number', $admissionNumber);
-                        }
+                    //     if ($admissionNumber) {
+                    //         $query->orWhere('admission_number', $admissionNumber);
+                    //     }
 
-                    })->first();
+                    // })->first();
 
-                    if ($existingLearner) {
+                    // if ($existingLearner) {
 
-                        $skipped++;
+                    //     $skipped++;
 
-                        Log::warning("Duplicate learner skipped: {$firstName} {$lastName}");
+                    //     Log::warning("Duplicate learner skipped: {$firstName} {$lastName}");
 
-                        continue;
-                    }
+                    //     continue;
+                    // }
 
                     /*
                     |--------------------------------------------------------------------------
@@ -145,18 +158,7 @@ class ImportEcdeLearners extends Command
                     |--------------------------------------------------------------------------
                     */
 
-                    $school = EcdeSchools::whereRaw('LOWER(school_name) = ?', [
-                        strtolower($schoolName)
-                    ])->first();
-
-                    if (!$school) {
-
-                        $skipped++;
-
-                        Log::warning("School not found for learner {$index}: {$firstName} {$lastName}: {$schoolName}");
-
-                        continue;
-                    }
+                   
 
                     /*
                     |--------------------------------------------------------------------------
@@ -202,16 +204,45 @@ class ImportEcdeLearners extends Command
                     | Dates
                     |--------------------------------------------------------------------------
                     */
-
                     $dob = null;
 
                     if (!empty($row['Date of Birth(mm/dd/yyyy)'])) {
 
-                        $dob = Carbon::createFromTimestampMs(
-                            $row['Date of Birth(mm/dd/yyyy)']
-                        )->format('Y-m-d');
+                        $value = $row['Date of Birth(mm/dd/yyyy)'];
+
+                        try {
+
+                            // If it's a timestamp in milliseconds
+                            if (is_numeric($value)) {
+
+                                $dob = Carbon::createFromTimestampMs($value)
+                                    ->format('Y-m-d');
+
+                            } else {
+
+                                // Handle string dates like 23/3/2022
+                                $value = trim($value);
+
+                                // Try d/m/Y first
+                                try {
+                                    $dob = Carbon::createFromFormat('d/m/Y', $value)
+                                        ->format('Y-m-d');
+
+                                } catch (\Exception $e) {
+
+                                    // Try m/d/Y
+                                    $dob = Carbon::createFromFormat('m/d/Y', $value)
+                                        ->format('Y-m-d');
+                                }
+                            }
+
+                        } catch (\Exception $e) {
+
+                            $dob = null;
+                        }
                     }
 
+               
                     $admissionDate = null;
 
                     if (!empty($row['Date of Admission'])) {

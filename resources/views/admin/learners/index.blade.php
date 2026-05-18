@@ -26,10 +26,17 @@
                 <tr>
                     <th>ID </th>
                     <th>FULL NAMES  </th>
-                    <th>NEMIS NO  </th>
-                    <th>GENDER  </th>
-                    <th>SCHOOL POSTED  </th>
-                    <th>AGE </th>
+                    <th>Birth Cert </th>
+                    <th>Gender  </th>
+                    <th>DOB </th>
+                    <th>Age</th>
+                    <th>Sub Location </th>
+                    <th>Village </th>
+                    <th>ADM</th>
+                    <th>Date Of Adm</th>
+                    <th>Class</th>
+                    <th>School</th>
+                    <th>Parental Status</th>
                     <th>ACTION</th>
                 </tr>
             </thead>
@@ -38,14 +45,25 @@
                     <tr>
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->first_name . ' ' . $item->middle_name . ' ' . $item->last_name }}</td>
-                        <td>{{ $item->nemis_number }}</td>
+                        <td>{{ $item->birth_certificate_number }}</td>
                         <td>{{ $item->gender }}</td>
-                        <td>{{ $item->school->school_name ?? '-' }}</td>
+                        <td>{{ $item->dob }}</td>
                         <td>
                             @if($item->dob)
                                 {{ \Carbon\Carbon::parse($item->dob)->age }}
                             @endif
                         </td>
+                        <td>{{ $item->sub_location_id?? '-' }}</td>
+                        <td>{{ $item->village ?? '-' }}</td>
+                        <td>{{ $item->admission_number }}</td>
+                        <td>{{ $item->date_of_admission }}</td>
+                        <td>{{ $item->class }}</td>
+                        <td>{{ $item->school->school_name ?? '-' }}</td>
+                        <td>{{ $item->parental_status ?? '-' }}</td>
+                
+
+
+                        
                         <td>
                             <div class="action-btns">
                                 <a class="act-btn view" title="View Learner" href="{{ route('admin.learners.show', $item->id) }}">

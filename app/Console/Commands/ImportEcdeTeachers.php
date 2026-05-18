@@ -93,6 +93,11 @@ class ImportEcdeTeachers extends Command
 
                     $phoneNumber = PhoneHelper::normalizePhoneNumber($phoneNumber);
 
+                    if (!$phoneNumber) {
+
+                        $phoneNumber = $this->cleanText($row['Phone Number'] ?? null);
+                    }
+
                     $idNumber = $this->cleanText($row['ID Number'] ?? null);
 
                     $ippdNumber = $this->cleanText($row['IPPD Number'] ?? null);
