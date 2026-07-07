@@ -69,7 +69,7 @@ Route::post('/contact', [WebController::class, 'submitContact'])->name('cms.cont
  Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth','permissions']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/dashboard', function () {
