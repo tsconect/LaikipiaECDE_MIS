@@ -36,6 +36,9 @@ class Teacher extends Model
     'ward_id',
     'contract_expiry',
     'retirement_date',
+    'job_group',
+    'remarks',
+    'ethnicity',
 ];
 
     protected $casts = [

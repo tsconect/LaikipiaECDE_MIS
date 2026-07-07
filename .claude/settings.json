@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mysql -u root ecde_4 -N -e ' *)",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, school_name, ward_id FROM ecde_schools LIMIT 10;\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, name, ward_id FROM sub_locations LIMIT 10;\")",
+      "Read(//c/Users/ADMIN/AppData/Local/Temp/**)",
+      "Bash(php inspect_tmp.php)",
+      "Read(//c/Users/ADMIN/AppData/Local/Temp/claude/c--Users-ADMIN-Desktop-TSCONECT-LaikipiaECDE-MIS-LaikipiaECDE-MIS/9afeb44b-58ab-4cfa-834a-b5f2893be657/scratchpad/**)",
+      "Bash(php -l app/Console/Commands/ImportEcdeWardData.php)",
+      "Bash(php -l app/Models/Teacher.php)",
+      "Bash(rm -f inspect3_tmp.php)",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, first_name, last_name, admission_number, dob, school_id, ward_id FROM learners LIMIT 10;\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT COUNT\\(*\\), SUM\\(admission_number IS NULL\\), SUM\\(dob IS NULL\\) FROM learners;\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, school_name FROM ecde_schools WHERE ward_id='q38k1nKzsRS' ORDER BY school_name;\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT w.name, COUNT\\(*\\) FROM ecde_schools s JOIN wards w ON w.id = s.ward_id GROUP BY w.name;\")",
+      "Bash(git add *)"
+    ]
+  }
+}

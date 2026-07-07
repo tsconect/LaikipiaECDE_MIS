@@ -35,7 +35,7 @@ class ImportEcdeLearners extends Command
 
             $defaultWardId = 1; // CHANGE THIS
 
-            $filePath = public_path('org_units/igwamiti_ecde_learners.json');
+            $filePath = public_path('org_units/nanyuki_ecde_learners.json');
 
             if (!file_exists($filePath)) {
                 $this->error("JSON file not found at: {$filePath}");
@@ -98,6 +98,8 @@ class ImportEcdeLearners extends Command
 
                         Log::warning("School not found for learner {$index}: {$firstName} {$lastName}: {$schoolName}");
 
+                        continue;
+                    } else{
                         continue;
                     }
 
