@@ -31,7 +31,7 @@ class LearnerAttendanceController extends Controller
             ->whereBetween('date', [$startDate, $endDate]);
 
         // Restrict for teacher
-        if ($user->role == 'Teacher') {
+        if ($user->role == 'teacher') {
             $query->where('user_id', $user->id);
         }
 
@@ -71,7 +71,7 @@ class LearnerAttendanceController extends Controller
         $schools = EcdeSchools::latest()->get();
 
         
-        if($user->role == 'Teacher'){
+        if($user->role == 'teacher'){
             $teacher = Teacher::where('user_id', $user->id)->first();
 
             if(!$teacher){

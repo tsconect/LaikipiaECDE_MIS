@@ -69,7 +69,7 @@ class LearnerController extends Controller
 
         
 
-        if($user->role == 'Teacher'){
+        if($user->role == 'teacher'){
             $teacher = Teacher::where('user_id', $user->id)->first();
             $schools = EcdeSchools::where('id', $teacher->school_id)->get();
         } else{
