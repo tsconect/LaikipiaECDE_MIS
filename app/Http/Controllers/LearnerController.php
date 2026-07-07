@@ -27,7 +27,7 @@ class LearnerController extends Controller
 
         
 
-        if($user->role == 'Teacher'){
+        if($user->role == 'teacher'){
             $teacher = Teacher::where('user_id', $user->id)->first();
 
             if(!$teacher){
