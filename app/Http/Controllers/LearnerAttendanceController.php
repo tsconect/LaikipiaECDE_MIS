@@ -73,6 +73,7 @@ class LearnerAttendanceController extends Controller
         
         if($user->role == 'teacher'){
             $teacher = Teacher::where('user_id', $user->id)->first();
+             $school_id = $teacher->school_id;
 
             if(!$teacher){
                 return redirect()->back()->with('error', 'Teacher not found');
