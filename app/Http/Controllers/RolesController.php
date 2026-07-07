@@ -37,12 +37,12 @@ class RolesController extends Controller
 
         // update by async with role Teacher
 
-        foreach ($teachers as $teacher) {
-            $teacher->syncRoles('teacher');
-            $teacher->save();
-        }
+        // foreach ($teachers as $teacher) {
+        //     $teacher->syncRoles('teacher');
+        //     $teacher->save();
+        // }
 
-        dd('done');
+    
 
         log_user_activity(0, 'roles', 'index', 'User accessed the roles index page', 'admin/roles');
 
