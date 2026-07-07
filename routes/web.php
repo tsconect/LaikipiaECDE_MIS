@@ -70,7 +70,7 @@ Route::post('/contact', [WebController::class, 'submitContact'])->name('cms.cont
 
 //,'permission'
 //,'permission'
-Route::middleware(['permission'])->group(function(){
+// Route::middleware(['permission'])->group(function(){
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -238,4 +238,4 @@ Route::group(['prefix' => 'admin/cms', 'as' => 'admin.cms.'], function () {
     Route::put('settings', [App\Http\Controllers\CMS\SettingsController::class, 'update'])->name('settings.update');
 });
 
-});
+// });
