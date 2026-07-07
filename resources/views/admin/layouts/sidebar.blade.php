@@ -21,7 +21,7 @@
             <span class="lw-text">Dashboard</span>
         </a>
 
-        @can('admin.ecde-schools.index')
+        @canany(['admin.teachers.index','admin.teachers.create','admin.ecde-schools.index','admin.feeder-schools.index'])
             <div class="nav-divider"></div>
             @php
                 $teachersOpen = request()->routeIs('admin.teachers.*');
@@ -35,8 +35,12 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.teachers.index')}}" class="lw-sub {{ request()->routeIs('admin.teachers.index') ? 'lw-sub-active' : '' }}">All Teachers</a>
-                    <a href="{{route('admin.teachers.create')}}" class="lw-sub {{ request()->routeIs('admin.teachers.create') ? 'lw-sub-active' : '' }}">New Teacher</a>
+                    @can('admin.teachers.index')
+                        <a href="{{route('admin.teachers.index')}}" class="lw-sub {{ request()->routeIs('admin.teachers.index') ? 'lw-sub-active' : '' }}">All Teachers</a>
+                    @endcan
+                    @can('admin.teachers.create')
+                        <a href="{{route('admin.teachers.create')}}" class="lw-sub {{ request()->routeIs('admin.teachers.create') ? 'lw-sub-active' : '' }}">New Teacher</a>
+                    @endcan
                 </div>
             </div>
 
@@ -52,13 +56,17 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.ecde-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.ecde-schools.*') ? 'lw-sub-active' : '' }}">All Schools</a>
-                    <a href="{{route('admin.feeder-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.feeder-schools.*') ? 'lw-sub-active' : '' }}">Feeder Schools</a>
+                    @can('admin.ecde-schools.index')
+                        <a href="{{route('admin.ecde-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.ecde-schools.*') ? 'lw-sub-active' : '' }}">All Schools</a>
+                    @endcan
+                    @can('admin.feeder-schools.index')
+                        <a href="{{route('admin.feeder-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.feeder-schools.*') ? 'lw-sub-active' : '' }}">Feeder Schools</a>
+                    @endcan
                 </div>
             </div>
         @endcan
 
-        @if (Route::has('zones.index') && Route::has('routes.index') && Route::has('zones.analytics'))
+        @canany(['zones.index', 'routes.index', 'zones.analytics'])
             @php
                 $netOpen = request()->routeIs('zones.*', 'routes.*');
             @endphp
@@ -69,12 +77,18 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{ route('zones.index') }}" class="lw-sub {{ request()->routeIs('zones.index', 'zones.create', 'zones.edit', 'zones.show') ? 'lw-sub-active' : '' }}">Zones</a>
-                    <a href="{{ route('routes.index') }}" class="lw-sub {{ request()->routeIs('routes.*') ? 'lw-sub-active' : '' }}">Routes</a>
-                    <a href="{{ route('zones.analytics') }}" class="lw-sub {{ request()->routeIs('zones.analytics') ? 'lw-sub-active' : '' }}">Analytics</a>
+                    @can('zones.index')
+                        <a href="{{ route('zones.index') }}" class="lw-sub {{ request()->routeIs('zones.index', 'zones.create', 'zones.edit', 'zones.show') ? 'lw-sub-active' : '' }}">Zones</a>
+                    @endcan
+                    @can('routes.index')
+                        <a href="{{ route('routes.index') }}" class="lw-sub {{ request()->routeIs('routes.*') ? 'lw-sub-active' : '' }}">Routes</a>
+                    @endcan
+                    @can('zones.analytics')
+                        <a href="{{ route('zones.analytics') }}" class="lw-sub {{ request()->routeIs('zones.analytics') ? 'lw-sub-active' : '' }}">Analytics</a>
+                    @endcan
                 </div>
             </div>
-        @endif
+        @endcan
 
         @can('admin.coordinators.index')
             @php
@@ -89,7 +103,9 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.coordinators.index')}}" class="lw-sub {{ request()->routeIs('admin.coordinators.*') ? 'lw-sub-active' : '' }}">All Coordinators</a>
+                    @can('admin.coordinators.index')
+                        <a href="{{route('admin.coordinators.index')}}" class="lw-sub {{ request()->routeIs('admin.coordinators.*') ? 'lw-sub-active' : '' }}">All Coordinators</a>
+                    @endcan
                 </div>
             </div>
         @endcan
@@ -108,16 +124,28 @@
                 <i class="bi bi-chevron-down lw-chevron"></i>
             </button>
             <div class="lw-submenu">
-                <a href="{{ route('admin.next-of-kins.index') }}" class="lw-sub {{ request()->routeIs('admin.next-of-kins.*') ? 'lw-sub-active' : '' }}">Next of Kin</a>
-                <a href="{{ route('admin.beneficiaries.index') }}" class="lw-sub {{ request()->routeIs('admin.beneficiaries.*') ? 'lw-sub-active' : '' }}">Beneficiaries</a>
-                <a href="{{ route('admin.education-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.education-histories.*') ? 'lw-sub-active' : '' }}">Academic Qualifications</a>
-                <a href="{{ route('admin.user-unions.index') }}" class="lw-sub {{ request()->routeIs('admin.user-unions.*') ? 'lw-sub-active' : '' }}">My Unions</a>
-                <a href="{{ route('admin.user-documents.index') }}" class="lw-sub {{ request()->routeIs('admin.user-documents.*') ? 'lw-sub-active' : '' }}">My Documents</a>
-                <a href="{{ route('admin.deployment-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.deployment-histories.*') ? 'lw-sub-active' : '' }}"> My Deployment History</a>
+                @can('admin.next-of-kins.index')
+                    <a href="{{ route('admin.next-of-kins.index') }}" class="lw-sub {{ request()->routeIs('admin.next-of-kins.*') ? 'lw-sub-active' : '' }}">Next of Kin</a>
+                @endcan
+                @can('admin.beneficiaries.index')
+                    <a href="{{ route('admin.beneficiaries.index') }}" class="lw-sub {{ request()->routeIs('admin.beneficiaries.*') ? 'lw-sub-active' : '' }}">Beneficiaries</a>
+                @endcan
+                @can('admin.education-histories.index')
+                    <a href="{{ route('admin.education-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.education-histories.*') ? 'lw-sub-active' : '' }}">Academic Qualifications</a>
+                @endcan
+                @can('admin.user-unions.index')
+                    <a href="{{ route('admin.user-unions.index') }}" class="lw-sub {{ request()->routeIs('admin.user-unions.*') ? 'lw-sub-active' : '' }}">My Unions</a>
+                @endcan
+                @can('admin.user-documents.index')
+                    <a href="{{ route('admin.user-documents.index') }}" class="lw-sub {{ request()->routeIs('admin.user-documents.*') ? 'lw-sub-active' : '' }}">My Documents</a>
+                @endcan
+                @can('admin.deployment-histories.index')
+                    <a href="{{ route('admin.deployment-histories.index') }}" class="lw-sub {{ request()->routeIs('admin.deployment-histories.*') ? 'lw-sub-active' : '' }}"> My Deployment History</a>
+                @endcan
             </div>
         </div>
 
-        @can('admin.learners.index')
+        @canany(['admin.learners.index', 'admin.learner-attendances.index', 'admin.non-attendance-days.index'])
             @php
                 $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*, admin.non-attendance-days.*');
             @endphp
@@ -130,16 +158,24 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
-                    <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
-                    <a href="{{ route('admin.non-attendance-days.index') }}" class="lw-sub {{ request()->routeIs('admin.non-attendance-days.index') ? 'lw-sub-active' : '' }}">Non-Attendance Days</a>
-                    <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
-                  
+                    @can('admin.learners.index')
+                        <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
+                    @endcan
+                    @can('admin.learner-attendances.index')
+                        <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
+                    @endcan
+                    @can('admin.non-attendance-days.index')
+                        <a href="{{ route('admin.non-attendance-days.index') }}" class="lw-sub {{ request()->routeIs('admin.non-attendance-days.index') ? 'lw-sub-active' : '' }}">Non-Attendance Days</a>
+                    @endcan
+                    @can('admin.learner-attendances.create')
+                        <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
+                    @endcan
                 </div>
             </div>
         @endcan
+      
 
-        @can('admin.counties.index')
+        @canany(['admin.counties.index', 'admin.sub-counties.index', 'admin.wards.index', 'admin.sub-locations.index'])
             @php
                 $locationsOpen = request()->routeIs('admin.counties.*', 'admin.sub-counties.*', 'admin.wards.*', 'admin.sub-locations.*');
             @endphp
@@ -152,15 +188,24 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.counties.index')}}" class="lw-sub {{ request()->routeIs('admin.counties.*') ? 'lw-sub-active' : '' }}">Counties</a>
-                    <a href="{{route('admin.sub-counties.index')}}" class="lw-sub {{ request()->routeIs('admin.sub-counties.*') ? 'lw-sub-active' : '' }}">Sub Counties</a>
-                    <a href="{{route('admin.wards.index')}}" class="lw-sub {{ request()->routeIs('admin.wards.*') ? 'lw-sub-active' : '' }}">Wards</a>
-                    <a href="{{route('admin.sub-locations.index')}}" class="lw-sub {{ request()->routeIs('admin.sub-locations.*') ? 'lw-sub-active' : '' }}">Sub Locations</a>
+                    @can('admin.counties.index')
+                        <a href="{{route('admin.counties.index')}}" class="lw-sub {{ request()->routeIs('admin.counties.*') ? 'lw-sub-active' : '' }}">Counties</a>
+                    @endcan
+                    @can('admin.sub-counties.index')
+                        <a href="{{route('admin.sub-counties.index')}}" class="lw-sub {{ request()->routeIs('admin.sub-counties.*') ? 'lw-sub-active' : '' }}">Sub Counties</a>
+                    @endcan
+                    @can('admin.wards.index')
+                        <a href="{{route('admin.wards.index')}}" class="lw-sub {{ request()->routeIs('admin.wards.*') ? 'lw-sub-active' : '' }}">Wards</a>
+                    @endcan
+                    @can('admin.sub-locations.index')
+                        <a href="{{route('admin.sub-locations.index')}}" class="lw-sub {{ request()->routeIs('admin.sub-locations.*') ? 'lw-sub-active' : '' }}">Sub Locations</a>
+                    @endcan
                 </div>
             </div>
         @endcan
+       
 
-        @can('admin.sms-logs.index')
+        @canany(['admin.sms-logs.index', 'admin.sms-dashboard'])
             @php
                 $smsOpen = request()->routeIs('admin.sms-logs.*', 'admin.sms-dashboard');
             @endphp
@@ -173,15 +218,21 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.sms-logs.index')}}" class="lw-sub {{ request()->routeIs('admin.sms-logs.*') ? 'lw-sub-active' : '' }}">SMS Logs</a>
-                    <a href="{{route('admin.sms-dashboard')}}" class="lw-sub {{ request()->routeIs('admin.sms-dashboard') ? 'lw-sub-active' : '' }}">SMS Dashboard</a>
+                    @can('admin.sms-logs.index')
+                        <a href="{{route('admin.sms-logs.index')}}" class="lw-sub {{ request()->routeIs('admin.sms-logs.*') ? 'lw-sub-active' : '' }}">SMS Logs</a>
+                    @endcan
+                    @can('admin.sms-dashboard')
+                        <a href="{{route('admin.sms-dashboard')}}" class="lw-sub {{ request()->routeIs('admin.sms-dashboard') ? 'lw-sub-active' : '' }}">SMS Dashboard</a>
+                    @endcan
                 </div>
             </div>
         @endcan
 
+
+
         <div class="nav-divider"></div>
 
-        @can('admin.unions.all')
+        @canany(['admin.unions.all','admin.documents.all','admin.ethnic-groups.all','admin.job-groups.all'])
             @php
                 $setupOpen = request()->routeIs('admin.unions.*', 'admin.documents.*', 'admin.ethnic-groups.*', 'admin.job-groups.*');
             @endphp
@@ -194,15 +245,23 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.unions.index')}}" class="lw-sub {{ request()->routeIs('admin.unions.*') ? 'lw-sub-active' : '' }}">Unions</a>
-                    <a href="{{route('admin.documents.index')}}" class="lw-sub {{ request()->routeIs('admin.documents.*') ? 'lw-sub-active' : '' }}">Documents</a>
-                    <a href="{{route('admin.ethnic-groups.index')}}" class="lw-sub {{ request()->routeIs('admin.ethnic-groups.*') ? 'lw-sub-active' : '' }}">Ethnic Groups</a>
-                    <a href="{{route('admin.job-groups.index')}}" class="lw-sub {{ request()->routeIs('admin.job-groups.*') ? 'lw-sub-active' : '' }}">Job Groups</a>
+                    @can('admin.unions.index')
+                        <a href="{{route('admin.unions.index')}}" class="lw-sub {{ request()->routeIs('admin.unions.*') ? 'lw-sub-active' : '' }}">Unions</a>
+                    @endcan
+                    @can('admin.documents.index')
+                        <a href="{{route('admin.documents.index')}}" class="lw-sub {{ request()->routeIs('admin.documents.*') ? 'lw-sub-active' : '' }}">Documents</a>
+                    @endcan
+                    @can('admin.ethnic-groups.index')
+                        <a href="{{route('admin.ethnic-groups.index')}}" class="lw-sub {{ request()->routeIs('admin.ethnic-groups.*') ? 'lw-sub-active' : '' }}">Ethnic Groups</a>
+                    @endcan
+                    @can('admin.job-groups.index')
+                        <a href="{{route('admin.job-groups.index')}}" class="lw-sub {{ request()->routeIs('admin.job-groups.*') ? 'lw-sub-active' : '' }}">Job Groups</a>
+                    @endcan
                 </div>
             </div>
         @endcan
 
-        @can('admin.users.index')
+        @canany(['admin.users.index', 'admin.roles.index', 'admin.system.logs', 'admin.system_logs_details'])
             @php
                 $usersOpen = request()->routeIs('admin.users.*', 'admin.roles.*', 'admin.system.logs', 'admin.system_logs_details');
             @endphp
@@ -215,14 +274,20 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{route('admin.users.index')}}" class="lw-sub {{ request()->routeIs('admin.users.*') ? 'lw-sub-active' : '' }}">Users</a>
-                    <a href="{{route('admin.roles.index')}}" class="lw-sub {{ request()->routeIs('admin.roles.*') ? 'lw-sub-active' : '' }}">Roles</a>
-                    <a href="{{route('admin.system.logs')}}" class="lw-sub {{ request()->routeIs('admin.system.logs', 'admin.system_logs_details') ? 'lw-sub-active' : '' }}">System Logs</a>
+                    @can('admin.users.index')
+                        <a href="{{route('admin.users.index')}}" class="lw-sub {{ request()->routeIs('admin.users.*') ? 'lw-sub-active' : '' }}">Users</a>
+                    @endcan
+                    @can('admin.roles.index')
+                        <a href="{{route('admin.roles.index')}}" class="lw-sub {{ request()->routeIs('admin.roles.*') ? 'lw-sub-active' : '' }}">Roles</a>
+                    @endcan
+                    @can('admin.system.logs')
+                        <a href="{{route('admin.system.logs')}}" class="lw-sub {{ request()->routeIs('admin.system.logs', 'admin.system_logs_details') ? 'lw-sub-active' : '' }}">System Logs</a>
+                    @endcan
                 </div>
             </div>
         @endcan
 
-        @can('admin.cms.settings.index')
+        @canany(['admin.cms.settings.index','admin.cms.pages.index','admin.cms.posts.index','admin.cms.galleries.index','admin.cms.announcements.index','admin.cms.faqs.index','admin.cms.testimonials.index','admin.cms.contact-messages.index'])
             @php
                 $settingsOpen = request()->routeIs('admin.cms.settings.*', 'admin.cms.pages.*', 'admin.cms.posts.*', 'admin.cms.galleries.*', 'admin.cms.announcements.*', 'admin.cms.faqs.*', 'admin.cms.testimonials.*', 'admin.cms.contact-messages.*');
             @endphp
@@ -235,15 +300,33 @@
                     <i class="bi bi-chevron-down lw-chevron"></i>
                 </button>
                 <div class="lw-submenu">
-                    <a href="{{ route('admin.features.index') }}" class="lw-sub {{ request()->routeIs('admin.features.*') ? 'lw-sub-active' : '' }}">Features</a>
-                    <a href="{{ route('admin.cms.settings.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.settings.*') ? 'lw-sub-active' : '' }}">Site Settings</a>
-                    <a href="{{ route('admin.cms.pages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.pages.*') ? 'lw-sub-active' : '' }}">Pages</a>
-                    <a href="{{ route('admin.cms.posts.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.posts.*') ? 'lw-sub-active' : '' }}">Blog Posts</a>
-                    <a href="{{ route('admin.cms.galleries.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.galleries.*') ? 'lw-sub-active' : '' }}">Galleries</a>
-                    <a href="{{ route('admin.cms.announcements.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.announcements.*') ? 'lw-sub-active' : '' }}">Announcements</a>
-                    <a href="{{ route('admin.cms.faqs.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.faqs.*') ? 'lw-sub-active' : '' }}">FAQs</a>
-                    <a href="{{ route('admin.cms.testimonials.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.testimonials.*') ? 'lw-sub-active' : '' }}">Testimonials</a>
-                    <a href="{{ route('admin.cms.contact-messages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.contact-messages.*') ? 'lw-sub-active' : '' }}">Contact Messages</a>
+                    @can('admin.features.index')
+                        <a href="{{ route('admin.features.index') }}" class="lw-sub {{ request()->routeIs('admin.features.*') ? 'lw-sub-active' : '' }}">Features</a>
+                    @endcan
+                    @can('admin.cms.settings.index')
+                        <a href="{{ route('admin.cms.settings.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.settings.*') ? 'lw-sub-active' : '' }}">Site Settings</a>
+                    @endcan
+                    @can('admin.cms.pages.index')
+                        <a href="{{ route('admin.cms.pages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.pages.*') ? 'lw-sub-active' : '' }}">Pages</a>
+                    @endcan
+                    @can('admin.cms.posts.index')
+                        <a href="{{ route('admin.cms.posts.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.posts.*') ? 'lw-sub-active' : '' }}">Blog Posts</a>
+                    @endcan
+                    @can('admin.cms.galleries.index')
+                        <a href="{{ route('admin.cms.galleries.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.galleries.*') ? 'lw-sub-active' : '' }}">Galleries</a>
+                    @endcan
+                    @can('admin.cms.announcements.index')
+                        <a href="{{ route('admin.cms.announcements.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.announcements.*') ? 'lw-sub-active' : '' }}">Announcements</a>
+                    @endcan
+                    @can('admin.cms.faqs.index')
+                        <a href="{{ route('admin.cms.faqs.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.faqs.*') ? 'lw-sub-active' : '' }}">FAQs</a>
+                    @endcan
+                    @can('admin.cms.testimonials.index')
+                        <a href="{{ route('admin.cms.testimonials.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.testimonials.*') ? 'lw-sub-active' : '' }}">Testimonials</a>
+                    @endcan
+                    @can('admin.cms.contact-messages.index')
+                        <a href="{{ route('admin.cms.contact-messages.index') }}" class="lw-sub {{ request()->routeIs('admin.cms.contact-messages.*') ? 'lw-sub-active' : '' }}">Contact Messages</a>
+                    @endcan
                 </div>
             </div>
         @endcan
