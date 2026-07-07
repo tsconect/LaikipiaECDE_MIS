@@ -10,9 +10,9 @@
         <div class="table-banner-title"><span>SYSTEM</span> LOGS</div>
     </div>
 
-    <div class="section-body section-body-flush">
+    <div class="section-body p-2 section-body-flush">
         <div class="table-responsive">
-            <table class="data-table dt-admin" id="dt-basic10">
+            <table class="dt-admin" id="dt-basic10">
                 <thead>
                     <tr>
                         <th>S/NO</th>
