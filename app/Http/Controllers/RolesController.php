@@ -29,9 +29,7 @@ class RolesController extends Controller
      */
     public function index(Request $request)
     {
-        $user = User::where('id', '=', '7')->first();
-        $user->password = bcrypt('123456');
-        $user->save();
+   
 
         $roles = Role::orderBy('id','DESC')->paginate(5);
 
