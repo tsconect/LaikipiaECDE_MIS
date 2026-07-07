@@ -68,8 +68,10 @@ Route::post('/contact', [WebController::class, 'submitContact'])->name('cms.cont
  Route::post('login', [AuthController::class, 'authenticate'])->name('login.submit');
  Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-
-Route::group(['middleware' => ['auth','permission']], function () {
+//,'permission'
+//,'permission'
+Route::middleware(['permission'])->group(function(){
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/dashboard', function () {
@@ -234,4 +236,6 @@ Route::group(['prefix' => 'admin/cms', 'as' => 'admin.cms.'], function () {
     // Settings
     Route::get('settings', [App\Http\Controllers\CMS\SettingsController::class, 'index'])->name('settings.index');
     Route::put('settings', [App\Http\Controllers\CMS\SettingsController::class, 'update'])->name('settings.update');
+});
+
 });
