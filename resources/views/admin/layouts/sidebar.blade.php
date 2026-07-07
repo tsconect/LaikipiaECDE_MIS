@@ -117,7 +117,7 @@
             </div>
         </div>
 
-        @can('admin.ecde-students.index')
+        @can('admin.learners.index')
             @php
                 $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*, admin.non-attendance-days.*');
             @endphp
