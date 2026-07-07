@@ -33,6 +33,17 @@ class RolesController extends Controller
 
         $roles = Role::orderBy('id','DESC')->paginate(5);
 
+        $teachers = User::where('role', 'teacher')->get();
+
+        // update by async with role Teacher
+
+        foreach ($teachers as $teacher) {
+            $teacher->syncRoles('teacher');
+            $teacher->save();
+        }
+
+        dd('done');
+
         log_user_activity(0, 'roles', 'index', 'User accessed the roles index page', 'admin/roles');
 
         return view('admin.roles.index',compact('roles'))
