@@ -100,7 +100,20 @@ class ImportEcdeWardData extends Command
             }
         }
 
-        return null;
+        // Fallback for folders named after just part of the official ward name
+        // (e.g. "Rumuruti" folder vs "Rumuruti Township Ward" in the DB). Only
+        // accepted when exactly one ward matches, to avoid guessing wrong.
+        $candidates = [];
+
+        foreach ($wards as $ward) {
+            $wardKey = $this->normalizeWardKey((string) $ward->name);
+
+            if ($wardKey !== '' && (str_starts_with($wardKey, $target) || str_starts_with($target, $wardKey))) {
+                $candidates[] = $ward;
+            }
+        }
+
+        return count($candidates) === 1 ? $candidates[0] : null;
     }
 
     private function normalizeWardKey(string $name): string
@@ -135,12 +148,46 @@ class ImportEcdeWardData extends Command
 
         [$file, $sheetName] = $this->locateSource($wardDir, '/^schools?(\s+done)?$/i', 'school', ['coordinat', 'teacher']);
 
-        if (!$file) {
+        $derived = false;
+        $rows = [];
+
+        if ($file) {
+            $rows = $this->readMappedRows($file, $sheetName);
+        } else {
+            // No dedicated schools list for this ward — fall back to the
+            // distinct school names mentioned in its learners/teachers rows,
+            // so those records still have somewhere to attach to. Minimal
+            // records only (name + ward); no code/sub-location/registration
+            // data exists for these.
+            $derived = true;
+            $names = [];
+
+            $learnerSource = $this->locateSource($wardDir, '/^(all\s+)?learners?(\s+done)?$/i', 'learner', ['coordinat']);
+            $teacherSource = $this->locateSource($wardDir, '/^teachers?(\s+done)?$/i', 'teacher', ['coordinat']);
+
+            foreach ([$learnerSource, $teacherSource] as [$srcFile, $srcSheet]) {
+                if (!$srcFile) {
+                    continue;
+                }
+
+                foreach ($this->readMappedRows($srcFile, $srcSheet) as $row) {
+                    $name = $this->cleanText($row['school'] ?? null);
+
+                    if ($name) {
+                        $names[$name] = true;
+                    }
+                }
+            }
+
+            $rows = array_map(fn ($name) => ['school_name' => $name], array_keys($names));
+        }
+
+        if (!$rows) {
             $this->warn('  No schools source found.');
             return compact('imported', 'skipped');
         }
 
-        foreach ($this->readMappedRows($file, $sheetName) as $row) {
+        foreach ($rows as $row) {
 
             $schoolName = $this->cleanText($row['school_name'] ?? null);
 
@@ -188,7 +235,8 @@ class ImportEcdeWardData extends Command
             $imported++;
         }
 
-        $this->info("  Schools: imported {$imported}, skipped {$skipped} (source: {$this->describeSource($file, $sheetName)})");
+        $sourceLabel = $derived ? 'derived from learners/teachers school names' : $this->describeSource($file, $sheetName);
+        $this->info("  Schools: imported {$imported}, skipped {$skipped} (source: {$sourceLabel})");
 
         return compact('imported', 'skipped');
     }
@@ -288,6 +336,23 @@ class ImportEcdeWardData extends Command
             if (!$school) {
                 $skipped++;
                 continue;
+            }
+
+            // Rows with neither an ID number nor an email have no reliable
+            // key above — fall back to name + school so re-running the
+            // import doesn't create a second copy of the same teacher.
+            if (!$idNumber && $email === '') {
+                $sameNameUserIds = User::where('first_name', $firstName)
+                    ->where('last_name', $lastName)
+                    ->pluck('id');
+
+                $duplicate = $sameNameUserIds->isNotEmpty()
+                    && Teacher::whereIn('user_id', $sameNameUserIds)->where('school_id', $school->id)->exists();
+
+                if ($duplicate) {
+                    $skipped++;
+                    continue;
+                }
             }
 
             if ($dryRun) {
@@ -393,7 +458,7 @@ class ImportEcdeWardData extends Command
         $imported = 0;
         $skipped = 0;
 
-        [$file, $sheetName] = $this->locateSource($wardDir, '/^(all\s+)?learners?(\s+done)?$/i', 'learner');
+        [$file, $sheetName] = $this->locateSource($wardDir, '/^(all\s+)?learners?(\s+done)?$/i', 'learner', ['coordinat']);
 
         if (!$file) {
             $this->warn('  No learners source found.');
@@ -565,20 +630,40 @@ class ImportEcdeWardData extends Command
      */
     private function locateSource(string $dir, string $cleanPattern, string $needle, array $excludes = []): array
     {
-        $cleanFiles = [];
+        $exactFiles = [];
+        $looseFiles = [];
         $otherFiles = [];
 
-        foreach (glob($dir . DIRECTORY_SEPARATOR . '*.xlsx') as $file) {
+        foreach ($this->listWorkbooks($dir) as $file) {
             $base = trim(preg_replace('/\s+/', ' ', pathinfo($file, PATHINFO_FILENAME)));
 
+            $lowerBase = strtolower($base);
+
             if (preg_match($cleanPattern, $base)) {
-                $cleanFiles[] = $file;
+                // Strict "Schools Done.xlsx"-style name — highest confidence.
+                $exactFiles[] = $file;
+            } elseif (str_contains($lowerBase, $needle) && !preg_match('/\bper[\s\-]*' . preg_quote($needle, '/') . '/i', $lowerBase)) {
+                // Looser: filename just mentions the category somewhere
+                // (e.g. "RUMURUTI LEARNERS DETAILS.xlsx"). Only trusted when
+                // nothing stricter exists, and not when the word is really a
+                // qualifier like "...(per school)" on what is actually a
+                // learner breakdown file — that would wrongly outrank the
+                // real "SCHOOLS DONE.xlsx" just for containing "school".
+                $looseFiles[] = $file;
             } else {
                 $otherFiles[] = $file;
             }
         }
 
-        foreach ($cleanFiles as $file) {
+        foreach ($exactFiles as $file) {
+            $sheetName = $this->pickSheet($file, $needle, $excludes, true);
+
+            if ($sheetName !== null) {
+                return [$file, $sheetName];
+            }
+        }
+
+        foreach ($looseFiles as $file) {
             $sheetName = $this->pickSheet($file, $needle, $excludes, true);
 
             if ($sheetName !== null) {
@@ -595,6 +680,18 @@ class ImportEcdeWardData extends Command
         }
 
         return [null, null];
+    }
+
+    /**
+     * Excel drops a hidden "~$name.xlsx" lock file next to any workbook that's
+     * currently open — it isn't real spreadsheet data and must be skipped.
+     */
+    private function listWorkbooks(string $dir): array
+    {
+        return array_values(array_filter(
+            glob($dir . DIRECTORY_SEPARATOR . '*.xlsx'),
+            fn ($file) => !str_starts_with(basename($file), '~$')
+        ));
     }
 
     /**
@@ -618,6 +715,8 @@ class ImportEcdeWardData extends Command
             return $sheetNames[0];
         }
 
+        $candidates = [];
+
         foreach ($sheetNames as $sheetName) {
             $n = strtolower($sheetName);
 
@@ -629,12 +728,58 @@ class ImportEcdeWardData extends Command
                 }
             }
 
-            if (!$excluded && str_contains($n, $needle)) {
+            if ($excluded) {
+                continue;
+            }
+
+            if (str_contains($n, $needle)) {
                 return $sheetName;
+            }
+
+            $candidates[] = $sheetName;
+        }
+
+        // A trusted filename (matched the clean pattern, or mentions the
+        // category by name) but with generically-named sheets inside — e.g.
+        // "RUMURUTI LEARNERS DETAILS.xlsx" containing "Sheet1" + "Sheet2".
+        // The real data sheet is reliably the biggest one; ancillary sheets
+        // like a coordinators list are a handful of rows.
+        return $isCleanFile && $candidates ? $this->largestSheet($file, $candidates) : null;
+    }
+
+    private function largestSheet(string $file, array $sheetNames): ?string
+    {
+        try {
+            $reader = IOFactory::createReaderForFile($file);
+            $reader->setReadDataOnly(true);
+            $reader->setLoadSheetsOnly($sheetNames);
+            $spreadsheet = $reader->load($file);
+        } catch (\Exception $e) {
+            return null;
+        }
+
+        $best = null;
+        $bestRows = -1;
+
+        foreach ($sheetNames as $sheetName) {
+            $sheet = $spreadsheet->getSheetByName($sheetName);
+
+            if (!$sheet) {
+                continue;
+            }
+
+            $rows = $sheet->getHighestDataRow();
+
+            if ($rows > $bestRows) {
+                $bestRows = $rows;
+                $best = $sheetName;
             }
         }
 
-        return null;
+        $spreadsheet->disconnectWorksheets();
+        unset($spreadsheet);
+
+        return $best;
     }
 
     private function describeSource(?string $file, ?string $sheetName): string

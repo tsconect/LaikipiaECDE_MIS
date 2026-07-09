@@ -14,7 +14,11 @@
       "Bash(mysql -u root ecde_4 -N -e \"SELECT COUNT\\(*\\), SUM\\(admission_number IS NULL\\), SUM\\(dob IS NULL\\) FROM learners;\")",
       "Bash(mysql -u root ecde_4 -N -e \"SELECT id, school_name FROM ecde_schools WHERE ward_id='q38k1nKzsRS' ORDER BY school_name;\")",
       "Bash(mysql -u root ecde_4 -N -e \"SELECT w.name, COUNT\\(*\\) FROM ecde_schools s JOIN wards w ON w.id = s.ward_id GROUP BY w.name;\")",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, name FROM wards WHERE name LIKE '%Rumuruti%' OR name LIKE '%Salama%';\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, name FROM wards WHERE name LIKE '%Rumuruti%';\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT id, name FROM wards WHERE name LIKE '%Salama%';\")",
+      "Bash(mysql -u root ecde_4 -N -e \"SELECT w.id,w.name,w.constituency_id FROM wards w WHERE w.name LIKE '%Rumuruti%' OR w.name LIKE '%Salama%';\")"
     ]
   }
 }
