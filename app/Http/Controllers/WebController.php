@@ -11,6 +11,7 @@ use App\Models\EcdeSchools;
 use App\Models\FAQ;
 use App\Models\Feature;
 use App\Models\Gallery;
+use App\Models\Learner;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Settings;
@@ -51,11 +52,8 @@ class WebController extends Controller
         $totalEcdeCentres = $ecde_schools->count();
         $totalLearners = Learner::count();
         $totalTeachers = Teacher::count();
-        $totalSubCounties = $ecde_schools->pluck('subcounty_id')->filter()->unique()->count();
+        $totalWards = $ecde_schools->pluck('ward_id')->filter()->unique()->count();
 
-        if ($totalSubCounties === 0) {
-            $totalSubCounties = $constituencies->count();
-        }
 
         $settings = Settings::all()->pluck('value', 'key')->toArray();
 
@@ -71,7 +69,7 @@ class WebController extends Controller
             'totalEcdeCentres',
             'totalLearners',
             'totalTeachers',
-            'totalSubCounties',
+            'totalWards',
             'features'
         ));
     }

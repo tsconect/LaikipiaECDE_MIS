@@ -895,7 +895,7 @@
       <div class="hero-fcard-icon"><i class="fas fa-users"></i></div>
       <div class="hero-fcard-text">
         <h4>{{ number_format($totalLearners ?? 0) }} Total Learners</h4>
-        <p>Enrolled across {{ number_format($totalSubCounties ?? 0) }} sub-counties this term.</p>
+        <p>Enrolled across {{ number_format($totalWards ?? 0) }} wards this term.</p>
       </div>
     </div>
   </div>
@@ -935,8 +935,8 @@
     </div>
     <div class="schools-overview-card">
       <div class="schools-overview-icon"><i class="fas fa-map-marker-alt"></i></div>
-      <div class="schools-overview-value">{{ number_format($totalSubCounties ?? 0) }}</div>
-      <div class="schools-overview-title">Sub-Counties</div>
+      <div class="schools-overview-value">{{ number_format($totalWards ?? 0) }}</div>
+      <div class="schools-overview-title">Wards</div>
       <div class="schools-overview-desc">Covered by the ECDE programme</div>
     </div>
   </div>
