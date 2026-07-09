@@ -49,9 +49,7 @@ class WebController extends Controller
             ->get();
 
         $totalEcdeCentres = $ecde_schools->count();
-        $totalLearners = $ecde_schools->sum(function ($school) {
-            return (int) preg_replace('/[^0-9]/', '', (string) ($school->number_of_students ?? 0));
-        });
+        $totalLearners = Learner::count();
         $totalTeachers = Teacher::count();
         $totalSubCounties = $ecde_schools->pluck('subcounty_id')->filter()->unique()->count();
 

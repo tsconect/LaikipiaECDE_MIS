@@ -30,6 +30,8 @@
     </div>
 </div>
 
+cd "c:/Users/ADMIN/Desktop/TSCONECT/LaikipiaECDE_MIS/LaikipiaECDE_MIS" && php -l app/Console/Commands/ImportEcdeWardData.php && php artisan ecde:import-ward-data --dry-run 2>&1 | tail -65
+
 <script>
 $(document).ready(function () {
     $('#dt-basic10').DataTable({
