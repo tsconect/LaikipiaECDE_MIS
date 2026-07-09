@@ -13,6 +13,7 @@ use App\Models\Teacher;
 use App\Models\Ward;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Yajra\DataTables\Facades\DataTables;
 
 class LearnerController extends Controller
 {
@@ -21,26 +22,64 @@ class LearnerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
-        
+        $query = Learner::query()->with('school:id,school_name');
 
-        if($user->role == 'teacher'){
+        if ($user->role == 'teacher') {
             $teacher = Teacher::where('user_id', $user->id)->first();
 
-            if(!$teacher){
+            if (!$teacher) {
                 return redirect()->back()->with('error', 'Teacher not found');
             }
-            $learners = Learner::where('school_id', $teacher->school_id)->latest()->get();
-        } else{
-            $learners = Learner::latest()->get();
+            $query->where('school_id', $teacher->school_id);
         }
 
-        
+        if ($request->ajax()) {
+            $learners = $query->latest();
+
+            return DataTables::eloquent($learners)
+                ->addColumn('full_name', function ($row) {
+                    return trim($row->first_name . ' ' . $row->middle_name . ' ' . $row->last_name);
+                })
+
+                ->addColumn('age', function ($row) {
+                    return $row->dob ? \Carbon\Carbon::parse($row->dob)->age : '-';
+                })
+
+                ->addColumn('sub_location', function ($row) {
+                    return $row->sub_location_id ?? '-';
+                })
+
+                ->addColumn('school', function ($row) {
+                    return $row->school->school_name ?? '-';
+                })
+
+                ->addColumn('action', function ($row) {
+                    return '<div class="action-btns">
+                                <a class="act-btn view" title="View Learner" href="' . route('admin.learners.show', $row->id) . '">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a class="act-btn edit" title="Edit Learner" href="' . route('admin.learners.edit', $row->id) . '">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <form action="' . route('admin.learners.destroy', $row->id) . '" method="POST" class="inline-form" onsubmit="return confirm(\'Delete this learner?\');">
+                                    ' . csrf_field() . method_field('DELETE') . '
+                                    <button type="submit" class="act-btn delete" title="Delete Learner">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+                            </div>';
+                })
+
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
         log_user_activity(0, 'learners', 'index', 'User accessed the learners index page', 'admin/learners');
-        return view('admin.learners.index', compact('learners'));
+        return view('admin.learners.index');
     }
 
     /**
