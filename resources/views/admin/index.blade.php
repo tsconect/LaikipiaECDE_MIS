@@ -114,10 +114,30 @@
     {{-- retiring teachers --}}
 
     <!-- retiring teachers count -->
-    <div class="stat-card c-blue bento-col-3">
+    {{-- <div class="stat-card c-blue bento-col-3">
       <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
       <div class="stat-label">Retiring Teachers</div>
       <div class="stat-value">{{ number_format($retiringTeachers ?? 0) }}</div>
+      <span class="stat-badge up enrolled"> In 5 Years</span>
+    </div> --}}
+
+    {{-- male retiring teachers --}}
+
+    <!-- male retiring teachers count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Male Retiring Teachers</div>
+      <div class="stat-value">{{ number_format($maleRetiringTeachers ?? 0) }}</div>
+      <span class="stat-badge up enrolled"> In 5 Years</span>
+    </div>
+
+    {{-- female retiring teachers --}}
+
+    <!-- female retiring teachers count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Female Retiring Teachers</div>
+      <div class="stat-value">{{ number_format($femaleRetiringTeachers ?? 0) }}</div>
       <span class="stat-badge up enrolled"> In 5 Years</span>
     </div>
 

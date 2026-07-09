@@ -143,6 +143,12 @@ class DashboardController extends Controller
         $totalTeachers = Teacher::count();
 
         $retiringTeachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+5 years'))])->count();
+        $maleRetiringTeachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+5 years'))])->whereHas('user', function($q) {
+            $q->where('gender', 'male');
+        })->count();
+        $femaleRetiringTeachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+5 years'))])->whereHas('user', function($q) {
+            $q->where('gender', 'female');
+        })->count();
 
 
 
@@ -152,7 +158,7 @@ class DashboardController extends Controller
             'learner_female', 'learner_male', 'teacher_female', 'teacher_male',
             'pwd_teachers', 'pwd_learners', 'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other',
             'present_today', 'absent_today', 'teachers', 'learners', 'days', 'maleData', 'femaleData', 'teacherAgeCounts', 'teacherEthnicityCounts', 'infra_counts',
-            'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other', 'maleLearners', 'femaleLearners', 'maleTeachers', 'femaleTeachers','totalTeachers','retiringTeachers'
+            'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other', 'maleLearners', 'femaleLearners', 'maleTeachers', 'femaleTeachers','totalTeachers','retiringTeachers', 'maleRetiringTeachers', 'femaleRetiringTeachers'
         ));
     }
 }
