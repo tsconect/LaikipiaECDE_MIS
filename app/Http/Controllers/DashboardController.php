@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Learner;
 use App\Models\Teacher;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -131,6 +132,17 @@ class DashboardController extends Controller
         $infra_temp = $infraCounts['temporary'] ?? 0;
         $infra_other = $infraCounts['other'] ?? 0;
         $infra_counts = $infraCounts;
+        $maleLearners = Learner::where('gender', 'male')->count();
+        $femaleLearners = Learner::where('gender', 'female')->count();
+        $maleTeachers = Teacher::whereHas('user', function($q) {
+            $q->where('gender', 'male');
+        })->count();
+        $femaleTeachers = Teacher::whereHas('user', function($q) {
+            $q->where('gender', 'female');
+        })->count();
+        $totalTeachers = Teacher::count();
+
+        $retiringTeachers = Teacher::whereBetween('retirement_date', [date('Y-m-d'), date('Y-m-d', strtotime('+5 years'))])->count();
 
 
 
@@ -140,7 +152,7 @@ class DashboardController extends Controller
             'learner_female', 'learner_male', 'teacher_female', 'teacher_male',
             'pwd_teachers', 'pwd_learners', 'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other',
             'present_today', 'absent_today', 'teachers', 'learners', 'days', 'maleData', 'femaleData', 'teacherAgeCounts', 'teacherEthnicityCounts', 'infra_counts',
-            'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other'
+            'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other', 'maleLearners', 'femaleLearners', 'maleTeachers', 'femaleTeachers','totalTeachers','retiringTeachers'
         ));
     }
 }

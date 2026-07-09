@@ -62,6 +62,65 @@
       <div class="ratio-bar"><div class="ratio-fill js-width" data-width="{{ min(100, $ratio * 2) }}"></div></div>
     </div>
 
+    {{-- male learners --}}
+
+    <!-- male learners count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Male Learners Enrolled</div>
+      <div class="stat-value">{{ number_format($maleLearners ?? 0) }}</div>
+      <span class="stat-badge up enrolled">— enrolled</span>
+    </div>
+
+    {{-- female learners --}}
+    <!-- female learners count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Female Learners Enrolled</div>
+      <div class="stat-value">{{ number_format($femaleLearners ?? 0) }}</div>
+      <span class="stat-badge up enrolled">— enrolled</span>
+    </div>
+
+    {{-- total teachers --}}
+
+    <!-- total teachers count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Total Teachers</div>
+      <div class="stat-value">{{ number_format($totalTeachers ?? 0) }}</div>
+      <span class="stat-badge up enrolled">— teachers</span>
+    </div>
+
+    {{-- male teachers --}} 
+
+    <!-- male teachers count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Male Teachers</div>
+      <div class="stat-value">{{ number_format($maleTeachers ?? 0) }}</div>
+      <span class="stat-badge up enrolled">— teachers</span>
+    </div>
+
+    {{-- female teachers --}}
+
+    <!-- female teachers count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Female Teachers</div>
+      <div class="stat-value">{{ number_format($femaleTeachers ?? 0) }}</div>
+      <span class="stat-badge up enrolled">— teachers</span>
+    </div>
+
+    {{-- retiring teachers --}}
+
+    <!-- retiring teachers count -->
+    <div class="stat-card c-blue bento-col-3">
+      <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+      <div class="stat-label">Retiring Teachers</div>
+      <div class="stat-value">{{ number_format($retiringTeachers ?? 0) }}</div>
+      <span class="stat-badge up enrolled"> In 5 Years</span>
+    </div>
+
     <!-- Absenteeism % -->
     <div class="stat-card c-red bento-col-3">
       <div class="stat-icon"><i class="bi bi-person-x-fill"></i></div>
@@ -201,7 +260,8 @@
         <tbody>
           @foreach($retiring_teachers as $teacher)
           <tr>
-            <td class="td-strong">{{ $teacher->user->first_name ?? '' }} {{ $teacher->user->last_name ?? '' }}</td>
+            <td class="td-strong"><a href="{{ route('admin.teachers.show', $teacher->id) }}" style="text-decoration: none; color: blue;">
+            {{ $teacher->user->first_name ?? '' }} {{ $teacher->user->last_name ?? '' }}</a></td>
             <td>{{ $teacher->school->school_name ?? '-' }}</td>
             <td>{{ \Carbon\Carbon::parse($teacher->dob)->age }} yrs</td>
             <td class="ta-right">{{ $teacher->retirement_date->diffForHumans() }}</td>
