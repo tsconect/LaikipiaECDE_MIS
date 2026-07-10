@@ -293,6 +293,44 @@
     </div>
   </div>
 
+  {{-- teachers and learners distribution per ward use $wards --}}
+
+    <div class="section-card table-card">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="panel-title-dot retiring"></span>
+        Teachers and Learners Distribution
+      </div>
+      <span class="panel-badge retiring">Per Ward</span>
+    </div>
+    <div class="section-body-flush p-4">
+      <table class="data-table2 p-2 table-bordered table-striped ">
+        <thead>
+          <tr>
+            <th>Ward</th>
+            <th>Teachers</th>
+            <th>Learners</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($wards as $ward)
+          <tr>
+            <td>{{ $ward->name }}</td>
+            <td>{{ $ward->teachers->count() }}</td>
+            <td>{{ $ward->learners->count() }}</td>
+          </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+    </div>
+    
+
+
+
+
+  
+
   <!-- ── Distribution Tables ── -->
   <div class="stats-grid-2 bento-row grid-cols-1 md-grid-cols-12 gap-6">
     <!-- Teacher Age Distribution -->

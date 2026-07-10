@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Learner;
 use App\Models\Teacher;
+use App\Models\Ward;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -150,14 +151,18 @@ class DashboardController extends Controller
             $q->where('gender', 'female');
         })->count();
 
+        // laikipiaWards
+        $wards = Ward::laikipia()->get();
 
+
+  
 
 
         return view('admin.index', compact(
             'schoolsCount', 'teachersCount', 'studentsCount', 'ethnicities', 'retiring_teachers',
             'learner_female', 'learner_male', 'teacher_female', 'teacher_male',
             'pwd_teachers', 'pwd_learners', 'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other',
-            'present_today', 'absent_today', 'teachers', 'learners', 'days', 'maleData', 'femaleData', 'teacherAgeCounts', 'teacherEthnicityCounts', 'infra_counts',
+            'present_today', 'absent_today', 'teachers', 'learners', 'days', 'maleData', 'femaleData', 'teacherAgeCounts', 'teacherEthnicityCounts', 'infra_counts','wards',
             'infra_permanent', 'infra_semi', 'infra_temp', 'infra_other', 'maleLearners', 'femaleLearners', 'maleTeachers', 'femaleTeachers','totalTeachers','retiringTeachers', 'maleRetiringTeachers', 'femaleRetiringTeachers'
         ));
     }
