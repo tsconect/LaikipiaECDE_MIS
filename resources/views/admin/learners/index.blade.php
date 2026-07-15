@@ -11,12 +11,14 @@
         <div class="table-banner">
             <div class="table-banner-title"><span>LEARNERS</span></div>
             <div class="banner-actions">
+            @can('admin.learners.create')
                 <a href="{{ route('admin.learners.create') }}">
                     <button class="btn-new">
                         <i class="bi bi-plus-lg"></i>
                         New Learner
                     </button>
                 </a>
+            @endcan
             </div>
         </div>
 <div class="p-3">
