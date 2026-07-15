@@ -60,24 +60,38 @@ class LearnerController extends Controller
                 ->addColumn('school', function ($row) {
                     return $row->school->school_name ?? '-';
                 })
-
                 ->addColumn('action', function ($row) {
-                    return '<div class="action-btns">
-                                <a class="act-btn view" title="View Learner" href="' . route('admin.learners.show', $row->id) . '">
-                                    <i class="bi bi-eye"></i>
-                                </a>
-                                <a class="act-btn edit" title="Edit Learner" href="' . route('admin.learners.edit', $row->id) . '">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <form action="' . route('admin.learners.destroy', $row->id) . '" method="POST" class="inline-form" onsubmit="return confirm(\'Delete this learner?\');">
-                                    ' . csrf_field() . method_field('DELETE') . '
-                                    <button type="submit" class="act-btn delete" title="Delete Learner">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </div>';
-                })
+                    $buttons = '<div class="action-btns">';
 
+                    if (auth()->user()->can('admin.learners.show')) {
+                        $buttons .= '
+                            <a class="act-btn view" title="View Learner" href="' . route('admin.learners.show', $row->id) . '">
+                                <i class="bi bi-eye"></i>
+                            </a>';
+                    }
+
+                    if (auth()->user()->can('admin.learners.edit')) {
+                        $buttons .= '
+                            <a class="act-btn edit" title="Edit Learner" href="' . route('admin.learners.edit', $row->id) . '">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>';
+                    }
+
+                    if (auth()->user()->can('admin.learners.destroy')) {
+                        $buttons .= '
+                            <form action="' . route('admin.learners.destroy', $row->id) . '" method="POST" class="d-inline" onsubmit="return confirm(\'Delete this learner?\');">
+                                ' . csrf_field() . '
+                                ' . method_field('DELETE') . '
+                                <button type="submit" class="act-btn delete" title="Delete Learner">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>';
+                    }
+
+                    $buttons .= '</div>';
+
+                    return $buttons;
+                })
                 ->rawColumns(['action'])
                 ->make(true);
         }
