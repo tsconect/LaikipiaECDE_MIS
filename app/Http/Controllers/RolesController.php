@@ -42,12 +42,12 @@ class RolesController extends Controller
         //     $teacher->save();
         // }
 
-        $cordinators = User::where('role','cordinator')->get();
+        // $cordinators = User::where('role','cordinator')->get();
         
-        foreach ($cordinators as $cordinator) {
-            $cordinator->syncRoles('Cordinator');
-            $cordinator->save();
-        }
+        // foreach ($cordinators as $cordinator) {
+        //     $cordinator->syncRoles('Cordinator');
+        //     $cordinator->save();
+        // }
 
         // dd($cordinators);
 

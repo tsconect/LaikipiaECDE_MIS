@@ -110,6 +110,36 @@
             </div>
         @endcan
 
+
+        @canany(['admin.learners.index', 'admin.learner-attendances.index', 'admin.non-attendance-days.index'])
+            @php
+                $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*, admin.non-attendance-days.*');
+            @endphp
+            <div class="lw-dropdown {{ $learnersOpen ? 'lw-open' : '' }}">
+                <button class="lw-link lw-drop-btn {{ $learnersOpen ? 'lw-link-active' : '' }}" data-label="Learners" type="button">
+                    <span class="lw-icon">
+                        <i class="bi bi-mortarboard"></i>
+                    </span>
+                    <span class="lw-text">Learners</span>
+                    <i class="bi bi-chevron-down lw-chevron"></i>
+                </button>
+                <div class="lw-submenu">
+                    @can('admin.learners.index')
+                        <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
+                    @endcan
+                    @can('admin.learner-attendances.index')
+                        <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
+                    @endcan
+                    @can('admin.non-attendance-days.index')
+                        <a href="{{ route('admin.non-attendance-days.index') }}" class="lw-sub {{ request()->routeIs('admin.non-attendance-days.index') ? 'lw-sub-active' : '' }}">Non-Attendance Days</a>
+                    @endcan
+                    @can('admin.learner-attendances.create')
+                        <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
+                    @endcan
+                </div>
+            </div>
+        @endcan
+      
         <div class="nav-divider"></div>
 
         @php
@@ -144,36 +174,6 @@
                 @endcan
             </div>
         </div>
-
-        @canany(['admin.learners.index', 'admin.learner-attendances.index', 'admin.non-attendance-days.index'])
-            @php
-                $learnersOpen = request()->routeIs('admin.learners.*', 'admin.learner-attendances.*, admin.non-attendance-days.*');
-            @endphp
-            <div class="lw-dropdown {{ $learnersOpen ? 'lw-open' : '' }}">
-                <button class="lw-link lw-drop-btn {{ $learnersOpen ? 'lw-link-active' : '' }}" data-label="Learners" type="button">
-                    <span class="lw-icon">
-                        <i class="bi bi-mortarboard"></i>
-                    </span>
-                    <span class="lw-text">Learners</span>
-                    <i class="bi bi-chevron-down lw-chevron"></i>
-                </button>
-                <div class="lw-submenu">
-                    @can('admin.learners.index')
-                        <a href="{{ route('admin.learners.index') }}" class="lw-sub {{ request()->routeIs('admin.learners.*') ? 'lw-sub-active' : '' }}">All Learners</a>
-                    @endcan
-                    @can('admin.learner-attendances.index')
-                        <a href="{{ route('admin.learner-attendances.index') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.index') ? 'lw-sub-active' : '' }}">Attendances</a>
-                    @endcan
-                    @can('admin.non-attendance-days.index')
-                        <a href="{{ route('admin.non-attendance-days.index') }}" class="lw-sub {{ request()->routeIs('admin.non-attendance-days.index') ? 'lw-sub-active' : '' }}">Non-Attendance Days</a>
-                    @endcan
-                    @can('admin.learner-attendances.create')
-                        <a href="{{ route('admin.learner-attendances.create') }}" class="lw-sub {{ request()->routeIs('admin.learner-attendances.create') ? 'lw-sub-active' : '' }}">Mark Register</a>
-                    @endcan
-                </div>
-            </div>
-        @endcan
-      
 
         @canany(['admin.counties.index', 'admin.sub-counties.index', 'admin.wards.index', 'admin.sub-locations.index'])
             @php
