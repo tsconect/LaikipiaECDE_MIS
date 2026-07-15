@@ -232,7 +232,7 @@
 
         <div class="nav-divider"></div>
 
-        @canany(['admin.unions.all','admin.documents.all','admin.ethnic-groups.all','admin.job-groups.all'])
+        @canany(['admin.unions.all','admin.documents.index','admin.ethnic-groups.index','admin.job-groups.index'])
             @php
                 $setupOpen = request()->routeIs('admin.unions.*', 'admin.documents.*', 'admin.ethnic-groups.*', 'admin.job-groups.*');
             @endphp
