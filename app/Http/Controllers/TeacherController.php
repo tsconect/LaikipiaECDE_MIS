@@ -37,7 +37,15 @@ class TeacherController extends Controller
    //
    public function index(Request $request)
    {
-      $teachers = Teacher::latest()->get();
+        $user = auth()->user();
+
+        if($user->role == 'cordinator'){
+           
+            $teachers = Teacher::where('ward_id', $user->coordinator->ward_id)->get();
+        }else{
+            $teachers = Teacher::latest()->get();
+        }
+
        log_user_activity(0, 'teachers', 'index', 'User accessed the teachers index page', 'admin/teachers');
        return view('admin.teachers.index', compact('teachers'));
    }

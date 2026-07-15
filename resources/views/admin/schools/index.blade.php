@@ -12,12 +12,14 @@
     <div class="table-banner">
         <div class="table-banner-title"><span>ECDE</span> SCHOOLS</div>
         <div class="banner-actions">
+             @can('admin.ecde-schools.create')
             <a href="{{ route('admin.ecde-schools.create') }}">
                 <button class="btn-new">
                     <i class="bi bi-plus-lg"></i>
                     New School
                 </button>
             </a>
+             @endcan
         </div>
     </div>
 
@@ -50,12 +52,17 @@
                 <td>{{$item->remarks}}</td>
                 <td>
                     <div class="action-btns">
+                    @can('admin.ecde-schools.show')
                         <a class="act-btn view" title="View School" href="{{ route('admin.ecde-schools.show', $item->id) }}">
                             <i class="bi bi-eye"></i>
                         </a>
+                    @endcan
+                    @can('admin.ecde-schools.edit')
                         <a class="act-btn edit" title="Edit School" href="{{ route('admin.ecde-schools.edit', $item->id) }}">
                             <i class="bi bi-pencil-square"></i>
                         </a>
+                        @endcan
+                        @can('admin.ecde-schools.destroy')
                         <form action="{{ route('admin.ecde-schools.destroy', $item->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this school?');">
                             @csrf
                             @method('DELETE')
@@ -63,6 +70,7 @@
                                 <i class="bi bi-trash"></i>
                             </button>
                         </form>
+                    @endcan
                     </div>
                 </td>
             </tr>

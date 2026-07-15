@@ -19,8 +19,16 @@ class ESchoolController extends Controller
 {
        public function index()
        {
+            $user = auth()->user();
 
-           $schools = EcdeSchools::latest()->get();
+            if($user->role == 'cordinator'){
+            
+                $schools = EcdeSchools::where('ward_id', $user->coordinator->ward_id)->get();
+            }else{
+                $schools = EcdeSchools::latest()->get();
+            }
+
+           // $schools = EcdeSchools::latest()->get();
            log_user_activity(0, 'ecde_schools', 'index', 'User accessed the ECDE schools index page', 'admin/ecde-schools');
            return view('admin.schools.index', compact('schools'));
        }

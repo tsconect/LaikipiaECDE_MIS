@@ -37,6 +37,10 @@ class LearnerController extends Controller
             $query->where('school_id', $teacher->school_id);
         }
 
+        if($user->role == 'cordinator'){
+            $query->where('ward_id', $user->coordinator->ward_id);
+        }
+
         if ($request->ajax()) {
             $learners = $query->latest();
 

@@ -24,11 +24,11 @@
         <table class="data-table dt-admin" id="coordinatorsTable">
             <thead>
                 <tr>
-                    <th>ID <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>NAME <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>EMAIL <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>PHONE <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
-                    <th>SUB COUNTY <span class="sort-arrows"><i class="bi bi-caret-up-fill"></i><i class="bi bi-caret-down-fill"></i></span></th>
+                    <th>ID </th>
+                    <th>NAME </th>
+                    <th>EMAIL </th>
+                    <th>PHONE </th>
+                    <th>Ward</th>
                     <th>ACTION</th>
                 </tr>
             </thead>
@@ -39,7 +39,7 @@
                         <td>{{ $item->user->first_name ?? '' }} {{ $item->user->middle_name ?? '' }} {{ $item->user->last_name ?? '' }}</td>
                         <td>{{ $item->user->email ?? '' }}</td>
                         <td>{{ $item->user->phone_number ?? '' }}</td>
-                        <td>{{ $item->constituency->name ?? '—' }}</td>
+                        <td>{{ $item->ward->name ?? '—' }}</td>
                         <td>
                             <div class="action-btns">
                                 <a class="act-btn view" title="View Coordinator" href="{{ route('admin.coordinators.show', $item->id) }}">

@@ -59,9 +59,9 @@
                     @can('admin.ecde-schools.index')
                         <a href="{{route('admin.ecde-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.ecde-schools.*') ? 'lw-sub-active' : '' }}">All Schools</a>
                     @endcan
-                    @can('admin.feeder-schools.index')
+                    {{-- @can('admin.feeder-schools.index')
                         <a href="{{route('admin.feeder-schools.index')}}" class="lw-sub {{ request()->routeIs('admin.feeder-schools.*') ? 'lw-sub-active' : '' }}">Feeder Schools</a>
-                    @endcan
+                    @endcan --}}
                 </div>
             </div>
         @endcan

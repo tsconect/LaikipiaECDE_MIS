@@ -52,4 +52,14 @@ class User extends Authenticatable
         'phone_number',
         'id_number',
     ];
+
+    public function coordinator()
+    {
+        return $this->hasOne(Coordinators::class);
+    }
+
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
+    }
 }

@@ -33,7 +33,7 @@ class RolesController extends Controller
 
         $roles = Role::orderBy('id','DESC')->paginate(5);
 
-        $teachers = User::where('role', 'teacher')->get();
+        // $teachers = User::where('role', 'teacher')->get();
 
         // update by async with role Teacher
 
@@ -41,6 +41,15 @@ class RolesController extends Controller
         //     $teacher->syncRoles('teacher');
         //     $teacher->save();
         // }
+
+        $cordinators = User::where('role','cordinator')->get();
+        
+        foreach ($cordinators as $cordinator) {
+            $cordinator->syncRoles('Cordinator');
+            $cordinator->save();
+        }
+
+        // dd($cordinators);
 
     
 

@@ -14,9 +14,21 @@ class Coordinators extends Model
     function user(){
         return $this->hasOne(User::class,'id','user_id');
     }
-    
+
     function constituency(){
         return $this->belongsTo(Constituency::class, 'subcounty_id', 'constituency_id');
+    }
+
+    function ward(){
+        return $this->belongsTo(Ward::class, 'ward_id', 'id');
+    }
+
+    function ethnicGroup(){
+        return $this->belongsTo(EthnicGroup::class, 'ethnicity_id', 'id');
+    }
+
+    function school(){
+        return $this->belongsTo(EcdeSchools::class, 'school_id', 'id');
     }
     
     function education(){

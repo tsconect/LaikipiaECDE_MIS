@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Helpers\PhoneHelper;
+use App\Models\Coordinators;
 use App\Models\EcdeSchools;
+use App\Models\EthnicGroup;
 use App\Models\Learner;
 use App\Models\SubLocation;
 use App\Models\Teacher;
@@ -30,11 +32,12 @@ class ImportEcdeWardData extends Command
     /**
      * The console command description.
      */
-    protected $description = 'Import ECDE schools, teachers and learners for every ward folder under public/org_units/New folder';
+    protected $description = 'Import ECDE schools, teachers, learners and coordinators for every ward folder under public/org_units/New folder';
 
     private array $schoolCache = [];
     private array $subLocationCache = [];
     private array $villageCache = [];
+    private array $ethnicGroupCache = [];
 
     public function handle()
     {
@@ -53,6 +56,9 @@ class ImportEcdeWardData extends Command
 
         $wards = Ward::all();
         $summary = [];
+        $touchedConstituencyIds = [];
+
+        $this->preloadEthnicGroups();
 
         foreach (glob($root . DIRECTORY_SEPARATOR . '*', GLOB_ONLYDIR) as $wardDir) {
 
@@ -72,6 +78,10 @@ class ImportEcdeWardData extends Command
 
             $this->preloadWardSchools($ward->id);
 
+            if ($ward->constituency_id) {
+                $touchedConstituencyIds[(string) $ward->constituency_id] = true;
+            }
+
             $summary[$folderName] = [
                 'schools' => $this->importSchools($wardDir, $ward, $dryRun),
                 'teachers' => $this->importTeachers($wardDir, $ward, $dryRun),
@@ -79,7 +89,19 @@ class ImportEcdeWardData extends Command
             ];
         }
 
-        $this->printSummary($summary, $dryRun);
+        // The coordinators sheet isn't split per ward folder — it's one file
+        // at the root of "New folder" with a "Ward" text column identifying
+        // each row. Match candidates are restricted to wards belonging to the
+        // same constituencies already touched above, so a garbled/unknown
+        // ward name can't accidentally fuzzy-match some unrelated ward
+        // elsewhere in the country.
+        $coordinatorWardPool = $wards->filter(
+            fn (Ward $w) => isset($touchedConstituencyIds[(string) $w->constituency_id])
+        );
+
+        $coordinatorStats = $this->importCoordinators($root, $coordinatorWardPool, $dryRun);
+
+        $this->printSummary($summary, $coordinatorStats, $dryRun);
 
         return Command::SUCCESS;
     }
@@ -564,6 +586,241 @@ class ImportEcdeWardData extends Command
 
     /*
     |--------------------------------------------------------------------------
+    | Coordinators
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Unlike schools/teachers/learners, coordinators aren't split one file
+     * per ward folder — there's a single "coordinators(edited).xlsx" at the
+     * root of "New folder" with every ward's coordinator in one sheet and a
+     * "Ward" text column identifying which. $candidateWards restricts which
+     * wards a row's "Ward" text is allowed to resolve to.
+     */
+    private function importCoordinators(string $root, $candidateWards, bool $dryRun): array
+    {
+        $imported = 0;
+        $skipped = 0;
+
+        $file = null;
+
+        foreach ($this->listWorkbooks($root) as $candidate) {
+            if (stripos(pathinfo($candidate, PATHINFO_FILENAME), 'coordinat') !== false) {
+                $file = $candidate;
+                break;
+            }
+        }
+
+        if (!$file) {
+            $this->warn('No coordinators source file found at the root of "New folder".');
+            return compact('imported', 'skipped');
+        }
+
+        $sheetName = $this->pickSheet($file, 'coordinat', [], true);
+
+        foreach ($this->readMappedRows($file, $sheetName) as $row) {
+
+            $firstName = $this->cleanText($row['first_name'] ?? null);
+            $lastName = $this->cleanText($row['last_name'] ?? null);
+
+            if (!$firstName || !$lastName) {
+                $skipped++;
+                continue;
+            }
+
+            $ward = $this->matchWardByName((string) ($row['ward'] ?? ''), $candidateWards);
+
+            if (!$ward) {
+                $skipped++;
+                Log::warning("Coordinator {$firstName} {$lastName}: unresolved ward '" . ($row['ward'] ?? '') . "'");
+                continue;
+            }
+
+            $idNumber = $this->cleanText($row['id_number'] ?? null);
+            $email = strtolower(trim((string) ($row['email'] ?? '')));
+
+            if ($email !== '' && User::where('email', $email)->exists()) {
+                $skipped++;
+                continue;
+            }
+
+            if ($idNumber && Coordinators::where('id_number', $idNumber)->exists()) {
+                $skipped++;
+                continue;
+            }
+
+            // No ID number and no email — fall back to name + ward so a
+            // re-run doesn't create a second copy of the same coordinator.
+            if (!$idNumber && $email === '') {
+                $sameNameUserIds = User::where('first_name', $firstName)
+                    ->where('last_name', $lastName)
+                    ->pluck('id');
+
+                $duplicate = $sameNameUserIds->isNotEmpty()
+                    && Coordinators::whereIn('user_id', $sameNameUserIds)->where('ward_id', $ward->id)->exists();
+
+                if ($duplicate) {
+                    $skipped++;
+                    continue;
+                }
+            }
+
+            if ($dryRun) {
+                $imported++;
+                continue;
+            }
+
+            $middleName = $this->cleanText($row['middle_name'] ?? null) ?: 'N/A';
+
+            if ($email === '') {
+                $email = strtolower(Str::slug($firstName . $middleName . $lastName, '')) . '@ecde.com';
+            }
+
+            if (User::where('email', $email)->exists()) {
+                $email = strtolower(Str::slug($firstName . $middleName . $lastName . random_int(1000, 9999), '')) . '@ecde.com';
+            }
+
+            $phoneNumber = $this->cleanText($row['phone_number'] ?? null);
+            $phoneNumber = PhoneHelper::normalizePhoneNumber($phoneNumber) ?: $phoneNumber;
+
+            $ethnicityName = $this->cleanText($row['ethnicity'] ?? null);
+
+            try {
+
+                $user = User::create([
+                    'first_name' => $firstName,
+                    'middle_name' => $middleName,
+                    'last_name' => $lastName,
+                    'email' => $email,
+                    'password' => Hash::make('123456'),
+                    'role' => 'cordinator',
+                    'phone_number' => $phoneNumber,
+                    'id_number' => $idNumber,
+                    'username' => $idNumber,
+                    'status' => 'active',
+                ]);
+
+                Coordinators::create([
+                    'user_id' => $user->id,
+                    'id_number' => $idNumber,
+                    'kra_pin' => strtoupper((string) ($this->cleanText($row['kra_pin'] ?? null))),
+                    'gender' => $this->cleanText($row['gender'] ?? null),
+                    'dob' => $this->parseFlexibleDate($row['dob'] ?? null),
+                    'pwd_status' => $this->cleanText($row['pwd_status'] ?? null),
+                    'disability_type' => $this->cleanText($row['pwd_type'] ?? null),
+                    'pwd_number' => $this->cleanText($row['pwd_number'] ?? null),
+                    'ethnicity_id' => $this->matchEthnicGroup($ethnicityName),
+                    'ethnicity' => $ethnicityName,
+                    'ward_id' => $ward->id,
+                ]);
+
+                $imported++;
+
+            } catch (\Exception $e) {
+
+                $skipped++;
+                Log::error("Failed importing coordinator {$firstName} {$lastName}: " . $e->getMessage());
+            }
+        }
+
+        $this->info("Coordinators: imported {$imported}, skipped {$skipped} (source: {$this->describeSource($file, $sheetName)})");
+
+        return compact('imported', 'skipped');
+    }
+
+    private function matchWardByName(string $rawName, $candidateWards): ?Ward
+    {
+        $target = $this->normalizeWardKey($rawName);
+
+        if ($target === '') {
+            return null;
+        }
+
+        foreach ($candidateWards as $ward) {
+            if ($this->normalizeWardKey((string) $ward->name) === $target) {
+                return $ward;
+            }
+        }
+
+        // Unambiguous prefix match — same case as folder resolution (e.g.
+        // "Rumuruti" vs "Rumuruti Township Ward"): their overall similarity
+        // score is too low to trust, but one is cleanly a prefix of the
+        // other, so accept it as long as exactly one candidate qualifies.
+        $prefixMatches = [];
+
+        foreach ($candidateWards as $ward) {
+            $key = $this->normalizeWardKey((string) $ward->name);
+
+            if ($key !== '' && (str_starts_with($key, $target) || str_starts_with($target, $key))) {
+                $prefixMatches[] = $ward;
+            }
+        }
+
+        if (count($prefixMatches) === 1) {
+            return $prefixMatches[0];
+        }
+
+        $best = null;
+        $bestPct = 0.0;
+
+        foreach ($candidateWards as $ward) {
+            $key = $this->normalizeWardKey((string) $ward->name);
+
+            if ($key === '') {
+                continue;
+            }
+
+            similar_text($target, $key, $pct);
+
+            if ($pct > $bestPct) {
+                $bestPct = $pct;
+                $best = $ward;
+            }
+        }
+
+        return ($best && $bestPct >= 80.0) ? $best : null;
+    }
+
+    private function preloadEthnicGroups(): void
+    {
+        foreach (EthnicGroup::all() as $group) {
+            $key = strtolower(trim((string) $group->name));
+
+            if ($key !== '') {
+                $this->ethnicGroupCache[$key] = $group->id;
+            }
+        }
+    }
+
+    private function matchEthnicGroup(?string $name): ?int
+    {
+        if (!$name) {
+            return null;
+        }
+
+        $key = strtolower(trim($name));
+
+        if (isset($this->ethnicGroupCache[$key])) {
+            return $this->ethnicGroupCache[$key];
+        }
+
+        $best = null;
+        $bestPct = 0.0;
+
+        foreach ($this->ethnicGroupCache as $cachedKey => $id) {
+            similar_text($key, $cachedKey, $pct);
+
+            if ($pct > $bestPct) {
+                $bestPct = $pct;
+                $best = $id;
+            }
+        }
+
+        return ($best !== null && $bestPct >= 85.0) ? $best : null;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Sub-location / village lookups
     |--------------------------------------------------------------------------
     */
@@ -941,6 +1198,7 @@ class ImportEcdeWardData extends Command
             str_contains($h, 'registrationnumber') || str_contains($h, 'regno') => 'reg_number',
             str_contains($h, 'feeder') => 'feeder_school',
             $h === 'school' || $h === 'schools' => 'school',
+            $h === 'ward' => 'ward',
             default => null,
         };
     }
@@ -1030,7 +1288,7 @@ class ImportEcdeWardData extends Command
     |--------------------------------------------------------------------------
     */
 
-    private function printSummary(array $summary, bool $dryRun): void
+    private function printSummary(array $summary, array $coordinatorStats, bool $dryRun): void
     {
         $this->newLine();
         $this->info($dryRun ? '=== DRY RUN SUMMARY ===' : '=== IMPORT SUMMARY ===');
@@ -1058,10 +1316,11 @@ class ImportEcdeWardData extends Command
         }
 
         $this->info(sprintf(
-            'Totals — Schools: %d/%d, Teachers: %d/%d, Learners: %d/%d',
+            'Totals — Schools: %d/%d, Teachers: %d/%d, Learners: %d/%d, Coordinators: %d/%d',
             $totals['schools'][0], $totals['schools'][1],
             $totals['teachers'][0], $totals['teachers'][1],
             $totals['learners'][0], $totals['learners'][1],
+            $coordinatorStats['imported'], $coordinatorStats['skipped'],
         ));
     }
 }

@@ -17,12 +17,14 @@
                         Generate {{ date('F, Y') }} Staff Returns
                     </button>
                 </a> --}}
+                @can('admin.teachers.create')
                 <a href="{{ route('admin.teachers.create') }}">
                     <button class="btn-new">
                         <i class="bi bi-plus-lg"></i>
                         New Teacher
                     </button>
                 </a>
+                @endcan
             </div>
         </div>
 
@@ -60,12 +62,17 @@
                         <td><span class="gender-badge {{ strtolower($item->gender) }}">{{ ucfirst($item->gender) }}</span></td>
                         <td>
                             <div class="action-btns">
+                                @can('admin.teachers.show')
                                 <a class="act-btn view" title="View teacher's metadata" href="{{ route('admin.teachers.show', $item->id) }}">
                                     <i class="bi bi-eye"></i>
                                 </a>
+                                @endcan
+                                @can('admin.teachers.edit')
                                 <a class="act-btn edit" title="Edit Teacher" href="{{ route('admin.teachers.edit', $item->id) }}">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
+                                @endcan
+                                @can('admin.teachers.destroy')
                                 <form action="{{ route('admin.teachers.destroy', $item->id) }}" method="POST" class="inline-form" onsubmit="return confirm('Delete this teacher?');">
                                     @csrf
                                     @method('DELETE')
@@ -73,6 +80,7 @@
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
+                                @endcan
                             </div>
                         </td>
                     </tr>
